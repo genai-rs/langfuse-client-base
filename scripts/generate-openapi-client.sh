@@ -22,9 +22,11 @@ fi
 echo "📥 Downloading OpenAPI specification..."
 curl -o "$OPENAPI_FILE" "$OPENAPI_URL"
 
-# Backup our custom Cargo.toml before generation
-echo "📝 Backing up custom Cargo.toml..."
+# Backup our custom files before generation
+echo "📝 Backing up custom files..."
 cp "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.custom" 2>/dev/null || true
+cp "$BASE_CLIENT_DIR/.gitignore" "$BASE_CLIENT_DIR/.gitignore.custom" 2>/dev/null || true
+cp "$BASE_CLIENT_DIR/README.md" "$BASE_CLIENT_DIR/README.md.custom" 2>/dev/null || true
 
 # Generate the client
 echo "🏗️ Generating Rust client..."
@@ -46,10 +48,16 @@ rm -f "$BASE_CLIENT_DIR/.gitignore"
 rm -f "$BASE_CLIENT_DIR/git_push.sh"
 rm -rf "$BASE_CLIENT_DIR/.openapi-generator"
 
-# Restore our custom Cargo.toml
-echo "📝 Restoring custom Cargo.toml..."
+# Restore our custom files
+echo "📝 Restoring custom files..."
 if [ -f "$BASE_CLIENT_DIR/Cargo.toml.custom" ]; then
     mv "$BASE_CLIENT_DIR/Cargo.toml.custom" "$BASE_CLIENT_DIR/Cargo.toml"
+fi
+if [ -f "$BASE_CLIENT_DIR/.gitignore.custom" ]; then
+    mv "$BASE_CLIENT_DIR/.gitignore.custom" "$BASE_CLIENT_DIR/.gitignore"
+fi
+if [ -f "$BASE_CLIENT_DIR/README.md.custom" ]; then
+    mv "$BASE_CLIENT_DIR/README.md.custom" "$BASE_CLIENT_DIR/README.md"
 fi
 
 # Format the generated code
