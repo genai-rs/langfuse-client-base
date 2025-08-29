@@ -31,6 +31,14 @@ jobs:
         
       - name: Build documentation
         run: cargo doc --no-deps --all-features
+        
+      - name: Run clippy (strict)
+        if: matrix.rust == 'stable'
+        run: cargo clippy --all-targets --all-features -- -D warnings
+        
+      - name: Check formatting
+        if: matrix.rust == 'stable'
+        run: cargo fmt --all -- --check
 
   # Security audit
   security:
