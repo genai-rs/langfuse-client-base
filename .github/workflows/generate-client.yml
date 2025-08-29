@@ -58,6 +58,9 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
+          # Clean any build artifacts that shouldn't be committed
+          rm -rf target/
+          
           # Check if there are any changes to commit
           if git diff --quiet && git diff --staged --quiet; then
             echo "No changes detected"
@@ -76,6 +79,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: update generated client from latest OpenAPI spec'
           title: 'chore: update generated client from latest OpenAPI spec'
+          add-paths: |
+            src/
+            Cargo.toml
+            docs/
           body: |
             ## 🤖 Auto-generated Update
             
