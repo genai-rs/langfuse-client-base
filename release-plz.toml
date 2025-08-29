@@ -33,9 +33,12 @@ pr_body = """
 {%- for release in releases -%}
 ## 📦 {{ release.package }} {{ release.previous_version }} → {{ release.next_version }}
 
+### 🔗 Compare Changes
+[**View all changes since v{{ release.previous_version }}**](https://github.com/genai-rs/langfuse-client-base/compare/v{{ release.previous_version }}...HEAD)
+
 {%- if release.changelog %}
 
-### Changelog
+### 📋 Changelog
 
 {{ release.changelog }}
 {%- else %}
