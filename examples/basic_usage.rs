@@ -1,7 +1,7 @@
 //! Basic usage example for langfuse-client-base
-//! 
+//!
 //! This example shows how to configure the client using environment variables.
-//! 
+//!
 //! To run this example:
 //! ```bash
 //! export LANGFUSE_PUBLIC_KEY="your-public-key"
@@ -21,15 +21,17 @@ fn main() {
         basic_auth: Some((
             env::var("LANGFUSE_PUBLIC_KEY")
                 .expect("Please set LANGFUSE_PUBLIC_KEY environment variable"),
-            Some(env::var("LANGFUSE_SECRET_KEY")
-                .expect("Please set LANGFUSE_SECRET_KEY environment variable"))
+            Some(
+                env::var("LANGFUSE_SECRET_KEY")
+                    .expect("Please set LANGFUSE_SECRET_KEY environment variable"),
+            ),
         )),
         ..Default::default()
     };
 
     println!("Configuration created successfully!");
     println!("Base URL: {}", config.base_path);
-    
+
     // Note: For actual API usage, see the langfuse-ergonomic crate
     // which provides a more user-friendly interface.
     // This crate provides low-level, auto-generated bindings.
