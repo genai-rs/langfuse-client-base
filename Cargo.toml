@@ -14,17 +14,12 @@ categories = ["api-bindings", "web-programming::http-client"]
 rust-version = "1.75"
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
+serde = { version = "^1.0", features = ["derive"] }
 serde_with = { version = "^3.8", default-features = false, features = ["base64", "std", "macros"] }
+serde_json = "^1.0"
 serde_repr = "^0.1"
-reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
-thiserror = "1.0"
-chrono = { version = "0.4", features = ["serde"] }
-uuid = { version = "1.10", features = ["serde", "v4"] }
-url = "2.5"
-base64 = "0.22"
-
+url = "^2.5"
+reqwest = { version = "^0.12", default-features = false, features = ["json", "multipart"] }
 [dev-dependencies]
 tokio = { version = "1.40", features = ["full"] }
 tracing = "0.1"
