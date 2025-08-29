@@ -1,0 +1,22 @@
+# CODEOWNERS for langfuse-client-base
+# These owners will be the default owners for everything in the repo
+
+# Global owners
+* @timvw
+
+# GitHub workflows and CI/CD
+/.github/ @timvw
+
+# Build and configuration files
+/Cargo.toml @timvw
+/release-plz.toml @timvw
+/renovate.json5 @timvw
+
+# Scripts
+/scripts/ @timvw
+
+# Documentation
+/*.md @timvw
+/SECURITY.md @timvw
+
+# Note: /src/ contains auto-generated code and should not be manually edited
