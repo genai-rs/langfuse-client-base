@@ -23,7 +23,7 @@ This is a low-level, auto-generated client. For a more ergonomic API, use [langf
 
 ```toml
 [dependencies]
-langfuse-client-base = "0.1"
+langfuse-client-base = "*" # See https://crates.io/crates/langfuse-client-base for latest version
 ```
 
 ## Usage
