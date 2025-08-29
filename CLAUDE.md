@@ -9,6 +9,21 @@ This is the **langfuse-client-base** repository - an auto-generated OpenAPI clie
 - **Generated Code**: All code in `src/` is auto-generated. Do not edit directly.
 - **Ergonomic Wrapper**: For the high-level API, see [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic)
 
+## Recent Migration (2025-08-29)
+
+This repository was migrated from the monorepo at timvw/langfuse-rs to a standalone repository in the genai-rs organization. Key changes:
+
+1. **Simplified Configuration**: Removed workspace configuration - this is now a single-package repository
+2. **Minimal CI**: Reduced to just build verification and security audit (no tests for generated code)
+3. **Simplified Docs**: CONTRIBUTING.md reduced to 26 lines focusing on generation only
+4. **Simplified Renovate**: Basic dependency updates only (39 lines instead of 215)
+5. **Version**: Successfully released v0.1.1 via release-plz
+
+### Known Issues Fixed
+- release-plz.toml no longer uses [workspace] configuration
+- All clippy warnings are suppressed for generated code
+- Repository is still technically a fork but has full permissions via organization settings
+
 ## Development Workflow
 
 ### Git Workflow
