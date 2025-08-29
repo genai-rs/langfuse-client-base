@@ -20,10 +20,3 @@ name = "langfuse-client-base"
 # This is auto-generated, so we might want to handle it specially
 changelog_update = false
 publish = true
-
-[[package]]
-name = "langfuse-ergonomic"  
-changelog_update = true
-publish = true
-# Ensure base client is published first
-publish_allow_dirty = false
