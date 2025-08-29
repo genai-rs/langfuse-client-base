@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.1...v0.2.2) - 2025-08-29
+
+### Added
+
+- add comparison link to release-plz PR template
+- add debug logging to diagnose workflow triggering issues
+- add manual dispatch support to skip-ci workflow
+- implement release-plz status check bypass with dual merge options
+- configure auto-merge for release-plz PRs
+- add GitHub release and PR body templates to release-plz
+- add GitHub settings configuration ([#29](https://github.com/genai-rs/langfuse-client-base/pull/29))
+
+### Fixed
+
+- remove duplicate changelog content
+- correct release-plz template variables
+- enable rebase merge for linear history ([#32](https://github.com/genai-rs/langfuse-client-base/pull/32))
+
+### Other
+
+- remove custom skip-ci system, use admin override instead
+- rename label from 'release-plz' to 'skip-ci'
+
 ## [0.2.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.0...v0.2.1) - 2025-08-29
 
 ### Added
