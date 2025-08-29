@@ -20,7 +20,6 @@ Cargo.lock
 Thumbs.db
 
 # OpenAPI generation artifacts
-scripts/openapi.yml
 langfuse-client-base/.openapi-generator/
 
 # Test coverage
