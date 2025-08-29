@@ -23,7 +23,8 @@ UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 
 ## Pinned Versions
 
-- **OpenAPI Generator**: `7.15.0` (see `openapitools.json`)
+- **OpenAPI Generator CLI**: `7.15.0` (npm version in `openapitools.json`)
+- **OpenAPI Generator Docker**: `7.10.0` (official Docker image)
 - **OpenAPI Spec Source**: `https://cloud.langfuse.com/generated/api/openapi.yml`
 - **Target Rust Version**: `1.82.0` (MSRV)
 
@@ -38,14 +39,20 @@ UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 
 ## Docker-based Generation (Recommended)
 
-For reproducible builds across different environments:
+For reproducible builds using the official OpenAPI Generator image:
 
 ```bash
-# Build the generation image
-docker build -f docker/Dockerfile.codegen -t langfuse-codegen .
+# Generate code using Docker
+./scripts/gen-in-docker.sh
 
-# Generate code
-docker run --rm -v $(pwd):/workspace langfuse-codegen
+# Or run directly:
+docker run --rm \
+    -v "$(pwd):/local" \
+    openapitools/openapi-generator-cli:v7.10.0 generate \
+    -i /local/openapi.yml \
+    -g rust \
+    -o /local \
+    --additional-properties=packageName=langfuse-client-base
 ```
 
 ## Debugging Generation Issues
@@ -88,6 +95,7 @@ openapi-generator-cli generate \
 - Check Python 3 is available: `python3 --version`
 - Install required modules: `pip3 install toml`
 
-**Docker build fails:**
-- Ensure Docker is running
-- Check Docker version compatibility: `docker --version`
+**Docker generation fails:**
+- Ensure Docker is running: `docker --version`
+- Pull the image manually: `docker pull openapitools/openapi-generator-cli:v7.10.0`
+- Check file permissions on openapi.yml
