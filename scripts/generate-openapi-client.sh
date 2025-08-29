@@ -9,16 +9,25 @@ BASE_CLIENT_DIR="$PROJECT_ROOT"
 OPENAPI_URL="https://cloud.langfuse.com/generated/api/openapi.yml"
 OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
 
-# Check if UPDATE_SPEC environment variable is set (for nightly workflow)
+# Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
+USE_DOCKER="${USE_DOCKER:-false}"
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.10.0}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
-# Check if openapi-generator-cli is installed
-if ! command -v openapi-generator-cli &> /dev/null; then
-    echo "❌ openapi-generator-cli is not installed."
-    echo "Installing via npm..."
-    npm install -g @openapitools/openapi-generator-cli
+# Check if we should use Docker
+if [ "$USE_DOCKER" = "true" ]; then
+    echo "🐳 Using Docker for generation (OpenAPI Generator v${OPENAPI_GENERATOR_VERSION})"
+    GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
+else
+    # Check if openapi-generator-cli is installed
+    if ! command -v openapi-generator-cli &> /dev/null; then
+        echo "❌ openapi-generator-cli is not installed."
+        echo "Installing via npm..."
+        npm install -g @openapitools/openapi-generator-cli
+    fi
+    GENERATOR_CMD="openapi-generator-cli"
 fi
 
 # Download or use local OpenAPI specification
@@ -56,10 +65,21 @@ cp "$BASE_CLIENT_DIR/README.md" "$BASE_CLIENT_DIR/README.md.custom" 2>/dev/null 
 
 # Generate the client
 echo "🏗️ Generating Rust client..."
-openapi-generator-cli generate \
-    -i "$OPENAPI_FILE" \
+
+# Adjust paths for Docker vs local
+if [ "$USE_DOCKER" = "true" ]; then
+    INPUT_PATH="/local/openapi.yml"
+    OUTPUT_PATH="/local"
+else
+    INPUT_PATH="$OPENAPI_FILE"
+    OUTPUT_PATH="$BASE_CLIENT_DIR"
+fi
+
+# Run the generator
+$GENERATOR_CMD generate \
+    -i "$INPUT_PATH" \
     -g rust \
-    -o "$BASE_CLIENT_DIR" \
+    -o "$OUTPUT_PATH" \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
     --additional-properties=library=reqwest \
