@@ -1,6 +1,8 @@
-# Contributing to langfuse-rs
+# Contributing to langfuse-client-base
 
-Thank you for your interest in contributing to langfuse-rs! This guide will help you get started.
+Thank you for your interest in contributing to langfuse-client-base! This guide will help you get started.
+
+**Note**: This repository contains auto-generated code. Most contributions should be made to the generation process or to the [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) repository.
 
 ## Development Setup
 
@@ -14,24 +16,24 @@ Thank you for your interest in contributing to langfuse-rs! This guide will help
 
 1. Fork and clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/langfuse-rs.git
-cd langfuse-rs
+git clone https://github.com/YOUR_USERNAME/langfuse-client-base.git
+cd langfuse-client-base
 ```
 
-2. Set up the development environment:
+2. Verify dependencies:
 ```bash
-just init  # Install git hooks and verify dependencies
-```
-
-3. Create a `.env` file with your Langfuse credentials:
-```bash
-cp .env.example .env
-# Edit .env with your credentials
+cargo build
+cargo test
 ```
 
 ## Development Workflow
 
 ### Making Changes
+
+**Important**: The code in `src/` is auto-generated. Changes should be made to:
+- The generation script (`scripts/generate-openapi-client.sh`)
+- The custom Cargo.toml configuration
+- Documentation files
 
 1. **Create a feature branch:**
 ```bash
@@ -41,16 +43,11 @@ git checkout -b feat/your-feature-name
 ```
 
 2. **Make your changes**
-   - Follow the existing code style
-   - Add tests for new functionality
-   - Update documentation as needed
+   - Update generation scripts if needed
+   - Update documentation
+   - Test the generation process
 
 3. **Run pre-commit checks:**
-```bash
-just check  # Runs fmt, clippy, and tests
-```
-
-Or individually:
 ```bash
 cargo fmt --all -- --check
 cargo clippy --all-targets --all-features -- -D warnings
@@ -89,63 +86,22 @@ gh pr create  # or use GitHub web UI
 
 ### Generated Code
 
-The `langfuse-client-base` crate contains auto-generated code from the OpenAPI specification. 
+This crate contains auto-generated code from the OpenAPI specification. 
 
-**DO NOT** edit files in `langfuse-client-base/src/` directly. Instead:
+**DO NOT** edit files in `src/` directly. Instead:
 
 1. Update the OpenAPI generation script if needed
 2. Regenerate the client:
 ```bash
-just generate
-# or: ./scripts/generate-openapi-client.sh
+./scripts/generate-openapi-client.sh
 ```
 
-### Examples
+### Testing
 
-When adding new features, please include examples:
+Ensure all tests pass:
 
-1. Create an example file in `langfuse-ergonomic/examples/`
-2. Add it to `langfuse-ergonomic/Cargo.toml`:
-```toml
-[[example]]
-name = "your_example"
-path = "examples/your_example.rs"
-```
-3. Test the example:
 ```bash
-cd langfuse-ergonomic
-cargo run --example your_example
-```
-
-## Testing
-
-### Unit Tests
-
-Add unit tests for new functionality:
-
-```rust
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_your_feature() {
-        // Your test
-    }
-}
-```
-
-### Integration Tests
-
-For features that require API calls, add integration tests that can run with real credentials:
-
-```rust
-#[tokio::test]
-async fn test_api_feature() {
-    dotenv::dotenv().ok();
-    let client = LangfuseClient::from_env().unwrap();
-    // Your test
-}
+cargo test --all-features
 ```
 
 ## Pull Request Process
@@ -159,13 +115,11 @@ async fn test_api_feature() {
 ## Project Structure
 
 ```
-langfuse-rs/
-├── langfuse-client-base/   # Auto-generated OpenAPI client
-│   └── src/                # Generated code (do not edit)
-├── langfuse-ergonomic/     # User-friendly wrapper
-│   ├── src/                # Hand-written ergonomic API
-│   └── examples/           # Usage examples
-├── scripts/                # Build and generation scripts
+langfuse-client-base/
+├── src/                    # Auto-generated code (do not edit)
+├── docs/                   # Generated API documentation
+├── scripts/                # Generation scripts
+├── Cargo.toml             # Custom package configuration
 └── .github/workflows/      # CI/CD configuration
 ```
 
@@ -180,8 +134,9 @@ Releases are automated using [release-plz](https://release-plz.ieni.dev/):
 
 ## Getting Help
 
-- Open an [issue](https://github.com/timvw/langfuse-rs/issues) for bugs or feature requests
+- Open an [issue](https://github.com/genai-rs/langfuse-client-base/issues) for bugs or feature requests
 - Check existing issues before creating a new one
+- For ergonomic API contributions, see [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic)
 - Join the [Langfuse community](https://langfuse.com/docs/community) for general questions
 
 ## Code of Conduct
