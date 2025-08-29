@@ -1,0 +1,28 @@
+name: Auto-merge release-plz PRs
+
+on:
+  pull_request:
+    types: [labeled, synchronize, opened]
+
+jobs:
+  auto-merge:
+    name: Auto-merge release-plz PRs
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'release-plz')
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Auto-merge release-plz PR (bypass status checks)
+        run: |
+          # Wait a moment for the PR to be ready
+          sleep 30
+          
+          # Merge the PR directly, bypassing status checks
+          # This works because enforce_admins is false and the action runs as admin
+          gh pr merge --rebase "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
