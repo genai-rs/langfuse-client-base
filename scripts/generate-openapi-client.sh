@@ -11,24 +11,21 @@ OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
 
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
-USE_DOCKER="${USE_DOCKER:-false}"
 OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.10.0}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
-# Check if we should use Docker
-if [ "$USE_DOCKER" = "true" ]; then
-    echo "🐳 Using Docker for generation (OpenAPI Generator v${OPENAPI_GENERATOR_VERSION})"
-    GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
-else
-    # Check if openapi-generator-cli is installed
-    if ! command -v openapi-generator-cli &> /dev/null; then
-        echo "❌ openapi-generator-cli is not installed."
-        echo "Installing via npm..."
-        npm install -g @openapitools/openapi-generator-cli
-    fi
-    GENERATOR_CMD="openapi-generator-cli"
+# Always use Docker for reproducible generation
+echo "🐳 Using Docker for generation (OpenAPI Generator v${OPENAPI_GENERATOR_VERSION})"
+
+# Check if Docker is available
+if ! command -v docker &> /dev/null; then
+    echo "❌ Docker is not installed or not in PATH"
+    echo "Please install Docker from https://www.docker.com/get-started"
+    exit 1
 fi
+
+GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
 
 # Download or use local OpenAPI specification
 if [ "$UPDATE_SPEC" = "true" ]; then
@@ -66,20 +63,11 @@ cp "$BASE_CLIENT_DIR/README.md" "$BASE_CLIENT_DIR/README.md.custom" 2>/dev/null 
 # Generate the client
 echo "🏗️ Generating Rust client..."
 
-# Adjust paths for Docker vs local
-if [ "$USE_DOCKER" = "true" ]; then
-    INPUT_PATH="/local/openapi.yml"
-    OUTPUT_PATH="/local"
-else
-    INPUT_PATH="$OPENAPI_FILE"
-    OUTPUT_PATH="$BASE_CLIENT_DIR"
-fi
-
-# Run the generator
+# Run the generator (Docker paths)
 $GENERATOR_CMD generate \
-    -i "$INPUT_PATH" \
+    -i "/local/openapi.yml" \
     -g rust \
-    -o "$OUTPUT_PATH" \
+    -o "/local" \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
     --additional-properties=library=reqwest \
