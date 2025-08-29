@@ -22,30 +22,17 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install OpenAPI Generator
-        run: |
-          npm install -g @openapitools/openapi-generator-cli
-          openapi-generator-cli version
-
-      - name: Install curl (for downloading OpenAPI spec)
-        run: |
-          which curl || sudo apt-get update && sudo apt-get install -y curl
-
-      - name: Make generation script executable
-        run: |
-          chmod +x ./scripts/generate-openapi-client.sh
-
       - name: Generate client
         env:
           UPDATE_SPEC: true
         run: |
-          # Run the generation script which:
-          # 1. Downloads latest OpenAPI spec (only if changed)
-          # 2. Backs up custom Cargo.toml
-          # 3. Generates the client
-          # 4. Cleans up unwanted files
-          # 5. Restores custom Cargo.toml
-          # 6. Formats the code
+          # The script handles everything internally:
+          # - Checks for Docker availability
+          # - Downloads latest OpenAPI spec (only if changed)
+          # - Runs generation using Docker
+          # - Preserves custom files
+          # - Formats the code
+          chmod +x ./scripts/generate-openapi-client.sh
           ./scripts/generate-openapi-client.sh
 
       - name: Verify generation succeeded
