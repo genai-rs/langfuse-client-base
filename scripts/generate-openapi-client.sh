@@ -148,8 +148,8 @@ PYTHON_SCRIPT
     rm -f "$BASE_CLIENT_DIR/Cargo.toml.generated"
 fi
 
-# Format the generated code
-echo "🎨 Formatting generated code..."
+# Format all code including examples
+echo "🎨 Formatting all code (src, tests, examples)..."
 cd "$PROJECT_ROOT"
 cargo fmt --all
 
