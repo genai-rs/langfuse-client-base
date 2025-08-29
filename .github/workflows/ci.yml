@@ -12,14 +12,19 @@ env:
 jobs:
   # Verify the generated code compiles
   build:
-    name: Build
+    name: Build (${{ matrix.rust }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, beta, 1.82.0]  # 1.82.0 is our MSRV
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
         
       - name: Build
         run: cargo build --verbose
@@ -35,7 +40,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Run security audit
-        run: |
-          cargo install cargo-audit
-          cargo audit
+      - name: Generate Cargo.lock for audit
+        run: cargo generate-lockfile
+        
+      - name: Run cargo audit
+        uses: rustsec/audit-check@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
