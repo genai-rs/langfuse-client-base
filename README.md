@@ -8,9 +8,21 @@
 
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
 
-## ⚠️ Note
-
-This is a low-level, auto-generated client. For a more ergonomic API, use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic).
+> [!WARNING]
+> **🚀 Most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead!**
+> 
+> This is a low-level, auto-generated client intended as a building block for higher-level abstractions.
+> The ergonomic wrapper provides:
+> - ✅ Simplified API with builder patterns
+> - ✅ Automatic batching and retries
+> - ✅ Environment-based configuration
+> - ✅ Better error handling
+> - ✅ OpenTelemetry integration
+>
+> **Only use this crate directly if you need:**
+> - Raw access to all OpenAPI endpoints
+> - Custom retry/batching logic
+> - Minimal dependencies
 
 ## Features
 
@@ -73,12 +85,48 @@ let config = Configuration {
 };
 ```
 
-## Generation
+## Platform Notes
 
-This client is generated from the OpenAPI specification:
+### TLS Backend
+
+By default, this crate uses `rustls` for TLS, which provides:
+- 🔒 Pure Rust implementation
+- 📦 Smaller binary size
+- 🐧 Better cross-platform compatibility
+
+For native TLS (OpenSSL on Linux, Schannel on Windows, Security Framework on macOS):
+
+```toml
+[dependencies]
+langfuse-client-base = { version = "*", default-features = false, features = ["native-tls"] }
+```
+
+### Alpine Linux / musl
+
+When building for Alpine Linux or other musl-based systems with `native-tls`:
+
+```dockerfile
+RUN apk add --no-cache openssl-dev musl-dev
+```
+
+### Static Linking
+
+For fully static binaries with rustls:
 
 ```bash
+RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --target x86_64-unknown-linux-musl
+```
+
+## Generation
+
+This client is generated from the OpenAPI specification. See [CODEGEN.md](CODEGEN.md) for details.
+
+```bash
+# Using local environment
 ./scripts/generate-openapi-client.sh
+
+# Using Docker (recommended)
+./scripts/gen-in-docker.sh
 ```
 
 ## License
