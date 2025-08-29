@@ -119,14 +119,14 @@ RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --target x86_64-
 
 ## Generation
 
-This client is generated from the OpenAPI specification. See [CODEGEN.md](CODEGEN.md) for details.
+This client is generated from the OpenAPI specification using Docker for reproducible builds.
 
 ```bash
-# Using local environment
+# Generate client (always uses Docker)
 ./scripts/generate-openapi-client.sh
 
-# Using Docker (recommended)
-./scripts/gen-in-docker.sh
+# Update to latest OpenAPI spec and regenerate
+UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 ```
 
 ## License
