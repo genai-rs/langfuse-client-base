@@ -24,9 +24,41 @@ reqwest = { version = "^0.12", default-features = false, features = ["json", "mu
 tokio = { version = "1.40", features = ["full"] }
 
 [features]
-default = ["rustls"]
+default = ["rustls", "all-apis"]
+
+# TLS backends
 rustls = ["reqwest/rustls-tls"]
 native-tls = ["reqwest/native-tls"]
+
+# API feature groups
+all-apis = [
+    "ingestion",
+    "tracing", 
+    "scoring",
+    "datasets",
+    "prompts",
+    "metrics",
+    "models",
+    "projects",
+    "comments",
+    "media",
+    "admin",
+    "health"
+]
+
+# Individual API features
+ingestion = []
+tracing = []
+scoring = []
+datasets = []
+prompts = []
+metrics = []
+models = []
+projects = []
+comments = []
+media = []
+admin = []
+health = []
 
 [lints.clippy]
 # Allow all clippy warnings for generated code

@@ -30,6 +30,7 @@ Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based o
 - Async/await support with Tokio
 - Choice of TLS backend (rustls or native-tls)
 - Strong typing with serde
+- Modular API features for smaller binaries
 
 ## Installation
 
@@ -37,6 +38,34 @@ Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based o
 [dependencies]
 langfuse-client-base = "*" # See https://crates.io/crates/langfuse-client-base for latest version
 ```
+
+### Feature Flags
+
+By default, all API modules are included. You can reduce binary size by selecting only the APIs you need:
+
+```toml
+[dependencies]
+langfuse-client-base = { version = "*", default-features = false, features = ["rustls", "ingestion", "tracing"] }
+```
+
+Available feature flags:
+- **TLS backends** (choose one):
+  - `rustls` (default) - Pure Rust TLS implementation
+  - `native-tls` - Platform native TLS
+- **API modules**:
+  - `all-apis` (default) - Include all API modules
+  - `ingestion` - Event ingestion API
+  - `tracing` - Traces, sessions, and observations
+  - `scoring` - Score management and configuration
+  - `datasets` - Dataset operations
+  - `prompts` - Prompt management
+  - `metrics` - Metrics and analytics
+  - `models` - Model and LLM connections
+  - `projects` - Projects and organizations
+  - `comments` - Comments and annotations
+  - `media` - Media upload/download
+  - `admin` - SCIM administration
+  - `health` - Health check endpoints
 
 ## Usage
 

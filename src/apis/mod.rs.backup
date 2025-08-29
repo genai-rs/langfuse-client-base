@@ -113,63 +113,27 @@ impl From<&str> for ContentType {
     }
 }
 
-// API modules with feature gates
-
-#[cfg(feature = "ingestion")]
-pub mod ingestion_api;
-
-#[cfg(feature = "tracing")]
-pub mod trace_api;
-#[cfg(feature = "tracing")]
-pub mod sessions_api;
-#[cfg(feature = "tracing")]
-pub mod observations_api;
-
-#[cfg(feature = "scoring")]
-pub mod score_api;
-#[cfg(feature = "scoring")]
-pub mod score_configs_api;
-#[cfg(feature = "scoring")]
-pub mod score_v2_api;
-
-#[cfg(feature = "datasets")]
-pub mod datasets_api;
-#[cfg(feature = "datasets")]
-pub mod dataset_items_api;
-#[cfg(feature = "datasets")]
-pub mod dataset_run_items_api;
-
-#[cfg(feature = "prompts")]
-pub mod prompts_api;
-#[cfg(feature = "prompts")]
-pub mod prompt_version_api;
-
-#[cfg(feature = "metrics")]
-pub mod metrics_api;
-
-#[cfg(feature = "models")]
-pub mod models_api;
-#[cfg(feature = "models")]
-pub mod llm_connections_api;
-
-#[cfg(feature = "projects")]
-pub mod projects_api;
-#[cfg(feature = "projects")]
-pub mod organizations_api;
-
-#[cfg(feature = "comments")]
-pub mod comments_api;
-#[cfg(feature = "comments")]
 pub mod annotation_queues_api;
-
-#[cfg(feature = "media")]
-pub mod media_api;
-
-#[cfg(feature = "admin")]
-pub mod scim_api;
-
-#[cfg(feature = "health")]
+pub mod comments_api;
+pub mod dataset_items_api;
+pub mod dataset_run_items_api;
+pub mod datasets_api;
 pub mod health_api;
+pub mod ingestion_api;
+pub mod llm_connections_api;
+pub mod media_api;
+pub mod metrics_api;
+pub mod models_api;
+pub mod observations_api;
+pub mod organizations_api;
+pub mod projects_api;
+pub mod prompt_version_api;
+pub mod prompts_api;
+pub mod scim_api;
+pub mod score_api;
+pub mod score_configs_api;
+pub mod score_v2_api;
+pub mod sessions_api;
+pub mod trace_api;
 
-// Configuration is always available
 pub mod configuration;

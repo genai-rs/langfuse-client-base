@@ -1,3 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+
+# Script to add Cargo feature gates to generated API modules
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+echo "🔧 Adding Cargo feature gates to API modules..."
+
+# Note: This script adds feature gates to the generated code
+# The API groupings are defined in Cargo.toml
+
+# Update mod.rs to use feature gates
+MOD_FILE="$PROJECT_ROOT/src/apis/mod.rs"
+MOD_BACKUP="$PROJECT_ROOT/src/apis/mod.rs.backup"
+
+# Backup the original mod.rs
+cp "$MOD_FILE" "$MOD_BACKUP"
+
+# Create a new mod.rs with feature gates
+cat > "$MOD_FILE" << 'EOF'
 use std::error;
 use std::fmt;
 
@@ -173,3 +195,21 @@ pub mod health_api;
 
 // Configuration is always available
 pub mod configuration;
+EOF
+
+echo "✅ Added feature gates to mod.rs"
+
+# Now update the generate script to call this after generation
+GENERATE_SCRIPT="$PROJECT_ROOT/scripts/generate-openapi-client.sh"
+if ! grep -q "add-cargo-features.sh" "$GENERATE_SCRIPT"; then
+    # Add call to this script after code formatting
+    sed -i.bak '/cargo fmt --all/a\
+\
+# Add Cargo feature gates\
+echo "🎨 Adding Cargo feature gates..."\
+"$SCRIPT_DIR/add-cargo-features.sh"' "$GENERATE_SCRIPT"
+    rm -f "$GENERATE_SCRIPT.bak"
+    echo "✅ Updated generate-openapi-client.sh to add features"
+fi
+
+echo "✅ Cargo features script complete!"

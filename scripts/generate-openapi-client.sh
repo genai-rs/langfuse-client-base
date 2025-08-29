@@ -153,6 +153,9 @@ echo "🎨 Formatting all code (src, tests, examples)..."
 cd "$PROJECT_ROOT"
 cargo fmt --all
 
+# Add Cargo feature gates
+echo "🎨 Adding Cargo feature gates..."
+"$SCRIPT_DIR/add-cargo-features.sh"
 echo "✅ Client generation complete!"
 echo ""
 echo "Note: The generated client is in $BASE_CLIENT_DIR"
