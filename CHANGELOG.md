@@ -7,21 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2025-01-29
+
+### Changed
+- Upgraded MSRV from 1.75.0 to 1.82.0
+- Upgraded reqwest from 0.11 to 0.12
+- Enabled changelog generation in release-plz
+
 ### Added
-- Initial implementation of Langfuse Rust client
-- Auto-generated base client from OpenAPI specification
-- Ergonomic wrapper with builder patterns using Bon
-- Support for traces, observations (spans/generations/events), and scores
-- Environment-based client initialization with `from_env()`
-- Comprehensive examples and documentation
-- CI/CD with GitHub Actions and release-plz
-- Pre-commit hooks for code quality
+- Basic usage example demonstrating environment variable configuration
+- CODEOWNERS file for repository governance
+- Security audit job in CI workflow
+- Cargo.lock generation in CI for security audits
+- MSRV badge in README
 
 ### Fixed
-- Resolved all build warnings
-- Added proper lifetime annotations
+- CI workflow to generate Cargo.lock for security audit
 
-### Developer Experience
-- Added git pre-commit hooks
-- Integrated cargo fmt and clippy checks
-- Created justfile for common tasks
+### Documentation
+- Improved README with environment variable configuration examples
+- Added self-hosted instance configuration example
+
+## [0.1.1] - 2025-01-28
+
+### Changed
+- Repository detached from upstream fork
+- Simplified repository structure for auto-generated code only
+
+### Added
+- Automated nightly OpenAPI client generation workflow
+- GitHub Actions CI with multi-version testing (stable, beta, MSRV)
+- release-plz integration for automated releases
+
+### Fixed
+- release-plz.toml configuration structure
+
+## [0.1.0] - 2025-01-28
+
+### Added
+- Initial release of auto-generated Langfuse OpenAPI client
+- Complete API coverage from OpenAPI specification
+- Async/await support with Tokio
+- Choice of TLS backend (rustls or native-tls)
+- Strong typing with serde
+
+[Unreleased]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/genai-rs/langfuse-client-base/releases/tag/v0.1.0
