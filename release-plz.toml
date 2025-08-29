@@ -26,27 +26,23 @@ git_release_body = """
 {%- else %}
 _No changelog available_
 {%- endif %}
-
-**Full Changelog**: https://github.com/{{ repository_url }}/compare/v{{ previous_version }}...v{{ version }}
 """
 
 # PR body template  
 pr_body = """
-{%- for package in packages -%}
-{%- if package.version_update -%}
-## 📦 {{ package.name }} {{ package.version_update.prev_version }} → {{ package.version_update.version }}
+{%- for release in releases -%}
+## 📦 {{ release.package }} {{ release.previous_version }} → {{ release.next_version }}
 
-{%- if package.changelog %}
+{%- if release.changelog %}
 
 ### Changelog
 
-{{ package.changelog }}
+{{ release.changelog }}
 {%- else %}
 
 _No changelog available for this release_
 {%- endif %}
 
-{%- endif %}
 {%- endfor %}
 
 ---
