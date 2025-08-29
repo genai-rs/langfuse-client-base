@@ -17,14 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - sync Cargo.toml version with crates.io ([#27](https://github.com/genai-rs/langfuse-client-base/pull/27))
 - revert manual version bump to let release-plz handle it ([#24](https://github.com/genai-rs/langfuse-client-base/pull/24))
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
 
 ## [0.2.0] - 2025-01-29
 
@@ -70,7 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Choice of TLS backend (rustls or native-tls)
 - Strong typing with serde
 
-[Unreleased]: https://github.com/genai-rs/langfuse-client-base/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/genai-rs/langfuse-client-base/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/genai-rs/langfuse-client-base/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/genai-rs/langfuse-client-base/releases/tag/v0.1.0
