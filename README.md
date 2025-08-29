@@ -3,6 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/langfuse-client-base.svg)](https://crates.io/crates/langfuse-client-base)
 [![Documentation](https://docs.rs/langfuse-client-base/badge.svg)](https://docs.rs/langfuse-client-base)
 [![CI](https://github.com/genai-rs/langfuse-client-base/workflows/CI/badge.svg)](https://github.com/genai-rs/langfuse-client-base/actions)
+[![MSRV](https://img.shields.io/badge/MSRV-1.75.0-blue)](https://releases.rs/docs/1.75.0/)
 [![License](https://img.shields.io/crates/l/langfuse-client-base)](./LICENSE-MIT)
 
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
@@ -29,6 +30,8 @@ langfuse-client-base = "0.1"
 
 This crate provides low-level API bindings. Most users should use the ergonomic wrapper instead.
 
+### Basic Configuration
+
 ```rust
 use langfuse_client_base::apis::configuration::Configuration;
 use langfuse_client_base::apis::ingestion_api;
@@ -40,6 +43,34 @@ let config = Configuration {
 };
 
 // Use the API...
+```
+
+### Using Environment Variables
+
+```rust
+use std::env;
+use langfuse_client_base::apis::configuration::Configuration;
+
+let config = Configuration {
+    base_path: env::var("LANGFUSE_HOST").unwrap_or_else(|_| "https://cloud.langfuse.com".to_string()),
+    basic_auth: Some((
+        env::var("LANGFUSE_PUBLIC_KEY").expect("LANGFUSE_PUBLIC_KEY not set"),
+        Some(env::var("LANGFUSE_SECRET_KEY").expect("LANGFUSE_SECRET_KEY not set"))
+    )),
+    ..Default::default()
+};
+```
+
+### Self-Hosted Instances
+
+For self-hosted Langfuse instances:
+
+```rust
+let config = Configuration {
+    base_path: "https://your-domain.com/langfuse".to_string(),  // Custom base path
+    basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".to_string()))),
+    ..Default::default()
+};
 ```
 
 ## Generation
