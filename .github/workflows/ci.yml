@@ -40,7 +40,7 @@ jobs:
         if: matrix.rust == 'stable'
         run: cargo fmt --all -- --check
 
-  # Security audit
+  # Security audit - quick check for PRs
   security:
     name: Security Audit
     runs-on: ubuntu-latest
