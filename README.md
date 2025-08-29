@@ -57,20 +57,50 @@ let config = Configuration {
 // Use the API...
 ```
 
+### Advanced Configuration with Transport Knobs
+
+For fine-grained control over HTTP transport settings:
+
+```rust
+use langfuse_client_base::configuration_ext::ConfigurationBuilder;
+use std::time::Duration;
+
+let config = ConfigurationBuilder::new()
+    .base_path("https://cloud.langfuse.com")
+    .basic_auth("your-public-key", "your-secret-key")
+    .timeout(Duration::from_secs(60))
+    .connect_timeout(Duration::from_secs(5))
+    .pool_max_idle_per_host(50)
+    .http1_only(false)  // Allow HTTP/2
+    .retry_count(5)
+    .build()
+    .expect("Failed to build configuration");
+```
+
+Available transport knobs:
+- **Timeouts**: `timeout`, `connect_timeout`
+- **Connection pooling**: `pool_idle_timeout`, `pool_max_idle_per_host`
+- **TCP settings**: `tcp_nodelay`, `tcp_keepalive`
+- **HTTP version**: `http1_only` (disable HTTP/2 when false)
+- **Compression**: `gzip`, `brotli`, `deflate`
+- **DNS**: `trust_dns` (requires `trust-dns` feature)
+- **Retry**: `retry_count`, `retry_delay`
+- **Security**: `https_only`
+
 ### Using Environment Variables
 
 ```rust
-use std::env;
-use langfuse_client_base::apis::configuration::Configuration;
+use langfuse_client_base::configuration_ext;
 
-let config = Configuration {
-    base_path: env::var("LANGFUSE_HOST").unwrap_or_else(|_| "https://cloud.langfuse.com".to_string()),
-    basic_auth: Some((
-        env::var("LANGFUSE_PUBLIC_KEY").expect("LANGFUSE_PUBLIC_KEY not set"),
-        Some(env::var("LANGFUSE_SECRET_KEY").expect("LANGFUSE_SECRET_KEY not set"))
-    )),
-    ..Default::default()
-};
+// Automatically reads from:
+// - LANGFUSE_HOST (base path)
+// - LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY (auth)
+// - LANGFUSE_TIMEOUT (request timeout in seconds)
+// - LANGFUSE_CONNECT_TIMEOUT (connection timeout in seconds)
+// - LANGFUSE_RETRY_COUNT (number of retries)
+// - LANGFUSE_HTTP1_ONLY (disable HTTP/2 when true)
+let config = configuration_ext::from_env()
+    .expect("Failed to load configuration from environment");
 ```
 
 ### Self-Hosted Instances
