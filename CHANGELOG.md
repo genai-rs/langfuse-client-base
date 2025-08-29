@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.2] - 2025-01-29
+## [0.2.0] - 2025-01-29
 
-### Changed
-- Upgraded MSRV from 1.75.0 to 1.82.0
+### Breaking Changes
+- Upgraded MSRV from 1.75.0 to 1.82.0 (requires Rust 1.82+)
 - Upgraded reqwest from 0.11 to 0.12
 - Enabled changelog generation in release-plz
 
@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Choice of TLS backend (rustls or native-tls)
 - Strong typing with serde
 
-[Unreleased]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.2...HEAD
-[0.1.2]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.1...v0.1.2
+[Unreleased]: https://github.com/genai-rs/langfuse-client-base/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/genai-rs/langfuse-client-base/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/genai-rs/langfuse-client-base/releases/tag/v0.1.0
