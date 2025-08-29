@@ -24,7 +24,6 @@ curl -o "$OPENAPI_FILE" "$OPENAPI_URL"
 
 # Backup our custom files before generation
 echo "📝 Backing up custom files..."
-cp "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.custom" 2>/dev/null || true
 cp "$BASE_CLIENT_DIR/.gitignore" "$BASE_CLIENT_DIR/.gitignore.custom" 2>/dev/null || true
 cp "$BASE_CLIENT_DIR/README.md" "$BASE_CLIENT_DIR/README.md.custom" 2>/dev/null || true
 
@@ -50,15 +49,37 @@ rm -rf "$BASE_CLIENT_DIR/.openapi-generator"
 
 # Restore our custom files
 echo "📝 Restoring custom files..."
-if [ -f "$BASE_CLIENT_DIR/Cargo.toml.custom" ]; then
-    mv "$BASE_CLIENT_DIR/Cargo.toml.custom" "$BASE_CLIENT_DIR/Cargo.toml"
-fi
 if [ -f "$BASE_CLIENT_DIR/.gitignore.custom" ]; then
     mv "$BASE_CLIENT_DIR/.gitignore.custom" "$BASE_CLIENT_DIR/.gitignore"
 fi
 if [ -f "$BASE_CLIENT_DIR/README.md.custom" ]; then
     mv "$BASE_CLIENT_DIR/README.md.custom" "$BASE_CLIENT_DIR/README.md"
 fi
+
+# Apply our custom Cargo.toml modifications
+echo "📝 Applying custom Cargo.toml modifications..."
+# Add our custom package metadata
+sed -i.bak 's/^authors = .*/authors = ["Tim Van Wassenhove <github@timvw.be>"]/' "$BASE_CLIENT_DIR/Cargo.toml"
+sed -i.bak 's|^repository = .*|repository = "https://github.com/genai-rs/langfuse-client-base"|' "$BASE_CLIENT_DIR/Cargo.toml"
+sed -i.bak 's|^homepage = .*|homepage = "https://github.com/genai-rs/langfuse-client-base"|' "$BASE_CLIENT_DIR/Cargo.toml"
+sed -i.bak 's|^documentation = .*|documentation = "https://docs.rs/langfuse-client-base"|' "$BASE_CLIENT_DIR/Cargo.toml"
+
+# Add clippy lints configuration if not present
+if ! grep -q "\[lints.clippy\]" "$BASE_CLIENT_DIR/Cargo.toml"; then
+    cat >> "$BASE_CLIENT_DIR/Cargo.toml" << 'EOF'
+
+[lints.clippy]
+# Allow all clippy warnings for generated code
+all = "allow"
+pedantic = "allow"
+restriction = "allow"
+nursery = "allow"
+cargo = "allow"
+EOF
+fi
+
+# Clean up backup files
+rm -f "$BASE_CLIENT_DIR/Cargo.toml.bak"
 
 # Format the generated code
 echo "🎨 Formatting generated code..."
