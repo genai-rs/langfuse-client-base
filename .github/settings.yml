@@ -97,9 +97,6 @@ labels:
     color: 00FF00
     description: Release-related PR
   
-  - name: skip-ci
-    color: 00FF00
-    description: Skip CI status checks for this PR
   
   - name: ci
     color: FFFF00
