@@ -24,6 +24,26 @@ jobs:
       pull-requests: read
     
     steps:
+      - name: Debug - Log event details
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('=== DEBUG: Event Information ===');
+            console.log('Event name:', context.eventName);
+            console.log('Event action:', context.payload.action);
+            
+            if (context.eventName === 'pull_request') {
+              console.log('PR number:', context.payload.pull_request.number);
+              console.log('PR labels:', context.payload.pull_request.labels.map(l => l.name));
+              console.log('Has skip-ci label:', context.payload.pull_request.labels.some(l => l.name === 'skip-ci'));
+              console.log('PR created at:', context.payload.pull_request.created_at);
+              console.log('PR updated at:', context.payload.pull_request.updated_at);
+            } else if (context.eventName === 'workflow_dispatch') {
+              console.log('Manual dispatch for PR:', ${{ github.event.inputs.pr_number || 'undefined' }});
+            }
+            
+            console.log('=== END DEBUG ===');
+            
       - name: Get PR information
         id: pr-info
         uses: actions/github-script@v7
