@@ -1,9 +1,8 @@
 # Configuration for release-plz
 # https://release-plz.ieni.dev/docs/config
 
-[workspace]
 # Enable changelog generation
-changelog_update = true
+changelog_update = false  # No changelog for generated code
 
 # Enable git releases and tags
 git_release_enable = true
@@ -14,9 +13,5 @@ pr_labels = ["release"]
 pr_draft = false
 pr_name = "chore: release version {{version}}"
 
-# Package-specific configuration
-[[package]]
-name = "langfuse-client-base"
-# This is auto-generated, so we might want to handle it specially
-changelog_update = false
+# Publishing
 publish = true

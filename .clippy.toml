@@ -1,4 +1,4 @@
-# Clippy configuration for the workspace
+# Clippy configuration for generated code
 
 # Allow generated code to have more relaxed linting rules
 allow-dbg-in-tests = true
