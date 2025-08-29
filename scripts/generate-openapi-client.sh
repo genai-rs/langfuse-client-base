@@ -5,7 +5,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-BASE_CLIENT_DIR="$PROJECT_ROOT/langfuse-client-base"
+BASE_CLIENT_DIR="$PROJECT_ROOT"
 OPENAPI_URL="https://cloud.langfuse.com/generated/api/openapi.yml"
 OPENAPI_FILE="$SCRIPT_DIR/openapi.yml"
 

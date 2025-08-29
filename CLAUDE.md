@@ -2,6 +2,13 @@
 
 This file contains important instructions and context for Claude when working on this project.
 
+## Repository Context
+
+This is the **langfuse-client-base** repository - an auto-generated OpenAPI client for Langfuse.
+
+- **Generated Code**: All code in `src/` is auto-generated. Do not edit directly.
+- **Ergonomic Wrapper**: For the high-level API, see [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic)
+
 ## Development Workflow
 
 ### Git Workflow
@@ -34,115 +41,48 @@ This file contains important instructions and context for Claude when working on
   - `docs:` for documentation only
   - `chore:` for maintenance tasks
   - `test:` for test additions/changes
-- Include the co-authored-by trailer:
-  ```
-  🤖 Generated with Claude Code
-  
-  Co-Authored-By: Claude <noreply@anthropic.com>
-  ```
 
-## Project Structure
+## Code Generation
 
-### Crates
-- `langfuse-client-base/` - Auto-generated OpenAPI client (do not edit directly)
-- `langfuse-ergonomic/` - User-friendly wrapper with builder patterns
+### Regenerating the Client
 
-### Important Files
-- `scripts/generate-openapi-client.sh` - Regenerates the OpenAPI client
-- `release-plz.toml` - Release automation configuration
-- `.env` - Contains Langfuse API credentials (never commit this file)
+To regenerate the client from the latest OpenAPI specification:
 
-## API Credentials
-
-The project uses environment variables for Langfuse authentication:
-- `LANGFUSE_PUBLIC_KEY` - Public API key
-- `LANGFUSE_SECRET_KEY` - Secret API key  
-- `LANGFUSE_HOST` - API endpoint (defaults to https://cloud.langfuse.com)
-
-## Testing
-
-### Running Examples
-Always test examples with real credentials before committing:
 ```bash
-cd langfuse-ergonomic
-cargo run --example test_trace
-cargo run --example basic_trace
-cargo run --example trace_with_metadata
-cargo run --example multiple_traces
+./scripts/generate-openapi-client.sh
 ```
 
-### CI/CD
-- GitHub Actions runs on every push and PR
-- Release-plz creates automated release PRs
-- Packages are published to crates.io on release
-
-## Current Implementation Status
-
-### Implemented ✅
-- Basic trace creation with builder pattern
-- Environment-based configuration
-- Trace metadata, tags, input/output
-- Session and user tracking
-
-### Not Yet Implemented ❌
-- Observations (spans, generations, events)
-- Scoring system (numeric, binary, categorical)
-- Fetching existing traces
-- Batch operations
-- Dataset management
-- Prompt management
-
-## Common Tasks
-
-### Adding a New Example
-1. Create the example file in `langfuse-ergonomic/examples/`
-2. Add entry to `langfuse-ergonomic/Cargo.toml`:
-   ```toml
-   [[example]]
-   name = "your_example"
-   path = "examples/your_example.rs"
-   ```
-3. Test the example
-4. Update README with the new example
-
-### Updating Documentation
-- Keep README accurate - only document implemented features
-- Mark unimplemented features as "Planned"
-- Test all code examples in documentation
+**Important**: The generation script:
+1. Downloads the latest OpenAPI spec
+2. Backs up the custom Cargo.toml
+3. Generates the client
+4. Restores the custom Cargo.toml
+5. Formats the generated code
 
 ### Handling Generated Code Issues
-- Clippy warnings in generated code are suppressed via `langfuse-client-base/Cargo.toml`
+
+- Clippy warnings in generated code are suppressed via Cargo.toml:
+  ```toml
+  [lints.clippy]
+  all = "allow"
+  ```
 - Formatting is automatically applied after generation
-- The generation script preserves our custom Cargo.toml
+- The custom Cargo.toml is preserved across regenerations
+
+## CI/CD
+
+- GitHub Actions runs on every push and PR
+- release-plz creates automated release PRs
+- Packages are published to crates.io on release
 
 ## Important Notes
 
-1. **Generated Code**: The `langfuse-client-base` crate is auto-generated. Don't edit it directly.
+1. **Generated Code**: All code in `src/` is auto-generated. Don't edit it directly.
 2. **Token Scopes**: crates.io tokens must have the pattern `langfuse-*` for publishing
 3. **Documentation**: docs.rs builds documentation automatically after crates.io publish
-4. **Examples**: All examples must be tested with real API credentials before committing
-
-## Useful Commands
-
-```bash
-# Initialize development environment
-just init
-
-# Generate OpenAPI client
-just generate
-
-# Run all checks
-just check
-
-# Create a release (via PR)
-just release
-
-# View all available commands
-just --list
-```
 
 ## Repository Links
-- GitHub: https://github.com/timvw/langfuse-rs
-- crates.io: https://crates.io/crates/langfuse-ergonomic
-- docs.rs: https://docs.rs/langfuse-ergonomic
+- GitHub: https://github.com/genai-rs/langfuse-client-base
+- crates.io: https://crates.io/crates/langfuse-client-base
+- docs.rs: https://docs.rs/langfuse-client-base
 - Langfuse API docs: https://langfuse.com/docs/api
