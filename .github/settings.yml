@@ -5,7 +5,7 @@
 repository:
   # Basic repository settings
   name: langfuse-client-base
-  description: Auto-generated Rust client for Langfuse API from OpenAPI specification
+  description: Auto-generated Rust client for Langfuse API from OpenAPI specification (v0.2.1)
   homepage: https://docs.rs/langfuse-client-base
   topics:
     - langfuse
