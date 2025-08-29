@@ -104,6 +104,10 @@ labels:
   - name: ci
     color: FFFF00
     description: Continuous Integration
+  
+  - name: approved
+    color: 0E8A16
+    description: Approved for merge (manual approval)
 
 # Collaborators and permissions
 # Note: This section requires organization permissions
