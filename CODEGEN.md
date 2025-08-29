@@ -14,11 +14,14 @@ This repository contains auto-generated Rust client code from the Langfuse OpenA
 # Generate using local environment
 ./scripts/generate-openapi-client.sh
 
+# Generate using Docker (reproducible builds)
+USE_DOCKER=true ./scripts/generate-openapi-client.sh
+
 # Update OpenAPI spec and generate
 UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 
-# Generate using Docker (reproducible)
-./scripts/gen-in-docker.sh
+# Combine: Update spec and use Docker
+UPDATE_SPEC=true USE_DOCKER=true ./scripts/generate-openapi-client.sh
 ```
 
 ## Pinned Versions
@@ -42,8 +45,8 @@ UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 For reproducible builds using the official OpenAPI Generator image:
 
 ```bash
-# Generate code using Docker
-./scripts/gen-in-docker.sh
+# Use Docker via the main script
+USE_DOCKER=true ./scripts/generate-openapi-client.sh
 
 # Or run directly:
 docker run --rm \
