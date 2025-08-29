@@ -36,9 +36,11 @@ jobs:
           chmod +x ./scripts/generate-openapi-client.sh
 
       - name: Generate client
+        env:
+          UPDATE_SPEC: true
         run: |
           # Run the generation script which:
-          # 1. Downloads latest OpenAPI spec
+          # 1. Downloads latest OpenAPI spec (only if changed)
           # 2. Backs up custom Cargo.toml
           # 3. Generates the client
           # 4. Cleans up unwanted files
@@ -92,12 +94,14 @@ jobs:
             src/
             Cargo.toml
             docs/
+            openapi.yml
           body: |
             ## 🤖 Auto-generated Update
             
             This PR updates the generated client based on the latest OpenAPI specification from Langfuse.
             
             ### Changes
+            - Updated OpenAPI specification (if changed)
             - Updated generated code in `src/` from latest OpenAPI spec
             - Applied automatic formatting
             

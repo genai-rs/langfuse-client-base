@@ -7,7 +7,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 BASE_CLIENT_DIR="$PROJECT_ROOT"
 OPENAPI_URL="https://cloud.langfuse.com/generated/api/openapi.yml"
-OPENAPI_FILE="$SCRIPT_DIR/openapi.yml"
+OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
+
+# Check if UPDATE_SPEC environment variable is set (for nightly workflow)
+UPDATE_SPEC="${UPDATE_SPEC:-false}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
@@ -18,9 +21,32 @@ if ! command -v openapi-generator-cli &> /dev/null; then
     npm install -g @openapitools/openapi-generator-cli
 fi
 
-# Download the latest OpenAPI specification
-echo "📥 Downloading OpenAPI specification..."
-curl -o "$OPENAPI_FILE" "$OPENAPI_URL"
+# Download or use local OpenAPI specification
+if [ "$UPDATE_SPEC" = "true" ]; then
+    echo "📥 Downloading latest OpenAPI specification..."
+    curl -o "$OPENAPI_FILE.new" "$OPENAPI_URL"
+    
+    # Check if spec has changed
+    if [ -f "$OPENAPI_FILE" ]; then
+        if diff -q "$OPENAPI_FILE" "$OPENAPI_FILE.new" > /dev/null; then
+            echo "✅ OpenAPI spec unchanged, no update needed"
+            rm "$OPENAPI_FILE.new"
+            exit 0
+        else
+            echo "📝 OpenAPI spec has changed, updating..."
+            mv "$OPENAPI_FILE.new" "$OPENAPI_FILE"
+        fi
+    else
+        mv "$OPENAPI_FILE.new" "$OPENAPI_FILE"
+    fi
+else
+    if [ ! -f "$OPENAPI_FILE" ]; then
+        echo "❌ Local OpenAPI spec not found at $OPENAPI_FILE"
+        echo "   Run with UPDATE_SPEC=true to download it"
+        exit 1
+    fi
+    echo "📝 Using local OpenAPI specification from $OPENAPI_FILE"
+fi
 
 # Backup our custom files before generation
 echo "📝 Backing up custom files..."
