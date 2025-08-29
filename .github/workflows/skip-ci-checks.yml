@@ -1,4 +1,4 @@
-name: Release-plz Status Checks
+name: Skip CI Status Checks
 
 on:
   pull_request:
@@ -6,9 +6,9 @@ on:
 
 jobs:
   bypass-checks:
-    name: Mark status checks as successful for release-plz PRs
+    name: Mark status checks as successful for skip-ci PRs
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'release-plz')
+    if: contains(github.event.pull_request.labels.*.name, 'skip-ci')
     
     permissions:
       checks: write
@@ -35,8 +35,8 @@ jobs:
                 status: 'completed',
                 conclusion: 'success',
                 output: {
-                  title: 'Bypassed for release-plz PR',
-                  summary: 'Status check bypassed for release-plz labeled PR'
+                  title: 'Bypassed for skip-ci PR',
+                  summary: 'Status check bypassed for skip-ci labeled PR'
                 }
               });
             }
@@ -45,7 +45,7 @@ jobs:
     name: Auto-merge when approved label is added
     runs-on: ubuntu-latest
     if: |
-      contains(github.event.pull_request.labels.*.name, 'release-plz') &&
+      contains(github.event.pull_request.labels.*.name, 'skip-ci') &&
       contains(github.event.pull_request.labels.*.name, 'approved') &&
       github.event.action == 'labeled' &&
       github.event.label.name == 'approved'
@@ -55,7 +55,7 @@ jobs:
       pull-requests: write
     
     steps:
-      - name: Auto-merge approved release-plz PR
+      - name: Auto-merge approved skip-ci PR
         run: |
           # Wait a moment for check runs to be created
           sleep 10
