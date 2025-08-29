@@ -1,8 +1,9 @@
 # Configuration for release-plz
 # https://release-plz.ieni.dev/docs/config
 
-# Enable changelog generation
-changelog_update = false  # No changelog for generated code
+[workspace]
+# Disable changelog generation for generated code
+changelog_update = false
 
 # Enable git releases and tags
 git_release_enable = true
