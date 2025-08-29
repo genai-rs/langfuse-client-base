@@ -19,8 +19,7 @@ Cargo.lock
 .DS_Store
 Thumbs.db
 
-# OpenAPI generation artifacts
-scripts/openapi.yml
+# OpenAPI generation artifacts  
 langfuse-client-base/.openapi-generator/
 
 # Test coverage
