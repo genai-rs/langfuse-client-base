@@ -27,14 +27,47 @@ jobs:
           npm install -g @openapitools/openapi-generator-cli
           openapi-generator-cli version
 
+      - name: Install curl (for downloading OpenAPI spec)
+        run: |
+          which curl || sudo apt-get update && sudo apt-get install -y curl
+
+      - name: Make generation script executable
+        run: |
+          chmod +x ./scripts/generate-openapi-client.sh
+
       - name: Generate client
         run: |
+          # Run the generation script which:
+          # 1. Downloads latest OpenAPI spec
+          # 2. Backs up custom Cargo.toml
+          # 3. Generates the client
+          # 4. Cleans up unwanted files
+          # 5. Restores custom Cargo.toml
+          # 6. Formats the code
           ./scripts/generate-openapi-client.sh
+
+      - name: Verify generation succeeded
+        run: |
+          # Ensure critical files exist
+          test -f src/lib.rs || (echo "Error: src/lib.rs not found after generation" && exit 1)
+          test -f Cargo.toml || (echo "Error: Cargo.toml not found after generation" && exit 1)
+          
+          # Verify the code compiles
+          cargo check --all-features
 
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+          # Check if there are any changes to commit
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            # Show what changed for the PR description
+            git diff --stat
+          fi
 
       - name: Create Pull Request
         if: steps.check_changes.outputs.has_changes == 'true'
