@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.3...v0.2.4) - 2025-08-30
+
+### Added
+
+- enhance security hygiene
+- add comprehensive CI hardening
+- add deterministic codegen with Docker support
+
+### Fixed
+
+- correct TruffleHog configuration for push events
+- add GITLEAKS_LICENSE to secrets scan workflow
+- update deny.toml to version 2 format and fix license allowlist
+- remove unused dev-dependencies
+- ensure all code is formatted after generation
+- formatting issues
+- deduplicate security checks between CI and Security workflows
+- update nightly workflow to use Docker instead of npm
+
+### Other
+
+- improve Renovate configuration organization
+- remove unnecessary actions-permissions.md
+- update README generation section to reflect current script
+- improve README with clear guidance and platform notes
+- add caching to speed up CI
+- remove CODEGEN.md as requested
+- always use Docker for generation, remove npm option
+- unify generation script with Docker support
+- use official OpenAPI Generator Docker image
+
 ## [0.2.3](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.2...v0.2.3) - 2025-08-29
 
 ### Other
