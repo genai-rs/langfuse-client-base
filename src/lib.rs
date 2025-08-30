@@ -1,3 +1,4 @@
+#![doc = include_str!("../README.md")]
 #![allow(unused_imports)]
 #![allow(clippy::too_many_arguments)]
 
