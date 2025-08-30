@@ -11,7 +11,8 @@ OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
 
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
-OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.10.0}"
+# Keep in sync with openapitools.json. You can override via env.
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.15.0}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
@@ -146,6 +147,21 @@ PYTHON_SCRIPT
     
     # Clean up
     rm -f "$BASE_CLIENT_DIR/Cargo.toml.generated"
+fi
+
+# Inject crate-level docs from README into lib.rs for docs.rs discoverability
+echo "📚 Injecting crate-level docs into src/lib.rs..."
+if [ -f "$BASE_CLIENT_DIR/src/lib.rs" ]; then
+    # Only inject if not already present
+    if ! grep -q "#!\[doc = include_str!\(\"../README.md\"\)\]" "$BASE_CLIENT_DIR/src/lib.rs"; then
+        tmpfile=$(mktemp)
+        {
+            echo "#![doc = include_str!(\"../README.md\")]";
+            echo;
+            cat "$BASE_CLIENT_DIR/src/lib.rs";
+        } > "$tmpfile"
+        mv "$tmpfile" "$BASE_CLIENT_DIR/src/lib.rs"
+    fi
 fi
 
 # Format all code including examples
