@@ -25,7 +25,8 @@
   // ========================================
   "enabledManagers": [
     "cargo",          // Rust dependencies
-    "github-actions"  // GitHub Actions versions
+    "github-actions", // GitHub Actions versions
+    "regex"           // Custom regex for Docker tags
   ],
   
   // ========================================
@@ -42,6 +43,28 @@
   "ignorePaths": [
     "src/**/*.rs",    // All generated Rust source
     "docs/**"         // Generated documentation
+  ],
+  
+  // ========================================
+  // REGEX MANAGERS (Custom version detection)
+  // ========================================
+  "regexManagers": [
+    {
+      "description": "Update OpenAPI Generator Docker tag",
+      "fileMatch": [
+        "^scripts/generate-openapi-client\\.sh$",
+        "^openapitools\\.json$"
+      ],
+      "matchStrings": [
+        // Match in shell script: OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.15.0}"
+        "OPENAPI_GENERATOR_VERSION=\"\\${OPENAPI_GENERATOR_VERSION:-(?<currentValue>[\\d\\.]+)}\"",
+        // Match in openapitools.json: "version": "7.15.0"
+        "\"version\":\\s*\"(?<currentValue>[\\d\\.]+)\""
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "openapitools/openapi-generator-cli",
+      "versioningTemplate": "docker"
+    }
   ],
   
   // ========================================
@@ -109,6 +132,24 @@
       "matchDepTypes": ["devDependencies"],
       "automerge": true,
       "labels": ["dependencies", "dev"]
+    },
+    
+    // === OpenAPI Generator ===
+    {
+      "description": "OpenAPI Generator updates - manual review",
+      "matchPackageNames": ["openapitools/openapi-generator-cli"],
+      "labels": ["dependencies", "openapi-generator"],
+      "automerge": false,
+      "assignees": ["timvw"],
+      "schedule": ["after 2am and before 6am on monday"],
+      "prBodyNotes": [
+        "⚠️ **OpenAPI Generator Update**",
+        "This updates the OpenAPI Generator version used to generate the client code.",
+        "After merging, you may need to regenerate the client with:",
+        "```bash",
+        "./scripts/generate-openapi-client.sh",
+        "```"
+      ]
     }
   ],
   
