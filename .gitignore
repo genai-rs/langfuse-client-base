@@ -20,7 +20,7 @@ Cargo.lock
 Thumbs.db
 
 # OpenAPI generation artifacts
-langfuse-client-base/.openapi-generator/
+.openapi-generator/
 
 # Test coverage
 tarpaulin-report.html
