@@ -1,12 +1,17 @@
-name: Security (Comprehensive)
+name: Security
 
 on:
   push:
-    branches: [main]  # Only on main, not PRs (CI handles that)
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   schedule:
-    # Run comprehensive security checks daily at 2 AM UTC
-    - cron: '0 2 * * *'
-  workflow_dispatch:  # Allow manual triggering
+    - cron: '0 0 * * 1'  # Weekly on Monday at midnight UTC
+
+permissions:
+  contents: read
+  checks: write
+  security-events: write
 
 jobs:
   audit:
@@ -16,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Generate Cargo.lock
+      - name: Generate Cargo.lock for audit
         run: cargo generate-lockfile
         
       - name: Run cargo audit
@@ -24,41 +29,36 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  deny:
-    name: Cargo Deny
+  trufflehog:
+    name: TruffleHog Secrets Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-        
-      - name: Install cargo-deny
-        run: cargo install cargo-deny --locked
-        
-      - name: Run cargo deny
-        run: cargo deny check
-
-  codeql:
-    name: CodeQL Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-      
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
         with:
-          languages: 'rust'
-          
-      - name: Build
-        run: cargo build --verbose
-        
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+          fetch-depth: 0  # Fetch all history for all branches
+      
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          # For PRs: scan from base to head
+          # For pushes: scan the commits in the push
+          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          head: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
+          extra_args: --only-verified
+
+  gitleaks:
+    name: Gitleaks Secrets Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}

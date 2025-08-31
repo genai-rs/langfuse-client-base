@@ -8,15 +8,13 @@ on:
 
 permissions:
   contents: read
-  checks: write
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  # Verify the generated code compiles
-  build:
-    name: Build (${{ matrix.rust }})
+  test:
+    name: Test (${{ matrix.rust }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,6 +27,7 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
+          components: rustfmt, clippy
           
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
@@ -39,26 +38,13 @@ jobs:
       - name: Build documentation
         run: cargo doc --no-deps --all-features
         
-      - name: Run clippy (strict)
-        if: matrix.rust == 'stable'
-        run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: Run tests
+        run: cargo test --verbose
         
       - name: Check formatting
         if: matrix.rust == 'stable'
         run: cargo fmt --all -- --check
-
-  # Security audit - quick check for PRs
-  security:
-    name: Security Audit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
         
-      - name: Generate Cargo.lock for audit
-        run: cargo generate-lockfile
-        
-      - name: Run cargo audit
-        uses: rustsec/audit-check@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run clippy
+        if: matrix.rust == 'stable'
+        run: cargo clippy --all-targets --all-features -- -D warnings
