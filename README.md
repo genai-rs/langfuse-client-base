@@ -59,7 +59,7 @@ let config = Configuration {
 
 ### Using Environment Variables
 
-```rust
+```rust,no_run
 use std::env;
 use langfuse_client_base::apis::configuration::Configuration;
 
@@ -78,6 +78,8 @@ let config = Configuration {
 For self-hosted Langfuse instances:
 
 ```rust
+use langfuse_client_base::apis::configuration::Configuration;
+
 let config = Configuration {
     base_path: "https://your-domain.com/langfuse".to_string(),  // Custom base path
     basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".to_string()))),
