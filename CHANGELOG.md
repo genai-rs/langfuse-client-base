@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.6...v0.2.7) - 2025-08-31
+
+### Added
+
+- reorganize GitHub workflows by tool
+
+### Fixed
+
+- fix doc test failures in README examples
+- update branch protection rules for new job names
+
 ## [0.2.6](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.5...v0.2.6) - 2025-08-30
 
 ### Other
