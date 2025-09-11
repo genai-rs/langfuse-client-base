@@ -7,13 +7,7 @@ repository:
   name: langfuse-client-base
   description: Auto-generated Rust client for Langfuse API from OpenAPI specification
   homepage: https://docs.rs/langfuse-client-base
-  topics:
-    - langfuse
-    - openapi
-    - rust
-    - api-client
-    - llm
-    - observability
+  topics: "langfuse, openapi, rust, api-client, llm, observability"
   
   # Repository features
   has_issues: true
@@ -30,7 +24,6 @@ repository:
   allow_rebase_merge: true
   allow_auto_merge: false
   delete_branch_on_merge: true
-  allow_update_branch: true
   
   # Security settings
   enable_automated_security_fixes: true
@@ -42,10 +35,12 @@ branches:
     protection:
       # Require PR reviews
       required_pull_request_reviews:
-        required_approving_review_count: 0  # Set to 1 or more for production
+        required_approving_review_count: 1
         dismiss_stale_reviews: true
         require_code_owner_reviews: false
-        dismissal_restrictions: {}
+        dismissal_restrictions:
+          users: []
+          teams: []
       
       # Require status checks
       required_status_checks:
