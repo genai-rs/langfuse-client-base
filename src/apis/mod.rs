@@ -114,6 +114,7 @@ impl From<&str> for ContentType {
 }
 
 pub mod annotation_queues_api;
+pub mod blob_storage_integrations_api;
 pub mod comments_api;
 pub mod dataset_items_api;
 pub mod dataset_run_items_api;
