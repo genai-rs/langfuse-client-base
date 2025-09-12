@@ -10,7 +10,7 @@ git_release_enable = true
 git_tag_enable = true
 
 # PR settings
-pr_labels = ["release", "automated", "bot"]
+pr_labels = ["release", "automated"]
 pr_draft = false
 pr_name = "chore: release version {{version}}"
 

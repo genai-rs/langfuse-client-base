@@ -98,7 +98,6 @@ jobs:
           labels: |
             dependencies
             automated
-            bot
 
   keepalive:
     runs-on: ubuntu-latest
