@@ -46,10 +46,10 @@ branches:
       required_status_checks:
         strict: true  # Require branches to be up to date
         contexts:
-          - "CI / Test (stable)"
-          - "CI / Test (beta)"
-          - "CI / Test (1.82.0)"
-          - "Security / Cargo Audit"
+          - "test / Test (stable)"
+          - "test / Test (beta)"
+          - "test / Test (1.82.0)"
+          - "audit / Cargo Audit"
       
       # Enforce for admins
       enforce_admins: false
