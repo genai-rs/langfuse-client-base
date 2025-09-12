@@ -22,10 +22,10 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      # Prefer short-lived GitHub App token if available; fall back to GH_BOT_TOKEN
+      # Prefer short-lived GitHub App token. Try to mint it; ignore failure if app secrets are absent.
       - name: Create GitHub App token (optional)
         id: app-token
-        if: ${{ secrets.BOT_APP_ID != '' && secrets.BOT_PRIVATE_KEY != '' }}
+        continue-on-error: true
         uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
@@ -69,10 +69,11 @@ jobs:
             git diff --stat
           fi
 
-      - name: Create or Update Pull Request
+      - name: Create or Update Pull Request (App)
+        if: ${{ steps.app-token.outputs.token != '' }}
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ steps.app-token.outputs.token || secrets.GH_BOT_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           commit-message: 'chore: update generated client from latest OpenAPI spec'
           title: 'chore: update generated client from latest OpenAPI spec'
           base: main
@@ -108,10 +109,78 @@ jobs:
             dependencies
             automated
 
-      - name: Update existing PR branch from main
+      - name: Create or Update Pull Request (PAT)
+        if: ${{ steps.app-token.outputs.token == '' && secrets.GH_BOT_TOKEN != '' }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_BOT_TOKEN }}
+          commit-message: 'chore: update generated client from latest OpenAPI spec'
+          title: 'chore: update generated client from latest OpenAPI spec'
+          base: main
+          add-paths: |
+            src/
+            Cargo.toml
+            docs/
+            openapi.yml
+          body: |
+            ## 🤖 Auto-generated Update
+            
+            This PR updates the generated client based on the latest OpenAPI specification from Langfuse.
+            
+            ### Changes
+            - Updated OpenAPI specification (if changed)
+            - Updated generated code in `src/` from latest OpenAPI spec
+            - Applied automatic formatting
+            
+            ### Validation
+            CI checks will run on this PR (build, tests, clippy, fmt).
+            
+            To verify locally:
+            - cargo build --all-features
+            - cargo clippy --all-features --all-targets -- -D warnings
+            - cargo test --all
+            
+            ---
+            *This PR was automatically created by the nightly generation workflow.*
+          branch: automated/generate-client
+          delete-branch: true
+          labels: |
+            dependencies
+            automated
+
+      - name: Fail when no token available
+        if: ${{ steps.app-token.outputs.token == '' && secrets.GH_BOT_TOKEN == '' }}
+        run: |
+          echo "No GitHub App token and no GH_BOT_TOKEN secret available to create PR." >&2
+          exit 1
+
+      - name: Update existing PR branch from main (App)
+        if: ${{ steps.app-token.outputs.token != '' }}
         uses: actions/github-script@v7
         with:
-          github-token: ${{ steps.app-token.outputs.token || secrets.GH_BOT_TOKEN }}
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const head = 'automated/generate-client';
+            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main', head: `${owner}:${head}` });
+            if (!prs.length) {
+              core.info('No open PR for automated/generate-client.');
+              return;
+            }
+            const number = prs[0].number;
+            core.info(`Updating PR #${number} from base main...`);
+            try {
+              await github.rest.pulls.updateBranch({ owner, repo, pull_number: number });
+              core.info('Branch update triggered.');
+            } catch (e) {
+              core.warning(`Update not needed or failed: ${e.message}`);
+            }
+
+      - name: Update existing PR branch from main (PAT)
+        if: ${{ steps.app-token.outputs.token == '' && secrets.GH_BOT_TOKEN != '' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_BOT_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
             const head = 'automated/generate-client';
