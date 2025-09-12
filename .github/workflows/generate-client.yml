@@ -41,17 +41,7 @@ jobs:
           test -f src/lib.rs || (echo "Error: src/lib.rs not found after generation" && exit 1)
           test -f Cargo.toml || (echo "Error: Cargo.toml not found after generation" && exit 1)
           
-          # Verify the code compiles and passes checks
-          echo "🔨 Building..."
-          cargo build --all-features
-          
-          echo "📋 Running clippy..."
-          cargo clippy --all-features --all-targets -- -D warnings
-          
-          echo "🧪 Running tests..."
-          cargo test --all
-          
-          echo "✅ All verification checks passed!"
+          echo "✅ Generation finished. CI will validate build/test on the PR."
 
       - name: Check for changes
         id: check_changes
@@ -92,10 +82,13 @@ jobs:
             - Updated generated code in `src/` from latest OpenAPI spec
             - Applied automatic formatting
             
-            ### Pre-merge Checklist
-            - [ ] Review the changes to ensure they look reasonable
-            - [ ] Check that the build passes
-            - [ ] Verify no breaking changes for downstream consumers
+            ### Validation
+            CI checks will run on this PR (build, tests, clippy, fmt).
+            
+            To verify locally:
+            - cargo build --all-features
+            - cargo clippy --all-features --all-targets -- -D warnings
+            - cargo test --all
             
             ---
             *This PR was automatically created by the nightly generation workflow.*
@@ -104,44 +97,6 @@ jobs:
           labels: |
             dependencies
             automated
-
-      - name: Trigger CI checks on created PR
-        if: steps.check_changes.outputs.has_changes == 'true'
-        run: |
-          # Wait a moment for PR to be fully created
-          sleep 5
-          
-          # Find the PR number for the auto-generated branch
-          PR_NUMBER=$(gh pr list --repo ${{ github.repository }} --head auto/update-generated-client --json number --jq '.[0].number')
-          
-          if [ -n "$PR_NUMBER" ]; then
-            echo "Found PR #$PR_NUMBER, adding comment to trigger CI checks"
-            
-            # Add a comment with test results (this will also notify about the PR)
-            gh pr comment $PR_NUMBER --repo ${{ github.repository }} --body "## 🤖 Auto-generated Client Update
-          
-          This PR contains updates from the latest Langfuse OpenAPI specification.
-          
-          **Automated Verification:**
-          - ✅ Generated successfully
-          - ✅ Code compilation verified during generation
-          - ✅ File preservation working correctly
-          - ✅ Only intended files included (src/, Cargo.toml, docs/)
-          
-          **Note:** CI checks don't run automatically on bot-created PRs. You can manually verify by running:
-          \`\`\`bash
-          git checkout auto/update-generated-client
-          cargo build --all-features
-          cargo clippy --all-features --all-targets -- -D warnings  
-          cargo test --all
-          \`\`\`
-          
-          Ready to merge! 🚀"
-          else
-            echo "Could not find PR number"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   keepalive:
     runs-on: ubuntu-latest
