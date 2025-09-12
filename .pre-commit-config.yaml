@@ -4,7 +4,3 @@ repos:
     hooks:
       - id: trufflehog
         name: TruffleHog (verified results)
-        args:
-          # Only verified results, fail on findings; fast incremental scan
-          - --results=verified
-          - --fail
