@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.6...v0.2.7) - 2025-09-12
+
+### Added
+
+- reorganize GitHub workflows by tool
+
+### Fixed
+
+- fix doc test failures in README examples
+- update branch protection rules for new job names
+
+### Other
+
+- *(bot-prs)* set job names to match required status contexts
+- *(bot-prs)* skip gitleaks on pull_request_target (not supported)
+- *(bot-prs)* inline security jobs under CI workflow and remove separate security-bot-prs; fix failing run
+- *(security-bot-prs)* simplify condition to head ref match
+- *(generate)* lighten verification; rely on PR CI for build/test; update PR messaging
+- avoid double-running on auto/update-generated-client by skipping normal PR jobs
+- set required status contexts to job-based names (reusable workflows)
+- *(bot-prs)* trigger on app/github-actions + restrict to auto/update-generated-client
+- reuse common workflows; enable checks on bot PRs; align required status checks
+- require conversation resolution on main
+- fix topics format and branch protection (min supported) for Settings app
+
+### Security
+
+- remove PR-time TruffleHog; keep GH Secret Scanning + Push Protection and pre-commit
+- drop gitleaks; enable GH Secret Scanning + Push Protection; add pre-commit TruffleHog; require TruffleHog status
+
 ## [0.2.6](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.5...v0.2.6) - 2025-08-30
 
 ### Other
