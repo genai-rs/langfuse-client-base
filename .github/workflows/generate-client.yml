@@ -60,13 +60,14 @@ jobs:
             git diff --stat
           fi
 
-      - name: Create Pull Request
-        if: steps.check_changes.outputs.has_changes == 'true'
+      - name: Create or Update Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: update generated client from latest OpenAPI spec'
           title: 'chore: update generated client from latest OpenAPI spec'
+          base: main
+          update-branch: true
           add-paths: |
             src/
             Cargo.toml
