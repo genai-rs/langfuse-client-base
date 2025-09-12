@@ -28,6 +28,13 @@ repository:
   # Security settings
   enable_automated_security_fixes: true
   enable_vulnerability_alerts: true
+  
+  # Security and analysis features
+  security_and_analysis:
+    secret_scanning:
+      status: enabled
+    secret_scanning_push_protection:
+      status: enabled
 
 # Branch protection rules
 branches:
@@ -50,6 +57,7 @@ branches:
           - "test / Test (beta)"
           - "test / Test (1.82.0)"
           - "audit / Cargo Audit"
+          - "trufflehog / TruffleHog Secrets Scan"
       
       # Enforce for admins
       enforce_admins: false
