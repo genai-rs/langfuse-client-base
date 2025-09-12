@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   security:
-    if: (startsWith(github.event.pull_request.user.login, 'app/') || github.event.pull_request.user.login == 'github-actions[bot]') && github.event.pull_request.head.ref == 'auto/update-generated-client'
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
     uses: ./.github/workflows/security-common.yml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
