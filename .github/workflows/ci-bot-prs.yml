@@ -57,8 +57,8 @@ jobs:
           extra_args: --only-verified
 
   gitleaks:
-    # Only run for bot-created update PRs
-    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
+    # Gitleaks does not support pull_request_target, skip for bot PRs
+    if: github.event_name != 'pull_request_target' && github.event.pull_request.head.ref == 'auto/update-generated-client'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR head (full history)
