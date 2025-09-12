@@ -6,11 +6,16 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: -C debuginfo=0
 
 jobs:
   test:
@@ -27,6 +32,12 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           components: rustfmt, clippy
+      - name: Enable sccache
+        uses: mozilla-actions/sccache-action@v0.0.5
+      - name: Start sccache locally (no GHA cache)
+        run: |
+          echo "SCCACHE_GHA_ENABLED=off" >> $GITHUB_ENV
+          sccache --start-server && echo "RUSTC_WRAPPER=sccache" >> $GITHUB_ENV || echo "sccache unavailable, proceeding without it"
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
       - name: Build
