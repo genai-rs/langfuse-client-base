@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   test:
-    # Only run for bot-created PRs for nightly client or release-plz
-    if: startsWith(github.event.pull_request.user.login, 'app/') && (github.event.pull_request.head.ref == 'auto/update-generated-client' || startsWith(github.event.pull_request.head.ref, 'release-plz-'))
+    # Run for nightly client branch or release-plz branches
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client' || startsWith(github.event.pull_request.head.ref, 'release-plz-')
     uses: ./.github/workflows/ci-common.yml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
@@ -19,8 +19,8 @@ jobs:
 
   audit:
     name: Cargo Audit
-    # Only run for bot-created PRs for nightly client or release-plz
-    if: startsWith(github.event.pull_request.user.login, 'app/') && (github.event.pull_request.head.ref == 'auto/update-generated-client' || startsWith(github.event.pull_request.head.ref, 'release-plz-'))
+    # Run for nightly client branch or release-plz branches
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client' || startsWith(github.event.pull_request.head.ref, 'release-plz-')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR head
