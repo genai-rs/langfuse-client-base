@@ -1,0 +1,61 @@
+name: Update Automated PRs
+
+on:
+  pull_request_target:
+    branches: [ main ]
+    types: [opened, synchronize, reopened, labeled]
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-on-pr-event:
+    if: github.event_name == 'pull_request_target' && startsWith(github.event.pull_request.head.ref, 'automated/') && contains(github.event.pull_request.labels.*.name, 'automated') && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge main into PR branch
+        uses: peter-evans/merge-branch@v4
+        with:
+          head: ${{ github.event.pull_request.head.ref }}
+          base: main
+          token: ${{ github.token }}
+          commit_message: 'chore: update branch with latest main'
+
+  discover-on-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      heads: ${{ steps.discover.outputs.heads }}
+    steps:
+      - name: Discover open automated PR heads
+        id: discover
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main' });
+            const automated = prs.filter(pr => pr.head && pr.head.ref && pr.head.ref.startsWith('automated/') && pr.head.repo && (pr.head.repo.full_name === `${owner}/${repo}`) && pr.labels.some(l => l.name === 'automated'));
+            const heads = automated.map(pr => pr.head.ref);
+            core.setOutput('heads', JSON.stringify(heads));
+
+  update-on-push:
+    if: github.event_name == 'push'
+    needs: discover-on-push
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        head: ${{ fromJson(needs.discover-on-push.outputs.heads) }}
+    steps:
+      - name: Merge main into PR branch
+        uses: peter-evans/merge-branch@v4
+        with:
+          head: ${{ matrix.head }}
+          base: main
+          token: ${{ github.token }}
+          commit_message: 'chore: update branch with latest main'
