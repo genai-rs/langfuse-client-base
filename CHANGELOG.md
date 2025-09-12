@@ -7,6 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.6...v0.2.7) - 2025-09-12
+
+### Added
+
+- reorganize GitHub workflows by tool
+
+### Fixed
+
+- fix doc test failures in README examples
+- update branch protection rules for new job names
+
+### Other
+
+- fix duplicate 'script' key in generate-client workflow
+- enforce App-only auth in generate-client and release-plz; remove PAT fallback
+- update required checks to consolidated names
+- inline reusable workflows into CI/Dependencies/Security and remove -common files
+- consolidate automated and regular CI; run audit in main CI; remove automated-only workflows
+- update generated client from latest OpenAPI spec
+- robust App/PAT selection without GITHUB_TOKEN; avoid secret refs in if; continue-on-error for app token step
+- remove GITHUB_TOKEN fallback to ensure PR events trigger via App/PAT only
+- use GitHub App token with fallback; ensure PR events trigger checks
+- *(generate)* remove unsupported update-branch input; update PR branch via pulls.updateBranch API
+- *(generate)* always run create-pull-request with base=main + update-branch=true; remove update-automated-prs workflow
+- update automated PR branches using pulls.updateBranch instead of merge-branch action
+- auto-update automated/* PR branches from main on PR events and push
+- *(security)* remove reserved GITHUB_TOKEN from reusable workflow_call; use github.token in cargo-audit
+- use github.head_ref in skip conditions to avoid push-event context errors
+- fix push-event condition by coalescing missing pull_request fields in if expressions
+- *(pre-commit)* drop trufflehog args; use upstream hook defaults
+- *(renovate)* use branchPrefix automated/renovate/ and add 'automated' label for CI routing
+- adopt automated/* + automated label routing; rename to CI/Dependencies (Automated PRs); set release-plz pr_branch_prefix; update nightly branch
+- align on single 'automated' label; remove 'bot' label usage
+- unify bot branch prefix (bot/*); route bot/release-plz/renovate PRs to bot CI; add labels
+- *(bot-prs)* trigger based on branch name only (release-plz*, auto/update-generated-client)
+- run bot PR checks for release-plz branches; skip normal CI/deps/security for release-plz to avoid duplicates
+- *(bot-prs)* set job names to match required status contexts
+- *(bot-prs)* skip gitleaks on pull_request_target (not supported)
+- *(bot-prs)* inline security jobs under CI workflow and remove separate security-bot-prs; fix failing run
+- *(security-bot-prs)* simplify condition to head ref match
+- *(generate)* lighten verification; rely on PR CI for build/test; update PR messaging
+- avoid double-running on auto/update-generated-client by skipping normal PR jobs
+- set required status contexts to job-based names (reusable workflows)
+- *(bot-prs)* trigger on app/github-actions + restrict to auto/update-generated-client
+- reuse common workflows; enable checks on bot PRs; align required status checks
+- require conversation resolution on main
+- fix topics format and branch protection (min supported) for Settings app
+
+### Security
+
+- schedule-only; keep cargo audit gating in CI
+- remove PR-time TruffleHog; keep GH Secret Scanning + Push Protection and pre-commit
+- drop gitleaks; enable GH Secret Scanning + Push Protection; add pre-commit TruffleHog; require TruffleHog status
+
 ## [0.2.6](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.5...v0.2.6) - 2025-08-30
 
 ### Other
