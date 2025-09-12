@@ -32,7 +32,10 @@
   // ========================================
   // PR CONFIGURATION
   // ========================================
-  "labels": ["dependencies"],
+  // Route Renovate PRs through automated CI by using
+  // a dedicated branch prefix and the `automated` label.
+  "branchPrefix": "automated/renovate/",
+  "labels": ["dependencies", "automated"],
   "commitMessagePrefix": "chore(deps):",
   "prBodyTemplate": "This PR updates dependencies. See the [Dependency Dashboard](../../issues) for details.",
   "rangeStrategy": "auto",
