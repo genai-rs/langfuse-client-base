@@ -11,7 +11,17 @@ permissions:
 
 jobs:
   test:
-    # Skip normal CI for automated/* PRs; automated workflow handles it
-    # Use github.head_ref which is empty on push and set on PRs
-    if: github.event_name != 'pull_request' || !startsWith(github.head_ref, 'automated/')
     uses: ./.github/workflows/ci-common.yml
+
+  audit:
+    name: Cargo Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Generate Cargo.lock for audit
+        run: cargo generate-lockfile
+      - name: Run cargo audit
+        uses: rustsec/audit-check@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
