@@ -17,13 +17,20 @@ jobs:
     if: github.event_name == 'pull_request_target' && startsWith(github.event.pull_request.head.ref, 'automated/') && contains(github.event.pull_request.labels.*.name, 'automated') && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - name: Merge main into PR branch
-        uses: peter-evans/merge-branch@v4
+      - name: Update PR branch from base
+        uses: actions/github-script@v7
         with:
-          head: ${{ github.event.pull_request.head.ref }}
-          base: main
-          token: ${{ github.token }}
-          commit_message: 'chore: update branch with latest main'
+          github-token: ${{ github.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            core.info(`Updating PR #${pr.number} branch ${pr.head.ref} from base ${pr.base.ref}`);
+            try {
+              await github.rest.pulls.updateBranch({ owner, repo, pull_number: pr.number });
+              core.info('Update triggered.');
+            } catch (e) {
+              core.warning(`Update failed or not needed: ${e.message}`);
+            }
 
   discover-on-push:
     if: github.event_name == 'push'
@@ -52,10 +59,23 @@ jobs:
       matrix:
         head: ${{ fromJson(needs.discover-on-push.outputs.heads) }}
     steps:
-      - name: Merge main into PR branch
-        uses: peter-evans/merge-branch@v4
+      - name: Update PR branch from base
+        uses: actions/github-script@v7
         with:
-          head: ${{ matrix.head }}
-          base: main
-          token: ${{ github.token }}
-          commit_message: 'chore: update branch with latest main'
+          github-token: ${{ github.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const head = '${{ matrix.head }}';
+            const list = await github.rest.pulls.list({ owner, repo, state: 'open', base: 'main', head: `${owner}:${head}` });
+            if (!list.data.length) {
+              core.info(`No open PR found for head ${head}`);
+              return;
+            }
+            const number = list.data[0].number;
+            core.info(`Updating PR #${number} branch ${head} from base main`);
+            try {
+              await github.rest.pulls.updateBranch({ owner, repo, pull_number: number });
+              core.info('Update triggered.');
+            } catch (e) {
+              core.warning(`Update failed or not needed: ${e.message}`);
+            }
