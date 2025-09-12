@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   test:
-    # Only run for PRs opened by github-actions bot (e.g., nightly update)
-    if: github.actor == 'github-actions[bot]'
+    # Only run for bot-created update PRs
+    if: (startsWith(github.event.pull_request.user.login, 'app/') || github.event.pull_request.user.login == 'github-actions[bot]') && github.event.pull_request.head.ref == 'auto/update-generated-client'
     uses: ./.github/workflows/ci-common.yml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
