@@ -9,8 +9,8 @@ permissions:
 
 jobs:
   udeps:
-    # Run for nightly client branch or release-plz branches
-    if: github.event.pull_request.head.ref == 'auto/update-generated-client' || startsWith(github.event.pull_request.head.ref, 'release-plz-')
+    # Run for bot/ prefix or release-plz branches
+    if: startsWith(github.event.pull_request.head.ref, 'bot/') || startsWith(github.event.pull_request.head.ref, 'release-plz-') || startsWith(github.event.pull_request.head.ref, 'renovate/')
     uses: ./.github/workflows/deps-common.yml
     with:
       ref: ${{ github.event.pull_request.head.sha }}
