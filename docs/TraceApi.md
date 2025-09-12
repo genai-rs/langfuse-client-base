@@ -125,7 +125,7 @@ Name | Type | Description  | Required | Notes
 **version** | Option<**String**> | Optional filter to only include traces with a certain version. |  |
 **release** | Option<**String**> | Optional filter to only include traces with a certain release. |  |
 **environment** | Option<[**Vec<String>**](String.md)> | Optional filter for traces where the environment is one of the provided values. |  |
-**fields** | Option<**String**> | Comma-separated list of fields to include in the response. Available field groups are 'core' (always included), 'io' (input, output, metadata), 'scores', 'observations', 'metrics'. If not provided, all fields are included. Example: 'core,scores,metrics' |  |
+**fields** | Option<**String**> | Comma-separated list of fields to include in the response. Available field groups: 'core' (always included), 'io' (input, output, metadata), 'scores', 'observations', 'metrics'. If not specified, all fields are returned. Example: 'core,scores,metrics'. Note: Excluded 'observations' or 'scores' fields return empty arrays; excluded 'metrics' returns -1 for 'totalCost' and 'latency'. |  |
 
 ### Return type
 
