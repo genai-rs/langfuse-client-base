@@ -11,6 +11,6 @@ permissions:
 
 jobs:
   test:
-    # Skip normal CI for bot/*, renovate/* and release-plz-* PRs; bot workflow handles it
-    if: github.event_name != 'pull_request' || (!startsWith(github.event.pull_request.head.ref, 'bot/') && !startsWith(github.event.pull_request.head.ref, 'renovate/') && !startsWith(github.event.pull_request.head.ref, 'release-plz-'))
+    # Skip normal CI for automated/* PRs; automated workflow handles it
+    if: github.event_name != 'pull_request' || !startsWith(github.event.pull_request.head.ref, 'automated/')
     uses: ./.github/workflows/ci-common.yml
