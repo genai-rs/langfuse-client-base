@@ -67,7 +67,7 @@ branches:
       
       # Other settings
       required_linear_history: true
-      allow_force_pushes: false
+      allow_force_pushes: true
       allow_deletions: false
       block_creations: false
       required_conversation_resolution: true
