@@ -43,5 +43,5 @@ jobs:
         uses: MarcoIeni/release-plz-action@v0.5
         env:
           # Use a PAT/GitHub App token so PR events trigger workflows
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GH_BOT_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token || secrets.GH_BOT_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
