@@ -136,23 +136,6 @@ jobs:
               core.warning(`Update not needed or failed: ${e.message}`);
             }
 
-          script: |
-            const { owner, repo } = context.repo;
-            const head = 'automated/generate-client';
-            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main', head: `${owner}:${head}` });
-            if (!prs.length) {
-              core.info('No open PR for automated/generate-client.');
-              return;
-            }
-            const number = prs[0].number;
-            core.info(`Updating PR #${number} from base main...`);
-            try {
-              await github.rest.pulls.updateBranch({ owner, repo, pull_number: number });
-              core.info('Branch update triggered.');
-            } catch (e) {
-              core.warning(`Update not needed or failed: ${e.message}`);
-            }
-
   keepalive:
     runs-on: ubuntu-latest
     steps:
