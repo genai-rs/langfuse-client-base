@@ -57,22 +57,3 @@ jobs:
           base: ${{ github.event.pull_request.base.sha }}
           head: ${{ github.event.pull_request.head.sha }}
           extra_args: --only-verified
-
-  gitleaks:
-    name: Gitleaks Secrets Scan
-    # Gitleaks does not support pull_request_target, skip for bot PRs
-    if: github.event_name != 'pull_request_target' && github.event.pull_request.head.ref == 'auto/update-generated-client'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout PR head (full history)
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
