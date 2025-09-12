@@ -16,3 +16,60 @@ jobs:
     with:
       ref: ${{ github.event.pull_request.head.sha }}
       persist_credentials: false
+
+  audit:
+    # Only run for bot-created update PRs
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Generate Cargo.lock for audit
+        run: cargo generate-lockfile
+
+      - name: Run cargo audit
+        uses: rustsec/audit-check@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  trufflehog:
+    # Only run for bot-created update PRs
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head (full history)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          extra_args: --only-verified
+
+  gitleaks:
+    # Only run for bot-created update PRs
+    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head (full history)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
