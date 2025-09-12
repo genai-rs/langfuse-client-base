@@ -15,5 +15,7 @@ permissions:
 
 jobs:
   security:
+    # Skip normal security checks for the auto-generated client PR; bot workflow handles it
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'auto/update-generated-client'
     uses: ./.github/workflows/security-common.yml
     secrets: inherit
