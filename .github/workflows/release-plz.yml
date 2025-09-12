@@ -12,6 +12,10 @@ on:
       - main
   workflow_dispatch: # Allow manual triggering
 
+concurrency:
+  group: release-plz
+  cancel-in-progress: true
+
 jobs:
   release-plz:
     name: Release-plz
