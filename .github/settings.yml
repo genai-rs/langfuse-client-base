@@ -95,6 +95,10 @@ labels:
     color: 8B4789
     description: Automated PR from bots
   
+  - name: bot
+    color: 5319e7
+    description: Created by internal ***REMOVED***
+  
   - name: release
     color: 00FF00
     description: Release-related PR

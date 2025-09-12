@@ -92,11 +92,13 @@ jobs:
             
             ---
             *This PR was automatically created by the nightly generation workflow.*
-          branch: auto/update-generated-client
+          # Use unified bot prefix for easier CI routing
+          branch: bot/generated-client
           delete-branch: true
           labels: |
             dependencies
             automated
+            bot
 
   keepalive:
     runs-on: ubuntu-latest
