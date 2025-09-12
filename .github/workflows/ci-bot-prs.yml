@@ -37,23 +37,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  trufflehog:
-    name: TruffleHog Secrets Scan
-    # Only run for bot-created update PRs
-    if: github.event.pull_request.head.ref == 'auto/update-generated-client'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout PR head (full history)
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Run TruffleHog
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ${{ github.event.pull_request.base.sha }}
-          head: ${{ github.event.pull_request.head.sha }}
-          extra_args: --only-verified
+  # TruffleHog disabled in PR workflows; rely on GH Secret Scanning + Push Protection and pre-commit

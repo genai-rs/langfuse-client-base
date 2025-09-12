@@ -49,29 +49,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  trufflehog:
-    name: TruffleHog Secrets Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository (full history, default)
-        if: inputs.ref == ''
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: ${{ inputs.persist_credentials }}
-
-      - name: Checkout repository (full history, ref)
-        if: inputs.ref != ''
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.ref }}
-          fetch-depth: 0
-          persist-credentials: ${{ inputs.persist_credentials }}
-
-      - name: Run TruffleHog
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
-          head: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
-          extra_args: --only-verified
+  # TruffleHog disabled in PR workflows; rely on GH Secret Scanning + Push Protection and pre-commit
