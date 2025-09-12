@@ -1,0 +1,18 @@
+name: CI (Bot PRs)
+
+on:
+  pull_request_target:
+    branches: [ main ]
+
+# Do not expose secrets; only read access is needed
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Only run for PRs opened by github-actions bot (e.g., nightly update)
+    if: github.actor == 'github-actions[bot]'
+    uses: ./.github/workflows/ci-common.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
+      persist_credentials: false

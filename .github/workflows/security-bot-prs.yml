@@ -1,12 +1,8 @@
-name: Security
+name: Security (Bot PRs)
 
 on:
-  push:
+  pull_request_target:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  schedule:
-    - cron: '0 0 * * 1'  # Weekly on Monday at midnight UTC
 
 permissions:
   contents: read
@@ -15,5 +11,9 @@ permissions:
 
 jobs:
   security:
+    if: github.actor == 'github-actions[bot]'
     uses: ./.github/workflows/security-common.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
+      persist_credentials: false
     secrets: inherit
