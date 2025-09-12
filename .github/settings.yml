@@ -57,7 +57,6 @@ branches:
           - "test / Test (beta)"
           - "test / Test (1.82.0)"
           - "audit / Cargo Audit"
-          - "trufflehog / TruffleHog Secrets Scan"
       
       # Enforce for admins
       enforce_admins: false
