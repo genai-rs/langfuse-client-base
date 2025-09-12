@@ -18,6 +18,7 @@ jobs:
       persist_credentials: false
 
   audit:
+    name: Cargo Audit
     # Only run for bot-created update PRs
     if: github.event.pull_request.head.ref == 'auto/update-generated-client'
     runs-on: ubuntu-latest
@@ -37,6 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   trufflehog:
+    name: TruffleHog Secrets Scan
     # Only run for bot-created update PRs
     if: github.event.pull_request.head.ref == 'auto/update-generated-client'
     runs-on: ubuntu-latest
@@ -57,6 +59,7 @@ jobs:
           extra_args: --only-verified
 
   gitleaks:
+    name: Gitleaks Secrets Scan
     # Gitleaks does not support pull_request_target, skip for bot PRs
     if: github.event_name != 'pull_request_target' && github.event.pull_request.head.ref == 'auto/update-generated-client'
     runs-on: ubuntu-latest
