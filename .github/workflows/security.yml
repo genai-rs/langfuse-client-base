@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   security:
-    # Skip normal security checks for bot/*, renovate/* and release-plz-* PRs; bot workflow handles it
-    if: github.event_name != 'pull_request' || (!startsWith(github.event.pull_request.head.ref, 'bot/') && !startsWith(github.event.pull_request.head.ref, 'renovate/') && !startsWith(github.event.pull_request.head.ref, 'release-plz-'))
+    # Skip normal security checks for automated/* PRs; automated workflow handles it
+    if: github.event_name != 'pull_request' || !startsWith(github.event.pull_request.head.ref, 'automated/')
     uses: ./.github/workflows/security-common.yml
     secrets: inherit
