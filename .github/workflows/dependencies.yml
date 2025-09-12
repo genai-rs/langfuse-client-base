@@ -8,6 +8,6 @@ on:
 
 jobs:
   udeps:
-    # Skip normal deps check for the auto-generated client PR; bot workflow handles it
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'auto/update-generated-client'
+    # Skip normal deps check for bot-created client update and release-plz PRs; bot workflow handles it
+    if: github.event_name != 'pull_request' || (github.event.pull_request.head.ref != 'auto/update-generated-client' && !startsWith(github.event.pull_request.head.ref, 'release-plz-'))
     uses: ./.github/workflows/deps-common.yml
