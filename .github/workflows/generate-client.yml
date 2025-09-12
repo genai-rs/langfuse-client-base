@@ -92,8 +92,8 @@ jobs:
             
             ---
             *This PR was automatically created by the nightly generation workflow.*
-          # Use unified bot prefix for easier CI routing
-          branch: bot/generated-client
+          # Use unified automated prefix for easier CI routing
+          branch: automated/generate-client
           delete-branch: true
           labels: |
             dependencies
