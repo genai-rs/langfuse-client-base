@@ -12,5 +12,6 @@ permissions:
 jobs:
   test:
     # Skip normal CI for automated/* PRs; automated workflow handles it
-    if: github.event_name != 'pull_request' || !startsWith(github.event.pull_request.head.ref, 'automated/')
+    # Use safe coalesce for non-PR events to avoid referencing undefined fields
+    if: github.event_name != 'pull_request' || !startsWith((github.event.pull_request.head.ref || ''), 'automated/')
     uses: ./.github/workflows/ci-common.yml
