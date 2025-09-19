@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## score_v2_get
 
-> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, queue_id, data_type, trace_tags)
+> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, queue_id, data_type, trace_tags)
 
 
 Get a list of scores (supports both trace and session scores)
@@ -33,6 +33,7 @@ Name | Type | Description  | Required | Notes
 **value** | Option<**f64**> | Retrieve only scores with <operator> value. |  |
 **score_ids** | Option<**String**> | Comma-separated list of score IDs to limit the results to. |  |
 **config_id** | Option<**String**> | Retrieve only scores with a specific configId. |  |
+**session_id** | Option<**String**> | Retrieve only scores with a specific sessionId. |  |
 **queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
 **data_type** | Option<[**ScoreDataType**](.md)> | Retrieve only scores with a specific dataType. |  |
 **trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
