@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.3.0...v0.4.0) - 2025-10-02
+
+### Added
+
+- add bon builder post processing
+
+### Other
+
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.16.0
+- remove decorative emoji from README
+- *(deps)* migrate config renovate.json5
+- *(deps)* Update mozilla-actions/sccache-action action to v0.0.9
+- *(deps)* Update github-actions
+- align renovate config with library defaults
+- replace Claude guide with automation guide
+
 ## [0.3.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.2.7...v0.3.0) - 2025-09-19
 
 ### Other
