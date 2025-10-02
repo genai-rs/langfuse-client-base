@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SdkLogBody {
     #[serde(rename = "log", deserialize_with = "Option::deserialize")]
     pub log: Option<serde_json::Value>,

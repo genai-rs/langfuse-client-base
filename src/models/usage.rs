@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// Usage : (Deprecated. Use usageDetails and costDetails instead.) Standard interface for usage and cost
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Usage {
     /// Number of input units (e.g. tokens)
     #[serde(

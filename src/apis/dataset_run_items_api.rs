@@ -38,6 +38,7 @@ pub enum DatasetRunItemsListError {
 }
 
 /// Create a dataset run item
+#[bon::builder]
 pub async fn dataset_run_items_create(
     configuration: &configuration::Configuration,
     create_dataset_run_item_request: models::CreateDatasetRunItemRequest,
@@ -88,6 +89,7 @@ pub async fn dataset_run_items_create(
 }
 
 /// List dataset run items
+#[bon::builder]
 pub async fn dataset_run_items_list(
     configuration: &configuration::Configuration,
     dataset_id: &str,

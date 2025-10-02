@@ -38,6 +38,7 @@ pub enum LlmConnectionsUpsertError {
 }
 
 /// Get all LLM connections in a project
+#[bon::builder]
 pub async fn llm_connections_list(
     configuration: &configuration::Configuration,
     page: Option<i32>,
@@ -93,6 +94,7 @@ pub async fn llm_connections_list(
 }
 
 /// Create or update an LLM connection. The connection is upserted on provider.
+#[bon::builder]
 pub async fn llm_connections_upsert(
     configuration: &configuration::Configuration,
     upsert_llm_connection_request: models::UpsertLlmConnectionRequest,

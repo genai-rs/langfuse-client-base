@@ -26,6 +26,7 @@ pub enum MetricsMetricsError {
 }
 
 /// Get metrics from the Langfuse project using a query object
+#[bon::builder]
 pub async fn metrics_metrics(
     configuration: &configuration::Configuration,
     query: &str,

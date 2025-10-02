@@ -38,6 +38,7 @@ pub enum SessionsListError {
 }
 
 /// Get a session. Please note that `traces` on this endpoint are not paginated, if you plan to fetch large sessions, consider `GET /api/public/traces?sessionId=<sessionId>`
+#[bon::builder]
 pub async fn sessions_get(
     configuration: &configuration::Configuration,
     session_id: &str,
@@ -89,6 +90,7 @@ pub async fn sessions_get(
 }
 
 /// Get sessions
+#[bon::builder]
 pub async fn sessions_list(
     configuration: &configuration::Configuration,
     page: Option<i32>,

@@ -27,6 +27,7 @@ pub enum HealthHealthError {
 }
 
 /// Check health of API and database
+#[bon::builder]
 pub async fn health_health(
     configuration: &configuration::Configuration,
 ) -> Result<models::HealthResponse, Error<HealthHealthError>> {

@@ -98,6 +98,7 @@ pub enum OrganizationsUpdateProjectMembershipError {
 }
 
 /// Delete a membership from the organization associated with the API key (requires organization-scoped API key)
+#[bon::builder]
 pub async fn organizations_delete_organization_membership(
     configuration: &configuration::Configuration,
     delete_membership_request: models::DeleteMembershipRequest,
@@ -153,6 +154,7 @@ pub async fn organizations_delete_organization_membership(
 }
 
 /// Delete a membership from a specific project (requires organization-scoped API key). The user must be a member of the organization.
+#[bon::builder]
 pub async fn organizations_delete_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -210,6 +212,7 @@ pub async fn organizations_delete_project_membership(
 }
 
 /// Get all memberships for the organization associated with the API key (requires organization-scoped API key)
+#[bon::builder]
 pub async fn organizations_get_organization_memberships(
     configuration: &configuration::Configuration,
 ) -> Result<models::MembershipsResponse, Error<OrganizationsGetOrganizationMembershipsError>> {
@@ -257,6 +260,7 @@ pub async fn organizations_get_organization_memberships(
 }
 
 /// Get all projects for the organization associated with the API key (requires organization-scoped API key)
+#[bon::builder]
 pub async fn organizations_get_organization_projects(
     configuration: &configuration::Configuration,
 ) -> Result<models::OrganizationProjectsResponse, Error<OrganizationsGetOrganizationProjectsError>>
@@ -305,6 +309,7 @@ pub async fn organizations_get_organization_projects(
 }
 
 /// Get all memberships for a specific project (requires organization-scoped API key)
+#[bon::builder]
 pub async fn organizations_get_project_memberships(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -357,6 +362,7 @@ pub async fn organizations_get_project_memberships(
 }
 
 /// Create or update a membership for the organization associated with the API key (requires organization-scoped API key)
+#[bon::builder]
 pub async fn organizations_update_organization_membership(
     configuration: &configuration::Configuration,
     membership_request: models::MembershipRequest,
@@ -409,6 +415,7 @@ pub async fn organizations_update_organization_membership(
 }
 
 /// Create or update a membership for a specific project (requires organization-scoped API key). The user must already be a member of the organization.
+#[bon::builder]
 pub async fn organizations_update_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,

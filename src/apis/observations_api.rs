@@ -38,6 +38,7 @@ pub enum ObservationsGetManyError {
 }
 
 /// Get a observation
+#[bon::builder]
 pub async fn observations_get(
     configuration: &configuration::Configuration,
     observation_id: &str,
@@ -89,6 +90,7 @@ pub async fn observations_get(
 }
 
 /// Get a list of observations
+#[bon::builder]
 pub async fn observations_get_many(
     configuration: &configuration::Configuration,
     page: Option<i32>,

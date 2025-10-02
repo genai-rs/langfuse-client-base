@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct MetricsResponse {
     /// The metrics data. Each item in the list contains the metric values and dimensions requested in the query. Format varies based on the query parameters. Histograms will return an array with [lower, upper, height] tuples.
     #[serde(rename = "data")]
