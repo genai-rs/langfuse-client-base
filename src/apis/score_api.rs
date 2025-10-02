@@ -38,6 +38,7 @@ pub enum ScoreDeleteError {
 }
 
 /// Create a score (supports both trace and session scores)
+#[bon::builder]
 pub async fn score_create(
     configuration: &configuration::Configuration,
     create_score_request: models::CreateScoreRequest,
@@ -88,6 +89,7 @@ pub async fn score_create(
 }
 
 /// Delete a score (supports both trace and session scores)
+#[bon::builder]
 pub async fn score_delete(
     configuration: &configuration::Configuration,
     score_id: &str,

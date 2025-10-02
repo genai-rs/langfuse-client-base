@@ -98,6 +98,7 @@ pub enum ProjectsUpdateError {
 }
 
 /// Create a new project (requires organization-scoped API key)
+#[bon::builder]
 pub async fn projects_create(
     configuration: &configuration::Configuration,
     projects_create_request: models::ProjectsCreateRequest,
@@ -148,6 +149,7 @@ pub async fn projects_create(
 }
 
 /// Create a new API key for a project (requires organization-scoped API key)
+#[bon::builder]
 pub async fn projects_create_api_key(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -204,6 +206,7 @@ pub async fn projects_create_api_key(
 }
 
 /// Delete a project by ID (requires organization-scoped API key). Project deletion is processed asynchronously.
+#[bon::builder]
 pub async fn projects_delete(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -257,6 +260,7 @@ pub async fn projects_delete(
 }
 
 /// Delete an API key for a project (requires organization-scoped API key)
+#[bon::builder]
 pub async fn projects_delete_api_key(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -313,6 +317,7 @@ pub async fn projects_delete_api_key(
 }
 
 /// Get Project associated with API key
+#[bon::builder]
 pub async fn projects_get(
     configuration: &configuration::Configuration,
 ) -> Result<models::Projects, Error<ProjectsGetError>> {
@@ -356,6 +361,7 @@ pub async fn projects_get(
 }
 
 /// Get all API keys for a project (requires organization-scoped API key)
+#[bon::builder]
 pub async fn projects_get_api_keys(
     configuration: &configuration::Configuration,
     project_id: &str,
@@ -407,6 +413,7 @@ pub async fn projects_get_api_keys(
 }
 
 /// Update a project by ID (requires organization-scoped API key).
+#[bon::builder]
 pub async fn projects_update(
     configuration: &configuration::Configuration,
     project_id: &str,

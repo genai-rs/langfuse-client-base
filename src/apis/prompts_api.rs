@@ -50,6 +50,7 @@ pub enum PromptsListError {
 }
 
 /// Create a new version for the prompt with the given `name`
+#[bon::builder]
 pub async fn prompts_create(
     configuration: &configuration::Configuration,
     create_prompt_request: models::CreatePromptRequest,
@@ -100,6 +101,7 @@ pub async fn prompts_create(
 }
 
 /// Get a prompt
+#[bon::builder]
 pub async fn prompts_get(
     configuration: &configuration::Configuration,
     prompt_name: &str,
@@ -161,6 +163,7 @@ pub async fn prompts_get(
 }
 
 /// Get a list of prompt names with versions and labels
+#[bon::builder]
 pub async fn prompts_list(
     configuration: &configuration::Configuration,
     name: Option<&str>,

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DatasetRunWithItems {
     #[serde(rename = "datasetRunItems")]
     pub dataset_run_items: Vec<models::DatasetRunItem>,

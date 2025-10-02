@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// OpenAiResponseUsageSchema : OpenAI Usage schema from Response API
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct OpenAiResponseUsageSchema {
     #[serde(rename = "input_tokens")]
     pub input_tokens: i32,

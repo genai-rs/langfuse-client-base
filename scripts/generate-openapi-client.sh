@@ -149,6 +149,10 @@ PYTHON_SCRIPT
     rm -f "$BASE_CLIENT_DIR/Cargo.toml.generated"
 fi
 
+# Apply post-generation patches
+echo "🔧 Applying post-generation patches..."
+bash "$SCRIPT_DIR/patch_generated.rs.sh" "$BASE_CLIENT_DIR"
+
 # Inject crate-level docs from README into lib.rs for docs.rs discoverability
 echo "📚 Injecting crate-level docs into src/lib.rs..."
 if [ -f "$BASE_CLIENT_DIR/src/lib.rs" ]; then

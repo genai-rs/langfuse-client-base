@@ -50,6 +50,7 @@ pub enum ScoreConfigsGetByIdError {
 }
 
 /// Create a score configuration (config). Score configs are used to define the structure of scores
+#[bon::builder]
 pub async fn score_configs_create(
     configuration: &configuration::Configuration,
     create_score_config_request: models::CreateScoreConfigRequest,
@@ -100,6 +101,7 @@ pub async fn score_configs_create(
 }
 
 /// Get all score configs
+#[bon::builder]
 pub async fn score_configs_get(
     configuration: &configuration::Configuration,
     page: Option<i32>,
@@ -155,6 +157,7 @@ pub async fn score_configs_get(
 }
 
 /// Get a score config
+#[bon::builder]
 pub async fn score_configs_get_by_id(
     configuration: &configuration::Configuration,
     config_id: &str,

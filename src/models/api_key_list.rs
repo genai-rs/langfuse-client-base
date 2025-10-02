@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// ApiKeyList : List of API keys for a project
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ApiKeyList {
     #[serde(rename = "apiKeys")]
     pub api_keys: Vec<models::ApiKeySummary>,
