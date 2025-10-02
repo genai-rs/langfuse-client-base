@@ -62,6 +62,7 @@ pub enum TraceListError {
 }
 
 /// Delete a specific trace
+#[bon::builder]
 pub async fn trace_delete(
     configuration: &configuration::Configuration,
     trace_id: &str,
@@ -115,6 +116,7 @@ pub async fn trace_delete(
 }
 
 /// Delete multiple traces
+#[bon::builder]
 pub async fn trace_delete_multiple(
     configuration: &configuration::Configuration,
     trace_delete_multiple_request: models::TraceDeleteMultipleRequest,
@@ -165,6 +167,7 @@ pub async fn trace_delete_multiple(
 }
 
 /// Get a specific trace
+#[bon::builder]
 pub async fn trace_get(
     configuration: &configuration::Configuration,
     trace_id: &str,
@@ -216,6 +219,7 @@ pub async fn trace_get(
 }
 
 /// Get list of traces
+#[bon::builder]
 pub async fn trace_list(
     configuration: &configuration::Configuration,
     page: Option<i32>,

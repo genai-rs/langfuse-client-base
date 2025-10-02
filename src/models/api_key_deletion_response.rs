@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// ApiKeyDeletionResponse : Response for API key deletion
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ApiKeyDeletionResponse {
     #[serde(rename = "success")]
     pub success: bool,

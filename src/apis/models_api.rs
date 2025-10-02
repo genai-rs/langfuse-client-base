@@ -62,6 +62,7 @@ pub enum ModelsListError {
 }
 
 /// Create a model
+#[bon::builder]
 pub async fn models_create(
     configuration: &configuration::Configuration,
     create_model_request: models::CreateModelRequest,
@@ -112,6 +113,7 @@ pub async fn models_create(
 }
 
 /// Delete a model. Cannot delete models managed by Langfuse. You can create your own definition with the same modelName to override the definition though.
+#[bon::builder]
 pub async fn models_delete(
     configuration: &configuration::Configuration,
     id: &str,
@@ -154,6 +156,7 @@ pub async fn models_delete(
 }
 
 /// Get a model
+#[bon::builder]
 pub async fn models_get(
     configuration: &configuration::Configuration,
     id: &str,
@@ -205,6 +208,7 @@ pub async fn models_get(
 }
 
 /// Get all models
+#[bon::builder]
 pub async fn models_list(
     configuration: &configuration::Configuration,
     page: Option<i32>,

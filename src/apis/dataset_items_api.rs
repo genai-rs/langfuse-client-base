@@ -62,6 +62,7 @@ pub enum DatasetItemsListError {
 }
 
 /// Create a dataset item
+#[bon::builder]
 pub async fn dataset_items_create(
     configuration: &configuration::Configuration,
     create_dataset_item_request: models::CreateDatasetItemRequest,
@@ -112,6 +113,7 @@ pub async fn dataset_items_create(
 }
 
 /// Delete a dataset item and all its run items. This action is irreversible.
+#[bon::builder]
 pub async fn dataset_items_delete(
     configuration: &configuration::Configuration,
     id: &str,
@@ -165,6 +167,7 @@ pub async fn dataset_items_delete(
 }
 
 /// Get a dataset item
+#[bon::builder]
 pub async fn dataset_items_get(
     configuration: &configuration::Configuration,
     id: &str,
@@ -216,6 +219,7 @@ pub async fn dataset_items_get(
 }
 
 /// Get dataset items
+#[bon::builder]
 pub async fn dataset_items_list(
     configuration: &configuration::Configuration,
     dataset_name: Option<&str>,

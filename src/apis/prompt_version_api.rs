@@ -26,6 +26,7 @@ pub enum PromptVersionUpdateError {
 }
 
 /// Update labels for a specific prompt version
+#[bon::builder]
 pub async fn prompt_version_update(
     configuration: &configuration::Configuration,
     name: &str,

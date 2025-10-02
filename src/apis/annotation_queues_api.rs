@@ -134,6 +134,7 @@ pub enum AnnotationQueuesUpdateQueueItemError {
 }
 
 /// Create an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_create_queue(
     configuration: &configuration::Configuration,
     create_annotation_queue_request: models::CreateAnnotationQueueRequest,
@@ -184,6 +185,7 @@ pub async fn annotation_queues_create_queue(
 }
 
 /// Create an assignment for a user to an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_create_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -244,6 +246,7 @@ pub async fn annotation_queues_create_queue_assignment(
 }
 
 /// Add an item to an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_create_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -301,6 +304,7 @@ pub async fn annotation_queues_create_queue_item(
 }
 
 /// Delete an assignment for a user to an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_delete_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -361,6 +365,7 @@ pub async fn annotation_queues_delete_queue_assignment(
 }
 
 /// Remove an item from an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_delete_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -419,6 +424,7 @@ pub async fn annotation_queues_delete_queue_item(
 }
 
 /// Get an annotation queue by ID
+#[bon::builder]
 pub async fn annotation_queues_get_queue(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -470,6 +476,7 @@ pub async fn annotation_queues_get_queue(
 }
 
 /// Get a specific item from an annotation queue
+#[bon::builder]
 pub async fn annotation_queues_get_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -524,6 +531,7 @@ pub async fn annotation_queues_get_queue_item(
 }
 
 /// Get items for a specific annotation queue
+#[bon::builder]
 pub async fn annotation_queues_list_queue_items(
     configuration: &configuration::Configuration,
     queue_id: &str,
@@ -591,6 +599,7 @@ pub async fn annotation_queues_list_queue_items(
 }
 
 /// Get all annotation queues
+#[bon::builder]
 pub async fn annotation_queues_list_queues(
     configuration: &configuration::Configuration,
     page: Option<i32>,
@@ -646,6 +655,7 @@ pub async fn annotation_queues_list_queues(
 }
 
 /// Update an annotation queue item
+#[bon::builder]
 pub async fn annotation_queues_update_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,

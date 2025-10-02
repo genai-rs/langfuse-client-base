@@ -50,6 +50,7 @@ pub enum BlobStorageIntegrationsUpsertBlobStorageIntegrationError {
 }
 
 /// Delete a blob storage integration by ID (requires organization-scoped API key)
+#[bon::builder]
 pub async fn blob_storage_integrations_delete_blob_storage_integration(
     configuration: &configuration::Configuration,
     id: &str,
@@ -107,6 +108,7 @@ pub async fn blob_storage_integrations_delete_blob_storage_integration(
 }
 
 /// Get all blob storage integrations for the organization (requires organization-scoped API key)
+#[bon::builder]
 pub async fn blob_storage_integrations_get_blob_storage_integrations(
     configuration: &configuration::Configuration,
 ) -> Result<
@@ -157,6 +159,7 @@ pub async fn blob_storage_integrations_get_blob_storage_integrations(
 }
 
 /// Create or update a blob storage integration for a specific project (requires organization-scoped API key). The configuration is validated by performing a test upload to the bucket.
+#[bon::builder]
 pub async fn blob_storage_integrations_upsert_blob_storage_integration(
     configuration: &configuration::Configuration,
     create_blob_storage_integration_request: models::CreateBlobStorageIntegrationRequest,

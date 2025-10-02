@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UpsertLlmConnectionRequest : Request to create or update an LLM connection (upsert)
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpsertLlmConnectionRequest {
     /// Provider name (e.g., 'openai', 'my-gateway'). Must be unique in project, used for upserting.
     #[serde(rename = "provider")]
