@@ -33,7 +33,7 @@ jobs:
           toolchain: ${{ matrix.rust }}
           components: rustfmt, clippy
       - name: Enable sccache
-        uses: mozilla-actions/sccache-action@v0.0.5
+        uses: mozilla-actions/sccache-action@v0.0.9
       - name: Start sccache locally (no GHA cache)
         run: |
           echo "SCCACHE_GHA_ENABLED=off" >> $GITHUB_ENV
