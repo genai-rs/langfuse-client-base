@@ -9,15 +9,15 @@
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
 
 > [!WARNING]
-> **🚀 Most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead!**
+> **Important:** most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead.
 > 
 > This is a low-level, auto-generated client intended as a building block for higher-level abstractions.
 > The ergonomic wrapper provides:
-> - ✅ Simplified API with builder patterns
-> - ✅ Automatic batching and retries
-> - ✅ Environment-based configuration
-> - ✅ Better error handling
-> - ✅ OpenTelemetry integration
+> - Simplified APIs with builder patterns
+> - Automatic batching and retries
+> - Environment-based configuration
+> - Improved error handling
+> - Built-in OpenTelemetry integration
 >
 > **Only use this crate directly if you need:**
 > - Raw access to all OpenAPI endpoints
@@ -92,9 +92,9 @@ let config = Configuration {
 ### TLS Backend
 
 By default, this crate uses `rustls` for TLS, which provides:
-- 🔒 Pure Rust implementation
-- 📦 Smaller binary size
-- 🐧 Better cross-platform compatibility
+- A pure Rust implementation
+- Smaller binary size
+- Better cross-platform compatibility
 
 For native TLS (OpenSSL on Linux, Schannel on Windows, Security Framework on macOS):
 
