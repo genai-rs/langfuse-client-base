@@ -50,6 +50,7 @@ pub enum MediaPatchError {
 }
 
 /// Get a media record
+#[bon::builder]
 pub async fn media_get(
     configuration: &configuration::Configuration,
     media_id: &str,
@@ -101,6 +102,7 @@ pub async fn media_get(
 }
 
 /// Get a presigned upload URL for a media record
+#[bon::builder]
 pub async fn media_get_upload_url(
     configuration: &configuration::Configuration,
     get_media_upload_url_request: models::GetMediaUploadUrlRequest,
@@ -151,6 +153,7 @@ pub async fn media_get_upload_url(
 }
 
 /// Patch a media record
+#[bon::builder]
 pub async fn media_patch(
     configuration: &configuration::Configuration,
     media_id: &str,

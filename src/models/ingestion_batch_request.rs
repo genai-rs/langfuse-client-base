@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct IngestionBatchRequest {
     /// Batch of tracing events to be ingested. Discriminated by attribute `type`.
     #[serde(rename = "batch")]

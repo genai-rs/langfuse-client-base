@@ -98,6 +98,7 @@ pub enum ScimListUsersError {
 }
 
 /// Create a new user in the organization (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_create_user(
     configuration: &configuration::Configuration,
     scim_create_user_request: models::ScimCreateUserRequest,
@@ -148,6 +149,7 @@ pub async fn scim_create_user(
 }
 
 /// Remove a user from the organization (requires organization-scoped API key). Note that this only removes the user from the organization but does not delete the user entity itself.
+#[bon::builder]
 pub async fn scim_delete_user(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -201,6 +203,7 @@ pub async fn scim_delete_user(
 }
 
 /// Get SCIM Resource Types (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_get_resource_types(
     configuration: &configuration::Configuration,
 ) -> Result<models::ResourceTypesResponse, Error<ScimGetResourceTypesError>> {
@@ -244,6 +247,7 @@ pub async fn scim_get_resource_types(
 }
 
 /// Get SCIM Schemas (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_get_schemas(
     configuration: &configuration::Configuration,
 ) -> Result<models::SchemasResponse, Error<ScimGetSchemasError>> {
@@ -287,6 +291,7 @@ pub async fn scim_get_schemas(
 }
 
 /// Get SCIM Service Provider Configuration (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_get_service_provider_config(
     configuration: &configuration::Configuration,
 ) -> Result<models::ServiceProviderConfig, Error<ScimGetServiceProviderConfigError>> {
@@ -333,6 +338,7 @@ pub async fn scim_get_service_provider_config(
 }
 
 /// Get a specific user by ID (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_get_user(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -384,6 +390,7 @@ pub async fn scim_get_user(
 }
 
 /// List users in the organization (requires organization-scoped API key)
+#[bon::builder]
 pub async fn scim_list_users(
     configuration: &configuration::Configuration,
     filter: Option<&str>,

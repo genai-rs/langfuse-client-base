@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateAnnotationQueueItemRequest {
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<models::AnnotationQueueStatus>,

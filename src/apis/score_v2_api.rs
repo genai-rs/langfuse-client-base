@@ -38,6 +38,7 @@ pub enum ScoreV2GetByIdError {
 }
 
 /// Get a list of scores (supports both trace and session scores)
+#[bon::builder]
 pub async fn score_v2_get(
     configuration: &configuration::Configuration,
     page: Option<i32>,
@@ -195,6 +196,7 @@ pub async fn score_v2_get(
 }
 
 /// Get a score (supports both trace and session scores)
+#[bon::builder]
 pub async fn score_v2_get_by_id(
     configuration: &configuration::Configuration,
     score_id: &str,

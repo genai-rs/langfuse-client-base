@@ -50,6 +50,7 @@ pub enum CommentsGetByIdError {
 }
 
 /// Create a comment. Comments may be attached to different object types (trace, observation, session, prompt).
+#[bon::builder]
 pub async fn comments_create(
     configuration: &configuration::Configuration,
     create_comment_request: models::CreateCommentRequest,
@@ -100,6 +101,7 @@ pub async fn comments_create(
 }
 
 /// Get all comments
+#[bon::builder]
 pub async fn comments_get(
     configuration: &configuration::Configuration,
     page: Option<i32>,
@@ -170,6 +172,7 @@ pub async fn comments_get(
 }
 
 /// Get a comment by id
+#[bon::builder]
 pub async fn comments_get_by_id(
     configuration: &configuration::Configuration,
     comment_id: &str,
