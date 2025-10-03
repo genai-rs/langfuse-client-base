@@ -49,6 +49,18 @@ pub enum ScoreConfigsGetByIdError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`score_configs_update`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ScoreConfigsUpdateError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
+
 /// Create a score configuration (config). Score configs are used to define the structure of scores
 #[bon::builder]
 pub async fn score_configs_create(
@@ -200,6 +212,63 @@ pub async fn score_configs_get_by_id(
     } else {
         let content = resp.text().await?;
         let entity: Option<ScoreConfigsGetByIdError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Update a score config
+#[bon::builder]
+pub async fn score_configs_update(
+    configuration: &configuration::Configuration,
+    config_id: &str,
+    update_score_config_request: models::UpdateScoreConfigRequest,
+) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_config_id = config_id;
+    let p_body_update_score_config_request = update_score_config_request;
+
+    let uri_str = format!(
+        "{}/api/public/score-configs/{configId}",
+        configuration.base_path,
+        configId = crate::apis::urlencode(p_path_config_id)
+    );
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::PATCH, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+    req_builder = req_builder.json(&p_body_update_score_config_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ScoreConfigsUpdateError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,
