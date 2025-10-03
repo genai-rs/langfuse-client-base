@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.4.0...v0.4.1) - 2025-10-03
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- install clippy and rustfmt for generator workflow
+
 ## [0.4.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.3.0...v0.4.0) - 2025-10-02
 
 ### Added
