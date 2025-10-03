@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**score_configs_create**](ScoreConfigsApi.md#score_configs_create) | **POST** /api/public/score-configs | 
 [**score_configs_get**](ScoreConfigsApi.md#score_configs_get) | **GET** /api/public/score-configs | 
 [**score_configs_get_by_id**](ScoreConfigsApi.md#score_configs_get_by_id) | **GET** /api/public/score-configs/{configId} | 
+[**score_configs_update**](ScoreConfigsApi.md#score_configs_update) | **PATCH** /api/public/score-configs/{configId} | 
 
 
 
@@ -96,6 +97,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## score_configs_update
+
+> models::ScoreConfig score_configs_update(config_id, update_score_config_request)
+
+
+Update a score config
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**config_id** | **String** | The unique langfuse identifier of a score config | [required] |
+**update_score_config_request** | [**UpdateScoreConfigRequest**](UpdateScoreConfigRequest.md) |  | [required] |
+
+### Return type
+
+[**models::ScoreConfig**](ScoreConfig.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

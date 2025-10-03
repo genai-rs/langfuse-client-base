@@ -394,6 +394,8 @@ pub mod update_generation_event;
 pub use self::update_generation_event::UpdateGenerationEvent;
 pub mod update_observation_event;
 pub use self::update_observation_event::UpdateObservationEvent;
+pub mod update_score_config_request;
+pub use self::update_score_config_request::UpdateScoreConfigRequest;
 pub mod update_span_body;
 pub use self::update_span_body::UpdateSpanBody;
 pub mod update_span_event;
