@@ -103,7 +103,7 @@ Name | Type | Description  | Required | Notes
 
 ## trace_list
 
-> models::Traces trace_list(page, limit, user_id, name, session_id, from_timestamp, to_timestamp, order_by, tags, version, release, environment, fields)
+> models::Traces trace_list(page, limit, user_id, name, session_id, from_timestamp, to_timestamp, order_by, tags, version, release, environment, fields, filter)
 
 
 Get list of traces
@@ -126,6 +126,7 @@ Name | Type | Description  | Required | Notes
 **release** | Option<**String**> | Optional filter to only include traces with a certain release. |  |
 **environment** | Option<[**Vec<String>**](String.md)> | Optional filter for traces where the environment is one of the provided values. |  |
 **fields** | Option<**String**> | Comma-separated list of fields to include in the response. Available field groups: 'core' (always included), 'io' (input, output, metadata), 'scores', 'observations', 'metrics'. If not specified, all fields are returned. Example: 'core,scores,metrics'. Note: Excluded 'observations' or 'scores' fields return empty arrays; excluded 'metrics' returns -1 for 'totalCost' and 'latency'. |  |
+**filter** | Option<**String**> | JSON string containing an array of filter conditions. When provided, this takes precedence over legacy filter parameters (userId, name, sessionId, tags, version, release, environment, fromTimestamp, toTimestamp). Each filter condition has the following structure: ```json [   {     \"type\": string,           // Required. One of: \"datetime\", \"string\", \"number\", \"stringOptions\", \"categoryOptions\", \"arrayOptions\", \"stringObject\", \"numberObject\", \"boolean\", \"null\"     \"column\": string,         // Required. Column to filter on     \"operator\": string,       // Required. Operator based on type:                               // - datetime: \">\", \"<\", \">=\", \"<=\"                               // - string: \"=\", \"contains\", \"does not contain\", \"starts with\", \"ends with\"                               // - stringOptions: \"any of\", \"none of\"                               // - categoryOptions: \"any of\", \"none of\"                               // - arrayOptions: \"any of\", \"none of\", \"all of\"                               // - number: \"=\", \">\", \"<\", \">=\", \"<=\"                               // - stringObject: \"=\", \"contains\", \"does not contain\", \"starts with\", \"ends with\"                               // - numberObject: \"=\", \">\", \"<\", \">=\", \"<=\"                               // - boolean: \"=\", \"<>\"                               // - null: \"is null\", \"is not null\"     \"value\": any,             // Required (except for null type). Value to compare against. Type depends on filter type     \"key\": string             // Required only for stringObject, numberObject, and categoryOptions types when filtering on nested fields like metadata   } ] ``` |  |
 
 ### Return type
 
