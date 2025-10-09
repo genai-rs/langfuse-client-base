@@ -235,6 +235,7 @@ pub async fn trace_list(
     release: Option<&str>,
     environment: Option<Vec<String>>,
     fields: Option<&str>,
+    filter: Option<&str>,
 ) -> Result<models::Traces, Error<TraceListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -250,6 +251,7 @@ pub async fn trace_list(
     let p_query_release = release;
     let p_query_environment = environment;
     let p_query_fields = fields;
+    let p_query_filter = filter;
 
     let uri_str = format!("{}/api/public/traces", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -324,6 +326,9 @@ pub async fn trace_list(
     }
     if let Some(ref param_value) = p_query_fields {
         req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_filter {
+        req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
