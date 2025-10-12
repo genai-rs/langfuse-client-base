@@ -13,6 +13,13 @@ if [ -f "$toml" ] && ! grep -q '^bon[[:space:]]*=' "$toml"; then
   mv "$tmp" "$toml"
 fi
 
+# Add reqwest-middleware dependency if missing (should be added by generator, but ensure it's there)
+if [ -f "$toml" ] && ! grep -q 'reqwest-middleware' "$toml"; then
+  tmp="$(mktemp)"
+  awk '/^reqwest = /{print; print "reqwest-middleware = { version = \"0.4\", features = [\"json\", \"multipart\"] }"; next} {print}' "$toml" > "$tmp"
+  mv "$tmp" "$toml"
+fi
+
 # Add #[bon::builder] to public async API functions
 for f in "$ROOT"/src/apis/*.rs; do
   [ -f "$f" ] || continue
