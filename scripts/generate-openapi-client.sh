@@ -73,6 +73,7 @@ $GENERATOR_CMD generate \
     --additional-properties=packageVersion=0.1.0 \
     --additional-properties=library=reqwest \
     --additional-properties=supportAsync=true \
+    --additional-properties=supportMiddleware=true \
     --additional-properties=preferUnsignedInt=false \
     --additional-properties=useSingleRequestParameter=false
 
