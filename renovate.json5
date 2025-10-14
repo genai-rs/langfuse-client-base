@@ -24,6 +24,9 @@
   commitMessagePrefix: 'chore(deps):',
   prBodyTemplate: 'This PR updates dependencies. See the [Dependency Dashboard](../../issues) for details.',
   rangeStrategy: 'auto',
+  lockFileMaintenance: {
+    enabled: false,
+  },
   ignorePaths: [
     'src/**/*.rs',
     'docs/**',
@@ -51,7 +54,7 @@
         'rust',
       ],
       enabled: true,
-      rangeStrategy: 'update-lockfile',
+      rangeStrategy: 'bump',
     },
     {
       description: 'Group all Rust patch updates',
