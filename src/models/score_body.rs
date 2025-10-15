@@ -57,6 +57,14 @@ pub struct ScoreBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue.
+    #[serde(
+        rename = "queueId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub queue_id: Option<Option<String>>,
     #[serde(rename = "value")]
     pub value: Box<models::CreateScoreValue>,
     #[serde(
@@ -95,6 +103,7 @@ impl ScoreBody {
             dataset_run_id: None,
             name,
             environment: None,
+            queue_id: None,
             value: Box::new(value),
             comment: None,
             metadata: None,

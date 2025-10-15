@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **comment** | Option<**String**> |  | [optional]
 **metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
 **environment** | Option<**String**> | The environment of the score. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
+**queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **data_type** | Option<[**models::ScoreDataType**](ScoreDataType.md)> |  | [optional]
 **config_id** | Option<**String**> | Reference a score config on a score. The unique langfuse identifier of a score config. When passing this field, the dataType and stringValue fields are automatically populated. | [optional]
 

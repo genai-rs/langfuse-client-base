@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **dataset_run_id** | Option<**String**> |  | [optional]
 **name** | **String** |  | 
 **environment** | Option<**String**> |  | [optional]
+**queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **value** | [**models::CreateScoreValue**](CreateScoreValue.md) |  | 
 **comment** | Option<**String**> |  | [optional]
 **metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
