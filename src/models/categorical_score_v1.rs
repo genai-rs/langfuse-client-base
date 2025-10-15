@@ -74,7 +74,7 @@ pub struct CategoricalScoreV1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub config_id: Option<Option<String>>,
-    /// Reference an annotation queue on a score. Populated if the score was initially created in an annotation queue.
+    /// The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue.
     #[serde(
         rename = "queueId",
         default,
