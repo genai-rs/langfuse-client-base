@@ -74,6 +74,14 @@ pub struct CreateScoreRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue.
+    #[serde(
+        rename = "queueId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub queue_id: Option<Option<String>>,
     #[serde(rename = "dataType", skip_serializing_if = "Option::is_none")]
     pub data_type: Option<models::ScoreDataType>,
     /// Reference a score config on a score. The unique langfuse identifier of a score config. When passing this field, the dataType and stringValue fields are automatically populated.
@@ -99,6 +107,7 @@ impl CreateScoreRequest {
             comment: None,
             metadata: None,
             environment: None,
+            queue_id: None,
             data_type: None,
             config_id: None,
         }
