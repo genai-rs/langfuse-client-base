@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.5.0...v0.6.0) - 2025-10-15
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- *(deps)* disable Cargo.lock-only updates from Renovate
+
 ## [0.5.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.4.0...v0.5.0) - 2025-10-12
 
 ### Other
