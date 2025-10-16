@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.5.0...v0.6.0) - 2025-10-16
+
+### Added
+
+- add bon builder post processing
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- *(deps)* disable Cargo.lock-only updates from Renovate
+- release version 0.5.0
+- Regenerate client with reqwest-middleware support
+- Add reqwest-middleware support to client generation
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- install clippy and rustfmt for generator workflow
+- release version 0.3.1
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.16.0
+- remove decorative emoji from README
+- *(deps)* migrate config renovate.json5
+- *(deps)* Update mozilla-actions/sccache-action action to v0.0.9
+- *(deps)* Update github-actions
+- align renovate config with library defaults
+- replace legacy assistant guide with automation guide
+
 ## [0.5.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.4.0...v0.5.0) - 2025-10-12
 
 ### Other
