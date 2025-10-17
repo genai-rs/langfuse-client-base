@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
+**r#type** | [**models::PromptType**](PromptType.md) |  | 
 **versions** | **Vec<i32>** |  | 
 **labels** | **Vec<String>** |  | 
 **tags** | **Vec<String>** |  | 
