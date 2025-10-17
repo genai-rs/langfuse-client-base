@@ -15,6 +15,8 @@ use serde::{Deserialize, Serialize};
 pub struct PromptMeta {
     #[serde(rename = "name")]
     pub name: String,
+    #[serde(rename = "type")]
+    pub r#type: models::PromptType,
     #[serde(rename = "versions")]
     pub versions: Vec<i32>,
     #[serde(rename = "labels")]
@@ -31,6 +33,7 @@ pub struct PromptMeta {
 impl PromptMeta {
     pub fn new(
         name: String,
+        r#type: models::PromptType,
         versions: Vec<i32>,
         labels: Vec<String>,
         tags: Vec<String>,
@@ -39,6 +42,7 @@ impl PromptMeta {
     ) -> PromptMeta {
         PromptMeta {
             name,
+            r#type,
             versions,
             labels,
             tags,

@@ -302,6 +302,8 @@ pub mod prompt_one_of;
 pub use self::prompt_one_of::PromptOneOf;
 pub mod prompt_one_of_1;
 pub use self::prompt_one_of_1::PromptOneOf1;
+pub mod prompt_type;
+pub use self::prompt_type::PromptType;
 pub mod prompt_version_update_request;
 pub use self::prompt_version_update_request::PromptVersionUpdateRequest;
 pub mod resource_meta;
