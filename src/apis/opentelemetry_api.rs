@@ -13,10 +13,10 @@ use crate::{apis::ResponseContent, models};
 use reqwest;
 use serde::{de::Error as _, Deserialize, Serialize};
 
-/// struct for typed errors of method [`ingestion_batch`]
+/// struct for typed errors of method [`opentelemetry_export_traces`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum IngestionBatchError {
+pub enum OpentelemetryExportTracesError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
     Status403(serde_json::Value),
@@ -25,16 +25,16 @@ pub enum IngestionBatchError {
     UnknownValue(serde_json::Value),
 }
 
-/// **Legacy endpoint for batch ingestion for Langfuse Observability.**  -> Please use the OpenTelemetry endpoint (`/api/public/otel/v1/traces`). Learn more: https://langfuse.com/integrations/native/opentelemetry  Within each batch, there can be multiple events. Each event has a type, an id, a timestamp, metadata and a body. Internally, we refer to this as the \"event envelope\" as it tells us something about the event but not the trace. We use the event id within this envelope to deduplicate messages to avoid processing the same event twice, i.e. the event id should be unique per request. The event.body.id is the ID of the actual trace and will be used for updates and will be visible within the Langfuse App. I.e. if you want to update a trace, you'd use the same body id, but separate event IDs.  Notes: - Introduction to data model: https://langfuse.com/docs/observability/data-model - Batch sizes are limited to 3.5 MB in total. You need to adjust the number of events per batch accordingly. - The API does not return a 4xx status code for input errors. Instead, it responds with a 207 status code, which includes a list of the encountered errors.
+/// **OpenTelemetry Traces Ingestion Endpoint**  This endpoint implements the OTLP/HTTP specification for trace ingestion, providing native OpenTelemetry integration for Langfuse Observability.  **Supported Formats:** - Binary Protobuf: `Content-Type: application/x-protobuf` - JSON Protobuf: `Content-Type: application/json` - Supports gzip compression via `Content-Encoding: gzip` header  **Specification Compliance:** - Conforms to [OTLP/HTTP Trace Export](https://opentelemetry.io/docs/specs/otlp/#otlphttp) - Implements `ExportTraceServiceRequest` message format  **Documentation:** - Integration guide: https://langfuse.com/integrations/native/opentelemetry - Data model: https://langfuse.com/docs/observability/data-model
 #[bon::builder]
-pub async fn ingestion_batch(
+pub async fn opentelemetry_export_traces(
     configuration: &configuration::Configuration,
-    ingestion_batch_request: models::IngestionBatchRequest,
-) -> Result<models::IngestionResponse, Error<IngestionBatchError>> {
+    opentelemetry_export_traces_request: models::OpentelemetryExportTracesRequest,
+) -> Result<serde_json::Value, Error<OpentelemetryExportTracesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_body_ingestion_batch_request = ingestion_batch_request;
+    let p_body_opentelemetry_export_traces_request = opentelemetry_export_traces_request;
 
-    let uri_str = format!("{}/api/public/ingestion", configuration.base_path);
+    let uri_str = format!("{}/api/public/otel/v1/traces", configuration.base_path);
     let mut req_builder = configuration
         .client
         .request(reqwest::Method::POST, &uri_str);
@@ -45,7 +45,7 @@ pub async fn ingestion_batch(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_ingestion_batch_request);
+    req_builder = req_builder.json(&p_body_opentelemetry_export_traces_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -62,12 +62,12 @@ pub async fn ingestion_batch(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::IngestionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::IngestionResponse`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `serde_json::Value`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `serde_json::Value`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<IngestionBatchError> = serde_json::from_str(&content).ok();
+        let entity: Option<OpentelemetryExportTracesError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,
