@@ -135,6 +135,7 @@ pub mod media_api;
 pub mod metrics_api;
 pub mod models_api;
 pub mod observations_api;
+pub mod opentelemetry_api;
 pub mod organizations_api;
 pub mod projects_api;
 pub mod prompt_version_api;
