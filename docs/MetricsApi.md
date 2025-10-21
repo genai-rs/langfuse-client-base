@@ -13,7 +13,7 @@ Method | HTTP request | Description
 > models::MetricsResponse metrics_metrics(query)
 
 
-Get metrics from the Langfuse project using a query object
+Get metrics from the Langfuse project using a query object.  For more details, see the [Metrics API documentation](https://langfuse.com/docs/metrics/features/metrics-api).
 
 ### Parameters
 

@@ -25,7 +25,7 @@ pub enum MetricsMetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get metrics from the Langfuse project using a query object
+/// Get metrics from the Langfuse project using a query object.  For more details, see the [Metrics API documentation](https://langfuse.com/docs/metrics/features/metrics-api).
 #[bon::builder]
 pub async fn metrics_metrics(
     configuration: &configuration::Configuration,
