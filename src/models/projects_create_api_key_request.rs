@@ -21,10 +21,30 @@ pub struct ProjectsCreateApiKeyRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub note: Option<Option<String>>,
+    /// Optional predefined public key. Must start with 'pk-lf-'. If provided, secretKey must also be provided.
+    #[serde(
+        rename = "publicKey",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub public_key: Option<Option<String>>,
+    /// Optional predefined secret key. Must start with 'sk-lf-'. If provided, publicKey must also be provided.
+    #[serde(
+        rename = "secretKey",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub secret_key: Option<Option<String>>,
 }
 
 impl ProjectsCreateApiKeyRequest {
     pub fn new() -> ProjectsCreateApiKeyRequest {
-        ProjectsCreateApiKeyRequest { note: None }
+        ProjectsCreateApiKeyRequest {
+            note: None,
+            public_key: None,
+            secret_key: None,
+        }
     }
 }

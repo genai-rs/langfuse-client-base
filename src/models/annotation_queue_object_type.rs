@@ -18,6 +18,8 @@ pub enum AnnotationQueueObjectType {
     Trace,
     #[serde(rename = "OBSERVATION")]
     Observation,
+    #[serde(rename = "SESSION")]
+    Session,
 }
 
 impl std::fmt::Display for AnnotationQueueObjectType {
@@ -25,6 +27,7 @@ impl std::fmt::Display for AnnotationQueueObjectType {
         match self {
             Self::Trace => write!(f, "TRACE"),
             Self::Observation => write!(f, "OBSERVATION"),
+            Self::Session => write!(f, "SESSION"),
         }
     }
 }
