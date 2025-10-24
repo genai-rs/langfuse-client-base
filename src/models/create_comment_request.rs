@@ -22,7 +22,7 @@ pub struct CreateCommentRequest {
     /// The id of the object to attach the comment to. If this does not reference a valid existing object, an error will be thrown.
     #[serde(rename = "objectId")]
     pub object_id: String,
-    /// The content of the comment. May include markdown. Currently limited to 3000 characters.
+    /// The content of the comment. May include markdown. Currently limited to 5000 characters.
     #[serde(rename = "content")]
     pub content: String,
     /// The id of the user who created the comment.
