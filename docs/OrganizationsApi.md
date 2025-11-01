@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**organizations_delete_organization_membership**](OrganizationsApi.md#organizations_delete_organization_membership) | **DELETE** /api/public/organizations/memberships | 
 [**organizations_delete_project_membership**](OrganizationsApi.md#organizations_delete_project_membership) | **DELETE** /api/public/projects/{projectId}/memberships | 
+[**organizations_get_organization_api_keys**](OrganizationsApi.md#organizations_get_organization_api_keys) | **GET** /api/public/organizations/apiKeys | 
 [**organizations_get_organization_memberships**](OrganizationsApi.md#organizations_get_organization_memberships) | **GET** /api/public/organizations/memberships | 
 [**organizations_get_organization_projects**](OrganizationsApi.md#organizations_get_organization_projects) | **GET** /api/public/organizations/projects | 
 [**organizations_get_project_memberships**](OrganizationsApi.md#organizations_get_project_memberships) | **GET** /api/public/projects/{projectId}/memberships | 
@@ -70,6 +71,33 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## organizations_get_organization_api_keys
+
+> models::OrganizationApiKeysResponse organizations_get_organization_api_keys()
+
+
+Get all API keys for the organization associated with the API key (requires organization-scoped API key)
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**models::OrganizationApiKeysResponse**](OrganizationApiKeysResponse.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
