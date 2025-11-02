@@ -12,7 +12,7 @@ OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
-OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.16.0}"
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.17.0}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
