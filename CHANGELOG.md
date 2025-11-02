@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.5.0...v0.5.1) - 2025-11-02
+
+### Added
+
+- add bon builder post processing
+
+### Other
+
+- *(deps)* Update rust minor updates
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.17.0
+- *(deps)* Update rust patch updates
+- improve dependency version clarity and renovate config (genai-rs-10)
+- update MSRV to 1.83 for icu crates compatibility (genai-rs-43)
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* disable Cargo.lock-only updates from Renovate
+- release version 0.5.0
+- Regenerate client with reqwest-middleware support
+- Add reqwest-middleware support to client generation
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- install clippy and rustfmt for generator workflow
+- release version 0.3.1
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.16.0
+- remove decorative emoji from README
+- *(deps)* migrate config renovate.json5
+- *(deps)* Update mozilla-actions/sccache-action action to v0.0.9
+- *(deps)* Update github-actions
+- align renovate config with library defaults
+- replace legacy assistant guide with automation guide
+
 ## [0.5.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.4.0...v0.5.0) - 2025-10-12
 
 ### Other
