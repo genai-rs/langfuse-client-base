@@ -11,7 +11,7 @@ documentation = "https://docs.rs/langfuse-client-base"
 readme = "README.md"
 keywords = ["langfuse", "openapi", "client", "api", "llm"]
 categories = ["api-bindings", "web-programming::http-client"]
-rust-version = "1.82"
+rust-version = "1.83"
 
 [package.metadata.docs.rs]
 # Build with default features (rustls). Keep builds deterministic on docs.rs
