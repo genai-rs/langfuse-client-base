@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct IngestionEventOneOf6 {
-    #[serde(rename = "body")]
-    pub body: Box<models::CreateEventBody>,
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
     pub id: String,
@@ -29,22 +27,24 @@ pub struct IngestionEventOneOf6 {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
+    #[serde(rename = "body")]
+    pub body: Box<models::CreateEventBody>,
     #[serde(rename = "type")]
     pub r#type: Type,
 }
 
 impl IngestionEventOneOf6 {
     pub fn new(
-        body: models::CreateEventBody,
         id: String,
         timestamp: String,
+        body: models::CreateEventBody,
         r#type: Type,
     ) -> IngestionEventOneOf6 {
         IngestionEventOneOf6 {
-            body: Box::new(body),
             id,
             timestamp,
             metadata: None,
+            body: Box::new(body),
             r#type,
         }
     }

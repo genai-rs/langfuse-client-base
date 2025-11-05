@@ -13,21 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct TraceWithFullDetails {
-    /// Path of trace in Langfuse UI
-    #[serde(rename = "htmlPath")]
-    pub html_path: String,
-    /// Latency of trace in seconds
-    #[serde(rename = "latency")]
-    pub latency: f64,
-    /// Cost of trace in USD
-    #[serde(rename = "totalCost")]
-    pub total_cost: f64,
-    /// List of observations
-    #[serde(rename = "observations")]
-    pub observations: Vec<models::ObservationsView>,
-    /// List of scores
-    #[serde(rename = "scores")]
-    pub scores: Vec<models::ScoreV1>,
     /// The unique identifier of a trace
     #[serde(rename = "id")]
     pub id: String,
@@ -122,24 +107,34 @@ pub struct TraceWithFullDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// Path of trace in Langfuse UI
+    #[serde(rename = "htmlPath")]
+    pub html_path: String,
+    /// Latency of trace in seconds
+    #[serde(rename = "latency")]
+    pub latency: f64,
+    /// Cost of trace in USD
+    #[serde(rename = "totalCost")]
+    pub total_cost: f64,
+    /// List of observations
+    #[serde(rename = "observations")]
+    pub observations: Vec<models::ObservationsView>,
+    /// List of scores
+    #[serde(rename = "scores")]
+    pub scores: Vec<models::ScoreV1>,
 }
 
 impl TraceWithFullDetails {
     pub fn new(
+        id: String,
+        timestamp: String,
         html_path: String,
         latency: f64,
         total_cost: f64,
         observations: Vec<models::ObservationsView>,
         scores: Vec<models::ScoreV1>,
-        id: String,
-        timestamp: String,
     ) -> TraceWithFullDetails {
         TraceWithFullDetails {
-            html_path,
-            latency,
-            total_cost,
-            observations,
-            scores,
             id,
             timestamp,
             name: None,
@@ -153,6 +148,11 @@ impl TraceWithFullDetails {
             tags: None,
             public: None,
             environment: None,
+            html_path,
+            latency,
+            total_cost,
+            observations,
+            scores,
         }
     }
 }

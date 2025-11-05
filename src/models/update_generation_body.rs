@@ -14,61 +14,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateGenerationBody {
     #[serde(
-        rename = "completionStartTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub completion_start_time: Option<Option<String>>,
-    #[serde(
-        rename = "model",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model: Option<Option<String>>,
-    #[serde(
-        rename = "modelParameters",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model_parameters: Option<Option<std::collections::HashMap<String, models::MapValue>>>,
-    #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
-    pub usage: Option<Box<models::IngestionUsage>>,
-    #[serde(
-        rename = "promptName",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_name: Option<Option<String>>,
-    #[serde(rename = "usageDetails", skip_serializing_if = "Option::is_none")]
-    pub usage_details: Option<Box<models::UsageDetails>>,
-    #[serde(
-        rename = "costDetails",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub cost_details: Option<Option<std::collections::HashMap<String, f64>>>,
-    #[serde(
-        rename = "promptVersion",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_version: Option<Option<i32>>,
-    #[serde(
-        rename = "endTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub end_time: Option<Option<String>>,
-    #[serde(rename = "id")]
-    pub id: String,
-    #[serde(
         rename = "traceId",
         default,
         with = "::serde_with::rust::double_option",
@@ -140,21 +85,66 @@ pub struct UpdateGenerationBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(rename = "id")]
+    pub id: String,
+    #[serde(
+        rename = "endTime",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub end_time: Option<Option<String>>,
+    #[serde(
+        rename = "completionStartTime",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub completion_start_time: Option<Option<String>>,
+    #[serde(
+        rename = "model",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub model: Option<Option<String>>,
+    #[serde(
+        rename = "modelParameters",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub model_parameters: Option<Option<std::collections::HashMap<String, models::MapValue>>>,
+    #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
+    pub usage: Option<Box<models::IngestionUsage>>,
+    #[serde(
+        rename = "promptName",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub prompt_name: Option<Option<String>>,
+    #[serde(rename = "usageDetails", skip_serializing_if = "Option::is_none")]
+    pub usage_details: Option<Box<models::UsageDetails>>,
+    #[serde(
+        rename = "costDetails",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub cost_details: Option<Option<std::collections::HashMap<String, f64>>>,
+    #[serde(
+        rename = "promptVersion",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub prompt_version: Option<Option<i32>>,
 }
 
 impl UpdateGenerationBody {
     pub fn new(id: String) -> UpdateGenerationBody {
         UpdateGenerationBody {
-            completion_start_time: None,
-            model: None,
-            model_parameters: None,
-            usage: None,
-            prompt_name: None,
-            usage_details: None,
-            cost_details: None,
-            prompt_version: None,
-            end_time: None,
-            id,
             trace_id: None,
             name: None,
             start_time: None,
@@ -166,6 +156,16 @@ impl UpdateGenerationBody {
             parent_observation_id: None,
             version: None,
             environment: None,
+            id,
+            end_time: None,
+            completion_start_time: None,
+            model: None,
+            model_parameters: None,
+            usage: None,
+            prompt_name: None,
+            usage_details: None,
+            cost_details: None,
+            prompt_version: None,
         }
     }
 }

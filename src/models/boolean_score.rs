@@ -13,12 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct BooleanScore {
-    /// The numeric value of the score. Equals 1 for \"True\" and 0 for \"False\"
-    #[serde(rename = "value")]
-    pub value: f64,
-    /// The string representation of the score value. Is inferred from the numeric value and equals \"True\" or \"False\"
-    #[serde(rename = "stringValue")]
-    pub string_value: String,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(
@@ -104,22 +98,26 @@ pub struct BooleanScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The numeric value of the score. Equals 1 for \"True\" and 0 for \"False\"
+    #[serde(rename = "value")]
+    pub value: f64,
+    /// The string representation of the score value. Is inferred from the numeric value and equals \"True\" or \"False\"
+    #[serde(rename = "stringValue")]
+    pub string_value: String,
 }
 
 impl BooleanScore {
     pub fn new(
-        value: f64,
-        string_value: String,
         id: String,
         name: String,
         source: models::ScoreSource,
         timestamp: String,
         created_at: String,
         updated_at: String,
+        value: f64,
+        string_value: String,
     ) -> BooleanScore {
         BooleanScore {
-            value,
-            string_value,
             id,
             trace_id: None,
             session_id: None,
@@ -136,6 +134,8 @@ impl BooleanScore {
             config_id: None,
             queue_id: None,
             environment: None,
+            value,
+            string_value,
         }
     }
 }

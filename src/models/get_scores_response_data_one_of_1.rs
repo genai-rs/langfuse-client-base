@@ -13,19 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetScoresResponseDataOneOf1 {
-    #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
-    pub trace: Option<Box<models::GetScoresResponseTraceData>>,
-    /// Only defined if a config is linked. Represents the numeric category mapping of the stringValue
-    #[serde(
-        rename = "value",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub value: Option<Option<f64>>,
-    /// The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category
-    #[serde(rename = "stringValue")]
-    pub string_value: String,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(
@@ -111,25 +98,35 @@ pub struct GetScoresResponseDataOneOf1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// Only defined if a config is linked. Represents the numeric category mapping of the stringValue
+    #[serde(
+        rename = "value",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub value: Option<Option<f64>>,
+    /// The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category
+    #[serde(rename = "stringValue")]
+    pub string_value: String,
+    #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
+    pub trace: Option<Box<models::GetScoresResponseTraceData>>,
     #[serde(rename = "dataType")]
     pub data_type: DataType,
 }
 
 impl GetScoresResponseDataOneOf1 {
     pub fn new(
-        string_value: String,
         id: String,
         name: String,
         source: models::ScoreSource,
         timestamp: String,
         created_at: String,
         updated_at: String,
+        string_value: String,
         data_type: DataType,
     ) -> GetScoresResponseDataOneOf1 {
         GetScoresResponseDataOneOf1 {
-            trace: None,
-            value: None,
-            string_value,
             id,
             trace_id: None,
             session_id: None,
@@ -146,6 +143,9 @@ impl GetScoresResponseDataOneOf1 {
             config_id: None,
             queue_id: None,
             environment: None,
+            value: None,
+            string_value,
+            trace: None,
             data_type,
         }
     }

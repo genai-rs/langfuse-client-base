@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptOneOf {
-    #[serde(rename = "prompt")]
-    pub prompt: Vec<models::ChatMessageWithPlaceholders>,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "version")]
@@ -43,22 +41,23 @@ pub struct PromptOneOf {
         skip_serializing_if = "Option::is_none"
     )]
     pub resolution_graph: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
+    #[serde(rename = "prompt")]
+    pub prompt: Vec<models::ChatMessageWithPlaceholders>,
     #[serde(rename = "type")]
     pub r#type: Type,
 }
 
 impl PromptOneOf {
     pub fn new(
-        prompt: Vec<models::ChatMessageWithPlaceholders>,
         name: String,
         version: i32,
         config: Option<serde_json::Value>,
         labels: Vec<String>,
         tags: Vec<String>,
+        prompt: Vec<models::ChatMessageWithPlaceholders>,
         r#type: Type,
     ) -> PromptOneOf {
         PromptOneOf {
-            prompt,
             name,
             version,
             config,
@@ -66,6 +65,7 @@ impl PromptOneOf {
             tags,
             commit_message: None,
             resolution_graph: None,
+            prompt,
             r#type,
         }
     }

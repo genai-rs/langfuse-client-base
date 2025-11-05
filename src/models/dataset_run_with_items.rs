@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DatasetRunWithItems {
-    #[serde(rename = "datasetRunItems")]
-    pub dataset_run_items: Vec<models::DatasetRunItem>,
     /// Unique identifier of the dataset run
     #[serde(rename = "id")]
     pub id: String,
@@ -49,20 +47,21 @@ pub struct DatasetRunWithItems {
     /// The date and time when the dataset run was last updated
     #[serde(rename = "updatedAt")]
     pub updated_at: String,
+    #[serde(rename = "datasetRunItems")]
+    pub dataset_run_items: Vec<models::DatasetRunItem>,
 }
 
 impl DatasetRunWithItems {
     pub fn new(
-        dataset_run_items: Vec<models::DatasetRunItem>,
         id: String,
         name: String,
         dataset_id: String,
         dataset_name: String,
         created_at: String,
         updated_at: String,
+        dataset_run_items: Vec<models::DatasetRunItem>,
     ) -> DatasetRunWithItems {
         DatasetRunWithItems {
-            dataset_run_items,
             id,
             name,
             description: None,
@@ -71,6 +70,7 @@ impl DatasetRunWithItems {
             dataset_name,
             created_at,
             updated_at,
+            dataset_run_items,
         }
     }
 }

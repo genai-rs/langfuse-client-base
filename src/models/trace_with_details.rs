@@ -13,21 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct TraceWithDetails {
-    /// Path of trace in Langfuse UI
-    #[serde(rename = "htmlPath")]
-    pub html_path: String,
-    /// Latency of trace in seconds
-    #[serde(rename = "latency")]
-    pub latency: f64,
-    /// Cost of trace in USD
-    #[serde(rename = "totalCost")]
-    pub total_cost: f64,
-    /// List of observation ids
-    #[serde(rename = "observations")]
-    pub observations: Vec<String>,
-    /// List of score ids
-    #[serde(rename = "scores")]
-    pub scores: Vec<String>,
     /// The unique identifier of a trace
     #[serde(rename = "id")]
     pub id: String,
@@ -122,24 +107,34 @@ pub struct TraceWithDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// Path of trace in Langfuse UI
+    #[serde(rename = "htmlPath")]
+    pub html_path: String,
+    /// Latency of trace in seconds
+    #[serde(rename = "latency")]
+    pub latency: f64,
+    /// Cost of trace in USD
+    #[serde(rename = "totalCost")]
+    pub total_cost: f64,
+    /// List of observation ids
+    #[serde(rename = "observations")]
+    pub observations: Vec<String>,
+    /// List of score ids
+    #[serde(rename = "scores")]
+    pub scores: Vec<String>,
 }
 
 impl TraceWithDetails {
     pub fn new(
+        id: String,
+        timestamp: String,
         html_path: String,
         latency: f64,
         total_cost: f64,
         observations: Vec<String>,
         scores: Vec<String>,
-        id: String,
-        timestamp: String,
     ) -> TraceWithDetails {
         TraceWithDetails {
-            html_path,
-            latency,
-            total_cost,
-            observations,
-            scores,
             id,
             timestamp,
             name: None,
@@ -153,6 +148,11 @@ impl TraceWithDetails {
             tags: None,
             public: None,
             environment: None,
+            html_path,
+            latency,
+            total_cost,
+            observations,
+            scores,
         }
     }
 }

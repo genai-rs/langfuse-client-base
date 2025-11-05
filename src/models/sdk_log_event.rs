@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SdkLogEvent {
-    #[serde(rename = "body")]
-    pub body: Box<models::SdkLogBody>,
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
     pub id: String,
@@ -29,15 +27,17 @@ pub struct SdkLogEvent {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
+    #[serde(rename = "body")]
+    pub body: Box<models::SdkLogBody>,
 }
 
 impl SdkLogEvent {
-    pub fn new(body: models::SdkLogBody, id: String, timestamp: String) -> SdkLogEvent {
+    pub fn new(id: String, timestamp: String, body: models::SdkLogBody) -> SdkLogEvent {
         SdkLogEvent {
-            body: Box::new(body),
             id,
             timestamp,
             metadata: None,
+            body: Box::new(body),
         }
     }
 }

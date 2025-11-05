@@ -13,11 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetScoresResponseDataNumeric {
-    #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
-    pub trace: Option<Box<models::GetScoresResponseTraceData>>,
-    /// The numeric value of the score
-    #[serde(rename = "value")]
-    pub value: f64,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(
@@ -103,21 +98,24 @@ pub struct GetScoresResponseDataNumeric {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The numeric value of the score
+    #[serde(rename = "value")]
+    pub value: f64,
+    #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
+    pub trace: Option<Box<models::GetScoresResponseTraceData>>,
 }
 
 impl GetScoresResponseDataNumeric {
     pub fn new(
-        value: f64,
         id: String,
         name: String,
         source: models::ScoreSource,
         timestamp: String,
         created_at: String,
         updated_at: String,
+        value: f64,
     ) -> GetScoresResponseDataNumeric {
         GetScoresResponseDataNumeric {
-            trace: None,
-            value,
             id,
             trace_id: None,
             session_id: None,
@@ -134,6 +132,8 @@ impl GetScoresResponseDataNumeric {
             config_id: None,
             queue_id: None,
             environment: None,
+            value,
+            trace: None,
         }
     }
 }
