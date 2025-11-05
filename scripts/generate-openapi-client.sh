@@ -93,62 +93,23 @@ if [ -f "$BASE_CLIENT_DIR/README.md.custom" ]; then
     mv "$BASE_CLIENT_DIR/README.md.custom" "$BASE_CLIENT_DIR/README.md"
 fi
 
-# Merge Cargo.toml: Keep our version but update dependencies
+# Merge Cargo.toml without letting the generator overwrite curated dependency versions
 echo "📝 Merging Cargo.toml changes..."
 if [ -f "$BASE_CLIENT_DIR/Cargo.toml.original" ]; then
-    # Save the generated Cargo.toml
     mv "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.generated"
-    
-    # Restore our original Cargo.toml
     mv "$BASE_CLIENT_DIR/Cargo.toml.original" "$BASE_CLIENT_DIR/Cargo.toml"
-    
-    # Extract dependencies from generated file and update our Cargo.toml
-    # This uses Python as it's more reliable for TOML parsing than sed/awk
-    python3 - << 'PYTHON_SCRIPT'
-import re
-import sys
 
-# Read the original and generated files
-with open("Cargo.toml", "r") as f:
-    original = f.read()
-with open("Cargo.toml.generated", "r") as f:
-    generated = f.read()
+    python3 "$SCRIPT_DIR/merge_cargo_dependencies.py" \
+        "$BASE_CLIENT_DIR/Cargo.toml" \
+        "$BASE_CLIENT_DIR/Cargo.toml.generated"
 
-# Extract dependencies section from generated file
-deps_pattern = r'(\[dependencies\].*?)(?=\n\[|$)'
-deps_match = re.search(deps_pattern, generated, re.DOTALL)
-
-if deps_match:
-    generated_deps = deps_match.group(1)
-    
-    # Replace dependencies section in original file
-    original_updated = re.sub(deps_pattern, generated_deps, original, flags=re.DOTALL)
-    
-    # Also extract and update dev-dependencies if present
-    dev_deps_pattern = r'(\[dev-dependencies\].*?)(?=\n\[|$)'
-    dev_deps_match = re.search(dev_deps_pattern, generated, re.DOTALL)
-    
-    if dev_deps_match:
-        generated_dev_deps = dev_deps_match.group(1)
-        if '[dev-dependencies]' in original:
-            original_updated = re.sub(dev_deps_pattern, generated_dev_deps, original_updated, flags=re.DOTALL)
-        else:
-            # Add dev-dependencies if not present in original
-            original_updated += "\n" + generated_dev_deps
-    
-    # Write the updated content
-    with open("Cargo.toml", "w") as f:
-        f.write(original_updated)
-    
-    print("✅ Successfully merged Cargo.toml dependencies")
-else:
-    print("⚠️ Could not find dependencies section in generated file")
-    sys.exit(1)
-PYTHON_SCRIPT
-    
-    # Clean up
     rm -f "$BASE_CLIENT_DIR/Cargo.toml.generated"
 fi
+
+# Remove any leftover backups if they still exist
+rm -f "$BASE_CLIENT_DIR/.gitignore.custom" \
+      "$BASE_CLIENT_DIR/README.md.custom" \
+      "$BASE_CLIENT_DIR/Cargo.toml.original"
 
 # Apply post-generation patches
 echo "🔧 Applying post-generation patches..."
