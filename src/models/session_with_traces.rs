@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SessionWithTraces {
-    #[serde(rename = "traces")]
-    pub traces: Vec<models::Trace>,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
@@ -29,21 +27,23 @@ pub struct SessionWithTraces {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(rename = "traces")]
+    pub traces: Vec<models::Trace>,
 }
 
 impl SessionWithTraces {
     pub fn new(
-        traces: Vec<models::Trace>,
         id: String,
         created_at: String,
         project_id: String,
+        traces: Vec<models::Trace>,
     ) -> SessionWithTraces {
         SessionWithTraces {
-            traces,
             id,
             created_at,
             project_id,
             environment: None,
+            traces,
         }
     }
 }

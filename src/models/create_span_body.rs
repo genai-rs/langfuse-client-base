@@ -14,20 +14,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateSpanBody {
     #[serde(
-        rename = "endTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub end_time: Option<Option<String>>,
-    #[serde(
-        rename = "id",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub id: Option<Option<String>>,
-    #[serde(
         rename = "traceId",
         default,
         with = "::serde_with::rust::double_option",
@@ -99,13 +85,25 @@ pub struct CreateSpanBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(
+        rename = "id",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub id: Option<Option<String>>,
+    #[serde(
+        rename = "endTime",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub end_time: Option<Option<String>>,
 }
 
 impl CreateSpanBody {
     pub fn new() -> CreateSpanBody {
         CreateSpanBody {
-            end_time: None,
-            id: None,
             trace_id: None,
             name: None,
             start_time: None,
@@ -117,6 +115,8 @@ impl CreateSpanBody {
             parent_observation_id: None,
             version: None,
             environment: None,
+            id: None,
+            end_time: None,
         }
     }
 }

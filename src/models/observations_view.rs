@@ -13,94 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsView {
-    /// The name of the prompt associated with the observation
-    #[serde(
-        rename = "promptName",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_name: Option<Option<String>>,
-    /// The version of the prompt associated with the observation
-    #[serde(
-        rename = "promptVersion",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_version: Option<Option<i32>>,
-    /// The unique identifier of the model
-    #[serde(
-        rename = "modelId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model_id: Option<Option<String>>,
-    /// The price of the input in USD
-    #[serde(
-        rename = "inputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input_price: Option<Option<f64>>,
-    /// The price of the output in USD.
-    #[serde(
-        rename = "outputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output_price: Option<Option<f64>>,
-    /// The total price in USD.
-    #[serde(
-        rename = "totalPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub total_price: Option<Option<f64>>,
-    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the input in USD
-    #[serde(
-        rename = "calculatedInputCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub calculated_input_cost: Option<Option<f64>>,
-    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the output in USD
-    #[serde(
-        rename = "calculatedOutputCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub calculated_output_cost: Option<Option<f64>>,
-    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated total cost in USD
-    #[serde(
-        rename = "calculatedTotalCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub calculated_total_cost: Option<Option<f64>>,
-    /// The latency in seconds.
-    #[serde(
-        rename = "latency",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub latency: Option<Option<f64>>,
-    /// The time to the first token in seconds
-    #[serde(
-        rename = "timeToFirstToken",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub time_to_first_token: Option<Option<f64>>,
     /// The unique identifier of the observation
     #[serde(rename = "id")]
     pub id: String,
@@ -242,6 +154,94 @@ pub struct ObservationsView {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The name of the prompt associated with the observation
+    #[serde(
+        rename = "promptName",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub prompt_name: Option<Option<String>>,
+    /// The version of the prompt associated with the observation
+    #[serde(
+        rename = "promptVersion",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub prompt_version: Option<Option<i32>>,
+    /// The unique identifier of the model
+    #[serde(
+        rename = "modelId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub model_id: Option<Option<String>>,
+    /// The price of the input in USD
+    #[serde(
+        rename = "inputPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub input_price: Option<Option<f64>>,
+    /// The price of the output in USD.
+    #[serde(
+        rename = "outputPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub output_price: Option<Option<f64>>,
+    /// The total price in USD.
+    #[serde(
+        rename = "totalPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub total_price: Option<Option<f64>>,
+    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the input in USD
+    #[serde(
+        rename = "calculatedInputCost",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub calculated_input_cost: Option<Option<f64>>,
+    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the output in USD
+    #[serde(
+        rename = "calculatedOutputCost",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub calculated_output_cost: Option<Option<f64>>,
+    /// (Deprecated. Use usageDetails and costDetails instead.) The calculated total cost in USD
+    #[serde(
+        rename = "calculatedTotalCost",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub calculated_total_cost: Option<Option<f64>>,
+    /// The latency in seconds.
+    #[serde(
+        rename = "latency",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub latency: Option<Option<f64>>,
+    /// The time to the first token in seconds
+    #[serde(
+        rename = "timeToFirstToken",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub time_to_first_token: Option<Option<f64>>,
 }
 
 impl ObservationsView {
@@ -252,17 +252,6 @@ impl ObservationsView {
         level: models::ObservationLevel,
     ) -> ObservationsView {
         ObservationsView {
-            prompt_name: None,
-            prompt_version: None,
-            model_id: None,
-            input_price: None,
-            output_price: None,
-            total_price: None,
-            calculated_input_cost: None,
-            calculated_output_cost: None,
-            calculated_total_cost: None,
-            latency: None,
-            time_to_first_token: None,
             id,
             trace_id: None,
             r#type,
@@ -284,6 +273,17 @@ impl ObservationsView {
             usage_details: None,
             cost_details: None,
             environment: None,
+            prompt_name: None,
+            prompt_version: None,
+            model_id: None,
+            input_price: None,
+            output_price: None,
+            total_price: None,
+            calculated_input_cost: None,
+            calculated_output_cost: None,
+            calculated_total_cost: None,
+            latency: None,
+            time_to_first_token: None,
         }
     }
 }

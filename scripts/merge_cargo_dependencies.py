@@ -18,7 +18,7 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 SECTION_NAMES = ("dependencies", "dev-dependencies", "build-dependencies")
 
@@ -132,8 +132,8 @@ def merge_section(
     original_entries: List[Entry],
     generated_entries: List[Entry],
     generated_map: Dict[str, Entry],
-    key_to_generated_section: Dict[str, str],
-    original_versions: Dict[str, str],
+    key_to_generated_sections: Dict[str, Set[str]],
+    original_versions: Dict[Tuple[str, str], str],
 ) -> List[Entry]:
     """Merge dependency entries while preserving curated versions and avoiding duplicates."""
     merged: List[Entry] = []
@@ -144,12 +144,12 @@ def merge_section(
             merged.append(entry)
             continue
 
-        generated_section = key_to_generated_section.get(entry.key)
-        if generated_section is None:
+        generated_sections = key_to_generated_sections.get(entry.key)
+        if not generated_sections:
             merged.append(entry)
             continue
 
-        if generated_section != section:
+        if section not in generated_sections:
             continue
 
         generated_entry = generated_map.get(entry.key)
@@ -158,7 +158,7 @@ def merge_section(
             continue
 
         updated_text = generated_entry.text
-        original_version = original_versions.get(entry.key)
+        original_version = original_versions.get((section, entry.key))
         if original_version is not None:
             updated_text = replace_version(updated_text, original_version)
 
@@ -170,11 +170,12 @@ def merge_section(
             continue
         if entry.key in processed:
             continue
-        if key_to_generated_section.get(entry.key) != section:
+        generated_sections = key_to_generated_sections.get(entry.key)
+        if not generated_sections or section not in generated_sections:
             continue
 
         updated_text = entry.text
-        original_version = original_versions.get(entry.key)
+        original_version = original_versions.get((section, entry.key))
         if original_version is not None:
             updated_text = replace_version(updated_text, original_version)
 
@@ -191,7 +192,7 @@ def update_cargo(original: Path, generated: Path) -> None:
     updated_text = original_text
 
     original_sections: Dict[str, List[Entry]] = {}
-    original_versions: Dict[str, str] = {}
+    original_versions: Dict[Tuple[str, str], str] = {}
     for section in SECTION_NAMES:
         orig_entries, _ = extract_section(updated_text, section)
         original_sections[section] = orig_entries
@@ -199,15 +200,15 @@ def update_cargo(original: Path, generated: Path) -> None:
             if entry.key:
                 version = extract_version(entry.text)
                 if version is not None:
-                    original_versions[entry.key] = version
+                    original_versions[(section, entry.key)] = version
 
     generated_sections: Dict[str, Tuple[List[Entry], Dict[str, Entry]]] = {}
-    key_to_generated_section: Dict[str, str] = {}
+    key_to_generated_sections: Dict[str, Set[str]] = {}
     for section in SECTION_NAMES:
         gen_entries, gen_map = extract_section(generated_text, section)
         generated_sections[section] = (gen_entries, gen_map)
         for key in gen_map:
-            key_to_generated_section[key] = section
+            key_to_generated_sections.setdefault(key, set()).add(section)
 
     for section in SECTION_NAMES:
         orig_entries = original_sections.get(section, [])
@@ -221,7 +222,7 @@ def update_cargo(original: Path, generated: Path) -> None:
             orig_entries,
             gen_entries,
             gen_map,
-            key_to_generated_section,
+            key_to_generated_sections,
             original_versions,
         )
         if merged_entries:

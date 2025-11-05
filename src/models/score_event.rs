@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreEvent {
-    #[serde(rename = "body")]
-    pub body: Box<models::ScoreBody>,
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
     pub id: String,
@@ -29,15 +27,17 @@ pub struct ScoreEvent {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
+    #[serde(rename = "body")]
+    pub body: Box<models::ScoreBody>,
 }
 
 impl ScoreEvent {
-    pub fn new(body: models::ScoreBody, id: String, timestamp: String) -> ScoreEvent {
+    pub fn new(id: String, timestamp: String, body: models::ScoreBody) -> ScoreEvent {
         ScoreEvent {
-            body: Box::new(body),
             id,
             timestamp,
             metadata: None,
+            body: Box::new(body),
         }
     }
 }

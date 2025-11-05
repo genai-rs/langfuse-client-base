@@ -13,17 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreV1OneOf1 {
-    /// Only defined if a config is linked. Represents the numeric category mapping of the stringValue
-    #[serde(
-        rename = "value",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub value: Option<Option<f64>>,
-    /// The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category
-    #[serde(rename = "stringValue")]
-    pub string_value: String,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "traceId")]
@@ -90,13 +79,23 @@ pub struct ScoreV1OneOf1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// Only defined if a config is linked. Represents the numeric category mapping of the stringValue
+    #[serde(
+        rename = "value",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub value: Option<Option<f64>>,
+    /// The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category
+    #[serde(rename = "stringValue")]
+    pub string_value: String,
     #[serde(rename = "dataType")]
     pub data_type: DataType,
 }
 
 impl ScoreV1OneOf1 {
     pub fn new(
-        string_value: String,
         id: String,
         trace_id: String,
         name: String,
@@ -104,11 +103,10 @@ impl ScoreV1OneOf1 {
         timestamp: String,
         created_at: String,
         updated_at: String,
+        string_value: String,
         data_type: DataType,
     ) -> ScoreV1OneOf1 {
         ScoreV1OneOf1 {
-            value: None,
-            string_value,
             id,
             trace_id,
             name,
@@ -123,6 +121,8 @@ impl ScoreV1OneOf1 {
             config_id: None,
             queue_id: None,
             environment: None,
+            value: None,
+            string_value,
             data_type,
         }
     }

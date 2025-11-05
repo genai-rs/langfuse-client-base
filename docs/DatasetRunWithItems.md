@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**dataset_run_items** | [**Vec<models::DatasetRunItem>**](DatasetRunItem.md) |  | 
 **id** | **String** | Unique identifier of the dataset run | 
 **name** | **String** | Name of the dataset run | 
 **description** | Option<**String**> | Description of the run | [optional]
@@ -13,6 +12,7 @@ Name | Type | Description | Notes
 **dataset_name** | **String** | Name of the associated dataset | 
 **created_at** | **String** | The date and time when the dataset run was created | 
 **updated_at** | **String** | The date and time when the dataset run was last updated | 
+**dataset_run_items** | [**Vec<models::DatasetRunItem>**](DatasetRunItem.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -13,8 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateEventBody {
-    #[serde(rename = "id")]
-    pub id: String,
     #[serde(
         rename = "traceId",
         default,
@@ -87,12 +85,13 @@ pub struct UpdateEventBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(rename = "id")]
+    pub id: String,
 }
 
 impl UpdateEventBody {
     pub fn new(id: String) -> UpdateEventBody {
         UpdateEventBody {
-            id,
             trace_id: None,
             name: None,
             start_time: None,
@@ -104,6 +103,7 @@ impl UpdateEventBody {
             parent_observation_id: None,
             version: None,
             environment: None,
+            id,
         }
     }
 }

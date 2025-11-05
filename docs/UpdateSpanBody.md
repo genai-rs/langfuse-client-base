@@ -4,8 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**end_time** | Option<**String**> |  | [optional]
-**id** | **String** |  | 
 **trace_id** | Option<**String**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
 **start_time** | Option<**String**> |  | [optional]
@@ -17,6 +15,8 @@ Name | Type | Description | Notes
 **parent_observation_id** | Option<**String**> |  | [optional]
 **version** | Option<**String**> |  | [optional]
 **environment** | Option<**String**> |  | [optional]
+**id** | **String** |  | 
+**end_time** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

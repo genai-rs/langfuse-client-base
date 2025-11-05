@@ -14,15 +14,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateSpanBody {
     #[serde(
-        rename = "endTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub end_time: Option<Option<String>>,
-    #[serde(rename = "id")]
-    pub id: String,
-    #[serde(
         rename = "traceId",
         default,
         with = "::serde_with::rust::double_option",
@@ -94,13 +85,20 @@ pub struct UpdateSpanBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(rename = "id")]
+    pub id: String,
+    #[serde(
+        rename = "endTime",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub end_time: Option<Option<String>>,
 }
 
 impl UpdateSpanBody {
     pub fn new(id: String) -> UpdateSpanBody {
         UpdateSpanBody {
-            end_time: None,
-            id,
             trace_id: None,
             name: None,
             start_time: None,
@@ -112,6 +110,8 @@ impl UpdateSpanBody {
             parent_observation_id: None,
             version: None,
             environment: None,
+            id,
+            end_time: None,
         }
     }
 }

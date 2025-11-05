@@ -14,13 +14,6 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateEventBody {
     #[serde(
-        rename = "id",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub id: Option<Option<String>>,
-    #[serde(
         rename = "traceId",
         default,
         with = "::serde_with::rust::double_option",
@@ -92,12 +85,18 @@ pub struct CreateEventBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    #[serde(
+        rename = "id",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub id: Option<Option<String>>,
 }
 
 impl CreateEventBody {
     pub fn new() -> CreateEventBody {
         CreateEventBody {
-            id: None,
             trace_id: None,
             name: None,
             start_time: None,
@@ -109,6 +108,7 @@ impl CreateEventBody {
             parent_observation_id: None,
             version: None,
             environment: None,
+            id: None,
         }
     }
 }

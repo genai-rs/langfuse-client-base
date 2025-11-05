@@ -13,9 +13,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreOneOf {
-    /// The numeric value of the score
-    #[serde(rename = "value")]
-    pub value: f64,
     #[serde(rename = "id")]
     pub id: String,
     #[serde(
@@ -101,23 +98,25 @@ pub struct ScoreOneOf {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The numeric value of the score
+    #[serde(rename = "value")]
+    pub value: f64,
     #[serde(rename = "dataType")]
     pub data_type: DataType,
 }
 
 impl ScoreOneOf {
     pub fn new(
-        value: f64,
         id: String,
         name: String,
         source: models::ScoreSource,
         timestamp: String,
         created_at: String,
         updated_at: String,
+        value: f64,
         data_type: DataType,
     ) -> ScoreOneOf {
         ScoreOneOf {
-            value,
             id,
             trace_id: None,
             session_id: None,
@@ -134,6 +133,7 @@ impl ScoreOneOf {
             config_id: None,
             queue_id: None,
             environment: None,
+            value,
             data_type,
         }
     }
