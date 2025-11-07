@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **description** | Option<**String**> |  | [optional]
 **metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**input_schema** | Option<[**serde_json::Value**](.md)> | JSON Schema for validating dataset item inputs | [optional]
+**expected_output_schema** | Option<[**serde_json::Value**](.md)> | JSON Schema for validating dataset item expected outputs | [optional]
 **project_id** | **String** |  | 
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 

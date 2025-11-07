@@ -29,6 +29,22 @@ pub struct CreateDatasetRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
+    /// JSON Schema for validating dataset item inputs. When set, all new and existing dataset items will be validated against this schema.
+    #[serde(
+        rename = "inputSchema",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub input_schema: Option<Option<serde_json::Value>>,
+    /// JSON Schema for validating dataset item expected outputs. When set, all new and existing dataset items will be validated against this schema.
+    #[serde(
+        rename = "expectedOutputSchema",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub expected_output_schema: Option<Option<serde_json::Value>>,
 }
 
 impl CreateDatasetRequest {
@@ -37,6 +53,8 @@ impl CreateDatasetRequest {
             name,
             description: None,
             metadata: None,
+            input_schema: None,
+            expected_output_schema: None,
         }
     }
 }

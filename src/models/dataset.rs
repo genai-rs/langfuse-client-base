@@ -31,6 +31,22 @@ pub struct Dataset {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
+    /// JSON Schema for validating dataset item inputs
+    #[serde(
+        rename = "inputSchema",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub input_schema: Option<Option<serde_json::Value>>,
+    /// JSON Schema for validating dataset item expected outputs
+    #[serde(
+        rename = "expectedOutputSchema",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub expected_output_schema: Option<Option<serde_json::Value>>,
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "createdAt")]
@@ -52,6 +68,8 @@ impl Dataset {
             name,
             description: None,
             metadata: None,
+            input_schema: None,
+            expected_output_schema: None,
             project_id,
             created_at,
             updated_at,
