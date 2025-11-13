@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **value** | [**models::CreateScoreValue**](CreateScoreValue.md) |  | 
 **comment** | Option<**String**> |  | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**metadata** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> |  | [optional]
 **environment** | Option<**String**> | The environment of the score. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **data_type** | Option<[**models::ScoreDataType**](ScoreDataType.md)> |  | [optional]

@@ -79,14 +79,9 @@ pub struct CategoricalScoreV1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
-    /// Only defined if a config is linked. Represents the numeric category mapping of the stringValue
-    #[serde(
-        rename = "value",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub value: Option<Option<f64>>,
+    /// Represents the numeric category mapping of the stringValue. If no config is linked, defaults to 0.
+    #[serde(rename = "value")]
+    pub value: f64,
     /// The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category
     #[serde(rename = "stringValue")]
     pub string_value: String,
@@ -101,6 +96,7 @@ impl CategoricalScoreV1 {
         timestamp: String,
         created_at: String,
         updated_at: String,
+        value: f64,
         string_value: String,
     ) -> CategoricalScoreV1 {
         CategoricalScoreV1 {
@@ -118,7 +114,7 @@ impl CategoricalScoreV1 {
             config_id: None,
             queue_id: None,
             environment: None,
-            value: None,
+            value,
             string_value,
         }
     }

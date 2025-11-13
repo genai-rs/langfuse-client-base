@@ -65,7 +65,7 @@ pub struct CreateScoreRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// The environment of the score. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
     #[serde(
         rename = "environment",
