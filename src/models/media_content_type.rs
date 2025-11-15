@@ -31,6 +31,10 @@ pub enum MediaContentType {
     ImageSlashTiff,
     #[serde(rename = "image/bmp")]
     ImageSlashBmp,
+    #[serde(rename = "image/avif")]
+    ImageSlashAvif,
+    #[serde(rename = "image/heic")]
+    ImageSlashHeic,
     #[serde(rename = "audio/mpeg")]
     AudioSlashMpeg,
     #[serde(rename = "audio/mp3")]
@@ -47,10 +51,24 @@ pub enum MediaContentType {
     AudioSlashMp4,
     #[serde(rename = "audio/flac")]
     AudioSlashFlac,
+    #[serde(rename = "audio/opus")]
+    AudioSlashOpus,
+    #[serde(rename = "audio/webm")]
+    AudioSlashWebm,
     #[serde(rename = "video/mp4")]
     VideoSlashMp4,
     #[serde(rename = "video/webm")]
     VideoSlashWebm,
+    #[serde(rename = "video/ogg")]
+    VideoSlashOgg,
+    #[serde(rename = "video/mpeg")]
+    VideoSlashMpeg,
+    #[serde(rename = "video/quicktime")]
+    VideoSlashQuicktime,
+    #[serde(rename = "video/x-msvideo")]
+    VideoSlashXMsvideo,
+    #[serde(rename = "video/x-matroska")]
+    VideoSlashXMatroska,
     #[serde(rename = "text/plain")]
     TextSlashPlain,
     #[serde(rename = "text/html")]
@@ -59,12 +77,24 @@ pub enum MediaContentType {
     TextSlashCss,
     #[serde(rename = "text/csv")]
     TextSlashCsv,
+    #[serde(rename = "text/markdown")]
+    TextSlashMarkdown,
+    #[serde(rename = "text/x-python")]
+    TextSlashXPython,
+    #[serde(rename = "application/javascript")]
+    ApplicationSlashJavascript,
+    #[serde(rename = "text/x-typescript")]
+    TextSlashXTypescript,
+    #[serde(rename = "application/x-yaml")]
+    ApplicationSlashXYaml,
     #[serde(rename = "application/pdf")]
     ApplicationSlashPdf,
     #[serde(rename = "application/msword")]
     ApplicationSlashMsword,
     #[serde(rename = "application/vnd.ms-excel")]
     ApplicationSlashVndMsExcel,
+    #[serde(rename = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")]
+    ApplicationSlashVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet,
     #[serde(rename = "application/zip")]
     ApplicationSlashZip,
     #[serde(rename = "application/json")]
@@ -73,6 +103,22 @@ pub enum MediaContentType {
     ApplicationSlashXml,
     #[serde(rename = "application/octet-stream")]
     ApplicationSlashOctetStream,
+    #[serde(rename = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")]
+    ApplicationSlashVndOpenxmlformatsOfficedocumentWordprocessingmlDocument,
+    #[serde(rename = "application/vnd.openxmlformats-officedocument.presentationml.presentation")]
+    ApplicationSlashVndOpenxmlformatsOfficedocumentPresentationmlPresentation,
+    #[serde(rename = "application/rtf")]
+    ApplicationSlashRtf,
+    #[serde(rename = "application/x-ndjson")]
+    ApplicationSlashXNdjson,
+    #[serde(rename = "application/vnd.apache.parquet")]
+    ApplicationSlashVndApacheParquet,
+    #[serde(rename = "application/gzip")]
+    ApplicationSlashGzip,
+    #[serde(rename = "application/x-tar")]
+    ApplicationSlashXTar,
+    #[serde(rename = "application/x-7z-compressed")]
+    ApplicationSlashX7zCompressed,
 }
 
 impl std::fmt::Display for MediaContentType {
@@ -86,6 +132,8 @@ impl std::fmt::Display for MediaContentType {
             Self::ImageSlashSvgPlusXml => write!(f, "image/svg+xml"),
             Self::ImageSlashTiff => write!(f, "image/tiff"),
             Self::ImageSlashBmp => write!(f, "image/bmp"),
+            Self::ImageSlashAvif => write!(f, "image/avif"),
+            Self::ImageSlashHeic => write!(f, "image/heic"),
             Self::AudioSlashMpeg => write!(f, "audio/mpeg"),
             Self::AudioSlashMp3 => write!(f, "audio/mp3"),
             Self::AudioSlashWav => write!(f, "audio/wav"),
@@ -94,19 +142,53 @@ impl std::fmt::Display for MediaContentType {
             Self::AudioSlashAac => write!(f, "audio/aac"),
             Self::AudioSlashMp4 => write!(f, "audio/mp4"),
             Self::AudioSlashFlac => write!(f, "audio/flac"),
+            Self::AudioSlashOpus => write!(f, "audio/opus"),
+            Self::AudioSlashWebm => write!(f, "audio/webm"),
             Self::VideoSlashMp4 => write!(f, "video/mp4"),
             Self::VideoSlashWebm => write!(f, "video/webm"),
+            Self::VideoSlashOgg => write!(f, "video/ogg"),
+            Self::VideoSlashMpeg => write!(f, "video/mpeg"),
+            Self::VideoSlashQuicktime => write!(f, "video/quicktime"),
+            Self::VideoSlashXMsvideo => write!(f, "video/x-msvideo"),
+            Self::VideoSlashXMatroska => write!(f, "video/x-matroska"),
             Self::TextSlashPlain => write!(f, "text/plain"),
             Self::TextSlashHtml => write!(f, "text/html"),
             Self::TextSlashCss => write!(f, "text/css"),
             Self::TextSlashCsv => write!(f, "text/csv"),
+            Self::TextSlashMarkdown => write!(f, "text/markdown"),
+            Self::TextSlashXPython => write!(f, "text/x-python"),
+            Self::ApplicationSlashJavascript => write!(f, "application/javascript"),
+            Self::TextSlashXTypescript => write!(f, "text/x-typescript"),
+            Self::ApplicationSlashXYaml => write!(f, "application/x-yaml"),
             Self::ApplicationSlashPdf => write!(f, "application/pdf"),
             Self::ApplicationSlashMsword => write!(f, "application/msword"),
             Self::ApplicationSlashVndMsExcel => write!(f, "application/vnd.ms-excel"),
+            Self::ApplicationSlashVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet => write!(
+                f,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ),
             Self::ApplicationSlashZip => write!(f, "application/zip"),
             Self::ApplicationSlashJson => write!(f, "application/json"),
             Self::ApplicationSlashXml => write!(f, "application/xml"),
             Self::ApplicationSlashOctetStream => write!(f, "application/octet-stream"),
+            Self::ApplicationSlashVndOpenxmlformatsOfficedocumentWordprocessingmlDocument => {
+                write!(
+                    f,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
+            }
+            Self::ApplicationSlashVndOpenxmlformatsOfficedocumentPresentationmlPresentation => {
+                write!(
+                    f,
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                )
+            }
+            Self::ApplicationSlashRtf => write!(f, "application/rtf"),
+            Self::ApplicationSlashXNdjson => write!(f, "application/x-ndjson"),
+            Self::ApplicationSlashVndApacheParquet => write!(f, "application/vnd.apache.parquet"),
+            Self::ApplicationSlashGzip => write!(f, "application/gzip"),
+            Self::ApplicationSlashXTar => write!(f, "application/x-tar"),
+            Self::ApplicationSlashX7zCompressed => write!(f, "application/x-7z-compressed"),
         }
     }
 }
