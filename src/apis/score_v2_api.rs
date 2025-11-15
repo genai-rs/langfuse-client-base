@@ -54,6 +54,8 @@ pub async fn score_v2_get(
     score_ids: Option<&str>,
     config_id: Option<&str>,
     session_id: Option<&str>,
+    dataset_run_id: Option<&str>,
+    trace_id: Option<&str>,
     queue_id: Option<&str>,
     data_type: Option<models::ScoreDataType>,
     trace_tags: Option<Vec<String>>,
@@ -72,6 +74,8 @@ pub async fn score_v2_get(
     let p_query_score_ids = score_ids;
     let p_query_config_id = config_id;
     let p_query_session_id = session_id;
+    let p_query_dataset_run_id = dataset_run_id;
+    let p_query_trace_id = trace_id;
     let p_query_queue_id = queue_id;
     let p_query_data_type = data_type;
     let p_query_trace_tags = trace_tags;
@@ -133,6 +137,12 @@ pub async fn score_v2_get(
     }
     if let Some(ref param_value) = p_query_session_id {
         req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_dataset_run_id {
+        req_builder = req_builder.query(&[("datasetRunId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_trace_id {
+        req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_queue_id {
         req_builder = req_builder.query(&[("queueId", &param_value.to_string())]);
