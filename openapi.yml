@@ -2501,14 +2501,6 @@ paths:
             keys.
 
 
-            ### Scores (requires join with scores table)
-
-            - `scores_avg` (number) - Average of numeric scores (alias:
-            `scores`)
-
-            - `score_categories` (categoryOptions) - Categorical score values
-
-
             ### Associated Trace Fields (requires join with traces table)
 
             - `userId` (string) - User ID from associated trace
@@ -3481,7 +3473,11 @@ paths:
       parameters:
         - name: name
           in: path
-          description: The name of the prompt
+          description: >-
+            The name of the prompt. If the prompt is in a folder (e.g.,
+            "folder/subfolder/prompt-name"), 
+
+            the folder path must be URL encoded.
           required: true
           schema:
             type: string
@@ -3551,7 +3547,11 @@ paths:
       parameters:
         - name: promptName
           in: path
-          description: The name of the prompt
+          description: >-
+            The name of the prompt. If the prompt is in a folder (e.g.,
+            "folder/subfolder/prompt-name"), 
+
+            the folder path must be URL encoded.
           required: true
           schema:
             type: string

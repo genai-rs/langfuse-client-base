@@ -20,7 +20,7 @@ Update labels for a specific prompt version
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**name** | **String** | The name of the prompt | [required] |
+**name** | **String** | The name of the prompt. If the prompt is in a folder (e.g., \"folder/subfolder/prompt-name\"),  the folder path must be URL encoded. | [required] |
 **version** | **i32** | Version of the prompt to update | [required] |
 **prompt_version_update_request** | [**PromptVersionUpdateRequest**](PromptVersionUpdateRequest.md) |  | [required] |
 
