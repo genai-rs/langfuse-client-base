@@ -52,7 +52,7 @@ Get a prompt
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**prompt_name** | **String** | The name of the prompt | [required] |
+**prompt_name** | **String** | The name of the prompt. If the prompt is in a folder (e.g., \"folder/subfolder/prompt-name\"),  the folder path must be URL encoded. | [required] |
 **version** | Option<**i32**> | Version of the prompt to be retrieved. |  |
 **label** | Option<**String**> | Label of the prompt to be retrieved. Defaults to \"production\" if no label or version is set. |  |
 
