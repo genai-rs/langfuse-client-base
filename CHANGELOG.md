@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.6.0...v0.6.1) - 2025-11-18
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- *(deps)* Update Rust crate serde_with to ^3.16.0
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- preserve per-section dependency versions (genai-a0b8)
+- preserve deps during client generation (genai-a0b8)
+
 ## [0.6.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.5.0...v0.6.0) - 2025-11-02
 
 ### Added
