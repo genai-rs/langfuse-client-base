@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Model : Model definition used for transforming usage into USD cost and/or tokenization.
+/// Model : Model definition used for transforming usage into USD cost and/or tokenization.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Model {
     #[serde(rename = "id")]
@@ -74,19 +74,27 @@ pub struct Model {
     pub tokenizer_config: Option<Option<serde_json::Value>>,
     #[serde(rename = "isLangfuseManaged")]
     pub is_langfuse_managed: bool,
-    /// Price (USD) by usage type
+    /// Timestamp when the model was created
+    #[serde(rename = "createdAt")]
+    pub created_at: String,
+    /// Deprecated. Use 'pricingTiers' instead for models with usage-based pricing variations.  This field shows prices by usage type from the default pricing tier. Maintained for backward compatibility. If the model uses tiered pricing, this field will be populated from the default tier's prices.
     #[serde(rename = "prices")]
     pub prices: std::collections::HashMap<String, models::ModelPrice>,
+    /// Array of pricing tiers with conditional pricing based on usage thresholds.  Pricing tiers enable accurate cost tracking for models that charge different rates based on usage patterns (e.g., different rates for high-volume usage, large context windows, or cached tokens).  Each model must have exactly one default tier (isDefault=true, priority=0) that serves as a fallback. Additional conditional tiers can be defined with specific matching criteria.  If this array is empty, the model uses legacy flat pricing from the inputPrice/outputPrice/totalPrice fields.
+    #[serde(rename = "pricingTiers")]
+    pub pricing_tiers: Vec<models::PricingTier>,
 }
 
 impl Model {
-    /// Model definition used for transforming usage into USD cost and/or tokenization.
+    /// Model definition used for transforming usage into USD cost and/or tokenization.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
     pub fn new(
         id: String,
         model_name: String,
         match_pattern: String,
         is_langfuse_managed: bool,
+        created_at: String,
         prices: std::collections::HashMap<String, models::ModelPrice>,
+        pricing_tiers: Vec<models::PricingTier>,
     ) -> Model {
         Model {
             id,
@@ -100,7 +108,9 @@ impl Model {
             tokenizer_id: None,
             tokenizer_config: None,
             is_langfuse_managed,
+            created_at,
             prices,
+            pricing_tiers,
         }
     }
 }
