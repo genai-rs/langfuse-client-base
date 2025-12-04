@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.6.1...v0.7.0) - 2025-12-04
+
+### Other
+
+- *(deps)* Update Rust crate serde_with to ^3.16.1
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update actions/checkout action to v6
+
 ## [0.6.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.6.0...v0.6.1) - 2025-11-18
 
 ### Other
