@@ -42,6 +42,14 @@ pub struct LlmConnection {
     /// Keys of extra headers sent with requests (values excluded for security)
     #[serde(rename = "extraHeaderKeys")]
     pub extra_header_keys: Vec<String>,
+    /// Adapter-specific configuration. Required for Bedrock (`{\"region\":\"us-east-1\"}`), optional for VertexAI (`{\"location\":\"us-central1\"}`), not used by other adapters.
+    #[serde(
+        rename = "config",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub config: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     #[serde(rename = "createdAt")]
     pub created_at: String,
     #[serde(rename = "updatedAt")]
@@ -70,6 +78,7 @@ impl LlmConnection {
             custom_models,
             with_default_models,
             extra_header_keys,
+            config: None,
             created_at,
             updated_at,
         }

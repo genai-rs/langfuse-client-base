@@ -141,7 +141,7 @@ Name | Type | Description  | Required | Notes
 > models::Projects projects_get()
 
 
-Get Project associated with API key
+Get Project associated with API key (requires project-scoped API key). You can use GET /api/public/organizations/projects to get all projects with an organization-scoped key.
 
 ### Parameters
 

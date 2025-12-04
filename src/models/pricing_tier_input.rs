@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// PricingTierInput : Input schema for creating a pricing tier. The tier ID will be automatically generated server-side.  When creating a model with pricing tiers: - Exactly one tier must have isDefault=true (the fallback tier) - The default tier must have priority=0 and conditions=[] - All tier names and priorities must be unique within the model - Each tier must define at least one price  See PricingTier for detailed information about how tiers work and why they're useful.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PricingTierInput {
-    /// Name of the pricing tier for display and identification purposes.  Must be unique within the model. Common patterns: \"Standard Pricing\", \"High Volume Tier\", \"Extended Context\"
+    /// Name of the pricing tier for display and identification purposes.  Must be unique within the model. Common patterns: \"Standard\", \"High Volume Tier\", \"Extended Context\"
     #[serde(rename = "name")]
     pub name: String,
     /// Whether this is the default tier. Exactly one tier per model must be marked as default.  Requirements for default tier: - Must have isDefault=true - Must have priority=0 - Must have empty conditions array (conditions=[])  The default tier acts as a fallback when no conditional tiers match.

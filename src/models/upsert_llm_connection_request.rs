@@ -54,6 +54,14 @@ pub struct UpsertLlmConnectionRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub extra_headers: Option<Option<std::collections::HashMap<String, String>>>,
+    /// Adapter-specific configuration. Validation rules: - **Bedrock**: Required. Must be `{\"region\": \"<aws-region>\"}` (e.g., `{\"region\":\"us-east-1\"}`) - **VertexAI**: Optional. If provided, must be `{\"location\": \"<gcp-location>\"}` (e.g., `{\"location\":\"us-central1\"}`) - **Other adapters**: Not supported. Omit this field or set to null.
+    #[serde(
+        rename = "config",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub config: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
 }
 
 impl UpsertLlmConnectionRequest {
@@ -71,6 +79,7 @@ impl UpsertLlmConnectionRequest {
             custom_models: None,
             with_default_models: None,
             extra_headers: None,
+            config: None,
         }
     }
 }
