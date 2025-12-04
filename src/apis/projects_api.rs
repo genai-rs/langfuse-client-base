@@ -316,7 +316,7 @@ pub async fn projects_delete_api_key(
     }
 }
 
-/// Get Project associated with API key
+/// Get Project associated with API key (requires project-scoped API key). You can use GET /api/public/organizations/projects to get all projects with an organization-scoped key.
 #[bon::builder]
 pub async fn projects_get(
     configuration: &configuration::Configuration,

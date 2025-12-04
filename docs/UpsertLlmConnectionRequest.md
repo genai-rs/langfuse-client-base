@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **custom_models** | Option<**Vec<String>**> | List of custom model names | [optional]
 **with_default_models** | Option<**bool**> | Whether to include default models. Default is true. | [optional]
 **extra_headers** | Option<**std::collections::HashMap<String, String>**> | Extra headers to send with requests | [optional]
+**config** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Adapter-specific configuration. Validation rules: - **Bedrock**: Required. Must be `{\"region\": \"<aws-region>\"}` (e.g., `{\"region\":\"us-east-1\"}`) - **VertexAI**: Optional. If provided, must be `{\"location\": \"<gcp-location>\"}` (e.g., `{\"location\":\"us-central1\"}`) - **Other adapters**: Not supported. Omit this field or set to null. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
