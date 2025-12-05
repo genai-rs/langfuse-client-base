@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**prompts_create**](PromptsApi.md#prompts_create) | **POST** /api/public/v2/prompts | 
+[**prompts_delete**](PromptsApi.md#prompts_delete) | **DELETE** /api/public/v2/prompts/{promptName} | 
 [**prompts_get**](PromptsApi.md#prompts_get) | **GET** /api/public/v2/prompts/{promptName} | 
 [**prompts_list**](PromptsApi.md#prompts_list) | **GET** /api/public/v2/prompts | 
 
@@ -35,6 +36,38 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## prompts_delete
+
+> serde_json::Value prompts_delete(prompt_name, label, version)
+
+
+Delete a prompt or specific versions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**prompt_name** | **String** | The name of the prompt | [required] |
+**label** | Option<**String**> | Optional label of the prompt to delete |  |
+**version** | Option<**i32**> | Optional version of the prompt to delete |  |
+
+### Return type
+
+[**serde_json::Value**](serde_json::Value.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
