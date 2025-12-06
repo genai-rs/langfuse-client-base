@@ -43,10 +43,10 @@ Name | Type | Description  | Required | Notes
 
 ## prompts_delete
 
-> serde_json::Value prompts_delete(prompt_name, label, version)
+> prompts_delete(prompt_name, label, version)
 
 
-Delete a prompt or specific versions
+Delete prompt versions. If neither version nor label is specified, all versions of the prompt are deleted.
 
 ### Parameters
 
@@ -54,12 +54,12 @@ Delete a prompt or specific versions
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **prompt_name** | **String** | The name of the prompt | [required] |
-**label** | Option<**String**> | Optional label of the prompt to delete |  |
-**version** | Option<**i32**> | Optional version of the prompt to delete |  |
+**label** | Option<**String**> | Optional label to filter deletion. If specified, deletes all prompt versions that have this label. |  |
+**version** | Option<**i32**> | Optional version to filter deletion. If specified, deletes only this specific version of the prompt. |  |
 
 ### Return type
 
-[**serde_json::Value**](serde_json::Value.md)
+ (empty response body)
 
 ### Authorization
 
