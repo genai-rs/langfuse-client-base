@@ -75,7 +75,7 @@ jobs:
           fi
 
       - name: Create or Update Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ steps.app-token.outputs.token }}
           commit-message: 'chore: update generated client from latest OpenAPI spec'
