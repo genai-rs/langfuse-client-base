@@ -13,30 +13,27 @@ use serde::{Deserialize, Serialize};
 
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum ScoreDataType {
+pub enum ScoreConfigDataType {
     #[serde(rename = "NUMERIC")]
     Numeric,
     #[serde(rename = "BOOLEAN")]
     Boolean,
     #[serde(rename = "CATEGORICAL")]
     Categorical,
-    #[serde(rename = "CORRECTION")]
-    Correction,
 }
 
-impl std::fmt::Display for ScoreDataType {
+impl std::fmt::Display for ScoreConfigDataType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Numeric => write!(f, "NUMERIC"),
             Self::Boolean => write!(f, "BOOLEAN"),
             Self::Categorical => write!(f, "CATEGORICAL"),
-            Self::Correction => write!(f, "CORRECTION"),
         }
     }
 }
 
-impl Default for ScoreDataType {
-    fn default() -> ScoreDataType {
+impl Default for ScoreConfigDataType {
+    fn default() -> ScoreConfigDataType {
         Self::Numeric
     }
 }

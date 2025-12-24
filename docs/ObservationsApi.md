@@ -44,7 +44,7 @@ Name | Type | Description  | Required | Notes
 > models::ObservationsViews observations_get_many(page, limit, name, user_id, r#type, trace_id, level, parent_observation_id, environment, from_start_time, to_start_time, version, filter)
 
 
-Get a list of observations
+Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
 
 ### Parameters
 

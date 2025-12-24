@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
 **project_id** | **String** |  | 
-**data_type** | [**models::ScoreDataType**](ScoreDataType.md) |  | 
+**data_type** | [**models::ScoreConfigDataType**](ScoreConfigDataType.md) |  | 
 **is_archived** | **bool** | Whether the score config is archived. Defaults to false | 
 **min_value** | Option<**f64**> | Sets minimum value for numerical scores. If not set, the minimum value defaults to -∞ | [optional]
 **max_value** | Option<**f64**> | Sets maximum value for numerical scores. If not set, the maximum value defaults to +∞ | [optional]

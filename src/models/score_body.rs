@@ -48,6 +48,7 @@ pub struct ScoreBody {
         skip_serializing_if = "Option::is_none"
     )]
     pub dataset_run_id: Option<Option<String>>,
+    /// The name of the score. Always overrides \"output\" for correction scores.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(
