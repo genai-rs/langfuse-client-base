@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **session_id** | Option<**String**> |  | [optional]
 **observation_id** | Option<**String**> |  | [optional]
 **dataset_run_id** | Option<**String**> |  | [optional]
-**name** | **String** |  | 
+**name** | **String** | The name of the score. Always overrides \"output\" for correction scores. | 
 **environment** | Option<**String**> |  | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **value** | [**models::CreateScoreValue**](CreateScoreValue.md) |  | 

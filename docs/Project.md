@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
+**organization** | [**models::Organization**](Organization.md) |  | 
 **metadata** | [**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md) | Metadata for the project | 
 **retention_days** | Option<**i32**> | Number of days to retain data. Null or 0 means no retention. Omitted if no retention is configured. | [optional]
 

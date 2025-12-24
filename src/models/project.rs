@@ -17,6 +17,8 @@ pub struct Project {
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
+    #[serde(rename = "organization")]
+    pub organization: Box<models::Organization>,
     /// Metadata for the project
     #[serde(rename = "metadata")]
     pub metadata: std::collections::HashMap<String, serde_json::Value>,
@@ -34,11 +36,13 @@ impl Project {
     pub fn new(
         id: String,
         name: String,
+        organization: models::Organization,
         metadata: std::collections::HashMap<String, serde_json::Value>,
     ) -> Project {
         Project {
             id,
             name,
+            organization: Box::new(organization),
             metadata,
             retention_days: None,
         }

@@ -25,7 +25,7 @@ pub struct ScoreConfig {
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "dataType")]
-    pub data_type: models::ScoreDataType,
+    pub data_type: models::ScoreConfigDataType,
     /// Whether the score config is archived. Defaults to false
     #[serde(rename = "isArchived")]
     pub is_archived: bool,
@@ -70,7 +70,7 @@ impl ScoreConfig {
         created_at: String,
         updated_at: String,
         project_id: String,
-        data_type: models::ScoreDataType,
+        data_type: models::ScoreConfigDataType,
         is_archived: bool,
     ) -> ScoreConfig {
         ScoreConfig {

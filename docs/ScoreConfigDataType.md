@@ -1,4 +1,4 @@
-# ScoreDataType
+# ScoreConfigDataType
 
 ## Enum Variants
 
@@ -7,7 +7,6 @@
 | Numeric | NUMERIC |
 | Boolean | BOOLEAN |
 | Categorical | CATEGORICAL |
-| Correction | CORRECTION |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

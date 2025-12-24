@@ -89,7 +89,7 @@ pub async fn observations_get(
     }
 }
 
-/// Get a list of observations
+/// Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
 #[bon::builder]
 pub async fn observations_get_many(
     configuration: &configuration::Configuration,
