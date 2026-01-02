@@ -553,7 +553,7 @@ pub async fn annotation_queues_list_queue_items(
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_status {
-        req_builder = req_builder.query(&[("status", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("status", &serde_json::to_string(param_value)?)]);
     }
     if let Some(ref param_value) = p_query_page {
         req_builder = req_builder.query(&[("page", &param_value.to_string())]);

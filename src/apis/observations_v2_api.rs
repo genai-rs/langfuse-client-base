@@ -90,7 +90,7 @@ pub async fn observations_v2_get_many(
         req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_level {
-        req_builder = req_builder.query(&[("level", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("level", &serde_json::to_string(param_value)?)]);
     }
     if let Some(ref param_value) = p_query_parent_observation_id {
         req_builder = req_builder.query(&[("parentObservationId", &param_value.to_string())]);
