@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## score_v2_get
 
-> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, queue_id, data_type, trace_tags)
+> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, queue_id, data_type, trace_tags, fields)
 
 
 Get a list of scores (supports both trace and session scores)
@@ -39,6 +39,7 @@ Name | Type | Description  | Required | Notes
 **queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
 **data_type** | Option<[**ScoreDataType**](.md)> | Retrieve only scores with a specific dataType. |  |
 **trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
+**fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
 
 ### Return type
 

@@ -59,6 +59,7 @@ pub async fn score_v2_get(
     queue_id: Option<&str>,
     data_type: Option<models::ScoreDataType>,
     trace_tags: Option<Vec<String>>,
+    fields: Option<&str>,
 ) -> Result<models::GetScoresResponse, Error<ScoreV2GetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -79,6 +80,7 @@ pub async fn score_v2_get(
     let p_query_queue_id = queue_id;
     let p_query_data_type = data_type;
     let p_query_trace_tags = trace_tags;
+    let p_query_fields = fields;
 
     let uri_str = format!("{}/api/public/v2/scores", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -121,7 +123,7 @@ pub async fn score_v2_get(
         };
     }
     if let Some(ref param_value) = p_query_source {
-        req_builder = req_builder.query(&[("source", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("source", &serde_json::to_string(param_value)?)]);
     }
     if let Some(ref param_value) = p_query_operator {
         req_builder = req_builder.query(&[("operator", &param_value.to_string())]);
@@ -148,7 +150,7 @@ pub async fn score_v2_get(
         req_builder = req_builder.query(&[("queueId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_data_type {
-        req_builder = req_builder.query(&[("dataType", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("dataType", &serde_json::to_string(param_value)?)]);
     }
     if let Some(ref param_value) = p_query_trace_tags {
         req_builder = match "multi" {
@@ -168,6 +170,9 @@ pub async fn score_v2_get(
                     .to_string(),
             )]),
         };
+    }
+    if let Some(ref param_value) = p_query_fields {
+        req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
