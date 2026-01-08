@@ -21,6 +21,7 @@ pub struct NumericScoreV1 {
     pub name: String,
     #[serde(rename = "source")]
     pub source: models::ScoreSource,
+    /// The observation ID associated with the score
     #[serde(
         rename = "observationId",
         default,
@@ -34,6 +35,7 @@ pub struct NumericScoreV1 {
     pub created_at: String,
     #[serde(rename = "updatedAt")]
     pub updated_at: String,
+    /// The user ID of the author
     #[serde(
         rename = "authorUserId",
         default,
@@ -41,6 +43,7 @@ pub struct NumericScoreV1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub author_user_id: Option<Option<String>>,
+    /// Comment on the score
     #[serde(
         rename = "comment",
         default,
@@ -48,13 +51,9 @@ pub struct NumericScoreV1 {
         skip_serializing_if = "Option::is_none"
     )]
     pub comment: Option<Option<String>>,
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    /// Metadata associated with the score
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
     #[serde(
         rename = "configId",
@@ -72,13 +71,8 @@ pub struct NumericScoreV1 {
     )]
     pub queue_id: Option<Option<String>>,
     /// The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
     /// The numeric value of the score
     #[serde(rename = "value")]
     pub value: f64,
@@ -93,6 +87,8 @@ impl NumericScoreV1 {
         timestamp: String,
         created_at: String,
         updated_at: String,
+        metadata: Option<serde_json::Value>,
+        environment: String,
         value: f64,
     ) -> NumericScoreV1 {
         NumericScoreV1 {
@@ -106,10 +102,10 @@ impl NumericScoreV1 {
             updated_at,
             author_user_id: None,
             comment: None,
-            metadata: None,
+            metadata,
             config_id: None,
             queue_id: None,
-            environment: None,
+            environment,
             value,
         }
     }

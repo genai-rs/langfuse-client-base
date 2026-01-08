@@ -8,16 +8,16 @@ Name | Type | Description | Notes
 **trace_id** | **String** |  | 
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
-**observation_id** | Option<**String**> |  | [optional]
+**observation_id** | Option<**String**> | The observation ID associated with the score | [optional]
 **timestamp** | **String** |  | 
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
-**author_user_id** | Option<**String**> |  | [optional]
-**comment** | Option<**String**> |  | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**author_user_id** | Option<**String**> | The user ID of the author | [optional]
+**comment** | Option<**String**> | Comment on the score | [optional]
+**metadata** | Option<[**serde_json::Value**](.md)> | Metadata associated with the score | 
 **config_id** | Option<**String**> | Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
-**environment** | Option<**String**> | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
+**environment** | **String** | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 **value** | **f64** | Represents the numeric category mapping of the stringValue. If no config is linked, defaults to 0. | 
 **string_value** | **String** | The string representation of the score value. If no config is linked, can be any string. Otherwise, must map to a config category | 
 **data_type** | **String** |  | 

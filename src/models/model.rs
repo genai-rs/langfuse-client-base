@@ -65,13 +65,8 @@ pub struct Model {
     )]
     pub tokenizer_id: Option<Option<String>>,
     /// Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details.
-    #[serde(
-        rename = "tokenizerConfig",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub tokenizer_config: Option<Option<serde_json::Value>>,
+    #[serde(rename = "tokenizerConfig", deserialize_with = "Option::deserialize")]
+    pub tokenizer_config: Option<serde_json::Value>,
     #[serde(rename = "isLangfuseManaged")]
     pub is_langfuse_managed: bool,
     /// Timestamp when the model was created
@@ -91,6 +86,7 @@ impl Model {
         id: String,
         model_name: String,
         match_pattern: String,
+        tokenizer_config: Option<serde_json::Value>,
         is_langfuse_managed: bool,
         created_at: String,
         prices: std::collections::HashMap<String, models::ModelPrice>,
@@ -106,7 +102,7 @@ impl Model {
             output_price: None,
             total_price: None,
             tokenizer_id: None,
-            tokenizer_config: None,
+            tokenizer_config,
             is_langfuse_managed,
             created_at,
             prices,

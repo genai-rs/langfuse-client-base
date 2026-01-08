@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct CategoricalScore {
     #[serde(rename = "id")]
     pub id: String,
+    /// The trace ID associated with the score
     #[serde(
         rename = "traceId",
         default,
@@ -22,6 +23,7 @@ pub struct CategoricalScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub trace_id: Option<Option<String>>,
+    /// The session ID associated with the score
     #[serde(
         rename = "sessionId",
         default,
@@ -29,6 +31,7 @@ pub struct CategoricalScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub session_id: Option<Option<String>>,
+    /// The observation ID associated with the score
     #[serde(
         rename = "observationId",
         default,
@@ -36,6 +39,7 @@ pub struct CategoricalScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub observation_id: Option<Option<String>>,
+    /// The dataset run ID associated with the score
     #[serde(
         rename = "datasetRunId",
         default,
@@ -53,6 +57,7 @@ pub struct CategoricalScore {
     pub created_at: String,
     #[serde(rename = "updatedAt")]
     pub updated_at: String,
+    /// The user ID of the author
     #[serde(
         rename = "authorUserId",
         default,
@@ -60,6 +65,7 @@ pub struct CategoricalScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub author_user_id: Option<Option<String>>,
+    /// Comment on the score
     #[serde(
         rename = "comment",
         default,
@@ -67,13 +73,9 @@ pub struct CategoricalScore {
         skip_serializing_if = "Option::is_none"
     )]
     pub comment: Option<Option<String>>,
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    /// Metadata associated with the score
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
     #[serde(
         rename = "configId",
@@ -91,13 +93,8 @@ pub struct CategoricalScore {
     )]
     pub queue_id: Option<Option<String>>,
     /// The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
     /// Represents the numeric category mapping of the stringValue. If no config is linked, defaults to 0.
     #[serde(rename = "value")]
     pub value: f64,
@@ -114,6 +111,8 @@ impl CategoricalScore {
         timestamp: String,
         created_at: String,
         updated_at: String,
+        metadata: Option<serde_json::Value>,
+        environment: String,
         value: f64,
         string_value: String,
     ) -> CategoricalScore {
@@ -130,10 +129,10 @@ impl CategoricalScore {
             updated_at,
             author_user_id: None,
             comment: None,
-            metadata: None,
+            metadata,
             config_id: None,
             queue_id: None,
-            environment: None,
+            environment,
             value,
             string_value,
         }

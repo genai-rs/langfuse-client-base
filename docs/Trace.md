@@ -14,9 +14,9 @@ Name | Type | Description | Notes
 **version** | Option<**String**> | The version of the trace | [optional]
 **user_id** | Option<**String**> | The user identifier associated with the trace | [optional]
 **metadata** | Option<[**serde_json::Value**](.md)> | The metadata associated with the trace. Can be any JSON. | [optional]
-**tags** | Option<**Vec<String>**> | The tags associated with the trace. Can be an array of strings or null. | [optional]
-**public** | Option<**bool**> | Public traces are accessible via url without login | [optional]
-**environment** | Option<**String**> | The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
+**tags** | **Vec<String>** | The tags associated with the trace. | 
+**public** | **bool** | Public traces are accessible via url without login | 
+**environment** | **String** | The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

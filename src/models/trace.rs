@@ -83,34 +83,25 @@ pub struct Trace {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
-    /// The tags associated with the trace. Can be an array of strings or null.
-    #[serde(
-        rename = "tags",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub tags: Option<Option<Vec<String>>>,
+    /// The tags associated with the trace.
+    #[serde(rename = "tags")]
+    pub tags: Vec<String>,
     /// Public traces are accessible via url without login
-    #[serde(
-        rename = "public",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub public: Option<Option<bool>>,
+    #[serde(rename = "public")]
+    pub public: bool,
     /// The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
 }
 
 impl Trace {
-    pub fn new(id: String, timestamp: String) -> Trace {
+    pub fn new(
+        id: String,
+        timestamp: String,
+        tags: Vec<String>,
+        public: bool,
+        environment: String,
+    ) -> Trace {
         Trace {
             id,
             timestamp,
@@ -122,9 +113,9 @@ impl Trace {
             version: None,
             user_id: None,
             metadata: None,
-            tags: None,
-            public: None,
-            environment: None,
+            tags,
+            public,
+            environment,
         }
     }
 }

@@ -17,6 +17,7 @@ pub struct Dataset {
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
+    /// Description of the dataset
     #[serde(
         rename = "description",
         default,
@@ -24,13 +25,9 @@ pub struct Dataset {
         skip_serializing_if = "Option::is_none"
     )]
     pub description: Option<Option<String>>,
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    /// Metadata associated with the dataset
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
     /// JSON Schema for validating dataset item inputs
     #[serde(
         rename = "inputSchema",
@@ -59,6 +56,7 @@ impl Dataset {
     pub fn new(
         id: String,
         name: String,
+        metadata: Option<serde_json::Value>,
         project_id: String,
         created_at: String,
         updated_at: String,
@@ -67,7 +65,7 @@ impl Dataset {
             id,
             name,
             description: None,
-            metadata: None,
+            metadata,
             input_schema: None,
             expected_output_schema: None,
             project_id,

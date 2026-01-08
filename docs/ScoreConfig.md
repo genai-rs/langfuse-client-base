@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **min_value** | Option<**f64**> | Sets minimum value for numerical scores. If not set, the minimum value defaults to -∞ | [optional]
 **max_value** | Option<**f64**> | Sets maximum value for numerical scores. If not set, the maximum value defaults to +∞ | [optional]
 **categories** | Option<[**Vec<models::ConfigCategory>**](ConfigCategory.md)> | Configures custom categories for categorical scores | [optional]
-**description** | Option<**String**> |  | [optional]
+**description** | Option<**String**> | Description of the score config | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

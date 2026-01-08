@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **object_type** | [**models::CommentObjectType**](CommentObjectType.md) |  | 
 **object_id** | **String** |  | 
 **content** | **String** |  | 
-**author_user_id** | Option<**String**> |  | [optional]
+**author_user_id** | Option<**String**> | The user ID of the comment author | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

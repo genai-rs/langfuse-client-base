@@ -27,6 +27,7 @@ pub struct Comment {
     pub object_id: String,
     #[serde(rename = "content")]
     pub content: String,
+    /// The user ID of the comment author
     #[serde(
         rename = "authorUserId",
         default,

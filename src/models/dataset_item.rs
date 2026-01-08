@@ -17,27 +17,16 @@ pub struct DatasetItem {
     pub id: String,
     #[serde(rename = "status")]
     pub status: models::DatasetStatus,
-    #[serde(
-        rename = "input",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input: Option<Option<serde_json::Value>>,
-    #[serde(
-        rename = "expectedOutput",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub expected_output: Option<Option<serde_json::Value>>,
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    /// Input data for the dataset item
+    #[serde(rename = "input", deserialize_with = "Option::deserialize")]
+    pub input: Option<serde_json::Value>,
+    /// Expected output for the dataset item
+    #[serde(rename = "expectedOutput", deserialize_with = "Option::deserialize")]
+    pub expected_output: Option<serde_json::Value>,
+    /// Metadata associated with the dataset item
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
+    /// The trace ID that sourced this dataset item
     #[serde(
         rename = "sourceTraceId",
         default,
@@ -45,6 +34,7 @@ pub struct DatasetItem {
         skip_serializing_if = "Option::is_none"
     )]
     pub source_trace_id: Option<Option<String>>,
+    /// The observation ID that sourced this dataset item
     #[serde(
         rename = "sourceObservationId",
         default,
@@ -66,6 +56,9 @@ impl DatasetItem {
     pub fn new(
         id: String,
         status: models::DatasetStatus,
+        input: Option<serde_json::Value>,
+        expected_output: Option<serde_json::Value>,
+        metadata: Option<serde_json::Value>,
         dataset_id: String,
         dataset_name: String,
         created_at: String,
@@ -74,9 +67,9 @@ impl DatasetItem {
         DatasetItem {
             id,
             status,
-            input: None,
-            expected_output: None,
-            metadata: None,
+            input,
+            expected_output,
+            metadata,
             source_trace_id: None,
             source_observation_id: None,
             dataset_id,
