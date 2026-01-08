@@ -14,12 +14,12 @@ Name | Type | Description | Notes
 **version** | Option<**String**> | The version of the trace | [optional]
 **user_id** | Option<**String**> | The user identifier associated with the trace | [optional]
 **metadata** | Option<[**serde_json::Value**](.md)> | The metadata associated with the trace. Can be any JSON. | [optional]
-**tags** | Option<**Vec<String>**> | The tags associated with the trace. Can be an array of strings or null. | [optional]
-**public** | Option<**bool**> | Public traces are accessible via url without login | [optional]
-**environment** | Option<**String**> | The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
+**tags** | **Vec<String>** | The tags associated with the trace. | 
+**public** | **bool** | Public traces are accessible via url without login | 
+**environment** | **String** | The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 **html_path** | **String** | Path of trace in Langfuse UI | 
-**latency** | **f64** | Latency of trace in seconds | 
-**total_cost** | **f64** | Cost of trace in USD | 
+**latency** | Option<**f64**> | Latency of trace in seconds | [optional]
+**total_cost** | Option<**f64**> | Cost of trace in USD | [optional]
 **observations** | [**Vec<models::ObservationsView>**](ObservationsView.md) | List of observations | 
 **scores** | [**Vec<models::ScoreV1>**](ScoreV1.md) | List of scores | 
 

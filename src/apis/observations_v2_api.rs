@@ -25,11 +25,12 @@ pub enum ObservationsV2GetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
+/// Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata (truncated to 200 chars by default, use `expandMetadata` to get full values) - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
 #[bon::builder]
 pub async fn observations_v2_get_many(
     configuration: &configuration::Configuration,
     fields: Option<&str>,
+    expand_metadata: Option<&str>,
     limit: Option<i32>,
     cursor: Option<&str>,
     parse_io_as_json: Option<bool>,
@@ -47,6 +48,7 @@ pub async fn observations_v2_get_many(
 ) -> Result<models::ObservationsV2Response, Error<ObservationsV2GetManyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_fields = fields;
+    let p_query_expand_metadata = expand_metadata;
     let p_query_limit = limit;
     let p_query_cursor = cursor;
     let p_query_parse_io_as_json = parse_io_as_json;
@@ -67,6 +69,9 @@ pub async fn observations_v2_get_many(
 
     if let Some(ref param_value) = p_query_fields {
         req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_expand_metadata {
+        req_builder = req_builder.query(&[("expandMetadata", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);

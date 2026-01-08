@@ -20,22 +20,17 @@ pub struct Session {
     #[serde(rename = "projectId")]
     pub project_id: String,
     /// The environment from which this session originated.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
 }
 
 impl Session {
-    pub fn new(id: String, created_at: String, project_id: String) -> Session {
+    pub fn new(id: String, created_at: String, project_id: String, environment: String) -> Session {
         Session {
             id,
             created_at,
             project_id,
-            environment: None,
+            environment,
         }
     }
 }

@@ -15,31 +15,22 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Usage {
     /// Number of input units (e.g. tokens)
-    #[serde(
-        rename = "input",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input: Option<Option<i32>>,
+    #[serde(rename = "input")]
+    pub input: i32,
     /// Number of output units (e.g. tokens)
-    #[serde(
-        rename = "output",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output: Option<Option<i32>>,
+    #[serde(rename = "output")]
+    pub output: i32,
     /// Defaults to input+output if not set
+    #[serde(rename = "total")]
+    pub total: i32,
+    /// Unit of measurement
     #[serde(
-        rename = "total",
+        rename = "unit",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub total: Option<Option<i32>>,
-    #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
-    pub unit: Option<models::ModelUsageUnit>,
+    pub unit: Option<Option<String>>,
     /// USD input cost
     #[serde(
         rename = "inputCost",
@@ -68,11 +59,11 @@ pub struct Usage {
 
 impl Usage {
     /// (Deprecated. Use usageDetails and costDetails instead.) Standard interface for usage and cost
-    pub fn new() -> Usage {
+    pub fn new(input: i32, output: i32, total: i32) -> Usage {
         Usage {
-            input: None,
-            output: None,
-            total: None,
+            input,
+            output,
+            total,
             unit: None,
             input_cost: None,
             output_cost: None,

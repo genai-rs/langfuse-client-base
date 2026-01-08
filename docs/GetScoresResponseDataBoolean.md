@@ -5,21 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**trace_id** | Option<**String**> |  | [optional]
-**session_id** | Option<**String**> |  | [optional]
-**observation_id** | Option<**String**> |  | [optional]
-**dataset_run_id** | Option<**String**> |  | [optional]
+**trace_id** | Option<**String**> | The trace ID associated with the score | [optional]
+**session_id** | Option<**String**> | The session ID associated with the score | [optional]
+**observation_id** | Option<**String**> | The observation ID associated with the score | [optional]
+**dataset_run_id** | Option<**String**> | The dataset run ID associated with the score | [optional]
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
 **timestamp** | **String** |  | 
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
-**author_user_id** | Option<**String**> |  | [optional]
-**comment** | Option<**String**> |  | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**author_user_id** | Option<**String**> | The user ID of the author | [optional]
+**comment** | Option<**String**> | Comment on the score | [optional]
+**metadata** | Option<[**serde_json::Value**](.md)> | Metadata associated with the score | 
 **config_id** | Option<**String**> | Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
-**environment** | Option<**String**> | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | [optional]
+**environment** | **String** | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 **value** | **f64** | The numeric value of the score. Equals 1 for \"True\" and 0 for \"False\" | 
 **string_value** | **String** | The string representation of the score value. Is inferred from the numeric value and equals \"True\" or \"False\" | 
 **trace** | Option<[**models::GetScoresResponseTraceData**](GetScoresResponseTraceData.md)> |  | [optional]

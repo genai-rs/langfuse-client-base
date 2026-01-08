@@ -63,21 +63,11 @@ pub struct Observation {
     )]
     pub model: Option<Option<String>>,
     /// The parameters of the model used for the observation
-    #[serde(
-        rename = "modelParameters",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model_parameters: Option<Option<std::collections::HashMap<String, models::MapValue>>>,
+    #[serde(rename = "modelParameters", deserialize_with = "Option::deserialize")]
+    pub model_parameters: Option<serde_json::Value>,
     /// The input data of the observation
-    #[serde(
-        rename = "input",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input: Option<Option<serde_json::Value>>,
+    #[serde(rename = "input", deserialize_with = "Option::deserialize")]
+    pub input: Option<serde_json::Value>,
     /// The version of the observation
     #[serde(
         rename = "version",
@@ -87,23 +77,13 @@ pub struct Observation {
     )]
     pub version: Option<Option<String>>,
     /// Additional metadata of the observation
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
     /// The output data of the observation
-    #[serde(
-        rename = "output",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output: Option<Option<serde_json::Value>>,
-    #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
-    pub usage: Option<Box<models::Usage>>,
+    #[serde(rename = "output", deserialize_with = "Option::deserialize")]
+    pub output: Option<serde_json::Value>,
+    #[serde(rename = "usage")]
+    pub usage: Box<models::Usage>,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
@@ -131,29 +111,14 @@ pub struct Observation {
     )]
     pub prompt_id: Option<Option<String>>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
-    #[serde(
-        rename = "usageDetails",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub usage_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    #[serde(rename = "usageDetails")]
+    pub usage_details: std::collections::HashMap<String, i32>,
     /// The cost details of the observation. Key is the name of the cost metric, value is the cost in USD. The total key is the sum of all (non-total) cost metrics or the total value ingested.
-    #[serde(
-        rename = "costDetails",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub cost_details: Option<Option<std::collections::HashMap<String, f64>>>,
+    #[serde(rename = "costDetails")]
+    pub cost_details: std::collections::HashMap<String, f64>,
     /// The environment from which this observation originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
 }
 
 impl Observation {
@@ -161,7 +126,15 @@ impl Observation {
         id: String,
         r#type: String,
         start_time: String,
+        model_parameters: Option<serde_json::Value>,
+        input: Option<serde_json::Value>,
+        metadata: Option<serde_json::Value>,
+        output: Option<serde_json::Value>,
+        usage: models::Usage,
         level: models::ObservationLevel,
+        usage_details: std::collections::HashMap<String, i32>,
+        cost_details: std::collections::HashMap<String, f64>,
+        environment: String,
     ) -> Observation {
         Observation {
             id,
@@ -172,19 +145,19 @@ impl Observation {
             end_time: None,
             completion_start_time: None,
             model: None,
-            model_parameters: None,
-            input: None,
+            model_parameters,
+            input,
             version: None,
-            metadata: None,
-            output: None,
-            usage: None,
+            metadata,
+            output,
+            usage: Box::new(usage),
             level,
             status_message: None,
             parent_observation_id: None,
             prompt_id: None,
-            usage_details: None,
-            cost_details: None,
-            environment: None,
+            usage_details,
+            cost_details,
+            environment,
         }
     }
 }

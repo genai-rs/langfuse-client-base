@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**input** | Option<**i32**> | Number of input units (e.g. tokens) | [optional]
-**output** | Option<**i32**> | Number of output units (e.g. tokens) | [optional]
-**total** | Option<**i32**> | Defaults to input+output if not set | [optional]
-**unit** | Option<[**models::ModelUsageUnit**](ModelUsageUnit.md)> |  | [optional]
+**input** | **i32** | Number of input units (e.g. tokens) | 
+**output** | **i32** | Number of output units (e.g. tokens) | 
+**total** | **i32** | Defaults to input+output if not set | 
+**unit** | Option<**String**> | Unit of measurement | [optional]
 **input_cost** | Option<**f64**> | USD input cost | [optional]
 **output_cost** | Option<**f64**> | USD output cost | [optional]
 **total_cost** | Option<**f64**> | USD total cost, defaults to input+output | [optional]

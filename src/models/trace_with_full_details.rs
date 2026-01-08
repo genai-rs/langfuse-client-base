@@ -83,39 +83,34 @@ pub struct TraceWithFullDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub metadata: Option<Option<serde_json::Value>>,
-    /// The tags associated with the trace. Can be an array of strings or null.
-    #[serde(
-        rename = "tags",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub tags: Option<Option<Vec<String>>>,
+    /// The tags associated with the trace.
+    #[serde(rename = "tags")]
+    pub tags: Vec<String>,
     /// Public traces are accessible via url without login
-    #[serde(
-        rename = "public",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub public: Option<Option<bool>>,
+    #[serde(rename = "public")]
+    pub public: bool,
     /// The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
-    #[serde(
-        rename = "environment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub environment: Option<Option<String>>,
+    #[serde(rename = "environment")]
+    pub environment: String,
     /// Path of trace in Langfuse UI
     #[serde(rename = "htmlPath")]
     pub html_path: String,
     /// Latency of trace in seconds
-    #[serde(rename = "latency")]
-    pub latency: f64,
+    #[serde(
+        rename = "latency",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub latency: Option<Option<f64>>,
     /// Cost of trace in USD
-    #[serde(rename = "totalCost")]
-    pub total_cost: f64,
+    #[serde(
+        rename = "totalCost",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub total_cost: Option<Option<f64>>,
     /// List of observations
     #[serde(rename = "observations")]
     pub observations: Vec<models::ObservationsView>,
@@ -128,9 +123,10 @@ impl TraceWithFullDetails {
     pub fn new(
         id: String,
         timestamp: String,
+        tags: Vec<String>,
+        public: bool,
+        environment: String,
         html_path: String,
-        latency: f64,
-        total_cost: f64,
         observations: Vec<models::ObservationsView>,
         scores: Vec<models::ScoreV1>,
     ) -> TraceWithFullDetails {
@@ -145,12 +141,12 @@ impl TraceWithFullDetails {
             version: None,
             user_id: None,
             metadata: None,
-            tags: None,
-            public: None,
-            environment: None,
+            tags,
+            public,
+            environment,
             html_path,
-            latency,
-            total_cost,
+            latency: None,
+            total_cost: None,
             observations,
             scores,
         }

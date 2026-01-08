@@ -53,6 +53,7 @@ pub struct ScoreConfig {
         skip_serializing_if = "Option::is_none"
     )]
     pub categories: Option<Option<Vec<models::ConfigCategory>>>,
+    /// Description of the score config
     #[serde(
         rename = "description",
         default,

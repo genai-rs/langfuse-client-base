@@ -28,13 +28,8 @@ pub struct DatasetRun {
     )]
     pub description: Option<Option<String>>,
     /// Metadata of the dataset run
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    pub metadata: Option<serde_json::Value>,
     /// Id of the associated dataset
     #[serde(rename = "datasetId")]
     pub dataset_id: String,
@@ -53,6 +48,7 @@ impl DatasetRun {
     pub fn new(
         id: String,
         name: String,
+        metadata: Option<serde_json::Value>,
         dataset_id: String,
         dataset_name: String,
         created_at: String,
@@ -62,7 +58,7 @@ impl DatasetRun {
             id,
             name,
             description: None,
-            metadata: None,
+            metadata,
             dataset_id,
             dataset_name,
             created_at,

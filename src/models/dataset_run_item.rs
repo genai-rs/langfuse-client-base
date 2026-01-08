@@ -23,6 +23,7 @@ pub struct DatasetRunItem {
     pub dataset_item_id: String,
     #[serde(rename = "traceId")]
     pub trace_id: String,
+    /// The observation ID associated with this run item
     #[serde(
         rename = "observationId",
         default,

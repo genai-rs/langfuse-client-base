@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **dataset_run_name** | **String** |  | 
 **dataset_item_id** | **String** |  | 
 **trace_id** | **String** |  | 
-**observation_id** | Option<**String**> |  | [optional]
+**observation_id** | Option<**String**> | The observation ID associated with this run item | [optional]
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
 
