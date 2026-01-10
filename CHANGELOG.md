@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.7.1...v0.8.0) - 2026-01-10
+
+### Other
+
+- align branch protection MSRV check
+- bump MSRV to 1.88
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.18.0
+- *(deps)* Update rust patch updates
+- update generated client from latest OpenAPI spec
+- *(deps)* Update rust patch updates
+- update generated client from latest OpenAPI spec
+
 ### Other
 
 - bump MSRV to 1.88.0 to align with bon/darling requirements
