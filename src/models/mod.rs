@@ -328,6 +328,8 @@ pub mod projects_create_api_key_request;
 pub use self::projects_create_api_key_request::ProjectsCreateApiKeyRequest;
 pub mod projects_create_request;
 pub use self::projects_create_request::ProjectsCreateRequest;
+pub mod projects_update_request;
+pub use self::projects_update_request::ProjectsUpdateRequest;
 pub mod prompt;
 pub use self::prompt::Prompt;
 pub mod prompt_meta;

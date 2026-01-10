@@ -195,7 +195,7 @@ Name | Type | Description  | Required | Notes
 
 ## projects_update
 
-> models::Project projects_update(project_id, projects_create_request)
+> models::Project projects_update(project_id, projects_update_request)
 
 
 Update a project by ID (requires organization-scoped API key).
@@ -206,7 +206,7 @@ Update a project by ID (requires organization-scoped API key).
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
-**projects_create_request** | [**ProjectsCreateRequest**](ProjectsCreateRequest.md) |  | [required] |
+**projects_update_request** | [**ProjectsUpdateRequest**](ProjectsUpdateRequest.md) |  | [required] |
 
 ### Return type
 
