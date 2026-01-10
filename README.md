@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/langfuse-client-base.svg)](https://crates.io/crates/langfuse-client-base)
 [![Documentation](https://docs.rs/langfuse-client-base/badge.svg)](https://docs.rs/langfuse-client-base)
 [![CI](https://github.com/genai-rs/langfuse-client-base/workflows/CI/badge.svg)](https://github.com/genai-rs/langfuse-client-base/actions)
-[![MSRV](https://img.shields.io/badge/MSRV-1.83.0-blue)](https://releases.rs/docs/1.83.0/)
+[![MSRV](https://img.shields.io/badge/MSRV-1.88.0-blue)](https://releases.rs/docs/1.88.0/)
 [![License](https://img.shields.io/crates/l/langfuse-client-base)](./LICENSE-MIT)
 
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
