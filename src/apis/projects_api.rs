@@ -417,11 +417,11 @@ pub async fn projects_get_api_keys(
 pub async fn projects_update(
     configuration: &configuration::Configuration,
     project_id: &str,
-    projects_create_request: models::ProjectsCreateRequest,
+    projects_update_request: models::ProjectsUpdateRequest,
 ) -> Result<models::Project, Error<ProjectsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
-    let p_body_projects_create_request = projects_create_request;
+    let p_body_projects_update_request = projects_update_request;
 
     let uri_str = format!(
         "{}/api/public/projects/{projectId}",
@@ -436,7 +436,7 @@ pub async fn projects_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_projects_create_request);
+    req_builder = req_builder.json(&p_body_projects_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
