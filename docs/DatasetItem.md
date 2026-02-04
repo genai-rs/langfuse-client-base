@@ -6,9 +6,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **status** | [**models::DatasetStatus**](DatasetStatus.md) |  | 
-**input** | Option<[**serde_json::Value**](.md)> | Input data for the dataset item | 
-**expected_output** | Option<[**serde_json::Value**](.md)> | Expected output for the dataset item | 
-**metadata** | Option<[**serde_json::Value**](.md)> | Metadata associated with the dataset item | 
+**input** | Option<**serde_json::Value**> | Input data for the dataset item | 
+**expected_output** | Option<**serde_json::Value**> | Expected output for the dataset item | 
+**metadata** | Option<**serde_json::Value**> | Metadata associated with the dataset item | 
 **source_trace_id** | Option<**String**> | The trace ID that sourced this dataset item | [optional]
 **source_observation_id** | Option<**String**> | The observation ID that sourced this dataset item | [optional]
 **dataset_id** | **String** |  | 

@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **dataset_name** | **String** |  | 
-**input** | Option<[**serde_json::Value**](.md)> |  | [optional]
-**expected_output** | Option<[**serde_json::Value**](.md)> |  | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**input** | Option<**serde_json::Value**> |  | [optional]
+**expected_output** | Option<**serde_json::Value**> |  | [optional]
+**metadata** | Option<**serde_json::Value**> |  | [optional]
 **source_trace_id** | Option<**String**> |  | [optional]
 **source_observation_id** | Option<**String**> |  | [optional]
 **id** | Option<**String**> | Dataset items are upserted on their id. Id needs to be unique (project-level) and cannot be reused across datasets. | [optional]

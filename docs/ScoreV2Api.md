@@ -28,7 +28,7 @@ Name | Type | Description  | Required | Notes
 **from_timestamp** | Option<**String**> | Optional filter to only include scores created on or after a certain datetime (ISO 8601) |  |
 **to_timestamp** | Option<**String**> | Optional filter to only include scores created before a certain datetime (ISO 8601) |  |
 **environment** | Option<[**Vec<String>**](String.md)> | Optional filter for scores where the environment is one of the provided values. |  |
-**source** | Option<[**ScoreSource**](.md)> | Retrieve only scores from a specific source. |  |
+**source** | Option<[**ScoreSource**](ScoreSource.md)> | Retrieve only scores from a specific source. |  |
 **operator** | Option<**String**> | Retrieve only scores with <operator> value. |  |
 **value** | Option<**f64**> | Retrieve only scores with <operator> value. |  |
 **score_ids** | Option<**String**> | Comma-separated list of score IDs to limit the results to. |  |
@@ -37,7 +37,7 @@ Name | Type | Description  | Required | Notes
 **dataset_run_id** | Option<**String**> | Retrieve only scores with a specific datasetRunId. |  |
 **trace_id** | Option<**String**> | Retrieve only scores with a specific traceId. |  |
 **queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
-**data_type** | Option<[**ScoreDataType**](.md)> | Retrieve only scores with a specific dataType. |  |
+**data_type** | Option<[**ScoreDataType**](ScoreDataType.md)> | Retrieve only scores with a specific dataType. |  |
 **trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
 **fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
 
