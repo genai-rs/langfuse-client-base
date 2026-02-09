@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-Merge dependency tables from the OpenAPI generator without overwriting curated versions.
+Merge dependency tables from the OpenAPI generator without overwriting curated entries.
 
-The generator rewrites `Cargo.toml` with exact dependency versions. We prefer to keep the
-versions we curate in the repository so regeneration does not churn dependency updates.
-This script merges the generated dependency tables into the existing `Cargo.toml` while
-preserving the version requirement (including any leading range operators) for entries
-that already exist in the project.
+The generator rewrites `Cargo.toml` with its own dependency versions and features. We
+prefer to keep the entries we curate in the repository so regeneration does not churn
+dependency updates or drop manually-added features (e.g. "query" on reqwest).
 
-New dependencies from the generated file are appended as-is so the build continues to
-work if upstream templates start requiring additional crates.
+For dependencies that already exist in the curated file, the entire entry (version,
+features, default-features, etc.) is preserved as-is. Only genuinely new dependencies
+from the generated file are appended so the build continues to work if upstream
+templates start requiring additional crates.
 """
 
 from __future__ import annotations
@@ -31,9 +31,7 @@ class Entry:
 
 def extract_section(body: str, name: str) -> Tuple[List[Entry], Dict[str, Entry]]:
     """Return the parsed entries and mapping for the given dependency section."""
-    pattern = re.compile(
-        rf"(?ms)^\[{re.escape(name)}\]\n(.*?)(?=^\[|\Z)"
-    )
+    pattern = re.compile(rf"(?ms)^\[{re.escape(name)}\]\n(.*?)(?=^\[|\Z)")
     match = pattern.search(body)
     if not match:
         return [], {}
@@ -85,39 +83,6 @@ def extract_section(body: str, name: str) -> Tuple[List[Entry], Dict[str, Entry]
     return entries, mapping
 
 
-def extract_version(entry_text: str) -> Optional[str]:
-    """Return the version string from a dependency entry if present."""
-    simple_match = re.match(
-        r'\s*[A-Za-z0-9_\-]+\s*=\s*"([^"]+)"', entry_text, flags=re.DOTALL
-    )
-    if simple_match:
-        return simple_match.group(1)
-
-    version_match = re.search(r'(version\s*=\s*")([^"]+)(")', entry_text)
-    if version_match:
-        return version_match.group(2)
-    return None
-
-
-def replace_version(entry_text: str, new_version: str) -> str:
-    """Replace the version string inside an entry with the provided value."""
-    if "version" in entry_text:
-        return re.sub(
-            r'(version\s*=\s*")([^"]+)(")',
-            lambda m: f'{m.group(1)}{new_version}{m.group(3)}',
-            entry_text,
-            count=1,
-        )
-
-    return re.sub(
-        r'^(\s*[A-Za-z0-9_\-]+\s*=\s*")([^"]+)(".*)',
-        lambda m: f'{m.group(1)}{new_version}{m.group(3)}',
-        entry_text,
-        count=1,
-        flags=re.DOTALL,
-    )
-
-
 def render_section(header: str, entries: List[Entry]) -> str:
     lines: List[str] = [f"[{header}]"]
     for entry in entries:
@@ -131,11 +96,9 @@ def merge_section(
     section: str,
     original_entries: List[Entry],
     generated_entries: List[Entry],
-    generated_map: Dict[str, Entry],
     key_to_generated_sections: Dict[str, Set[str]],
-    original_versions: Dict[Tuple[str, str], str],
 ) -> List[Entry]:
-    """Merge dependency entries while preserving curated versions and avoiding duplicates."""
+    """Merge dependency entries, preserving curated entries and adding new ones."""
     merged: List[Entry] = []
     processed: set[str] = set()
 
@@ -146,25 +109,20 @@ def merge_section(
 
         generated_sections = key_to_generated_sections.get(entry.key)
         if not generated_sections:
+            # Dependency only in original (not generated) -- keep it
             merged.append(entry)
             continue
 
         if section not in generated_sections:
             continue
 
-        generated_entry = generated_map.get(entry.key)
-        if generated_entry is None:
-            merged.append(entry)
-            continue
-
-        updated_text = generated_entry.text
-        original_version = original_versions.get((section, entry.key))
-        if original_version is not None:
-            updated_text = replace_version(updated_text, original_version)
-
-        merged.append(Entry(entry.key, updated_text))
+        # Dependency exists in both original and generated.
+        # Preserve the curated entry entirely (version, features, etc.)
+        # to avoid dropping manually-added features like "query".
+        merged.append(entry)
         processed.add(entry.key)
 
+    # Append genuinely new dependencies from the generated file
     for entry in generated_entries:
         if entry.key is None:
             continue
@@ -174,12 +132,7 @@ def merge_section(
         if not generated_sections or section not in generated_sections:
             continue
 
-        updated_text = entry.text
-        original_version = original_versions.get((section, entry.key))
-        if original_version is not None:
-            updated_text = replace_version(updated_text, original_version)
-
-        merged.append(Entry(entry.key, updated_text))
+        merged.append(Entry(entry.key, entry.text))
         processed.add(entry.key)
 
     return merged
@@ -192,15 +145,9 @@ def update_cargo(original: Path, generated: Path) -> None:
     updated_text = original_text
 
     original_sections: Dict[str, List[Entry]] = {}
-    original_versions: Dict[Tuple[str, str], str] = {}
     for section in SECTION_NAMES:
         orig_entries, _ = extract_section(updated_text, section)
         original_sections[section] = orig_entries
-        for entry in orig_entries:
-            if entry.key:
-                version = extract_version(entry.text)
-                if version is not None:
-                    original_versions[(section, entry.key)] = version
 
     generated_sections: Dict[str, Tuple[List[Entry], Dict[str, Entry]]] = {}
     key_to_generated_sections: Dict[str, Set[str]] = {}
@@ -221,9 +168,7 @@ def update_cargo(original: Path, generated: Path) -> None:
             section,
             orig_entries,
             gen_entries,
-            gen_map,
             key_to_generated_sections,
-            original_versions,
         )
         if merged_entries:
             new_section = render_section(section, merged_entries)
@@ -235,9 +180,7 @@ def update_cargo(original: Path, generated: Path) -> None:
         if new_section and not new_section.endswith("\n\n"):
             new_section += "\n"
 
-        pattern = re.compile(
-            rf"(?ms)^\[{re.escape(section)}\]\n.*?(?=^\[|\Z)"
-        )
+        pattern = re.compile(rf"(?ms)^\[{re.escape(section)}\]\n.*?(?=^\[|\Z)")
 
         if pattern.search(updated_text):
             updated_text = pattern.sub(new_section, updated_text, count=1)
