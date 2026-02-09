@@ -1,4 +1,4 @@
-# GetScoresResponseDataBoolean
+# GetScoresResponseDataCorrection
 
 ## Properties
 
@@ -20,8 +20,8 @@ Name | Type | Description | Notes
 **config_id** | Option<**String**> | Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **environment** | **String** | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
-**value** | **f64** | The numeric value of the score. Equals 1 for \"True\" and 0 for \"False\" | 
-**string_value** | **String** | The string representation of the score value. Is inferred from the numeric value and equals \"True\" or \"False\" | 
+**value** | **f64** | The numeric value of the score. Always 0 for correction scores. | 
+**string_value** | **String** | The string representation of the correction content | 
 **trace** | Option<[**models::GetScoresResponseTraceData**](GetScoresResponseTraceData.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

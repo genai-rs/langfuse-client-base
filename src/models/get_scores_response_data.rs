@@ -17,6 +17,7 @@ pub enum GetScoresResponseData {
     GetScoresResponseDataOneOf(Box<models::GetScoresResponseDataOneOf>),
     GetScoresResponseDataOneOf1(Box<models::GetScoresResponseDataOneOf1>),
     GetScoresResponseDataOneOf2(Box<models::GetScoresResponseDataOneOf2>),
+    GetScoresResponseDataOneOf3(Box<models::GetScoresResponseDataOneOf3>),
 }
 
 impl Default for GetScoresResponseData {
@@ -27,12 +28,12 @@ impl Default for GetScoresResponseData {
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
-    #[serde(rename = "BOOLEAN")]
-    Boolean,
+    #[serde(rename = "CORRECTION")]
+    Correction,
 }
 
 impl Default for DataType {
     fn default() -> DataType {
-        Self::Boolean
+        Self::Correction
     }
 }

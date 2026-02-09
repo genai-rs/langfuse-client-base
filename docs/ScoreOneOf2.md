@@ -16,13 +16,13 @@ Name | Type | Description | Notes
 **updated_at** | **String** |  | 
 **author_user_id** | Option<**String**> | The user ID of the author | [optional]
 **comment** | Option<**String**> | Comment on the score | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> | Metadata associated with the score | 
+**metadata** | Option<**serde_json::Value**> | Metadata associated with the score | 
 **config_id** | Option<**String**> | Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range | [optional]
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **environment** | **String** | The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 **value** | **f64** | The numeric value of the score. Equals 1 for \"True\" and 0 for \"False\" | 
 **string_value** | **String** | The string representation of the score value. Is inferred from the numeric value and equals \"True\" or \"False\" | 
-**data_type** | **String** |  | 
+**data_type** | **DataType** |  (enum: BOOLEAN) | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

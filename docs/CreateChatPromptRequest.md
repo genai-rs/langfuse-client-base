@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
 **prompt** | [**Vec<models::ChatMessageWithPlaceholders>**](ChatMessageWithPlaceholders.md) |  | 
-**config** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**config** | Option<**serde_json::Value**> |  | [optional]
 **labels** | Option<**Vec<String>**> | List of deployment labels of this prompt version. | [optional]
 **tags** | Option<**Vec<String>**> | List of tags to apply to all versions of this prompt. | [optional]
 **commit_message** | Option<**String**> | Commit message for this prompt version. | [optional]

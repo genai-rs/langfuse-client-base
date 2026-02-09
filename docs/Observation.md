@@ -12,11 +12,11 @@ Name | Type | Description | Notes
 **end_time** | Option<**String**> | The end time of the observation. | [optional]
 **completion_start_time** | Option<**String**> | The completion start time of the observation | [optional]
 **model** | Option<**String**> | The model used for the observation | [optional]
-**model_parameters** | Option<[**serde_json::Value**](.md)> | The parameters of the model used for the observation | 
-**input** | Option<[**serde_json::Value**](.md)> | The input data of the observation | 
+**model_parameters** | Option<**serde_json::Value**> | The parameters of the model used for the observation | 
+**input** | Option<**serde_json::Value**> | The input data of the observation | 
 **version** | Option<**String**> | The version of the observation | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> | Additional metadata of the observation | 
-**output** | Option<[**serde_json::Value**](.md)> | The output data of the observation | 
+**metadata** | Option<**serde_json::Value**> | Additional metadata of the observation | 
+**output** | Option<**serde_json::Value**> | The output data of the observation | 
 **usage** | [**models::Usage**](Usage.md) |  | 
 **level** | [**models::ObservationLevel**](ObservationLevel.md) |  | 
 **status_message** | Option<**String**> | The status message of the observation | [optional]

@@ -57,7 +57,7 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<**String**> |  |  |
 **r#type** | Option<**String**> |  |  |
 **trace_id** | Option<**String**> |  |  |
-**level** | Option<[**ObservationLevel**](.md)> | Optional filter for observations with a specific level (e.g. \"DEBUG\", \"DEFAULT\", \"WARNING\", \"ERROR\"). |  |
+**level** | Option<[**ObservationLevel**](ObservationLevel.md)> | Optional filter for observations with a specific level (e.g. \"DEBUG\", \"DEFAULT\", \"WARNING\", \"ERROR\"). |  |
 **parent_observation_id** | Option<**String**> |  |  |
 **environment** | Option<[**Vec<String>**](String.md)> | Optional filter for observations where the environment is one of the provided values. |  |
 **from_start_time** | Option<**String**> | Retrieve only observations with a start_time on or after this datetime (ISO 8601). |  |
