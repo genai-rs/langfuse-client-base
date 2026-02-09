@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **value** | [**models::CreateScoreValue**](CreateScoreValue.md) |  | 
 **comment** | Option<**String**> |  | [optional]
-**metadata** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**metadata** | Option<**serde_json::Value**> |  | [optional]
 **data_type** | Option<[**models::ScoreDataType**](ScoreDataType.md)> |  | [optional]
 **config_id** | Option<**String**> | Reference a score config on a score. When set, the score name must equal the config name and scores must comply with the config's range and data type. For categorical scores, the value must map to a config category. Numeric scores might be constrained by the score config's max and min values | [optional]
 

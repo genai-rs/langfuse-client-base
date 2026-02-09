@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
-**metadata** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> |  | [optional]
+**metadata** | Option<**std::collections::HashMap<String, serde_json::Value>**> |  | [optional]
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
 

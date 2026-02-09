@@ -6,11 +6,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
 **prompt** | **String** |  | 
-**config** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**config** | Option<**serde_json::Value**> |  | [optional]
 **labels** | Option<**Vec<String>**> | List of deployment labels of this prompt version. | [optional]
 **tags** | Option<**Vec<String>**> | List of tags to apply to all versions of this prompt. | [optional]
 **commit_message** | Option<**String**> | Commit message for this prompt version. | [optional]
-**r#type** | **String** |  | 
+**r#type** | **Type** |  (enum: text) | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
