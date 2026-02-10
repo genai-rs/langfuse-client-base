@@ -218,13 +218,14 @@ pub async fn dataset_items_get(
     }
 }
 
-/// Get dataset items
+/// Get dataset items. Optionally specify a version to get the items as they existed at that point in time. Note: If version parameter is provided, datasetName must also be provided.
 #[bon::builder]
 pub async fn dataset_items_list(
     configuration: &configuration::Configuration,
     dataset_name: Option<&str>,
     source_trace_id: Option<&str>,
     source_observation_id: Option<&str>,
+    version: Option<String>,
     page: Option<i32>,
     limit: Option<i32>,
 ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>> {
@@ -232,6 +233,7 @@ pub async fn dataset_items_list(
     let p_query_dataset_name = dataset_name;
     let p_query_source_trace_id = source_trace_id;
     let p_query_source_observation_id = source_observation_id;
+    let p_query_version = version;
     let p_query_page = page;
     let p_query_limit = limit;
 
@@ -246,6 +248,9 @@ pub async fn dataset_items_list(
     }
     if let Some(ref param_value) = p_query_source_observation_id {
         req_builder = req_builder.query(&[("sourceObservationId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_version {
+        req_builder = req_builder.query(&[("version", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_page {
         req_builder = req_builder.query(&[("page", &param_value.to_string())]);

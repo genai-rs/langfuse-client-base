@@ -48,6 +48,14 @@ pub struct CreateDatasetRunItemRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub trace_id: Option<Option<String>>,
+    /// ISO 8601 timestamp (RFC 3339, Section 5.6) in UTC (e.g., \"2026-01-21T14:35:42Z\"). Specifies the dataset version to use for this experiment run.  If provided, the experiment will use dataset items as they existed at or before this timestamp. If not provided, uses the latest version of dataset items.
+    #[serde(
+        rename = "datasetVersion",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub dataset_version: Option<Option<String>>,
 }
 
 impl CreateDatasetRunItemRequest {
@@ -59,6 +67,7 @@ impl CreateDatasetRunItemRequest {
             dataset_item_id,
             observation_id: None,
             trace_id: None,
+            dataset_version: None,
         }
     }
 }
