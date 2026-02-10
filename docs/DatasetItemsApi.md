@@ -103,10 +103,10 @@ Name | Type | Description  | Required | Notes
 
 ## dataset_items_list
 
-> models::PaginatedDatasetItems dataset_items_list(dataset_name, source_trace_id, source_observation_id, page, limit)
+> models::PaginatedDatasetItems dataset_items_list(dataset_name, source_trace_id, source_observation_id, version, page, limit)
 
 
-Get dataset items
+Get dataset items. Optionally specify a version to get the items as they existed at that point in time. Note: If version parameter is provided, datasetName must also be provided.
 
 ### Parameters
 
@@ -116,6 +116,7 @@ Name | Type | Description  | Required | Notes
 **dataset_name** | Option<**String**> |  |  |
 **source_trace_id** | Option<**String**> |  |  |
 **source_observation_id** | Option<**String**> |  |  |
+**version** | Option<**String**> | ISO 8601 timestamp (RFC 3339, Section 5.6) in UTC (e.g., \"2026-01-21T14:35:42Z\"). If provided, returns state of dataset at this timestamp. If not provided, returns the latest version. Requires datasetName to be specified. |  |
 **page** | Option<**i32**> | page number, starts at 1 |  |
 **limit** | Option<**i32**> | limit of items per page |  |
 
