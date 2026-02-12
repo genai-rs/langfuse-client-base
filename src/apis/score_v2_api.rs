@@ -56,10 +56,12 @@ pub async fn score_v2_get(
     session_id: Option<&str>,
     dataset_run_id: Option<&str>,
     trace_id: Option<&str>,
+    observation_id: Option<&str>,
     queue_id: Option<&str>,
     data_type: Option<models::ScoreDataType>,
     trace_tags: Option<Vec<String>>,
     fields: Option<&str>,
+    filter: Option<&str>,
 ) -> Result<models::GetScoresResponse, Error<ScoreV2GetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -77,10 +79,12 @@ pub async fn score_v2_get(
     let p_query_session_id = session_id;
     let p_query_dataset_run_id = dataset_run_id;
     let p_query_trace_id = trace_id;
+    let p_query_observation_id = observation_id;
     let p_query_queue_id = queue_id;
     let p_query_data_type = data_type;
     let p_query_trace_tags = trace_tags;
     let p_query_fields = fields;
+    let p_query_filter = filter;
 
     let uri_str = format!("{}/api/public/v2/scores", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -146,6 +150,9 @@ pub async fn score_v2_get(
     if let Some(ref param_value) = p_query_trace_id {
         req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
     }
+    if let Some(ref param_value) = p_query_observation_id {
+        req_builder = req_builder.query(&[("observationId", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_query_queue_id {
         req_builder = req_builder.query(&[("queueId", &param_value.to_string())]);
     }
@@ -173,6 +180,9 @@ pub async fn score_v2_get(
     }
     if let Some(ref param_value) = p_query_fields {
         req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_filter {
+        req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

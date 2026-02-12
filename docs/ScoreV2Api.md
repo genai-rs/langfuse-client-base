@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## score_v2_get
 
-> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, queue_id, data_type, trace_tags, fields)
+> models::GetScoresResponse score_v2_get(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, observation_id, queue_id, data_type, trace_tags, fields, filter)
 
 
 Get a list of scores (supports both trace and session scores)
@@ -36,10 +36,12 @@ Name | Type | Description  | Required | Notes
 **session_id** | Option<**String**> | Retrieve only scores with a specific sessionId. |  |
 **dataset_run_id** | Option<**String**> | Retrieve only scores with a specific datasetRunId. |  |
 **trace_id** | Option<**String**> | Retrieve only scores with a specific traceId. |  |
+**observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter scores by. |  |
 **queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
 **data_type** | Option<[**ScoreDataType**](ScoreDataType.md)> | Retrieve only scores with a specific dataType. |  |
 **trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
 **fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
+**filter** | Option<**String**> | A JSON stringified array of filter objects. Each object requires type, column, operator, and value. Supports filtering by score metadata using the stringObject type. Example: [{\"type\":\"stringObject\",\"column\":\"metadata\",\"key\":\"user_id\",\"operator\":\"=\",\"value\":\"abc123\"}]. Supported types: stringObject (metadata key-value filtering), string, number, datetime, stringOptions, arrayOptions. Supported operators for stringObject: =, contains, does not contain, starts with, ends with. |  |
 
 ### Return type
 
