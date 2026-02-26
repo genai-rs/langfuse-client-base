@@ -1,7 +1,7 @@
 /*
  * langfuse
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
+ * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
  * The version of the OpenAPI document:
  *
@@ -14,26 +14,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ChatMessageWithPlaceholders {
-    ChatMessageWithPlaceholdersOneOf(Box<models::ChatMessageWithPlaceholdersOneOf>),
-    ChatMessageWithPlaceholdersOneOf1(Box<models::ChatMessageWithPlaceholdersOneOf1>),
+    ChatMessage(Box<models::ChatMessage>),
+    PlaceholderMessage(Box<models::PlaceholderMessage>),
 }
 
 impl Default for ChatMessageWithPlaceholders {
     fn default() -> Self {
-        Self::ChatMessageWithPlaceholdersOneOf(Default::default())
-    }
-}
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Type {
-    #[serde(rename = "chatmessage")]
-    Chatmessage,
-    #[serde(rename = "placeholder")]
-    Placeholder,
-}
-
-impl Default for Type {
-    fn default() -> Type {
-        Self::Chatmessage
+        Self::ChatMessage(Default::default())
     }
 }
