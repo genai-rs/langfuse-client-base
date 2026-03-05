@@ -1,7 +1,7 @@
 /*
  * langfuse
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
+ * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
  * The version of the OpenAPI document:
  *
@@ -15,10 +15,12 @@ use serde::{Deserialize, Serialize};
 pub struct PlaceholderMessage {
     #[serde(rename = "name")]
     pub name: String,
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<models::PlaceholderMessageType>,
 }
 
 impl PlaceholderMessage {
     pub fn new(name: String) -> PlaceholderMessage {
-        PlaceholderMessage { name }
+        PlaceholderMessage { name, r#type: None }
     }
 }

@@ -24,7 +24,7 @@ Name | Type | Description  | Required | Notes
 **expand_metadata** | Option<**String**> | Comma-separated list of metadata keys to return non-truncated. By default, metadata values over 200 characters are truncated. Use this parameter to retrieve full values for specific keys. Example: \"key1,key2\" |  |
 **limit** | Option<**i32**> | Number of items to return per page. Maximum 1000, default 50. |  |
 **cursor** | Option<**String**> | Base64-encoded cursor for pagination. Use the cursor from the previous response to get the next page. |  |
-**parse_io_as_json** | Option<**bool**> | Set to `true` to parse input/output fields as JSON, or `false` to return raw strings. Defaults to `false` if not provided. |  |
+**parse_io_as_json** | Option<**bool**> | **Deprecated.** Setting this to `true` will return a 400 error. Input/output fields are always returned as raw strings. Remove this parameter or set it to `false`. |  |
 **name** | Option<**String**> |  |  |
 **user_id** | Option<**String**> |  |  |
 **r#type** | Option<**String**> | Filter by observation type (e.g., \"GENERATION\", \"SPAN\", \"EVENT\", \"AGENT\", \"TOOL\", \"CHAIN\", \"RETRIEVER\", \"EVALUATOR\", \"EMBEDDING\", \"GUARDRAIL\") |  |

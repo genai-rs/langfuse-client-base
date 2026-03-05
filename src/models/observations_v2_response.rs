@@ -1,7 +1,7 @@
 /*
  * langfuse
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
+ * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
  * The version of the OpenAPI document:
  *
@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct ObservationsV2Response {
     /// Array of observation objects. Fields included depend on the `fields` parameter in the request.
     #[serde(rename = "data")]
-    pub data: Vec<std::collections::HashMap<String, serde_json::Value>>,
+    pub data: Vec<models::ObservationV2>,
     #[serde(rename = "meta")]
     pub meta: Box<models::ObservationsV2Meta>,
 }
@@ -24,7 +24,7 @@ pub struct ObservationsV2Response {
 impl ObservationsV2Response {
     /// Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results.
     pub fn new(
-        data: Vec<std::collections::HashMap<String, serde_json::Value>>,
+        data: Vec<models::ObservationV2>,
         meta: models::ObservationsV2Meta,
     ) -> ObservationsV2Response {
         ObservationsV2Response {

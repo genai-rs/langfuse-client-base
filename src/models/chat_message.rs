@@ -1,7 +1,7 @@
 /*
  * langfuse
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
+ * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
  * The version of the OpenAPI document:
  *
@@ -17,10 +17,16 @@ pub struct ChatMessage {
     pub role: String,
     #[serde(rename = "content")]
     pub content: String,
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<models::ChatMessageType>,
 }
 
 impl ChatMessage {
     pub fn new(role: String, content: String) -> ChatMessage {
-        ChatMessage { role, content }
+        ChatMessage {
+            role,
+            content,
+            r#type: None,
+        }
     }
 }
