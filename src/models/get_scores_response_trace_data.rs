@@ -1,7 +1,7 @@
 /*
  * langfuse
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
+ * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
  * The version of the OpenAPI document:
  *
@@ -37,6 +37,14 @@ pub struct GetScoresResponseTraceData {
         skip_serializing_if = "Option::is_none"
     )]
     pub environment: Option<Option<String>>,
+    /// The session ID associated with the trace referenced by score
+    #[serde(
+        rename = "sessionId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub session_id: Option<Option<String>>,
 }
 
 impl GetScoresResponseTraceData {
@@ -45,6 +53,7 @@ impl GetScoresResponseTraceData {
             user_id: None,
             tags: None,
             environment: None,
+            session_id: None,
         }
     }
 }

@@ -4,8 +4,8 @@
 
 | Name | Description |
 |---- | -----|
-| ChatMessageWithPlaceholdersOneOf |  |
-| ChatMessageWithPlaceholdersOneOf1 |  |
+| ChatMessage |  |
+| PlaceholderMessage |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
