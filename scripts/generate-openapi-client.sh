@@ -55,6 +55,10 @@ else
     echo "📝 Using local OpenAPI specification from $OPENAPI_FILE"
 fi
 
+# Normalize known upstream schema issues that break Rust generation
+echo "🧪 Normalizing OpenAPI schema for Rust generation..."
+python3 "$SCRIPT_DIR/normalize_openapi_schema.py" "$OPENAPI_FILE"
+
 # Backup our custom files before generation
 echo "📝 Backing up custom files..."
 cp "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.original" 2>/dev/null || true
