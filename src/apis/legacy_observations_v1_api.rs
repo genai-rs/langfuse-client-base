@@ -13,10 +13,10 @@ use crate::{apis::ResponseContent, models};
 use reqwest;
 use serde::{de::Error as _, Deserialize, Serialize};
 
-/// struct for typed errors of method [`observations_get_many`]
+/// struct for typed errors of method [`legacy_observations_v1_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ObservationsGetManyError {
+pub enum LegacyObservationsV1GetError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
     Status403(serde_json::Value),
@@ -25,15 +25,76 @@ pub enum ObservationsGetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata (truncated to 200 chars by default, use `expandMetadata` to get full values) - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
+/// struct for typed errors of method [`legacy_observations_v1_get_many`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegacyObservationsV1GetManyError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
+
+/// Get a observation
 #[bon::builder]
-pub async fn observations_get_many(
+pub async fn legacy_observations_v1_get(
     configuration: &configuration::Configuration,
-    fields: Option<&str>,
-    expand_metadata: Option<&str>,
+    observation_id: &str,
+) -> Result<models::ObservationsView, Error<LegacyObservationsV1GetError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_observation_id = observation_id;
+
+    let uri_str = format!(
+        "{}/api/public/observations/{observationId}",
+        configuration.base_path,
+        observationId = crate::apis::urlencode(p_path_observation_id)
+    );
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsView`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsView`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegacyObservationsV1GetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
+#[bon::builder]
+pub async fn legacy_observations_v1_get_many(
+    configuration: &configuration::Configuration,
+    page: Option<i32>,
     limit: Option<i32>,
-    cursor: Option<&str>,
-    parse_io_as_json: Option<bool>,
     name: Option<&str>,
     user_id: Option<&str>,
     r#type: Option<&str>,
@@ -45,13 +106,10 @@ pub async fn observations_get_many(
     to_start_time: Option<String>,
     version: Option<&str>,
     filter: Option<&str>,
-) -> Result<models::ObservationsV2Response, Error<ObservationsGetManyError>> {
+) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_query_fields = fields;
-    let p_query_expand_metadata = expand_metadata;
+    let p_query_page = page;
     let p_query_limit = limit;
-    let p_query_cursor = cursor;
-    let p_query_parse_io_as_json = parse_io_as_json;
     let p_query_name = name;
     let p_query_user_id = user_id;
     let p_query_type = r#type;
@@ -64,23 +122,14 @@ pub async fn observations_get_many(
     let p_query_version = version;
     let p_query_filter = filter;
 
-    let uri_str = format!("{}/api/public/v2/observations", configuration.base_path);
+    let uri_str = format!("{}/api/public/observations", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_query_fields {
-        req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_expand_metadata {
-        req_builder = req_builder.query(&[("expandMetadata", &param_value.to_string())]);
+    if let Some(ref param_value) = p_query_page {
+        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_cursor {
-        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_parse_io_as_json {
-        req_builder = req_builder.query(&[("parseIoAsJson", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_name {
         req_builder = req_builder.query(&[("name", &param_value.to_string())]);
@@ -153,12 +202,12 @@ pub async fn observations_get_many(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsV2Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsV2Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LegacyObservationsViews`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LegacyObservationsViews`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<ObservationsGetManyError> = serde_json::from_str(&content).ok();
+        let entity: Option<LegacyObservationsV1GetManyError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,

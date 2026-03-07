@@ -1,0 +1,90 @@
+# \ScoresApi
+
+All URIs are relative to *http://localhost*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**scores_get_by_id**](ScoresApi.md#scores_get_by_id) | **GET** /api/public/v2/scores/{scoreId} | 
+[**scores_get_many**](ScoresApi.md#scores_get_many) | **GET** /api/public/v2/scores | 
+
+
+
+## scores_get_by_id
+
+> models::Score scores_get_by_id(score_id)
+
+
+Get a score (supports both trace and session scores)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**score_id** | **String** | The unique langfuse identifier of a score | [required] |
+
+### Return type
+
+[**models::Score**](Score.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## scores_get_many
+
+> models::GetScoresResponse scores_get_many(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, observation_id, queue_id, data_type, trace_tags, fields, filter)
+
+
+Get a list of scores (supports both trace and session scores)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**page** | Option<**i32**> | Page number, starts at 1. |  |
+**limit** | Option<**i32**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
+**user_id** | Option<**String**> | Retrieve only scores with this userId associated to the trace. |  |
+**name** | Option<**String**> | Retrieve only scores with this name. |  |
+**from_timestamp** | Option<**String**> | Optional filter to only include scores created on or after a certain datetime (ISO 8601) |  |
+**to_timestamp** | Option<**String**> | Optional filter to only include scores created before a certain datetime (ISO 8601) |  |
+**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for scores where the environment is one of the provided values. |  |
+**source** | Option<[**ScoreSource**](ScoreSource.md)> | Retrieve only scores from a specific source. |  |
+**operator** | Option<**String**> | Retrieve only scores with <operator> value. |  |
+**value** | Option<**f64**> | Retrieve only scores with <operator> value. |  |
+**score_ids** | Option<**String**> | Comma-separated list of score IDs to limit the results to. |  |
+**config_id** | Option<**String**> | Retrieve only scores with a specific configId. |  |
+**session_id** | Option<**String**> | Retrieve only scores with a specific sessionId. |  |
+**dataset_run_id** | Option<**String**> | Retrieve only scores with a specific datasetRunId. |  |
+**trace_id** | Option<**String**> | Retrieve only scores with a specific traceId. |  |
+**observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter scores by. |  |
+**queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
+**data_type** | Option<[**ScoreDataType**](ScoreDataType.md)> | Retrieve only scores with a specific dataType. |  |
+**trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
+**fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment, sessionId). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
+**filter** | Option<**String**> | A JSON stringified array of filter objects. Each object requires type, column, operator, and value. Supports filtering by score metadata using the stringObject type. Example: [{\"type\":\"stringObject\",\"column\":\"metadata\",\"key\":\"user_id\",\"operator\":\"=\",\"value\":\"abc123\"}]. Supported types: stringObject (metadata key-value filtering), string, number, datetime, stringOptions, arrayOptions. Supported operators for stringObject: =, contains, does not contain, starts with, ends with. |  |
+
+### Return type
+
+[**models::GetScoresResponse**](GetScoresResponse.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
