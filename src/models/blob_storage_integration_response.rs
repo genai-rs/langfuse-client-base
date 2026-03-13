@@ -70,6 +70,20 @@ pub struct BlobStorageIntegrationResponse {
         skip_serializing_if = "Option::is_none"
     )]
     pub last_sync_at: Option<Option<String>>,
+    #[serde(
+        rename = "lastError",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub last_error: Option<Option<String>>,
+    #[serde(
+        rename = "lastErrorAt",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub last_error_at: Option<Option<String>>,
     #[serde(rename = "createdAt")]
     pub created_at: String,
     #[serde(rename = "updatedAt")]
@@ -109,6 +123,8 @@ impl BlobStorageIntegrationResponse {
             export_start_date: None,
             next_sync_at: None,
             last_sync_at: None,
+            last_error: None,
+            last_error_at: None,
             created_at,
             updated_at,
         }

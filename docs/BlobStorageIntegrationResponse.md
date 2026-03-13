@@ -20,6 +20,8 @@ Name | Type | Description | Notes
 **export_start_date** | Option<**String**> |  | [optional]
 **next_sync_at** | Option<**String**> |  | [optional]
 **last_sync_at** | Option<**String**> |  | [optional]
+**last_error** | Option<**String**> |  | [optional]
+**last_error_at** | Option<**String**> |  | [optional]
 **created_at** | **String** |  | 
 **updated_at** | **String** |  | 
 

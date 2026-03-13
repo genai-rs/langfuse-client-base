@@ -75,7 +75,7 @@ Name | Type | Description  | Required | Notes
 
 ## prompts_get
 
-> models::Prompt prompts_get(prompt_name, version, label)
+> models::Prompt prompts_get(prompt_name, version, label, resolve)
 
 
 Get a prompt
@@ -88,6 +88,7 @@ Name | Type | Description  | Required | Notes
 **prompt_name** | **String** | The name of the prompt. If the prompt is in a folder (e.g., \"folder/subfolder/prompt-name\"),  the folder path must be URL encoded. | [required] |
 **version** | Option<**i32**> | Version of the prompt to be retrieved. |  |
 **label** | Option<**String**> | Label of the prompt to be retrieved. Defaults to \"production\" if no label or version is set. |  |
+**resolve** | Option<**bool**> | Resolve prompt dependencies before returning the prompt. Defaults to `true`. Set to `false` to return the raw stored prompt with dependency tags intact. This bypasses prompt caching and is intended for debugging or one-off jobs, not production runtime fetches. |  |
 
 ### Return type
 

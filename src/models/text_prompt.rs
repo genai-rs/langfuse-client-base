@@ -33,7 +33,7 @@ pub struct TextPrompt {
         skip_serializing_if = "Option::is_none"
     )]
     pub commit_message: Option<Option<String>>,
-    /// The dependency resolution graph for the current prompt. Null if prompt has no dependencies.
+    /// The dependency resolution graph for the current prompt. Null if the prompt has no dependencies or if `resolve=false` was used.
     #[serde(
         rename = "resolutionGraph",
         default,
