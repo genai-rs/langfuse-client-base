@@ -172,11 +172,13 @@ pub async fn prompts_get(
     prompt_name: &str,
     version: Option<i32>,
     label: Option<&str>,
+    resolve: Option<bool>,
 ) -> Result<models::Prompt, Error<PromptsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_prompt_name = prompt_name;
     let p_query_version = version;
     let p_query_label = label;
+    let p_query_resolve = resolve;
 
     let uri_str = format!(
         "{}/api/public/v2/prompts/{promptName}",
@@ -190,6 +192,9 @@ pub async fn prompts_get(
     }
     if let Some(ref param_value) = p_query_label {
         req_builder = req_builder.query(&[("label", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_resolve {
+        req_builder = req_builder.query(&[("resolve", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

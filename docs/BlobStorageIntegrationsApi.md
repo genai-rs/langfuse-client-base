@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**blob_storage_integrations_delete_blob_storage_integration**](BlobStorageIntegrationsApi.md#blob_storage_integrations_delete_blob_storage_integration) | **DELETE** /api/public/integrations/blob-storage/{id} | 
+[**blob_storage_integrations_get_blob_storage_integration_status**](BlobStorageIntegrationsApi.md#blob_storage_integrations_get_blob_storage_integration_status) | **GET** /api/public/integrations/blob-storage/{id} | 
 [**blob_storage_integrations_get_blob_storage_integrations**](BlobStorageIntegrationsApi.md#blob_storage_integrations_get_blob_storage_integrations) | **GET** /api/public/integrations/blob-storage | 
 [**blob_storage_integrations_upsert_blob_storage_integration**](BlobStorageIntegrationsApi.md#blob_storage_integrations_upsert_blob_storage_integration) | **PUT** /api/public/integrations/blob-storage | 
 
@@ -27,6 +28,36 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::BlobStorageIntegrationDeletionResponse**](BlobStorageIntegrationDeletionResponse.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## blob_storage_integrations_get_blob_storage_integration_status
+
+> models::BlobStorageIntegrationStatusResponse blob_storage_integrations_get_blob_storage_integration_status(id)
+
+
+Get the sync status of a blob storage integration by integration ID (requires organization-scoped API key)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+
+### Return type
+
+[**models::BlobStorageIntegrationStatusResponse**](BlobStorageIntegrationStatusResponse.md)
 
 ### Authorization
 
