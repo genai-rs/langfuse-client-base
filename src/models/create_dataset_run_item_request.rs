@@ -56,6 +56,14 @@ pub struct CreateDatasetRunItemRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub dataset_version: Option<Option<String>>,
+    /// Optional timestamp to set the createdAt field of the dataset run item. If not provided or null, defaults to current timestamp.
+    #[serde(
+        rename = "createdAt",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub created_at: Option<Option<String>>,
 }
 
 impl CreateDatasetRunItemRequest {
@@ -68,6 +76,7 @@ impl CreateDatasetRunItemRequest {
             observation_id: None,
             trace_id: None,
             dataset_version: None,
+            created_at: None,
         }
     }
 }
