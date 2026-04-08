@@ -20,6 +20,8 @@ pub enum ScoreConfigDataType {
     Boolean,
     #[serde(rename = "CATEGORICAL")]
     Categorical,
+    #[serde(rename = "TEXT")]
+    Text,
 }
 
 impl std::fmt::Display for ScoreConfigDataType {
@@ -28,6 +30,7 @@ impl std::fmt::Display for ScoreConfigDataType {
             Self::Numeric => write!(f, "NUMERIC"),
             Self::Boolean => write!(f, "BOOLEAN"),
             Self::Categorical => write!(f, "CATEGORICAL"),
+            Self::Text => write!(f, "TEXT"),
         }
     }
 }

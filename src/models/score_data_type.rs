@@ -22,6 +22,8 @@ pub enum ScoreDataType {
     Categorical,
     #[serde(rename = "CORRECTION")]
     Correction,
+    #[serde(rename = "TEXT")]
+    Text,
 }
 
 impl std::fmt::Display for ScoreDataType {
@@ -31,6 +33,7 @@ impl std::fmt::Display for ScoreDataType {
             Self::Boolean => write!(f, "BOOLEAN"),
             Self::Categorical => write!(f, "CATEGORICAL"),
             Self::Correction => write!(f, "CORRECTION"),
+            Self::Text => write!(f, "TEXT"),
         }
     }
 }

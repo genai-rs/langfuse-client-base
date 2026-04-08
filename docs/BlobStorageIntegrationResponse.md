@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **file_type** | [**models::BlobStorageIntegrationFileType**](BlobStorageIntegrationFileType.md) |  | 
 **export_mode** | [**models::BlobStorageExportMode**](BlobStorageExportMode.md) |  | 
 **export_start_date** | Option<**String**> |  | [optional]
+**compressed** | **bool** |  | 
 **next_sync_at** | Option<**String**> |  | [optional]
 **last_sync_at** | Option<**String**> |  | [optional]
 **last_error** | Option<**String**> |  | [optional]

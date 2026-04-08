@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// CreateScoreValue : The value of the score. Must be passed as string for categorical scores, and numeric for boolean and numeric scores
-/// The value of the score. Must be passed as string for categorical scores, and numeric for boolean and numeric scores
+/// CreateScoreValue : The value of the score. Must be passed as string for categorical and text scores, and numeric for boolean and numeric scores
+/// The value of the score. Must be passed as string for categorical and text scores, and numeric for boolean and numeric scores
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScoreValue {

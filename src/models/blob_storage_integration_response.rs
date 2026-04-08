@@ -56,6 +56,8 @@ pub struct BlobStorageIntegrationResponse {
         skip_serializing_if = "Option::is_none"
     )]
     pub export_start_date: Option<Option<String>>,
+    #[serde(rename = "compressed")]
+    pub compressed: bool,
     #[serde(
         rename = "nextSyncAt",
         default,
@@ -103,6 +105,7 @@ impl BlobStorageIntegrationResponse {
         force_path_style: bool,
         file_type: models::BlobStorageIntegrationFileType,
         export_mode: models::BlobStorageExportMode,
+        compressed: bool,
         created_at: String,
         updated_at: String,
     ) -> BlobStorageIntegrationResponse {
@@ -121,6 +124,7 @@ impl BlobStorageIntegrationResponse {
             file_type,
             export_mode,
             export_start_date: None,
+            compressed,
             next_sync_at: None,
             last_sync_at: None,
             last_error: None,
