@@ -17,6 +17,7 @@ pub enum ScoreV1 {
     ScoreV1OneOf(Box<models::ScoreV1OneOf>),
     ScoreV1OneOf1(Box<models::ScoreV1OneOf1>),
     ScoreV1OneOf2(Box<models::ScoreV1OneOf2>),
+    ScoreV1OneOf3(Box<models::ScoreV1OneOf3>),
 }
 
 impl Default for ScoreV1 {
@@ -27,12 +28,12 @@ impl Default for ScoreV1 {
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
-    #[serde(rename = "BOOLEAN")]
-    Boolean,
+    #[serde(rename = "TEXT")]
+    Text,
 }
 
 impl Default for DataType {
     fn default() -> DataType {
-        Self::Boolean
+        Self::Text
     }
 }

@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **file_type** | [**models::BlobStorageIntegrationFileType**](BlobStorageIntegrationFileType.md) |  | 
 **export_mode** | [**models::BlobStorageExportMode**](BlobStorageExportMode.md) |  | 
 **export_start_date** | Option<**String**> | Custom start date for exports (required when exportMode is FROM_CUSTOM_DATE) | [optional]
+**compressed** | Option<**bool**> | Enable gzip compression for exported files (.csv.gz, .json.gz, .jsonl.gz). Defaults to true. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
