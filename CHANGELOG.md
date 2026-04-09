@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.11.0...v0.12.0) - 2026-04-09
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update Rust crate tokio to 1.51.0
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.21.0
+- update generated client from latest OpenAPI spec
+- *(deps)* Update rust minor updates
+- *(deps)* Update actions/create-github-app-token action to v3
+- *(deps)* Update Rust crate bon to 3.9.1
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+
 ## [0.11.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.10.0...v0.11.0) - 2026-03-05
 
 ### Fixed
