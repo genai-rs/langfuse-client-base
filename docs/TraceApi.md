@@ -73,7 +73,7 @@ Name | Type | Description  | Required | Notes
 
 ## trace_get
 
-> models::TraceWithFullDetails trace_get(trace_id)
+> models::TraceWithFullDetails trace_get(trace_id, fields)
 
 
 Get a specific trace
@@ -84,6 +84,7 @@ Get a specific trace
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **trace_id** | **String** | The unique langfuse identifier of a trace | [required] |
+**fields** | Option<**String**> | Comma-separated list of fields to include in the response. Available field groups: 'core' (always included), 'io' (input, output, metadata), 'scores', 'observations', 'metrics'. If not specified, all fields are returned. Example: 'core,scores,metrics'. Note: Excluded 'observations' or 'scores' fields return empty arrays; excluded 'metrics' returns -1 for 'totalCost' and 'latency'. |  |
 
 ### Return type
 
