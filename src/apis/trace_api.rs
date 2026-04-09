@@ -171,9 +171,11 @@ pub async fn trace_delete_multiple(
 pub async fn trace_get(
     configuration: &configuration::Configuration,
     trace_id: &str,
+    fields: Option<&str>,
 ) -> Result<models::TraceWithFullDetails, Error<TraceGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_trace_id = trace_id;
+    let p_query_fields = fields;
 
     let uri_str = format!(
         "{}/api/public/traces/{traceId}",
@@ -182,6 +184,9 @@ pub async fn trace_get(
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_query_fields {
+        req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
