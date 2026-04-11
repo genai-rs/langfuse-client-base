@@ -18,7 +18,7 @@ pub struct CreateBlobStorageIntegrationRequest {
     pub project_id: String,
     #[serde(rename = "type")]
     pub r#type: models::BlobStorageIntegrationType,
-    /// Name of the storage bucket
+    /// Name of the storage bucket. For AZURE_BLOB_STORAGE, must be a valid Azure container name (3-63 chars, lowercase letters, numbers, and hyphens only, must start and end with a letter or number, no consecutive hyphens).
     #[serde(rename = "bucketName")]
     pub bucket_name: String,
     /// Custom endpoint URL (required for S3_COMPATIBLE type)

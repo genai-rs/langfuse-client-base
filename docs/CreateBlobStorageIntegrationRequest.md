@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **project_id** | **String** | ID of the project in which to configure the blob storage integration | 
 **r#type** | [**models::BlobStorageIntegrationType**](BlobStorageIntegrationType.md) |  | 
-**bucket_name** | **String** | Name of the storage bucket | 
+**bucket_name** | **String** | Name of the storage bucket. For AZURE_BLOB_STORAGE, must be a valid Azure container name (3-63 chars, lowercase letters, numbers, and hyphens only, must start and end with a letter or number, no consecutive hyphens). | 
 **endpoint** | Option<**String**> | Custom endpoint URL (required for S3_COMPATIBLE type) | [optional]
 **region** | **String** | Storage region | 
 **access_key_id** | Option<**String**> | Access key ID for authentication | [optional]
