@@ -30,7 +30,7 @@ reqwest = { version = "^0.13.2", default-features = false, features = ["json", "
 reqwest-middleware = { version = "^0.5.1", features = ["json", "multipart", "query"] }
 
 [dev-dependencies]
-tokio = { version = "1.51.0", features = ["full"] }
+tokio = { version = "1.51.1", features = ["full"] }
 
 [features]
 default = ["rustls"]
