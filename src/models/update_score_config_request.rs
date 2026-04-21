@@ -21,7 +21,7 @@ pub struct UpdateScoreConfigRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub is_archived: Option<Option<bool>>,
-    /// The name of the score config
+    /// Name of the score config. Max 35 characters. Only letters, numbers, underscores, spaces, periods, parentheses, and hyphens are allowed.
     #[serde(
         rename = "name",
         default,
