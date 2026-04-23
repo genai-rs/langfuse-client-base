@@ -13,6 +13,18 @@ use crate::{apis::ResponseContent, models};
 use reqwest;
 use serde::{de::Error as _, Deserialize, Serialize};
 
+/// struct for typed errors of method [`llm_connections_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LlmConnectionsDeleteError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`llm_connections_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -35,6 +47,60 @@ pub enum LlmConnectionsUpsertError {
     Status404(serde_json::Value),
     Status405(serde_json::Value),
     UnknownValue(serde_json::Value),
+}
+
+/// Delete an LLM connection by id. Evaluators that depend on the deleted connection are automatically paused.
+#[bon::builder]
+pub async fn llm_connections_delete(
+    configuration: &configuration::Configuration,
+    id: &str,
+) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_id = id;
+
+    let uri_str = format!(
+        "{}/api/public/llm-connections/{id}",
+        configuration.base_path,
+        id = crate::apis::urlencode(p_path_id)
+    );
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LlmConnectionsDeleteError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
 }
 
 /// Get all LLM connections in a project

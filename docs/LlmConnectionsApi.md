@@ -4,9 +4,40 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**llm_connections_delete**](LlmConnectionsApi.md#llm_connections_delete) | **DELETE** /api/public/llm-connections/{id} | 
 [**llm_connections_list**](LlmConnectionsApi.md#llm_connections_list) | **GET** /api/public/llm-connections | 
 [**llm_connections_upsert**](LlmConnectionsApi.md#llm_connections_upsert) | **PUT** /api/public/llm-connections | 
 
+
+
+## llm_connections_delete
+
+> models::DeleteLlmConnectionResponse llm_connections_delete(id)
+
+
+Delete an LLM connection by id. Evaluators that depend on the deleted connection are automatically paused.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+
+### Return type
+
+[**models::DeleteLlmConnectionResponse**](DeleteLlmConnectionResponse.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## llm_connections_list
