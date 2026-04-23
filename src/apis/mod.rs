@@ -148,5 +148,7 @@ pub mod score_configs_api;
 pub mod scores_api;
 pub mod sessions_api;
 pub mod trace_api;
+pub mod unstable_evaluation_rules_api;
+pub mod unstable_evaluators_api;
 
 pub mod configuration;
