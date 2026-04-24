@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **queue_id** | Option<**String**> | The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue. | [optional]
 **data_type** | Option<[**models::ScoreDataType**](ScoreDataType.md)> |  | [optional]
 **config_id** | Option<**String**> | Reference a score config on a score. The unique langfuse identifier of a score config. When passing this field, the dataType and stringValue fields are automatically populated. | [optional]
+**source** | Option<[**models::LegacyCreateScoreSource**](LegacyCreateScoreSource.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
