@@ -92,6 +92,8 @@ pub struct LegacyCreateScoreRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub config_id: Option<Option<String>>,
+    #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
+    pub source: Option<models::LegacyCreateScoreSource>,
 }
 
 impl LegacyCreateScoreRequest {
@@ -110,6 +112,7 @@ impl LegacyCreateScoreRequest {
             queue_id: None,
             data_type: None,
             config_id: None,
+            source: None,
         }
     }
 }

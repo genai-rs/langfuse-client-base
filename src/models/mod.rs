@@ -218,6 +218,8 @@ pub mod legacy_create_score_request;
 pub use self::legacy_create_score_request::LegacyCreateScoreRequest;
 pub mod legacy_create_score_response;
 pub use self::legacy_create_score_response::LegacyCreateScoreResponse;
+pub mod legacy_create_score_source;
+pub use self::legacy_create_score_source::LegacyCreateScoreSource;
 pub mod legacy_metrics_response;
 pub use self::legacy_metrics_response::LegacyMetricsResponse;
 pub mod legacy_observations;
