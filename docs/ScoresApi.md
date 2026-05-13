@@ -52,7 +52,7 @@ Get a list of scores (supports both trace and session scores)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**i32**> | Page number, starts at 1. |  |
-**limit** | Option<**i32**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
+**limit** | Option<**i32**> | Limit of items per page. Maximum 100. Defaults to 50. Requests with a limit greater than 100 return HTTP 400. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
 **user_id** | Option<**String**> | Retrieve only scores with this userId associated to the trace. |  |
 **name** | Option<**String**> | Retrieve only scores with this name. |  |
 **from_timestamp** | Option<**String**> | Optional filter to only include scores created on or after a certain datetime (ISO 8601) |  |
