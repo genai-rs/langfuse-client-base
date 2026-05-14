@@ -13,8 +13,8 @@ Name | Type | Description | Notes
 **with_default_models** | **bool** | Whether to include default models for this adapter | 
 **extra_header_keys** | **Vec<String>** | Keys of extra headers sent with requests (values excluded for security) | 
 **config** | Option<**std::collections::HashMap<String, serde_json::Value>**> | Adapter-specific configuration. Required for Bedrock (`{\"region\":\"us-east-1\"}`), optional for VertexAI (`{\"location\":\"us-central1\"}`), not used by other adapters. | [optional]
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

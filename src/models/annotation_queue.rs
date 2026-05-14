@@ -27,9 +27,9 @@ pub struct AnnotationQueue {
     #[serde(rename = "scoreConfigIds")]
     pub score_config_ids: Vec<String>,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl AnnotationQueue {
@@ -37,8 +37,8 @@ impl AnnotationQueue {
         id: String,
         name: String,
         score_config_ids: Vec<String>,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> AnnotationQueue {
         AnnotationQueue {
             id,

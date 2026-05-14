@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **trace_id** | Option<**String**> |  | [optional]
 **r#type** | [**models::ObservationType**](ObservationType.md) |  | 
 **name** | Option<**String**> |  | [optional]
-**start_time** | Option<**String**> |  | [optional]
-**end_time** | Option<**String**> |  | [optional]
-**completion_start_time** | Option<**String**> |  | [optional]
+**start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
+**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
+**completion_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **model** | Option<**String**> |  | [optional]
 **model_parameters** | Option<[**std::collections::HashMap<String, models::MapValue>**](MapValue.md)> |  | [optional]
 **input** | Option<**serde_json::Value**> |  | [optional]

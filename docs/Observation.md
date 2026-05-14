@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **trace_id** | Option<**String**> | The trace ID associated with the observation | [optional]
 **r#type** | **String** | The type of the observation | 
 **name** | Option<**String**> | The name of the observation | [optional]
-**start_time** | **String** | The start time of the observation | 
-**end_time** | Option<**String**> | The end time of the observation. | [optional]
-**completion_start_time** | Option<**String**> | The completion start time of the observation | [optional]
+**start_time** | **chrono::DateTime<chrono::FixedOffset>** | The start time of the observation | 
+**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The end time of the observation. | [optional]
+**completion_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The completion start time of the observation | [optional]
 **model** | Option<**String**> | The model used for the observation | [optional]
 **model_parameters** | Option<**serde_json::Value**> | The parameters of the model used for the observation | 
 **input** | Option<**serde_json::Value**> | The input data of the observation | 

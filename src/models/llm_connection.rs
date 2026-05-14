@@ -51,9 +51,9 @@ pub struct LlmConnection {
     )]
     pub config: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl LlmConnection {
@@ -66,8 +66,8 @@ impl LlmConnection {
         custom_models: Vec<String>,
         with_default_models: bool,
         extra_header_keys: Vec<String>,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> LlmConnection {
         LlmConnection {
             id,

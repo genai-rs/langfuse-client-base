@@ -27,7 +27,7 @@ pub struct ObservationV2 {
     pub trace_id: Option<Option<String>>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
-    pub start_time: String,
+    pub start_time: chrono::DateTime<chrono::FixedOffset>,
     /// The end time of the observation
     #[serde(
         rename = "endTime",
@@ -35,7 +35,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub end_time: Option<Option<String>>,
+    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The project ID this observation belongs to
     #[serde(rename = "projectId")]
     pub project_id: String,
@@ -123,7 +123,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_start_time: Option<Option<String>>,
+    pub completion_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The creation timestamp of the observation
     #[serde(
         rename = "createdAt",
@@ -131,7 +131,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub created_at: Option<Option<String>>,
+    pub created_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The last update timestamp of the observation
     #[serde(
         rename = "updatedAt",
@@ -139,7 +139,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub updated_at: Option<Option<String>>,
+    pub updated_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The input data of the observation
     #[serde(
         rename = "input",
@@ -266,7 +266,7 @@ impl ObservationV2 {
     /// An observation from the v2 API with field-group-based selection. Core fields are always present. Other fields are included only when their field group is requested.
     pub fn new(
         id: String,
-        start_time: String,
+        start_time: chrono::DateTime<chrono::FixedOffset>,
         project_id: String,
         r#type: String,
     ) -> ObservationV2 {

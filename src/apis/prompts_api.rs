@@ -241,8 +241,8 @@ pub async fn prompts_list(
     tag: Option<&str>,
     page: Option<i32>,
     limit: Option<i32>,
-    from_updated_at: Option<String>,
-    to_updated_at: Option<String>,
+    from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
 ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_name = name;

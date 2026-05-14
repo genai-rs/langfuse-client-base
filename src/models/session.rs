@@ -16,7 +16,7 @@ pub struct Session {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "projectId")]
     pub project_id: String,
     /// The environment from which this session originated.
@@ -25,7 +25,12 @@ pub struct Session {
 }
 
 impl Session {
-    pub fn new(id: String, created_at: String, project_id: String, environment: String) -> Session {
+    pub fn new(
+        id: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        project_id: String,
+        environment: String,
+    ) -> Session {
         Session {
             id,
             created_at,

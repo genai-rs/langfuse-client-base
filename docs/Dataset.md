@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **input_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item inputs | [optional]
 **expected_output_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item expected outputs | [optional]
 **project_id** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **metadata** | Option<**serde_json::Value**> | Metadata of the dataset run | 
 **dataset_id** | **String** | Id of the associated dataset | 
 **dataset_name** | **String** | Name of the associated dataset | 
-**created_at** | **String** | The date and time when the dataset run was created | 
-**updated_at** | **String** | The date and time when the dataset run was last updated | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** | The date and time when the dataset run was created | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** | The date and time when the dataset run was last updated | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

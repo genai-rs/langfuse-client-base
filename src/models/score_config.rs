@@ -19,9 +19,9 @@ pub struct ScoreConfig {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "dataType")]
@@ -68,8 +68,8 @@ impl ScoreConfig {
     pub fn new(
         id: String,
         name: String,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
         project_id: String,
         data_type: models::ScoreConfigDataType,
         is_archived: bool,

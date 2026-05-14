@@ -42,21 +42,21 @@ pub struct ObservationBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub start_time: Option<Option<String>>,
+    pub start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "endTime",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub end_time: Option<Option<String>>,
+    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "completionStartTime",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_start_time: Option<Option<String>>,
+    pub completion_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "model",
         default,

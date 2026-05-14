@@ -14,6 +14,8 @@ use serde::{Deserialize, Serialize};
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageExportFrequency {
+    #[serde(rename = "every_20_minutes")]
+    Every20Minutes,
     #[serde(rename = "hourly")]
     Hourly,
     #[serde(rename = "daily")]
@@ -25,6 +27,7 @@ pub enum BlobStorageExportFrequency {
 impl std::fmt::Display for BlobStorageExportFrequency {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
+            Self::Every20Minutes => write!(f, "every_20_minutes"),
             Self::Hourly => write!(f, "hourly"),
             Self::Daily => write!(f, "daily"),
             Self::Weekly => write!(f, "weekly"),
@@ -34,6 +37,6 @@ impl std::fmt::Display for BlobStorageExportFrequency {
 
 impl Default for BlobStorageExportFrequency {
     fn default() -> BlobStorageExportFrequency {
-        Self::Hourly
+        Self::Every20Minutes
     }
 }

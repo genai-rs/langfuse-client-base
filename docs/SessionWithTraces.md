@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**created_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **project_id** | **String** |  | 
 **environment** | **String** | The environment from which this session originated. | 
 **traces** | [**Vec<models::Trace>**](Trace.md) |  | 

@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **model_name** | **String** | Name of the model definition. If multiple with the same name exist, they are applied in the following order: (1) custom over built-in, (2) newest according to startTime where model.startTime<observation.startTime | 
 **match_pattern** | **String** | Regex pattern which matches this model definition to generation.model. Useful in case of fine-tuned models. If you want to exact match, use `(?i)^modelname$` | 
-**start_date** | Option<**String**> | Apply only to generations which are newer than this ISO date. | [optional]
+**start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Apply only to generations which are newer than this ISO date. | [optional]
 **unit** | Option<[**models::ModelUsageUnit**](ModelUsageUnit.md)> |  | [optional]
 **input_price** | Option<**f64**> | Deprecated. Use 'pricingTiers' instead. Price (USD) per input unit. Creates a default tier if pricingTiers not provided. | [optional]
 **output_price** | Option<**f64**> | Deprecated. Use 'pricingTiers' instead. Price (USD) per output unit. Creates a default tier if pricingTiers not provided. | [optional]

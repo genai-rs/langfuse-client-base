@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **project_id** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **object_type** | [**models::CommentObjectType**](CommentObjectType.md) |  | 
 **object_id** | **String** |  | 
 **content** | **String** |  | 

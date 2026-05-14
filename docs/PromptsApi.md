@@ -123,8 +123,8 @@ Name | Type | Description  | Required | Notes
 **tag** | Option<**String**> |  |  |
 **page** | Option<**i32**> | page number, starts at 1 |  |
 **limit** | Option<**i32**> | limit of items per page |  |
-**from_updated_at** | Option<**String**> | Optional filter to only include prompt versions created/updated on or after a certain datetime (ISO 8601) |  |
-**to_updated_at** | Option<**String**> | Optional filter to only include prompt versions created/updated before a certain datetime (ISO 8601) |  |
+**from_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include prompt versions created/updated on or after a certain datetime (ISO 8601) |  |
+**to_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include prompt versions created/updated before a certain datetime (ISO 8601) |  |
 
 ### Return type
 

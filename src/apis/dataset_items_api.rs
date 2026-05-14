@@ -225,7 +225,7 @@ pub async fn dataset_items_list(
     dataset_name: Option<&str>,
     source_trace_id: Option<&str>,
     source_observation_id: Option<&str>,
-    version: Option<String>,
+    version: Option<chrono::DateTime<chrono::FixedOffset>>,
     page: Option<i32>,
     limit: Option<i32>,
 ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>> {

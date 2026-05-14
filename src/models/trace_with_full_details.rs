@@ -18,7 +18,7 @@ pub struct TraceWithFullDetails {
     pub id: String,
     /// The timestamp when the trace was created
     #[serde(rename = "timestamp")]
-    pub timestamp: String,
+    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
     /// The name of the trace
     #[serde(
         rename = "name",
@@ -122,7 +122,7 @@ pub struct TraceWithFullDetails {
 impl TraceWithFullDetails {
     pub fn new(
         id: String,
-        timestamp: String,
+        timestamp: chrono::DateTime<chrono::FixedOffset>,
         tags: Vec<String>,
         public: bool,
         environment: String,
