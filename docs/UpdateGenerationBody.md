@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **trace_id** | Option<**String**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
-**start_time** | Option<**String**> |  | [optional]
+**start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **metadata** | Option<**serde_json::Value**> |  | [optional]
 **input** | Option<**serde_json::Value**> |  | [optional]
 **output** | Option<**serde_json::Value**> |  | [optional]
@@ -16,8 +16,8 @@ Name | Type | Description | Notes
 **version** | Option<**String**> |  | [optional]
 **environment** | Option<**String**> |  | [optional]
 **id** | **String** |  | 
-**end_time** | Option<**String**> |  | [optional]
-**completion_start_time** | Option<**String**> |  | [optional]
+**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
+**completion_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **model** | Option<**String**> |  | [optional]
 **model_parameters** | Option<[**std::collections::HashMap<String, models::MapValue>**](MapValue.md)> |  | [optional]
 **usage** | Option<[**models::IngestionUsage**](IngestionUsage.md)> |  | [optional]

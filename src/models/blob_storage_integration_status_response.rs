@@ -28,7 +28,7 @@ pub struct BlobStorageIntegrationStatusResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_sync_at: Option<Option<String>>,
+    pub last_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// When the next export is scheduled. Null if no sync has occurred yet.
     #[serde(
         rename = "nextSyncAt",
@@ -36,7 +36,7 @@ pub struct BlobStorageIntegrationStatusResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub next_sync_at: Option<Option<String>>,
+    pub next_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// Raw error message from the storage provider (S3/Azure/GCS) if the last export failed. Cleared on successful export.
     #[serde(
         rename = "lastError",
@@ -52,7 +52,7 @@ pub struct BlobStorageIntegrationStatusResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_error_at: Option<Option<String>>,
+    pub last_error_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
 }
 
 impl BlobStorageIntegrationStatusResponse {

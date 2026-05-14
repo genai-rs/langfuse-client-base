@@ -29,7 +29,7 @@ pub struct Model {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub start_date: Option<Option<String>>,
+    pub start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
     pub unit: Option<models::ModelUsageUnit>,
     /// Deprecated. See 'prices' instead. Price (USD) per input unit
@@ -71,7 +71,7 @@ pub struct Model {
     pub is_langfuse_managed: bool,
     /// Timestamp when the model was created
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Deprecated. Use 'pricingTiers' instead for models with usage-based pricing variations.  This field shows prices by usage type from the default pricing tier. Maintained for backward compatibility. If the model uses tiered pricing, this field will be populated from the default tier's prices.
     #[serde(rename = "prices")]
     pub prices: std::collections::HashMap<String, models::ModelPrice>,
@@ -88,7 +88,7 @@ impl Model {
         match_pattern: String,
         tokenizer_config: Option<serde_json::Value>,
         is_langfuse_managed: bool,
-        created_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
         prices: std::collections::HashMap<String, models::ModelPrice>,
         pricing_tiers: Vec<models::PricingTier>,
     ) -> Model {

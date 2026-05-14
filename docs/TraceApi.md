@@ -119,8 +119,8 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<**String**> |  |  |
 **name** | Option<**String**> |  |  |
 **session_id** | Option<**String**> |  |  |
-**from_timestamp** | Option<**String**> | Optional filter to only include traces with a trace.timestamp on or after a certain datetime (ISO 8601) |  |
-**to_timestamp** | Option<**String**> | Optional filter to only include traces with a trace.timestamp before a certain datetime (ISO 8601) |  |
+**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include traces with a trace.timestamp on or after a certain datetime (ISO 8601) |  |
+**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include traces with a trace.timestamp before a certain datetime (ISO 8601) |  |
 **order_by** | Option<**String**> | Format of the string [field].[asc/desc]. Fields: id, timestamp, name, userId, release, version, public, bookmarked, sessionId. Example: timestamp.asc |  |
 **tags** | Option<[**Vec<String>**](String.md)> | Only traces that include all of these tags will be returned. |  |
 **version** | Option<**String**> | Optional filter to only include traces with a certain version. |  |

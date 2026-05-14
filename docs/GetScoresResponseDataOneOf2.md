@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 **dataset_run_id** | Option<**String**> | The dataset run ID associated with the score | [optional]
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
-**timestamp** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**timestamp** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **author_user_id** | Option<**String**> | The user ID of the author | [optional]
 **comment** | Option<**String**> | Comment on the score | [optional]
 **metadata** | Option<**serde_json::Value**> | Metadata associated with the score | 

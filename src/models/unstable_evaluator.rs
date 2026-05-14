@@ -42,10 +42,10 @@ pub struct UnstableEvaluator {
     pub evaluation_rule_count: i32,
     /// Timestamp when this evaluator was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Timestamp when this evaluator was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl UnstableEvaluator {
@@ -60,8 +60,8 @@ impl UnstableEvaluator {
         variables: Vec<String>,
         output_definition: models::UnstablePublicEvaluatorOutputDefinition,
         evaluation_rule_count: i32,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> UnstableEvaluator {
         UnstableEvaluator {
             id,

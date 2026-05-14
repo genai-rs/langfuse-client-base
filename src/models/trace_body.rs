@@ -26,7 +26,7 @@ pub struct TraceBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub timestamp: Option<Option<String>>,
+    pub timestamp: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "name",
         default,

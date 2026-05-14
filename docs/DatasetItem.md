@@ -13,8 +13,8 @@ Name | Type | Description | Notes
 **source_observation_id** | Option<**String**> | The observation ID that sourced this dataset item | [optional]
 **dataset_id** | **String** |  | 
 **dataset_name** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

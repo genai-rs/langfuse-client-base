@@ -38,10 +38,10 @@ pub struct DatasetRun {
     pub dataset_name: String,
     /// The date and time when the dataset run was created
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// The date and time when the dataset run was last updated
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl DatasetRun {
@@ -51,8 +51,8 @@ impl DatasetRun {
         metadata: Option<serde_json::Value>,
         dataset_id: String,
         dataset_name: String,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> DatasetRun {
         DatasetRun {
             id,

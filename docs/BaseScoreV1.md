@@ -9,9 +9,9 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
 **observation_id** | Option<**String**> | The observation ID associated with the score | [optional]
-**timestamp** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**timestamp** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **author_user_id** | Option<**String**> | The user ID of the author | [optional]
 **comment** | Option<**String**> | Comment on the score | [optional]
 **metadata** | Option<**serde_json::Value**> | Metadata associated with the score | 

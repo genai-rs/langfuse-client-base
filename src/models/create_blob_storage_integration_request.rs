@@ -75,7 +75,7 @@ pub struct CreateBlobStorageIntegrationRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub export_start_date: Option<Option<String>>,
+    pub export_start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// Enable gzip compression for exported files (.csv.gz, .json.gz, .jsonl.gz). Defaults to true.
     #[serde(
         rename = "compressed",
@@ -84,6 +84,16 @@ pub struct CreateBlobStorageIntegrationRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub compressed: Option<Option<bool>>,
+    #[serde(rename = "exportSource", skip_serializing_if = "Option::is_none")]
+    pub export_source: Option<models::BlobStorageExportSource>,
+    /// Field groups to include in each exported row.  For exportSource `EVENTS` or `TRACES_OBSERVATIONS_EVENTS`: must include `core` if provided. When omitted on create, the column default (all groups) applies. When omitted on update, the existing value is preserved.  For exportSource `TRACES_OBSERVATIONS`: this field must be omitted or null. Sending an array (including an empty array) returns 400, because that source uses a fixed column set and does not honor field groups.  `exportFieldGroups` requires `exportSource` to be provided in the same request.
+    #[serde(
+        rename = "exportFieldGroups",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub export_field_groups: Option<Option<Vec<models::BlobStorageExportFieldGroup>>>,
 }
 
 impl CreateBlobStorageIntegrationRequest {
@@ -114,6 +124,8 @@ impl CreateBlobStorageIntegrationRequest {
             export_mode,
             export_start_date: None,
             compressed: None,
+            export_source: None,
+            export_field_groups: None,
         }
     }
 }

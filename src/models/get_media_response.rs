@@ -24,7 +24,7 @@ pub struct GetMediaResponse {
     pub content_length: i32,
     /// The date and time when the media record was uploaded
     #[serde(rename = "uploadedAt")]
-    pub uploaded_at: String,
+    pub uploaded_at: chrono::DateTime<chrono::FixedOffset>,
     /// The download URL of the media record
     #[serde(rename = "url")]
     pub url: String,
@@ -38,7 +38,7 @@ impl GetMediaResponse {
         media_id: String,
         content_type: String,
         content_length: i32,
-        uploaded_at: String,
+        uploaded_at: chrono::DateTime<chrono::FixedOffset>,
         url: String,
         url_expiry: String,
     ) -> GetMediaResponse {

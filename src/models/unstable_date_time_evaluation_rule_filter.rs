@@ -20,14 +20,14 @@ pub struct UnstableDateTimeEvaluationRuleFilter {
     pub operator: models::UnstableEvaluationRuleNumberFilterOperator,
     /// Datetime value to compare against.
     #[serde(rename = "value")]
-    pub value: String,
+    pub value: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl UnstableDateTimeEvaluationRuleFilter {
     pub fn new(
         column: String,
         operator: models::UnstableEvaluationRuleNumberFilterOperator,
-        value: String,
+        value: chrono::DateTime<chrono::FixedOffset>,
     ) -> UnstableDateTimeEvaluationRuleFilter {
         UnstableDateTimeEvaluationRuleFilter {
             column,

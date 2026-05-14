@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **trace_id** | Option<**String**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
-**start_time** | Option<**String**> |  | [optional]
+**start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **metadata** | Option<**serde_json::Value**> |  | [optional]
 **input** | Option<**serde_json::Value**> |  | [optional]
 **output** | Option<**serde_json::Value**> |  | [optional]

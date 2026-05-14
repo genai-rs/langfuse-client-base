@@ -37,7 +37,7 @@ pub struct ObservationsView {
     pub name: Option<Option<String>>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
-    pub start_time: String,
+    pub start_time: chrono::DateTime<chrono::FixedOffset>,
     /// The end time of the observation.
     #[serde(
         rename = "endTime",
@@ -45,7 +45,7 @@ pub struct ObservationsView {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub end_time: Option<Option<String>>,
+    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The completion start time of the observation
     #[serde(
         rename = "completionStartTime",
@@ -53,7 +53,7 @@ pub struct ObservationsView {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_start_time: Option<Option<String>>,
+    pub completion_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// The model used for the observation
     #[serde(
         rename = "model",
@@ -213,7 +213,7 @@ impl ObservationsView {
     pub fn new(
         id: String,
         r#type: String,
-        start_time: String,
+        start_time: chrono::DateTime<chrono::FixedOffset>,
         model_parameters: Option<serde_json::Value>,
         input: Option<serde_json::Value>,
         metadata: Option<serde_json::Value>,

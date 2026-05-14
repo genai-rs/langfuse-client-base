@@ -33,7 +33,7 @@ pub struct CreateSpanBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub start_time: Option<Option<String>>,
+    pub start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "metadata",
         default,
@@ -98,7 +98,7 @@ pub struct CreateSpanBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub end_time: Option<Option<String>>,
+    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
 }
 
 impl CreateSpanBody {

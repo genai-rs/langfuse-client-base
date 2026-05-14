@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | The unique identifier of the observation | 
 **trace_id** | Option<**String**> | The trace ID associated with the observation | [optional]
-**start_time** | **String** | The start time of the observation | 
-**end_time** | Option<**String**> | The end time of the observation | [optional]
+**start_time** | **chrono::DateTime<chrono::FixedOffset>** | The start time of the observation | 
+**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The end time of the observation | [optional]
 **project_id** | **String** | The project ID this observation belongs to | 
 **parent_observation_id** | Option<**String**> | The parent observation ID | [optional]
 **r#type** | **String** | The type of the observation (e.g. GENERATION, SPAN, EVENT) | 
@@ -20,9 +20,9 @@ Name | Type | Description | Notes
 **public** | Option<**bool**> | Whether the observation is public | [optional]
 **user_id** | Option<**String**> | The user ID associated with the observation | [optional]
 **session_id** | Option<**String**> | The session ID associated with the observation | [optional]
-**completion_start_time** | Option<**String**> | The completion start time of the observation | [optional]
-**created_at** | Option<**String**> | The creation timestamp of the observation | [optional]
-**updated_at** | Option<**String**> | The last update timestamp of the observation | [optional]
+**completion_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The completion start time of the observation | [optional]
+**created_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The creation timestamp of the observation | [optional]
+**updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The last update timestamp of the observation | [optional]
 **input** | Option<**serde_json::Value**> | The input data of the observation | [optional]
 **output** | Option<**serde_json::Value**> | The output data of the observation | [optional]
 **metadata** | Option<**serde_json::Value**> | Additional metadata of the observation | [optional]

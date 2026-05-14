@@ -102,8 +102,8 @@ pub async fn legacy_observations_v1_get_many(
     level: Option<models::ObservationLevel>,
     parent_observation_id: Option<&str>,
     environment: Option<Vec<String>>,
-    from_start_time: Option<String>,
-    to_start_time: Option<String>,
+    from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
     version: Option<&str>,
     filter: Option<&str>,
 ) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>> {

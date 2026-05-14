@@ -56,10 +56,10 @@ pub struct UnstableEvaluationRule {
     pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
     /// Timestamp when the evaluation rule was created.
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     /// Timestamp when the evaluation rule was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl UnstableEvaluationRule {
@@ -74,8 +74,8 @@ impl UnstableEvaluationRule {
         sampling: f64,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
         mapping: Vec<models::UnstableEvaluationRuleMapping>,
-        created_at: String,
-        updated_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> UnstableEvaluationRule {
         UnstableEvaluationRule {
             id,

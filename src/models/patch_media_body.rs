@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 pub struct PatchMediaBody {
     /// The date and time when the media record was uploaded
     #[serde(rename = "uploadedAt")]
-    pub uploaded_at: String,
+    pub uploaded_at: chrono::DateTime<chrono::FixedOffset>,
     /// The HTTP status code of the upload
     #[serde(rename = "uploadHttpStatus")]
     pub upload_http_status: i32,
@@ -38,7 +38,10 @@ pub struct PatchMediaBody {
 }
 
 impl PatchMediaBody {
-    pub fn new(uploaded_at: String, upload_http_status: i32) -> PatchMediaBody {
+    pub fn new(
+        uploaded_at: chrono::DateTime<chrono::FixedOffset>,
+        upload_http_status: i32,
+    ) -> PatchMediaBody {
         PatchMediaBody {
             uploaded_at,
             upload_http_status,

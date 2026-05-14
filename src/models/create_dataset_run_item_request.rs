@@ -55,7 +55,7 @@ pub struct CreateDatasetRunItemRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub dataset_version: Option<Option<String>>,
+    pub dataset_version: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// Optional timestamp to set the createdAt field of the dataset run item. If not provided or null, defaults to current timestamp.
     #[serde(
         rename = "createdAt",
@@ -63,7 +63,7 @@ pub struct CreateDatasetRunItemRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub created_at: Option<Option<String>>,
+    pub created_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
 }
 
 impl CreateDatasetRunItemRequest {

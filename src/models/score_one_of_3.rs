@@ -52,11 +52,11 @@ pub struct ScoreOneOf3 {
     #[serde(rename = "source")]
     pub source: models::ScoreSource,
     #[serde(rename = "timestamp")]
-    pub timestamp: String,
+    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The user ID of the author
     #[serde(
         rename = "authorUserId",
@@ -110,9 +110,9 @@ impl ScoreOneOf3 {
         id: String,
         name: String,
         source: models::ScoreSource,
-        timestamp: String,
-        created_at: String,
-        updated_at: String,
+        timestamp: chrono::DateTime<chrono::FixedOffset>,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
         metadata: Option<serde_json::Value>,
         environment: String,
         value: f64,

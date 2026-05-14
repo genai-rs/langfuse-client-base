@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | Option<**String**> |  | [optional]
-**timestamp** | Option<**String**> |  | [optional]
+**timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
 **user_id** | Option<**String**> |  | [optional]
 **input** | Option<**serde_json::Value**> |  | [optional]

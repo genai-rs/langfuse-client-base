@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **output_definition** | [**models::UnstablePublicEvaluatorOutputDefinition**](UnstablePublicEvaluatorOutputDefinition.md) |  | 
 **model_config** | Option<[**models::UnstableEvaluatorModelConfig**](UnstableEvaluatorModelConfig.md)> |  | [optional]
 **evaluation_rule_count** | **i32** | Number of evaluation rules in the project that currently use this evaluator version. | 
-**created_at** | **String** | Timestamp when this evaluator was created. | 
-**updated_at** | **String** | Timestamp when this evaluator was last updated. | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when this evaluator was created. | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when this evaluator was last updated. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

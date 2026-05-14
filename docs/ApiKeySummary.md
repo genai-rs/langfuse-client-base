@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**created_at** | **String** |  | 
-**expires_at** | Option<**String**> |  | [optional]
-**last_used_at** | Option<**String**> |  | [optional]
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**expires_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
+**last_used_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **note** | Option<**String**> |  | [optional]
 **public_key** | **String** |  | 
 **display_secret_key** | **String** |  | 

@@ -16,21 +16,21 @@ pub struct OrganizationApiKey {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(
         rename = "expiresAt",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub expires_at: Option<Option<String>>,
+    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "lastUsedAt",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_used_at: Option<Option<String>>,
+    pub last_used_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "note",
         default,
@@ -47,7 +47,7 @@ pub struct OrganizationApiKey {
 impl OrganizationApiKey {
     pub fn new(
         id: String,
-        created_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
         public_key: String,
         display_secret_key: String,
     ) -> OrganizationApiKey {

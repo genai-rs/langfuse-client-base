@@ -17,7 +17,7 @@ pub struct ApiKeyResponse {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "publicKey")]
     pub public_key: String,
     #[serde(rename = "secretKey")]
@@ -37,7 +37,7 @@ impl ApiKeyResponse {
     /// Response for API key creation
     pub fn new(
         id: String,
-        created_at: String,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
         public_key: String,
         secret_key: String,
         display_secret_key: String,

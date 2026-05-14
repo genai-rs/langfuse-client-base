@@ -95,8 +95,8 @@ pub async fn sessions_list(
     configuration: &configuration::Configuration,
     page: Option<i32>,
     limit: Option<i32>,
-    from_timestamp: Option<String>,
-    to_timestamp: Option<String>,
+    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     environment: Option<Vec<String>>,
 ) -> Result<models::PaginatedSessions, Error<SessionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions

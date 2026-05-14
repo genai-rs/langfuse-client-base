@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | The unique identifier of a trace | 
-**timestamp** | **String** | The timestamp when the trace was created | 
+**timestamp** | **chrono::DateTime<chrono::FixedOffset>** | The timestamp when the trace was created | 
 **name** | Option<**String**> | The name of the trace | [optional]
 **input** | Option<**serde_json::Value**> | The input data of the trace. Can be any JSON. | [optional]
 **output** | Option<**serde_json::Value**> | The output data of the trace. Can be any JSON. | [optional]

@@ -55,23 +55,33 @@ pub struct BlobStorageIntegrationResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub export_start_date: Option<Option<String>>,
+    pub export_start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(rename = "compressed")]
     pub compressed: bool,
+    #[serde(rename = "exportSource")]
+    pub export_source: models::BlobStorageExportSource,
+    /// Field groups included in each exported row for `EVENTS` / `TRACES_OBSERVATIONS_EVENTS` sources. Always `null` when exportSource is `TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface).
+    #[serde(
+        rename = "exportFieldGroups",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub export_field_groups: Option<Option<Vec<models::BlobStorageExportFieldGroup>>>,
     #[serde(
         rename = "nextSyncAt",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub next_sync_at: Option<Option<String>>,
+    pub next_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "lastSyncAt",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_sync_at: Option<Option<String>>,
+    pub last_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(
         rename = "lastError",
         default,
@@ -85,11 +95,11 @@ pub struct BlobStorageIntegrationResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_error_at: Option<Option<String>>,
+    pub last_error_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(rename = "createdAt")]
-    pub created_at: String,
+    pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: String,
+    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
 }
 
 impl BlobStorageIntegrationResponse {
@@ -106,8 +116,9 @@ impl BlobStorageIntegrationResponse {
         file_type: models::BlobStorageIntegrationFileType,
         export_mode: models::BlobStorageExportMode,
         compressed: bool,
-        created_at: String,
-        updated_at: String,
+        export_source: models::BlobStorageExportSource,
+        created_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> BlobStorageIntegrationResponse {
         BlobStorageIntegrationResponse {
             id,
@@ -125,6 +136,8 @@ impl BlobStorageIntegrationResponse {
             export_mode,
             export_start_date: None,
             compressed,
+            export_source,
+            export_field_groups: None,
             next_sync_at: None,
             last_sync_at: None,
             last_error: None,

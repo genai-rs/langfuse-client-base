@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
-**created_at** | **String** |  | 
-**updated_at** | **String** |  | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **project_id** | **String** |  | 
 **data_type** | [**models::ScoreConfigDataType**](ScoreConfigDataType.md) |  | 
 **is_archived** | **bool** | Whether the score config is archived. Defaults to false | 
