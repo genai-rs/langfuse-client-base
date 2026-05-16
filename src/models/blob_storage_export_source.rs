@@ -11,30 +11,32 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// BlobStorageExportSource : What data the integration exports. - `TRACES_OBSERVATIONS`: legacy traces + observations + scores tables with a fixed column set. The `exportFieldGroups` field is not applicable. - `EVENTS`: enriched observations_v2 events; columns are controlled by `exportFieldGroups`. - `TRACES_OBSERVATIONS_EVENTS`: both sets. For the `EVENTS` portion, columns are controlled by `exportFieldGroups`.  **Note:** `EVENTS` and the events portion of `TRACES_OBSERVATIONS_EVENTS` rely on the observations_v2 events table (Langfuse Fast Preview / v4), which is currently available on Langfuse Cloud only. See https://langfuse.com/docs/v4.
-/// What data the integration exports. - `TRACES_OBSERVATIONS`: legacy traces + observations + scores tables with a fixed column set. The `exportFieldGroups` field is not applicable. - `EVENTS`: enriched observations_v2 events; columns are controlled by `exportFieldGroups`. - `TRACES_OBSERVATIONS_EVENTS`: both sets. For the `EVENTS` portion, columns are controlled by `exportFieldGroups`.  **Note:** `EVENTS` and the events portion of `TRACES_OBSERVATIONS_EVENTS` rely on the observations_v2 events table (Langfuse Fast Preview / v4), which is currently available on Langfuse Cloud only. See https://langfuse.com/docs/v4.
+/// BlobStorageExportSource : What data the integration exports. - `LEGACY_TRACES_OBSERVATIONS`: traces, observations, and scores tables with a fixed column set. The `exportFieldGroups` field is not applicable. - `OBSERVATIONS_V2`: same data model as the `/api/public/v2/observations` endpoint, plus scores. Columns are controlled by `exportFieldGroups`. - `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS`: both sets. For the `OBSERVATIONS_V2` portion, columns are controlled by `exportFieldGroups`.  **Note:** `OBSERVATIONS_V2` and the enriched-observations portion of `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS` rely on the enriched observations table (Langfuse Fast Preview / v4), which is currently available on Langfuse Cloud only. See https://langfuse.com/docs/v4.
+/// What data the integration exports. - `LEGACY_TRACES_OBSERVATIONS`: traces, observations, and scores tables with a fixed column set. The `exportFieldGroups` field is not applicable. - `OBSERVATIONS_V2`: same data model as the `/api/public/v2/observations` endpoint, plus scores. Columns are controlled by `exportFieldGroups`. - `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS`: both sets. For the `OBSERVATIONS_V2` portion, columns are controlled by `exportFieldGroups`.  **Note:** `OBSERVATIONS_V2` and the enriched-observations portion of `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS` rely on the enriched observations table (Langfuse Fast Preview / v4), which is currently available on Langfuse Cloud only. See https://langfuse.com/docs/v4.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageExportSource {
-    #[serde(rename = "EVENTS")]
-    Events,
-    #[serde(rename = "TRACES_OBSERVATIONS")]
-    TracesObservations,
-    #[serde(rename = "TRACES_OBSERVATIONS_EVENTS")]
-    TracesObservationsEvents,
+    #[serde(rename = "LEGACY_TRACES_OBSERVATIONS")]
+    LegacyTracesObservations,
+    #[serde(rename = "OBSERVATIONS_V2")]
+    ObservationsV2,
+    #[serde(rename = "LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS")]
+    LegacyTracesAndEnrichedObservations,
 }
 
 impl std::fmt::Display for BlobStorageExportSource {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Events => write!(f, "EVENTS"),
-            Self::TracesObservations => write!(f, "TRACES_OBSERVATIONS"),
-            Self::TracesObservationsEvents => write!(f, "TRACES_OBSERVATIONS_EVENTS"),
+            Self::LegacyTracesObservations => write!(f, "LEGACY_TRACES_OBSERVATIONS"),
+            Self::ObservationsV2 => write!(f, "OBSERVATIONS_V2"),
+            Self::LegacyTracesAndEnrichedObservations => {
+                write!(f, "LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS")
+            }
         }
     }
 }
 
 impl Default for BlobStorageExportSource {
     fn default() -> BlobStorageExportSource {
-        Self::Events
+        Self::LegacyTracesObservations
     }
 }

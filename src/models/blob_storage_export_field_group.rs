@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// BlobStorageExportFieldGroup : Field group for the EVENTS export.
-/// Field group for the EVENTS export.
+/// BlobStorageExportFieldGroup : Field group for the OBSERVATIONS_V2 and LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS export.
+/// Field group for the OBSERVATIONS_V2 and LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS export.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageExportFieldGroup {
     #[serde(rename = "core")]

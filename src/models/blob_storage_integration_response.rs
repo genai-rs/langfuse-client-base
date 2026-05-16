@@ -60,7 +60,7 @@ pub struct BlobStorageIntegrationResponse {
     pub compressed: bool,
     #[serde(rename = "exportSource")]
     pub export_source: models::BlobStorageExportSource,
-    /// Field groups included in each exported row for `EVENTS` / `TRACES_OBSERVATIONS_EVENTS` sources. Always `null` when exportSource is `TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface).
+    /// Field groups included in each exported row for `OBSERVATIONS_V2` / `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS` sources. Always `null` when exportSource is `LEGACY_TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface).
     #[serde(
         rename = "exportFieldGroups",
         default,

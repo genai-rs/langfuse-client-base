@@ -4,9 +4,9 @@
 
 | Name | Value |
 |---- | -----|
-| Events | EVENTS |
-| TracesObservations | TRACES_OBSERVATIONS |
-| TracesObservationsEvents | TRACES_OBSERVATIONS_EVENTS |
+| LegacyTracesObservations | LEGACY_TRACES_OBSERVATIONS |
+| ObservationsV2 | OBSERVATIONS_V2 |
+| LegacyTracesAndEnrichedObservations | LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
