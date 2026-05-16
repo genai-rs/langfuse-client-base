@@ -32,12 +32,16 @@ Name | Type | Description | Notes
 **usage_details** | Option<**std::collections::HashMap<String, i32>**> | The usage details of the observation. Key is the usage metric name, value is the number of units consumed. | [optional]
 **cost_details** | Option<**std::collections::HashMap<String, f64>**> | The cost details of the observation. Key is the cost metric name, value is the cost in USD. | [optional]
 **total_cost** | Option<**f64**> | The total cost of the observation in USD | [optional]
+**usage_pricing_tier_name** | Option<**String**> | The name of the pricing tier applied to this observation's usage costs | [optional]
 **prompt_id** | Option<**String**> | The prompt ID associated with the observation | [optional]
 **prompt_name** | Option<**String**> | The prompt name associated with the observation | [optional]
 **prompt_version** | Option<**i32**> | The prompt version associated with the observation | [optional]
 **latency** | Option<**f64**> | The latency in seconds | [optional]
 **time_to_first_token** | Option<**f64**> | The time to first token in seconds | [optional]
 **model_id** | Option<**String**> | The matched model ID | [optional]
+**trace_name** | Option<**String**> | The name of the parent trace | [optional]
+**tags** | Option<**Vec<String>**> | Tags from the parent trace (denormalized onto the observation) | [optional]
+**release** | Option<**String**> | The release version of the parent trace | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

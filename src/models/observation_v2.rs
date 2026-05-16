@@ -212,6 +212,14 @@ pub struct ObservationV2 {
         skip_serializing_if = "Option::is_none"
     )]
     pub total_cost: Option<Option<f64>>,
+    /// The name of the pricing tier applied to this observation's usage costs
+    #[serde(
+        rename = "usagePricingTierName",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub usage_pricing_tier_name: Option<Option<String>>,
     /// The prompt ID associated with the observation
     #[serde(
         rename = "promptId",
@@ -260,6 +268,30 @@ pub struct ObservationV2 {
         skip_serializing_if = "Option::is_none"
     )]
     pub model_id: Option<Option<String>>,
+    /// The name of the parent trace
+    #[serde(
+        rename = "traceName",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub trace_name: Option<Option<String>>,
+    /// Tags from the parent trace (denormalized onto the observation)
+    #[serde(
+        rename = "tags",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub tags: Option<Option<Vec<String>>>,
+    /// The release version of the parent trace
+    #[serde(
+        rename = "release",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub release: Option<Option<String>>,
 }
 
 impl ObservationV2 {
@@ -299,12 +331,16 @@ impl ObservationV2 {
             usage_details: None,
             cost_details: None,
             total_cost: None,
+            usage_pricing_tier_name: None,
             prompt_id: None,
             prompt_name: None,
             prompt_version: None,
             latency: None,
             time_to_first_token: None,
             model_id: None,
+            trace_name: None,
+            tags: None,
+            release: None,
         }
     }
 }

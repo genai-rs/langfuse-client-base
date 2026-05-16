@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **export_start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **compressed** | **bool** |  | 
 **export_source** | [**models::BlobStorageExportSource**](BlobStorageExportSource.md) |  | 
-**export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups included in each exported row for `EVENTS` / `TRACES_OBSERVATIONS_EVENTS` sources. Always `null` when exportSource is `TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface). | [optional]
+**export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups included in each exported row for `OBSERVATIONS_V2` / `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS` sources. Always `null` when exportSource is `LEGACY_TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface). | [optional]
 **next_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **last_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | [optional]
 **last_error** | Option<**String**> |  | [optional]
