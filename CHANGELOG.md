@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.12.0...v0.13.0) - 2026-05-18
+
+### Other
+
+- *(deps)* Update Rust crate serde_with to ^3.20.0
+- *(deps)* Update rust patch updates
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.22.0
+- update generated client from latest OpenAPI spec
+- *(deps)* Update Rust crate reqwest to ^0.13.3
+- *(deps)* Update mozilla-actions/sccache-action action to v0.0.10
+- update generated client from latest OpenAPI spec
+- automerge core dependency updates
+- *(deps)* Update Rust crate tokio to 1.52.1
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update actions/github-script action to v9
+- update generated client from latest OpenAPI spec
+
 ## [0.12.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.11.0...v0.12.0) - 2026-04-09
 
 ### Other
