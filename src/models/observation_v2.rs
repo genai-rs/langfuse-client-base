@@ -260,7 +260,7 @@ pub struct ObservationV2 {
         skip_serializing_if = "Option::is_none"
     )]
     pub time_to_first_token: Option<Option<f64>>,
-    /// The matched model ID
+    /// The matched model ID. Null when the `model` field group is not requested.
     #[serde(
         rename = "modelId",
         default,
@@ -268,6 +268,30 @@ pub struct ObservationV2 {
         skip_serializing_if = "Option::is_none"
     )]
     pub model_id: Option<Option<String>>,
+    /// The input token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
+    #[serde(
+        rename = "inputPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub input_price: Option<Option<String>>,
+    /// The output token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
+    #[serde(
+        rename = "outputPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub output_price: Option<Option<String>>,
+    /// The total token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
+    #[serde(
+        rename = "totalPrice",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub total_price: Option<Option<String>>,
     /// The name of the parent trace
     #[serde(
         rename = "traceName",
@@ -338,6 +362,9 @@ impl ObservationV2 {
             latency: None,
             time_to_first_token: None,
             model_id: None,
+            input_price: None,
+            output_price: None,
+            total_price: None,
             trace_name: None,
             tags: None,
             release: None,
