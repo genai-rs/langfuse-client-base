@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleMappingSource : Source field used to populate a prompt variable.  Use these values when mapping evaluator prompt variables to live data.  Target-specific rules: - `target=observation` supports `input`, `output`, and `metadata` - `target=experiment` supports `input`, `output`, `metadata`, and `expected_output`  Source semantics: - `input`: the observation or experiment input payload - `output`: the observation or experiment output payload - `metadata`: the metadata object for the target. Combine with `jsonPath` when you need one nested field instead of the whole object. - `expected_output`: the experiment item's expected output. Only valid for `target=experiment`.
-/// Source field used to populate a prompt variable.  Use these values when mapping evaluator prompt variables to live data.  Target-specific rules: - `target=observation` supports `input`, `output`, and `metadata` - `target=experiment` supports `input`, `output`, `metadata`, and `expected_output`  Source semantics: - `input`: the observation or experiment input payload - `output`: the observation or experiment output payload - `metadata`: the metadata object for the target. Combine with `jsonPath` when you need one nested field instead of the whole object. - `expected_output`: the experiment item's expected output. Only valid for `target=experiment`.
+/// UnstableEvaluationRuleMappingSource : Source field used to populate a prompt variable.  Use these values when mapping evaluator prompt variables to live data.  Target-specific rules: - `target=observation` supports `input`, `output`, and `metadata` - `target=experiment` supports `input`, `output`, `metadata`, `expected_output`, and `experiment_item_metadata`  Source semantics: - `input`: the observation or experiment input payload - `output`: the observation or experiment output payload - `metadata`: the metadata object for the target. Combine with `jsonPath` when you need one nested field instead of the whole object. - `expected_output`: the experiment item's expected output. Only valid for `target=experiment`. - `experiment_item_metadata`: the experiment item's metadata object. Only valid for `target=experiment`.
+/// Source field used to populate a prompt variable.  Use these values when mapping evaluator prompt variables to live data.  Target-specific rules: - `target=observation` supports `input`, `output`, and `metadata` - `target=experiment` supports `input`, `output`, `metadata`, `expected_output`, and `experiment_item_metadata`  Source semantics: - `input`: the observation or experiment input payload - `output`: the observation or experiment output payload - `metadata`: the metadata object for the target. Combine with `jsonPath` when you need one nested field instead of the whole object. - `expected_output`: the experiment item's expected output. Only valid for `target=experiment`. - `experiment_item_metadata`: the experiment item's metadata object. Only valid for `target=experiment`.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstableEvaluationRuleMappingSource {
     #[serde(rename = "input")]
@@ -23,6 +23,8 @@ pub enum UnstableEvaluationRuleMappingSource {
     Metadata,
     #[serde(rename = "expected_output")]
     ExpectedOutput,
+    #[serde(rename = "experiment_item_metadata")]
+    ExperimentItemMetadata,
 }
 
 impl std::fmt::Display for UnstableEvaluationRuleMappingSource {
@@ -32,6 +34,7 @@ impl std::fmt::Display for UnstableEvaluationRuleMappingSource {
             Self::Output => write!(f, "output"),
             Self::Metadata => write!(f, "metadata"),
             Self::ExpectedOutput => write!(f, "expected_output"),
+            Self::ExperimentItemMetadata => write!(f, "experiment_item_metadata"),
         }
     }
 }
