@@ -42,7 +42,7 @@ pub struct LlmConnection {
     /// Keys of extra headers sent with requests (values excluded for security)
     #[serde(rename = "extraHeaderKeys")]
     pub extra_header_keys: Vec<String>,
-    /// Adapter-specific configuration. Required for Bedrock (`{\"region\":\"us-east-1\"}`), optional for VertexAI (`{\"location\":\"us-central1\"}`), not used by other adapters.
+    /// Adapter-specific configuration. Required for Bedrock (`{\"region\":\"us-east-1\"}`), optional for OpenAI (`{\"useResponsesApi\":true}`), optional for VertexAI (`{\"location\":\"us-central1\"}`), not used by other adapters.
     #[serde(
         rename = "config",
         default,
