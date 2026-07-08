@@ -10,11 +10,11 @@ Name | Type | Description | Notes
 **target** | [**models::UnstableEvaluationRuleTarget**](UnstableEvaluationRuleTarget.md) |  | 
 **enabled** | **bool** | Desired enabled state configured by the client. | 
 **status** | [**models::UnstableEvaluationRuleStatus**](UnstableEvaluationRuleStatus.md) |  | 
-**paused_reason** | Option<**String**> | Machine-readable reason when `status=paused`, otherwise `null`. | [optional]
-**paused_message** | Option<**String**> | Human-readable explanation when `status=paused`, otherwise `null`. | [optional]
+**paused_reason** | Option<**String**> | Machine-readable reason when `status=paused`, otherwise `null`. | 
+**paused_message** | Option<**String**> | Human-readable explanation when `status=paused`, otherwise `null`. | 
 **sampling** | **f64** | Fraction of matching target objects that should be evaluated.  Must be greater than `0` and less than or equal to `1`. - `1` means evaluate every matching target. - `0.25` means evaluate approximately 25% of matching targets. | 
 **filter** | [**Vec<models::UnstableEvaluationRuleFilter>**](UnstableEvaluationRuleFilter.md) | List of filter conditions used to decide whether a target should be evaluated. | 
-**mapping** | [**Vec<models::UnstableEvaluationRuleMapping>**](UnstableEvaluationRuleMapping.md) | Variable mappings used to populate the evaluator prompt from the live target object. | 
+**mapping** | [**Vec<models::UnstableEvaluationRuleMapping>**](UnstableEvaluationRuleMapping.md) | Variable mappings used to populate evaluator runtime variables from the live target object. | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was created. | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was last updated. | 
 

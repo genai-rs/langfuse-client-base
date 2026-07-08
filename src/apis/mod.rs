@@ -128,6 +128,7 @@ pub mod comments_api;
 pub mod dataset_items_api;
 pub mod dataset_run_items_api;
 pub mod datasets_api;
+pub mod experiments_api;
 pub mod health_api;
 pub mod ingestion_api;
 pub mod legacy_metrics_v1_api;
@@ -146,8 +147,10 @@ pub mod prompts_api;
 pub mod scim_api;
 pub mod score_configs_api;
 pub mod scores_api;
+pub mod scores_v3_api;
 pub mod sessions_api;
 pub mod trace_api;
+pub mod unstable_dashboard_widgets_api;
 pub mod unstable_evaluation_rules_api;
 pub mod unstable_evaluators_api;
 

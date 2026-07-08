@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -37,7 +37,7 @@ pub enum ScoresGetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get a score (supports both trace and session scores)
+/// **Deprecated.** Use `GET /api/public/v3/scores` with the `id` filter instead. This endpoint is no longer available on Langfuse v4 and later.  Get a score (supports both trace and session scores)
 #[bon::builder]
 pub async fn scores_get_by_id(
     configuration: &configuration::Configuration,
@@ -89,7 +89,7 @@ pub async fn scores_get_by_id(
     }
 }
 
-/// Get a list of scores (supports both trace and session scores)
+/// **Deprecated.** Use `GET /api/public/v3/scores` instead. This endpoint is no longer available on Langfuse v4 and later.  Get a list of scores (supports both trace and session scores)
 #[bon::builder]
 pub async fn scores_get_many(
     configuration: &configuration::Configuration,

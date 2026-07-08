@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -20,13 +20,8 @@ pub struct DatasetRunWithItems {
     #[serde(rename = "name")]
     pub name: String,
     /// Description of the run
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub description: Option<Option<String>>,
+    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    pub description: Option<String>,
     /// Metadata of the dataset run
     #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
     pub metadata: Option<serde_json::Value>,
@@ -50,6 +45,7 @@ impl DatasetRunWithItems {
     pub fn new(
         id: String,
         name: String,
+        description: Option<String>,
         metadata: Option<serde_json::Value>,
         dataset_id: String,
         dataset_name: String,
@@ -60,7 +56,7 @@ impl DatasetRunWithItems {
         DatasetRunWithItems {
             id,
             name,
-            description: None,
+            description,
             metadata,
             dataset_id,
             dataset_name,

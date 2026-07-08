@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | Unique identifier of the dataset run | 
 **name** | **String** | Name of the dataset run | 
-**description** | Option<**String**> | Description of the run | [optional]
+**description** | Option<**String**> | Description of the run | 
 **metadata** | Option<**serde_json::Value**> | Metadata of the dataset run | 
 **dataset_id** | **String** | Id of the associated dataset | 
 **dataset_name** | **String** | Name of the associated dataset | 

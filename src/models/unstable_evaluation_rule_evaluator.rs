@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleEvaluator : Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name` and `scope` identify the evaluator family conceptually.
+/// UnstableEvaluationRuleEvaluator : Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name`, `scope`, and `type` identify the evaluator family conceptually.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluationRuleEvaluator {
     /// Identifier of the exact evaluator version currently used by the rule.
@@ -22,15 +22,23 @@ pub struct UnstableEvaluationRuleEvaluator {
     pub name: String,
     #[serde(rename = "scope")]
     pub scope: models::UnstableEvaluatorScope,
+    #[serde(rename = "type")]
+    pub r#type: models::UnstableEvaluatorType,
 }
 
 impl UnstableEvaluationRuleEvaluator {
-    /// Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name` and `scope` identify the evaluator family conceptually.
+    /// Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name`, `scope`, and `type` identify the evaluator family conceptually.
     pub fn new(
         id: String,
         name: String,
         scope: models::UnstableEvaluatorScope,
+        r#type: models::UnstableEvaluatorType,
     ) -> UnstableEvaluationRuleEvaluator {
-        UnstableEvaluationRuleEvaluator { id, name, scope }
+        UnstableEvaluationRuleEvaluator {
+            id,
+            name,
+            scope,
+            r#type,
+        }
     }
 }

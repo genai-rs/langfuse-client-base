@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -24,6 +24,21 @@ pub enum UnstableEvaluatorsCreateError {
     Status405(serde_json::Value),
     Status409(models::UnstablePublicApiError),
     Status422(models::UnstablePublicApiError),
+    Status429(models::UnstablePublicApiError),
+    Status500(models::UnstablePublicApiError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`unstable_evaluators_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableEvaluatorsDeleteError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    Status409(models::UnstablePublicApiError),
     Status429(models::UnstablePublicApiError),
     Status500(models::UnstablePublicApiError),
     UnknownValue(serde_json::Value),
@@ -57,7 +72,7 @@ pub enum UnstableEvaluatorsListError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create an evaluator in the authenticated project.  Use evaluators to define **how** Langfuse should score data: the prompt, the expected structured output, and the optional model configuration.  Naming behavior: - If this is a new evaluator name in your project, Langfuse creates version `1`. - If the name already exists in your project, Langfuse creates the next version and returns it. - When a new project version is created, existing evaluation rules in that project automatically move to the newest version for that evaluator name.  Recommended workflow: 1. Create the evaluator. 2. Read the returned `variables` array. 3. Read the returned `outputDefinition.dataType` so the client knows whether future scores will be numeric, boolean, or categorical. 4. Create one or more evaluation rules that reference the returned evaluator family using `name` and `scope`.  Recovery guidance: - `422` with `code=evaluator_preflight_failed`: the evaluator cannot run with the resolved model configuration. Add a valid explicit `modelConfig`, or configure the project's default evaluation model, then retry the same request. - `400` with `code=invalid_body`: the request shape is malformed. Use the structured `details.issues` array to fix the specific fields and retry. - `400` with `code=invalid_body` on `outputDefinition`: send `dataType`, `reasoning.description`, and `score.description`. Do not send `version`; it is not part of the public request shape.  Unstable API note: - This surface may evolve while the underlying evaluation data model is being redesigned.
+/// Create an evaluator in the authenticated project.  Use evaluators to define **how** Langfuse should score data. LLM-as-a-judge evaluators define a prompt, expected structured output, and optional model configuration. Code evaluators define source code and a runtime language.  Naming behavior: - If this is a new evaluator name in your project, Langfuse creates version `1`. - If the name already exists in your project, Langfuse creates the next version and returns it. - When a new project version is created, existing evaluation rules in that project automatically move to the newest version for that evaluator name.  Recommended workflow: 1. Create the evaluator. 2. Read the returned `variables` array. 3. Read the returned `outputDefinition.dataType` so the client knows whether future scores will be numeric, boolean, or categorical. 4. Create one or more evaluation rules that reference the returned evaluator family using `name` and `scope`.  Code evaluator validation: - At creation, Langfuse only validates the request shape - The `sourceCode` itself is not executed here. It is first run (preflight-tested against a sample observation) when you link the evaluator to an evaluation rule, so runtime errors in the code surface at evaluation-rule creation, not at evaluator creation.  Recovery guidance: - `422` with `code=evaluator_preflight_failed`: the evaluator cannot run with the resolved model configuration. Add a valid explicit `modelConfig`, or configure the project's default evaluation model, then retry the same request. - `400` with `code=invalid_body`: the request shape is malformed. Use the structured `details.issues` array to fix the specific fields and retry. - `400` with `code=invalid_body` on `outputDefinition`: for `type=llm_as_judge`, send `dataType`, `reasoning.description`, and `score.description`. Do not send `version`; it is not part of the public request shape. - If `type` is omitted, Langfuse treats the request as `type=llm_as_judge` for backwards compatibility. New clients should send `type` explicitly.  Unstable API note: - This surface may evolve while the underlying evaluation data model is being redesigned.
 #[bon::builder]
 pub async fn unstable_evaluators_create(
     configuration: &configuration::Configuration,
@@ -100,6 +115,60 @@ pub async fn unstable_evaluators_create(
     } else {
         let content = resp.text().await?;
         let entity: Option<UnstableEvaluatorsCreateError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Delete an evaluator.  Important behavior: - This deletes the evaluator including all of its stored versions; `evaluatorId` may reference any version. - The API returns `409` while evaluation rules still reference the evaluator. Delete those evaluation rules first. - Langfuse-managed evaluators (`scope=managed`) cannot be deleted; the API returns `403`. - Scores already produced by the evaluator are not deleted.
+#[bon::builder]
+pub async fn unstable_evaluators_delete(
+    configuration: &configuration::Configuration,
+    evaluator_id: &str,
+) -> Result<models::UnstableDeleteEvaluatorResponse, Error<UnstableEvaluatorsDeleteError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_evaluator_id = evaluator_id;
+
+    let uri_str = format!(
+        "{}/api/public/unstable/evaluators/{evaluatorId}",
+        configuration.base_path,
+        evaluatorId = crate::apis::urlencode(p_path_evaluator_id)
+    );
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDeleteEvaluatorResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDeleteEvaluatorResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<UnstableEvaluatorsDeleteError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,

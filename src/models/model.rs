@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -23,47 +23,22 @@ pub struct Model {
     #[serde(rename = "matchPattern")]
     pub match_pattern: String,
     /// Apply only to generations which are newer than this ISO date.
-    #[serde(
-        rename = "startDate",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "startDate", deserialize_with = "Option::deserialize")]
+    pub start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
     #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
     pub unit: Option<models::ModelUsageUnit>,
     /// Deprecated. See 'prices' instead. Price (USD) per input unit
-    #[serde(
-        rename = "inputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input_price: Option<Option<f64>>,
+    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    pub input_price: Option<f64>,
     /// Deprecated. See 'prices' instead. Price (USD) per output unit
-    #[serde(
-        rename = "outputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output_price: Option<Option<f64>>,
+    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    pub output_price: Option<f64>,
     /// Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set.
-    #[serde(
-        rename = "totalPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub total_price: Option<Option<f64>>,
+    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    pub total_price: Option<f64>,
     /// Optional. Tokenizer to be applied to observations which match to this model. See docs for more details.
-    #[serde(
-        rename = "tokenizerId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub tokenizer_id: Option<Option<String>>,
+    #[serde(rename = "tokenizerId", deserialize_with = "Option::deserialize")]
+    pub tokenizer_id: Option<String>,
     /// Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details.
     #[serde(rename = "tokenizerConfig", deserialize_with = "Option::deserialize")]
     pub tokenizer_config: Option<serde_json::Value>,
@@ -86,6 +61,11 @@ impl Model {
         id: String,
         model_name: String,
         match_pattern: String,
+        start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
+        input_price: Option<f64>,
+        output_price: Option<f64>,
+        total_price: Option<f64>,
+        tokenizer_id: Option<String>,
         tokenizer_config: Option<serde_json::Value>,
         is_langfuse_managed: bool,
         created_at: chrono::DateTime<chrono::FixedOffset>,
@@ -96,12 +76,12 @@ impl Model {
             id,
             model_name,
             match_pattern,
-            start_date: None,
+            start_date,
             unit: None,
-            input_price: None,
-            output_price: None,
-            total_price: None,
-            tokenizer_id: None,
+            input_price,
+            output_price,
+            total_price,
+            tokenizer_id,
             tokenizer_config,
             is_langfuse_managed,
             created_at,

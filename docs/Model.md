@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 **id** | **String** |  | 
 **model_name** | **String** | Name of the model definition. If multiple with the same name exist, they are applied in the following order: (1) custom over built-in, (2) newest according to startTime where model.startTime<observation.startTime | 
 **match_pattern** | **String** | Regex pattern which matches this model definition to generation.model. Useful in case of fine-tuned models. If you want to exact match, use `(?i)^modelname$` | 
-**start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Apply only to generations which are newer than this ISO date. | [optional]
+**start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Apply only to generations which are newer than this ISO date. | 
 **unit** | Option<[**models::ModelUsageUnit**](ModelUsageUnit.md)> |  | [optional]
-**input_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per input unit | [optional]
-**output_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per output unit | [optional]
-**total_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set. | [optional]
-**tokenizer_id** | Option<**String**> | Optional. Tokenizer to be applied to observations which match to this model. See docs for more details. | [optional]
+**input_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per input unit | 
+**output_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per output unit | 
+**total_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set. | 
+**tokenizer_id** | Option<**String**> | Optional. Tokenizer to be applied to observations which match to this model. See docs for more details. | 
 **tokenizer_config** | Option<**serde_json::Value**> | Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details. | 
 **is_langfuse_managed** | **bool** |  | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the model was created | 

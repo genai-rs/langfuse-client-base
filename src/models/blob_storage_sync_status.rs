@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,12 +11,14 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// BlobStorageSyncStatus : Sync status of the blob storage integration: - `disabled` — integration is not enabled - `error` — last export failed (see `lastError` for details) - `idle` — enabled but has never exported yet - `queued` — next export is overdue (`nextSyncAt` is in the past) and waiting to be picked up by the worker - `up_to_date` — all available data has been exported; next export is scheduled for the future  **ETL usage**: poll this endpoint and check for `up_to_date` status. Compare `lastSyncAt` against your ETL bookmark to determine if new data is available. Note that exports run with a 20-minute lag buffer, so `lastSyncAt` will always be at least 20 minutes behind real-time.
-/// Sync status of the blob storage integration: - `disabled` — integration is not enabled - `error` — last export failed (see `lastError` for details) - `idle` — enabled but has never exported yet - `queued` — next export is overdue (`nextSyncAt` is in the past) and waiting to be picked up by the worker - `up_to_date` — all available data has been exported; next export is scheduled for the future  **ETL usage**: poll this endpoint and check for `up_to_date` status. Compare `lastSyncAt` against your ETL bookmark to determine if new data is available. Note that exports run with a 20-minute lag buffer, so `lastSyncAt` will always be at least 20 minutes behind real-time.
+/// BlobStorageSyncStatus : Sync status of the blob storage integration: - `disabled` — integration is not enabled - `error` — last export failed (see `lastError` for details) - `running` — an export job is currently being processed - `queued` — next export is overdue (`nextSyncAt` is in the past) and waiting to be picked up by the worker - `idle` — enabled but has never exported yet and no export is queued - `up_to_date` — all available data has been exported; next export is scheduled for the future  **ETL usage**: poll this endpoint and check for `up_to_date` status. Compare `lastSyncAt` against your ETL bookmark to determine if new data is available. Note that exports run with a 20-minute lag buffer, so `lastSyncAt` will always be at least 20 minutes behind real-time.
+/// Sync status of the blob storage integration: - `disabled` — integration is not enabled - `error` — last export failed (see `lastError` for details) - `running` — an export job is currently being processed - `queued` — next export is overdue (`nextSyncAt` is in the past) and waiting to be picked up by the worker - `idle` — enabled but has never exported yet and no export is queued - `up_to_date` — all available data has been exported; next export is scheduled for the future  **ETL usage**: poll this endpoint and check for `up_to_date` status. Compare `lastSyncAt` against your ETL bookmark to determine if new data is available. Note that exports run with a 20-minute lag buffer, so `lastSyncAt` will always be at least 20 minutes behind real-time.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageSyncStatus {
     #[serde(rename = "idle")]
     Idle,
+    #[serde(rename = "running")]
+    Running,
     #[serde(rename = "queued")]
     Queued,
     #[serde(rename = "up_to_date")]
@@ -31,6 +33,7 @@ impl std::fmt::Display for BlobStorageSyncStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Idle => write!(f, "idle"),
+            Self::Running => write!(f, "running"),
             Self::Queued => write!(f, "queued"),
             Self::UpToDate => write!(f, "up_to_date"),
             Self::Disabled => write!(f, "disabled"),

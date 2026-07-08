@@ -14,7 +14,7 @@ Method | HTTP request | Description
 > models::Score scores_get_by_id(score_id)
 
 
-Get a score (supports both trace and session scores)
+**Deprecated.** Use `GET /api/public/v3/scores` with the `id` filter instead. This endpoint is no longer available on Langfuse v4 and later.  Get a score (supports both trace and session scores)
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Required | Notes
 > models::GetScoresResponse scores_get_many(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, observation_id, queue_id, data_type, trace_tags, fields, filter)
 
 
-Get a list of scores (supports both trace and session scores)
+**Deprecated.** Use `GET /api/public/v3/scores` instead. This endpoint is no longer available on Langfuse v4 and later.  Get a list of scores (supports both trace and session scores)
 
 ### Parameters
 

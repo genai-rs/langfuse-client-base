@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleEvaluatorReference : Evaluator family reference used when creating or updating an evaluation rule.  `name` and `scope` are enough to identify the evaluator family in the authenticated project context.
+/// UnstableEvaluationRuleEvaluatorReference : Evaluator family reference used when updating an evaluation rule.  `name` and `scope` identify the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluationRuleEvaluatorReference {
     /// Evaluator family name.
@@ -22,7 +22,7 @@ pub struct UnstableEvaluationRuleEvaluatorReference {
 }
 
 impl UnstableEvaluationRuleEvaluatorReference {
-    /// Evaluator family reference used when creating or updating an evaluation rule.  `name` and `scope` are enough to identify the evaluator family in the authenticated project context.
+    /// Evaluator family reference used when updating an evaluation rule.  `name` and `scope` identify the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
     pub fn new(
         name: String,
         scope: models::UnstableEvaluatorScope,

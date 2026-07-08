@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,18 +11,21 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluatorType : The evaluator engine type.  The unstable public API currently supports only LLM-as-a-judge evaluators.
-/// The evaluator engine type.  The unstable public API currently supports only LLM-as-a-judge evaluators.
+/// UnstableEvaluatorType : The evaluator engine type.  The unstable public API supports LLM-as-a-judge and code evaluators.
+/// The evaluator engine type.  The unstable public API supports LLM-as-a-judge and code evaluators.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstableEvaluatorType {
     #[serde(rename = "llm_as_judge")]
     LlmAsJudge,
+    #[serde(rename = "code")]
+    Code,
 }
 
 impl std::fmt::Display for UnstableEvaluatorType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::LlmAsJudge => write!(f, "llm_as_judge"),
+            Self::Code => write!(f, "code"),
         }
     }
 }

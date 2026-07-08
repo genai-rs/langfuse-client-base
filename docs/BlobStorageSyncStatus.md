@@ -5,6 +5,7 @@
 | Name | Value |
 |---- | -----|
 | Idle | idle |
+| Running | running |
 | Queued | queued |
 | UpToDate | up_to_date |
 | Disabled | disabled |

@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -18,35 +18,23 @@ pub struct ObservationV2 {
     #[serde(rename = "id")]
     pub id: String,
     /// The trace ID associated with the observation
-    #[serde(
-        rename = "traceId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub trace_id: Option<Option<String>>,
+    #[serde(rename = "traceId", deserialize_with = "Option::deserialize")]
+    pub trace_id: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
     pub start_time: chrono::DateTime<chrono::FixedOffset>,
     /// The end time of the observation
-    #[serde(
-        rename = "endTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    pub end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// The project ID this observation belongs to
     #[serde(rename = "projectId")]
     pub project_id: String,
     /// The parent observation ID
     #[serde(
         rename = "parentObservationId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub parent_observation_id: Option<Option<String>>,
+    pub parent_observation_id: Option<String>,
     /// The type of the observation (e.g. GENERATION, SPAN, EVENT)
     #[serde(rename = "type")]
     pub r#type: String,
@@ -261,37 +249,17 @@ pub struct ObservationV2 {
     )]
     pub time_to_first_token: Option<Option<f64>>,
     /// The matched model ID. Null when the `model` field group is not requested.
-    #[serde(
-        rename = "modelId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model_id: Option<Option<String>>,
+    #[serde(rename = "modelId", deserialize_with = "Option::deserialize")]
+    pub model_id: Option<String>,
     /// The input token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(
-        rename = "inputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input_price: Option<Option<String>>,
+    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    pub input_price: Option<String>,
     /// The output token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(
-        rename = "outputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output_price: Option<Option<String>>,
+    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    pub output_price: Option<String>,
     /// The total token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(
-        rename = "totalPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub total_price: Option<Option<String>>,
+    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    pub total_price: Option<String>,
     /// The name of the parent trace
     #[serde(
         rename = "traceName",
@@ -322,17 +290,24 @@ impl ObservationV2 {
     /// An observation from the v2 API with field-group-based selection. Core fields are always present. Other fields are included only when their field group is requested.
     pub fn new(
         id: String,
+        trace_id: Option<String>,
         start_time: chrono::DateTime<chrono::FixedOffset>,
+        end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
         project_id: String,
+        parent_observation_id: Option<String>,
         r#type: String,
+        model_id: Option<String>,
+        input_price: Option<String>,
+        output_price: Option<String>,
+        total_price: Option<String>,
     ) -> ObservationV2 {
         ObservationV2 {
             id,
-            trace_id: None,
+            trace_id,
             start_time,
-            end_time: None,
+            end_time,
             project_id,
-            parent_observation_id: None,
+            parent_observation_id,
             r#type,
             name: None,
             level: None,
@@ -361,10 +336,10 @@ impl ObservationV2 {
             prompt_version: None,
             latency: None,
             time_to_first_token: None,
-            model_id: None,
-            input_price: None,
-            output_price: None,
-            total_price: None,
+            model_id,
+            input_price,
+            output_price,
+            total_price,
             trace_name: None,
             tags: None,
             release: None,

@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -68,7 +68,7 @@ pub struct CreateBlobStorageIntegrationRequest {
     pub file_type: models::BlobStorageIntegrationFileType,
     #[serde(rename = "exportMode")]
     pub export_mode: models::BlobStorageExportMode,
-    /// Custom start date for exports (required when exportMode is FROM_CUSTOM_DATE)
+    /// Custom start date for exports (required when exportMode is FROM_CUSTOM_DATE). Must not be in the future (27 h tolerance for timezone differences).
     #[serde(
         rename = "exportStartDate",
         default,
@@ -86,7 +86,7 @@ pub struct CreateBlobStorageIntegrationRequest {
     pub compressed: Option<Option<bool>>,
     #[serde(rename = "exportSource", skip_serializing_if = "Option::is_none")]
     pub export_source: Option<models::BlobStorageExportSource>,
-    /// Field groups to include in each exported row.  For exportSource `OBSERVATIONS_V2` or `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS`: must include `core` if provided. When omitted on create, the column default (all groups) applies. When omitted on update, the existing value is preserved.  For exportSource `LEGACY_TRACES_OBSERVATIONS`: this field must be omitted or null. Sending an array (including an empty array) returns 400, because that source uses a fixed column set and does not honor field groups.  `exportFieldGroups` requires `exportSource` to be provided in the same request.
+    /// Field groups to include in each exported observation row. Applies to all export sources; must include `core` if provided. When omitted on create, the column default (all groups) applies. When omitted on update, the existing value is preserved.  `exportFieldGroups` requires `exportSource` to be provided in the same request.
     #[serde(
         rename = "exportFieldGroups",
         default,

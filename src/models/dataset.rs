@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -18,32 +18,20 @@ pub struct Dataset {
     #[serde(rename = "name")]
     pub name: String,
     /// Description of the dataset
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub description: Option<Option<String>>,
+    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    pub description: Option<String>,
     /// Metadata associated with the dataset
     #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
     pub metadata: Option<serde_json::Value>,
     /// JSON Schema for validating dataset item inputs
-    #[serde(
-        rename = "inputSchema",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input_schema: Option<Option<serde_json::Value>>,
+    #[serde(rename = "inputSchema", deserialize_with = "Option::deserialize")]
+    pub input_schema: Option<serde_json::Value>,
     /// JSON Schema for validating dataset item expected outputs
     #[serde(
         rename = "expectedOutputSchema",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub expected_output_schema: Option<Option<serde_json::Value>>,
+    pub expected_output_schema: Option<serde_json::Value>,
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "createdAt")]
@@ -56,7 +44,10 @@ impl Dataset {
     pub fn new(
         id: String,
         name: String,
+        description: Option<String>,
         metadata: Option<serde_json::Value>,
+        input_schema: Option<serde_json::Value>,
+        expected_output_schema: Option<serde_json::Value>,
         project_id: String,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
@@ -64,10 +55,10 @@ impl Dataset {
         Dataset {
             id,
             name,
-            description: None,
+            description,
             metadata,
-            input_schema: None,
-            expected_output_schema: None,
+            input_schema,
+            expected_output_schema,
             project_id,
             created_at,
             updated_at,

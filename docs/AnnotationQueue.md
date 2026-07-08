@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
-**description** | Option<**String**> |  | [optional]
+**description** | Option<**String**> |  | 
 **score_config_ids** | **Vec<String>** |  | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 

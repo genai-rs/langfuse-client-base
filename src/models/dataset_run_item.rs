@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -24,13 +24,8 @@ pub struct DatasetRunItem {
     #[serde(rename = "traceId")]
     pub trace_id: String,
     /// The observation ID associated with this run item
-    #[serde(
-        rename = "observationId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub observation_id: Option<Option<String>>,
+    #[serde(rename = "observationId", deserialize_with = "Option::deserialize")]
+    pub observation_id: Option<String>,
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
@@ -44,6 +39,7 @@ impl DatasetRunItem {
         dataset_run_name: String,
         dataset_item_id: String,
         trace_id: String,
+        observation_id: Option<String>,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> DatasetRunItem {
@@ -53,7 +49,7 @@ impl DatasetRunItem {
             dataset_run_name,
             dataset_item_id,
             trace_id,
-            observation_id: None,
+            observation_id,
             created_at,
             updated_at,
         }
