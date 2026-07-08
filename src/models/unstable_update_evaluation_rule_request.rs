@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableUpdateEvaluationRuleRequest : Partial update body for an evaluation rule.  Provide only the fields you want to change. An empty body is rejected.  Practical guidance: - If you only want to rename the rule or change sampling, send just those fields. - If you change `evaluator`, send a fresh `mapping` unless you are certain the existing mapping still matches the evaluator variables. - If you change `target`, usually send both `filter` and `mapping` in the same request. - If you change an experiment `datasetId` filter, call `GET /api/public/v2/datasets` and use dataset `id` values from that response.
+/// UnstableUpdateEvaluationRuleRequest : Partial update body for an evaluation rule.  Provide only the fields you want to change. An empty body is rejected.  Practical guidance: - If you only want to rename the rule or change sampling, send just those fields. - If you change to an LLM-as-judge `evaluator`, send a fresh `mapping` unless you are certain the existing mapping still matches the evaluator variables. - If you change `target` for an LLM-as-judge rule, usually send both `filter` and `mapping` in the same request. - For code evaluator rules, omit `mapping`; Langfuse stores the fixed code runtime mapping automatically. - If you change an experiment `datasetId` filter, call `GET /api/public/v2/datasets` and use dataset `id` values from that response.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableUpdateEvaluationRuleRequest {
     /// Updated deployment name.
@@ -50,7 +50,7 @@ pub struct UnstableUpdateEvaluationRuleRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub filter: Option<Option<Vec<models::UnstableEvaluationRuleFilter>>>,
-    /// Updated variable mappings.
+    /// Updated LLM-as-judge variable mappings.  Do not send this field for code evaluator rules. Langfuse stores the fixed code runtime mapping automatically and returns it in the response.
     #[serde(
         rename = "mapping",
         default,
@@ -61,7 +61,7 @@ pub struct UnstableUpdateEvaluationRuleRequest {
 }
 
 impl UnstableUpdateEvaluationRuleRequest {
-    /// Partial update body for an evaluation rule.  Provide only the fields you want to change. An empty body is rejected.  Practical guidance: - If you only want to rename the rule or change sampling, send just those fields. - If you change `evaluator`, send a fresh `mapping` unless you are certain the existing mapping still matches the evaluator variables. - If you change `target`, usually send both `filter` and `mapping` in the same request. - If you change an experiment `datasetId` filter, call `GET /api/public/v2/datasets` and use dataset `id` values from that response.
+    /// Partial update body for an evaluation rule.  Provide only the fields you want to change. An empty body is rejected.  Practical guidance: - If you only want to rename the rule or change sampling, send just those fields. - If you change to an LLM-as-judge `evaluator`, send a fresh `mapping` unless you are certain the existing mapping still matches the evaluator variables. - If you change `target` for an LLM-as-judge rule, usually send both `filter` and `mapping` in the same request. - For code evaluator rules, omit `mapping`; Langfuse stores the fixed code runtime mapping automatically. - If you change an experiment `datasetId` filter, call `GET /api/public/v2/datasets` and use dataset `id` values from that response.
     pub fn new() -> UnstableUpdateEvaluationRuleRequest {
         UnstableUpdateEvaluationRuleRequest {
             name: None,

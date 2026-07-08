@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -37,7 +37,7 @@ pub enum SessionsListError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get a session. Please note that `traces` on this endpoint are not paginated, if you plan to fetch large sessions, consider `GET /api/public/traces?sessionId=<sessionId>`
+/// Get a session.  Please note that `traces` on this endpoint are not paginated. For large sessions or new data extraction workflows, use the v2 observations endpoint with a URL-encoded `sessionId` filter and a bounded time range: `GET /api/public/v2/observations?filter=<sessionId filter>&fromStartTime=<from>&toStartTime=<to>`.
 #[bon::builder]
 pub async fn sessions_get(
     configuration: &configuration::Configuration,
@@ -89,7 +89,7 @@ pub async fn sessions_get(
     }
 }
 
-/// Get sessions
+/// Get sessions.  This legacy endpoint is not recommended for new data extraction workflows. Use the v2 observations endpoint with a bounded time range and group rows by `sessionId` instead: `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`.
 #[bon::builder]
 pub async fn sessions_list(
     configuration: &configuration::Configuration,

@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,11 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// GetMediaUploadUrlRequest : Request a presigned media upload URL. Provide exactly one context: a trace (traceId, optionally observationId) or a dataset item (datasetId + datasetItemId). field is required and must match the chosen context.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetMediaUploadUrlRequest {
-    /// The trace ID associated with the media record
-    #[serde(rename = "traceId")]
-    pub trace_id: String,
+    /// The trace the media is associated with. Null for dataset item media uploads.
+    #[serde(
+        rename = "traceId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub trace_id: Option<Option<String>>,
     /// The observation ID associated with the media record. If the media record is associated directly with a trace, this will be null.
     #[serde(
         rename = "observationId",
@@ -24,6 +30,22 @@ pub struct GetMediaUploadUrlRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub observation_id: Option<Option<String>>,
+    /// The dataset the media belongs to. Null for trace/observation media uploads.
+    #[serde(
+        rename = "datasetId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub dataset_id: Option<Option<String>>,
+    /// The dataset item the media is associated with (need not exist yet). Null for trace/observation media uploads.
+    #[serde(
+        rename = "datasetItemId",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub dataset_item_id: Option<Option<String>>,
     #[serde(rename = "contentType")]
     pub content_type: models::MediaContentType,
     /// The size of the media record in bytes
@@ -32,22 +54,24 @@ pub struct GetMediaUploadUrlRequest {
     /// The SHA-256 hash of the media record
     #[serde(rename = "sha256Hash")]
     pub sha256_hash: String,
-    /// The trace / observation field the media record is associated with. This can be one of `input`, `output`, `metadata`
+    /// The item field the media is in: `input`/`output`/`metadata` (trace) or `input`/`expectedOutput`/`metadata` (dataset item).
     #[serde(rename = "field")]
     pub field: String,
 }
 
 impl GetMediaUploadUrlRequest {
+    /// Request a presigned media upload URL. Provide exactly one context: a trace (traceId, optionally observationId) or a dataset item (datasetId + datasetItemId). field is required and must match the chosen context.
     pub fn new(
-        trace_id: String,
         content_type: models::MediaContentType,
         content_length: i32,
         sha256_hash: String,
         field: String,
     ) -> GetMediaUploadUrlRequest {
         GetMediaUploadUrlRequest {
-            trace_id,
+            trace_id: None,
             observation_id: None,
+            dataset_id: None,
+            dataset_item_id: None,
             content_type,
             content_length,
             sha256_hash,

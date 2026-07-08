@@ -5,11 +5,11 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | The unique identifier of the observation | 
-**trace_id** | Option<**String**> | The trace ID associated with the observation | [optional]
+**trace_id** | Option<**String**> | The trace ID associated with the observation | 
 **start_time** | **chrono::DateTime<chrono::FixedOffset>** | The start time of the observation | 
-**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The end time of the observation | [optional]
+**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The end time of the observation | 
 **project_id** | **String** | The project ID this observation belongs to | 
-**parent_observation_id** | Option<**String**> | The parent observation ID | [optional]
+**parent_observation_id** | Option<**String**> | The parent observation ID | 
 **r#type** | **String** | The type of the observation (e.g. GENERATION, SPAN, EVENT) | 
 **name** | Option<**String**> | The name of the observation | [optional]
 **level** | Option<[**models::ObservationLevel**](ObservationLevel.md)> |  | [optional]
@@ -38,10 +38,10 @@ Name | Type | Description | Notes
 **prompt_version** | Option<**i32**> | The prompt version associated with the observation | [optional]
 **latency** | Option<**f64**> | The latency in seconds | [optional]
 **time_to_first_token** | Option<**f64**> | The time to first token in seconds | [optional]
-**model_id** | Option<**String**> | The matched model ID. Null when the `model` field group is not requested. | [optional]
-**input_price** | Option<**String**> | The input token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | [optional]
-**output_price** | Option<**String**> | The output token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | [optional]
-**total_price** | Option<**String**> | The total token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | [optional]
+**model_id** | Option<**String**> | The matched model ID. Null when the `model` field group is not requested. | 
+**input_price** | Option<**String**> | The input token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | 
+**output_price** | Option<**String**> | The output token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | 
+**total_price** | Option<**String**> | The total token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested. | 
 **trace_name** | Option<**String**> | The name of the parent trace | [optional]
 **tags** | Option<**Vec<String>**> | Tags from the parent trace (denormalized onto the observation) | [optional]
 **release** | Option<**String**> | The release version of the parent trace | [optional]

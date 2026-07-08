@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// BlobStorageExportFieldGroup : Field group for the OBSERVATIONS_V2 and LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS export.
-/// Field group for the OBSERVATIONS_V2 and LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS export.
+/// BlobStorageExportFieldGroup : Field group selecting which observation columns are included in the export. Applies to all export sources; groups without a counterpart in the legacy data model (e.g. `trace_context`) are omitted from the legacy observations export.
+/// Field group selecting which observation columns are included in the export. Applies to all export sources; groups without a counterpart in the legacy data model (e.g. `trace_context`) are omitted from the legacy observations export.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageExportFieldGroup {
     #[serde(rename = "core")]

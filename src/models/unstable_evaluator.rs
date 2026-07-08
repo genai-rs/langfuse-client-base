@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,71 +11,31 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluator : One evaluator that can be used for scoring.  An evaluator describes **how** to score data: - prompt - extracted prompt variables - output schema - optional explicit model configuration  It does not define **which** live objects are evaluated. That is the job of `evaluation-rules`.  For agent clients, the most important fields are: - `variables`: use these exact names when building the evaluation-rule `mapping` array - `outputDefinition`: tells you the expected score type and the evaluator's response instructions - `modelConfig`: tells you whether the evaluator uses the project default model (`null`) or an explicit provider/model  Versioning behavior: - `GET /evaluators` returns the latest version of each available evaluator. - `GET /evaluators/{id}` can return an older version. - Evaluation rules always run against the latest version for the selected evaluator name within the same source (`project` or `managed`).
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableEvaluator {
-    /// Identifier of this evaluator.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// Evaluator name.
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Version number of this evaluator.
-    #[serde(rename = "version")]
-    pub version: i32,
-    #[serde(rename = "scope")]
-    pub scope: models::UnstableEvaluatorScope,
-    #[serde(rename = "type")]
-    pub r#type: models::UnstableEvaluatorType,
-    /// Prompt template used during evaluation.
-    #[serde(rename = "prompt")]
-    pub prompt: String,
-    /// Variables extracted from the evaluator prompt.  Every variable in this list must be mapped exactly once when creating an evaluation rule.
-    #[serde(rename = "variables")]
-    pub variables: Vec<String>,
-    #[serde(rename = "outputDefinition")]
-    pub output_definition: Box<models::UnstablePublicEvaluatorOutputDefinition>,
-    #[serde(rename = "modelConfig", skip_serializing_if = "Option::is_none")]
-    pub model_config: Option<Box<models::UnstableEvaluatorModelConfig>>,
-    /// Number of evaluation rules in the project that currently use this evaluator version.
-    #[serde(rename = "evaluationRuleCount")]
-    pub evaluation_rule_count: i32,
-    /// Timestamp when this evaluator was created.
-    #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
-    /// Timestamp when this evaluator was last updated.
-    #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+/// UnstableEvaluator : One evaluator that can be used for scoring.  An evaluator describes **how** to score data.  It does not define **which** live objects are evaluated. That is the job of `evaluation-rules`.  For agent clients, the most important fields are: - `type`: determines which evaluator fields are present - `variables`: for LLM evaluators, use these exact names when building the evaluation-rule `mapping` array. LLM evaluators require every variable to be mapped. Code evaluators always expose the fixed runtime payload fields and Langfuse maps them automatically.  Versioning behavior: - `GET /evaluators` returns the latest version of each available evaluator. - `GET /evaluators/{id}` can return an older version. - Evaluation rules always run against the latest version for the selected evaluator name within the same source (`project` or `managed`).
+/// One evaluator that can be used for scoring.  An evaluator describes **how** to score data.  It does not define **which** live objects are evaluated. That is the job of `evaluation-rules`.  For agent clients, the most important fields are: - `type`: determines which evaluator fields are present - `variables`: for LLM evaluators, use these exact names when building the evaluation-rule `mapping` array. LLM evaluators require every variable to be mapped. Code evaluators always expose the fixed runtime payload fields and Langfuse maps them automatically.  Versioning behavior: - `GET /evaluators` returns the latest version of each available evaluator. - `GET /evaluators/{id}` can return an older version. - Evaluation rules always run against the latest version for the selected evaluator name within the same source (`project` or `managed`).
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableEvaluator {
+    UnstableEvaluatorOneOf(Box<models::UnstableEvaluatorOneOf>),
+    UnstableEvaluatorOneOf1(Box<models::UnstableEvaluatorOneOf1>),
 }
 
-impl UnstableEvaluator {
-    /// One evaluator that can be used for scoring.  An evaluator describes **how** to score data: - prompt - extracted prompt variables - output schema - optional explicit model configuration  It does not define **which** live objects are evaluated. That is the job of `evaluation-rules`.  For agent clients, the most important fields are: - `variables`: use these exact names when building the evaluation-rule `mapping` array - `outputDefinition`: tells you the expected score type and the evaluator's response instructions - `modelConfig`: tells you whether the evaluator uses the project default model (`null`) or an explicit provider/model  Versioning behavior: - `GET /evaluators` returns the latest version of each available evaluator. - `GET /evaluators/{id}` can return an older version. - Evaluation rules always run against the latest version for the selected evaluator name within the same source (`project` or `managed`).
-    pub fn new(
-        id: String,
-        name: String,
-        version: i32,
-        scope: models::UnstableEvaluatorScope,
-        r#type: models::UnstableEvaluatorType,
-        prompt: String,
-        variables: Vec<String>,
-        output_definition: models::UnstablePublicEvaluatorOutputDefinition,
-        evaluation_rule_count: i32,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
-    ) -> UnstableEvaluator {
-        UnstableEvaluator {
-            id,
-            name,
-            version,
-            scope,
-            r#type,
-            prompt,
-            variables,
-            output_definition: Box::new(output_definition),
-            model_config: None,
-            evaluation_rule_count,
-            created_at,
-            updated_at,
-        }
+impl Default for UnstableEvaluator {
+    fn default() -> Self {
+        Self::UnstableEvaluatorOneOf(Default::default())
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "llm_as_judge")]
+    LlmAsJudge,
+    #[serde(rename = "code")]
+    Code,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::LlmAsJudge
     }
 }

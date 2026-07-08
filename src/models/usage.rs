@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -24,13 +24,8 @@ pub struct Usage {
     #[serde(rename = "total")]
     pub total: i32,
     /// Unit of measurement
-    #[serde(
-        rename = "unit",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub unit: Option<Option<String>>,
+    #[serde(rename = "unit", deserialize_with = "Option::deserialize")]
+    pub unit: Option<String>,
     /// USD input cost
     #[serde(
         rename = "inputCost",
@@ -59,12 +54,12 @@ pub struct Usage {
 
 impl Usage {
     /// (Deprecated. Use usageDetails and costDetails instead.) Standard interface for usage and cost
-    pub fn new(input: i32, output: i32, total: i32) -> Usage {
+    pub fn new(input: i32, output: i32, total: i32, unit: Option<String>) -> Usage {
         Usage {
             input,
             output,
             total,
-            unit: None,
+            unit,
             input_cost: None,
             output_cost: None,
             total_cost: None,

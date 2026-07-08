@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -20,13 +20,8 @@ pub struct TraceWithFullDetails {
     #[serde(rename = "timestamp")]
     pub timestamp: chrono::DateTime<chrono::FixedOffset>,
     /// The name of the trace
-    #[serde(
-        rename = "name",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub name: Option<Option<String>>,
+    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    pub name: Option<String>,
     /// The input data of the trace. Can be any JSON.
     #[serde(
         rename = "input",
@@ -44,37 +39,17 @@ pub struct TraceWithFullDetails {
     )]
     pub output: Option<Option<serde_json::Value>>,
     /// The session identifier associated with the trace
-    #[serde(
-        rename = "sessionId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub session_id: Option<Option<String>>,
+    #[serde(rename = "sessionId", deserialize_with = "Option::deserialize")]
+    pub session_id: Option<String>,
     /// The release version of the application when the trace was created
-    #[serde(
-        rename = "release",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub release: Option<Option<String>>,
+    #[serde(rename = "release", deserialize_with = "Option::deserialize")]
+    pub release: Option<String>,
     /// The version of the trace
-    #[serde(
-        rename = "version",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub version: Option<Option<String>>,
+    #[serde(rename = "version", deserialize_with = "Option::deserialize")]
+    pub version: Option<String>,
     /// The user identifier associated with the trace
-    #[serde(
-        rename = "userId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub user_id: Option<Option<String>>,
+    #[serde(rename = "userId", deserialize_with = "Option::deserialize")]
+    pub user_id: Option<String>,
     /// The metadata associated with the trace. Can be any JSON.
     #[serde(
         rename = "metadata",
@@ -123,6 +98,11 @@ impl TraceWithFullDetails {
     pub fn new(
         id: String,
         timestamp: chrono::DateTime<chrono::FixedOffset>,
+        name: Option<String>,
+        session_id: Option<String>,
+        release: Option<String>,
+        version: Option<String>,
+        user_id: Option<String>,
         tags: Vec<String>,
         public: bool,
         environment: String,
@@ -133,13 +113,13 @@ impl TraceWithFullDetails {
         TraceWithFullDetails {
             id,
             timestamp,
-            name: None,
+            name,
             input: None,
             output: None,
-            session_id: None,
-            release: None,
-            version: None,
-            user_id: None,
+            session_id,
+            release,
+            version,
+            user_id,
             metadata: None,
             tags,
             public,

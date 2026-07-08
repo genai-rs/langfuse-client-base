@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -17,51 +17,29 @@ pub struct ObservationsView {
     #[serde(rename = "id")]
     pub id: String,
     /// The trace ID associated with the observation
-    #[serde(
-        rename = "traceId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub trace_id: Option<Option<String>>,
+    #[serde(rename = "traceId", deserialize_with = "Option::deserialize")]
+    pub trace_id: Option<String>,
     /// The type of the observation
     #[serde(rename = "type")]
     pub r#type: String,
     /// The name of the observation
-    #[serde(
-        rename = "name",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub name: Option<Option<String>>,
+    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    pub name: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
     pub start_time: chrono::DateTime<chrono::FixedOffset>,
     /// The end time of the observation.
-    #[serde(
-        rename = "endTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    pub end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// The completion start time of the observation
     #[serde(
         rename = "completionStartTime",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub completion_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// The model used for the observation
-    #[serde(
-        rename = "model",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model: Option<Option<String>>,
+    #[serde(rename = "model", deserialize_with = "Option::deserialize")]
+    pub model: Option<String>,
     /// The parameters of the model used for the observation
     #[serde(rename = "modelParameters", deserialize_with = "Option::deserialize")]
     pub model_parameters: Option<serde_json::Value>,
@@ -69,13 +47,8 @@ pub struct ObservationsView {
     #[serde(rename = "input", deserialize_with = "Option::deserialize")]
     pub input: Option<serde_json::Value>,
     /// The version of the observation
-    #[serde(
-        rename = "version",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub version: Option<Option<String>>,
+    #[serde(rename = "version", deserialize_with = "Option::deserialize")]
+    pub version: Option<String>,
     /// Additional metadata of the observation
     #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
     pub metadata: Option<serde_json::Value>,
@@ -87,29 +60,17 @@ pub struct ObservationsView {
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
-    #[serde(
-        rename = "statusMessage",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub status_message: Option<Option<String>>,
+    #[serde(rename = "statusMessage", deserialize_with = "Option::deserialize")]
+    pub status_message: Option<String>,
     /// The parent observation ID
     #[serde(
         rename = "parentObservationId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub parent_observation_id: Option<Option<String>>,
+    pub parent_observation_id: Option<String>,
     /// The prompt ID associated with the observation
-    #[serde(
-        rename = "promptId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_id: Option<Option<String>>,
+    #[serde(rename = "promptId", deserialize_with = "Option::deserialize")]
+    pub prompt_id: Option<String>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
     #[serde(rename = "usageDetails")]
     pub usage_details: std::collections::HashMap<String, i32>,
@@ -120,143 +81,117 @@ pub struct ObservationsView {
     #[serde(rename = "environment")]
     pub environment: String,
     /// The name of the prompt associated with the observation
-    #[serde(
-        rename = "promptName",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_name: Option<Option<String>>,
+    #[serde(rename = "promptName", deserialize_with = "Option::deserialize")]
+    pub prompt_name: Option<String>,
     /// The version of the prompt associated with the observation
-    #[serde(
-        rename = "promptVersion",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub prompt_version: Option<Option<i32>>,
+    #[serde(rename = "promptVersion", deserialize_with = "Option::deserialize")]
+    pub prompt_version: Option<i32>,
     /// The unique identifier of the model
-    #[serde(
-        rename = "modelId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model_id: Option<Option<String>>,
+    #[serde(rename = "modelId", deserialize_with = "Option::deserialize")]
+    pub model_id: Option<String>,
     /// The price of the input in USD
-    #[serde(
-        rename = "inputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub input_price: Option<Option<f64>>,
+    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    pub input_price: Option<f64>,
     /// The price of the output in USD.
-    #[serde(
-        rename = "outputPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub output_price: Option<Option<f64>>,
+    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    pub output_price: Option<f64>,
     /// The total price in USD.
-    #[serde(
-        rename = "totalPrice",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub total_price: Option<Option<f64>>,
+    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    pub total_price: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the input in USD
     #[serde(
         rename = "calculatedInputCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub calculated_input_cost: Option<Option<f64>>,
+    pub calculated_input_cost: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the output in USD
     #[serde(
         rename = "calculatedOutputCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub calculated_output_cost: Option<Option<f64>>,
+    pub calculated_output_cost: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated total cost in USD
     #[serde(
         rename = "calculatedTotalCost",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub calculated_total_cost: Option<Option<f64>>,
+    pub calculated_total_cost: Option<f64>,
     /// The latency in seconds.
-    #[serde(
-        rename = "latency",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub latency: Option<Option<f64>>,
+    #[serde(rename = "latency", deserialize_with = "Option::deserialize")]
+    pub latency: Option<f64>,
     /// The time to the first token in seconds
-    #[serde(
-        rename = "timeToFirstToken",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub time_to_first_token: Option<Option<f64>>,
+    #[serde(rename = "timeToFirstToken", deserialize_with = "Option::deserialize")]
+    pub time_to_first_token: Option<f64>,
 }
 
 impl ObservationsView {
     pub fn new(
         id: String,
+        trace_id: Option<String>,
         r#type: String,
+        name: Option<String>,
         start_time: chrono::DateTime<chrono::FixedOffset>,
+        end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+        completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+        model: Option<String>,
         model_parameters: Option<serde_json::Value>,
         input: Option<serde_json::Value>,
+        version: Option<String>,
         metadata: Option<serde_json::Value>,
         output: Option<serde_json::Value>,
         usage: models::Usage,
         level: models::ObservationLevel,
+        status_message: Option<String>,
+        parent_observation_id: Option<String>,
+        prompt_id: Option<String>,
         usage_details: std::collections::HashMap<String, i32>,
         cost_details: std::collections::HashMap<String, f64>,
         environment: String,
+        prompt_name: Option<String>,
+        prompt_version: Option<i32>,
+        model_id: Option<String>,
+        input_price: Option<f64>,
+        output_price: Option<f64>,
+        total_price: Option<f64>,
+        calculated_input_cost: Option<f64>,
+        calculated_output_cost: Option<f64>,
+        calculated_total_cost: Option<f64>,
+        latency: Option<f64>,
+        time_to_first_token: Option<f64>,
     ) -> ObservationsView {
         ObservationsView {
             id,
-            trace_id: None,
+            trace_id,
             r#type,
-            name: None,
+            name,
             start_time,
-            end_time: None,
-            completion_start_time: None,
-            model: None,
+            end_time,
+            completion_start_time,
+            model,
             model_parameters,
             input,
-            version: None,
+            version,
             metadata,
             output,
             usage: Box::new(usage),
             level,
-            status_message: None,
-            parent_observation_id: None,
-            prompt_id: None,
+            status_message,
+            parent_observation_id,
+            prompt_id,
             usage_details,
             cost_details,
             environment,
-            prompt_name: None,
-            prompt_version: None,
-            model_id: None,
-            input_price: None,
-            output_price: None,
-            total_price: None,
-            calculated_input_cost: None,
-            calculated_output_cost: None,
-            calculated_total_cost: None,
-            latency: None,
-            time_to_first_token: None,
+            prompt_name,
+            prompt_version,
+            model_id,
+            input_price,
+            output_price,
+            total_price,
+            calculated_input_cost,
+            calculated_output_cost,
+            calculated_total_cost,
+            latency,
+            time_to_first_token,
         }
     }
 }

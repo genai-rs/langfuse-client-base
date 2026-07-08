@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -30,28 +30,18 @@ pub struct UnstableEvaluationRule {
     #[serde(rename = "status")]
     pub status: models::UnstableEvaluationRuleStatus,
     /// Machine-readable reason when `status=paused`, otherwise `null`.
-    #[serde(
-        rename = "pausedReason",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub paused_reason: Option<Option<String>>,
+    #[serde(rename = "pausedReason", deserialize_with = "Option::deserialize")]
+    pub paused_reason: Option<String>,
     /// Human-readable explanation when `status=paused`, otherwise `null`.
-    #[serde(
-        rename = "pausedMessage",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub paused_message: Option<Option<String>>,
+    #[serde(rename = "pausedMessage", deserialize_with = "Option::deserialize")]
+    pub paused_message: Option<String>,
     /// Fraction of matching target objects that should be evaluated.  Must be greater than `0` and less than or equal to `1`. - `1` means evaluate every matching target. - `0.25` means evaluate approximately 25% of matching targets.
     #[serde(rename = "sampling")]
     pub sampling: f64,
     /// List of filter conditions used to decide whether a target should be evaluated.
     #[serde(rename = "filter")]
     pub filter: Vec<models::UnstableEvaluationRuleFilter>,
-    /// Variable mappings used to populate the evaluator prompt from the live target object.
+    /// Variable mappings used to populate evaluator runtime variables from the live target object.
     #[serde(rename = "mapping")]
     pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
     /// Timestamp when the evaluation rule was created.
@@ -71,6 +61,8 @@ impl UnstableEvaluationRule {
         target: models::UnstableEvaluationRuleTarget,
         enabled: bool,
         status: models::UnstableEvaluationRuleStatus,
+        paused_reason: Option<String>,
+        paused_message: Option<String>,
         sampling: f64,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
         mapping: Vec<models::UnstableEvaluationRuleMapping>,
@@ -84,8 +76,8 @@ impl UnstableEvaluationRule {
             target,
             enabled,
             status,
-            paused_reason: None,
-            paused_message: None,
+            paused_reason,
+            paused_message,
             sampling,
             filter,
             mapping,

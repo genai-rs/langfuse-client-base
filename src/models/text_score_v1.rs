@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -36,40 +36,20 @@ pub struct TextScoreV1 {
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// The user ID of the author
-    #[serde(
-        rename = "authorUserId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub author_user_id: Option<Option<String>>,
+    #[serde(rename = "authorUserId", deserialize_with = "Option::deserialize")]
+    pub author_user_id: Option<String>,
     /// Comment on the score
-    #[serde(
-        rename = "comment",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub comment: Option<Option<String>>,
+    #[serde(rename = "comment", deserialize_with = "Option::deserialize")]
+    pub comment: Option<String>,
     /// Metadata associated with the score
     #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
     pub metadata: Option<serde_json::Value>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
-    #[serde(
-        rename = "configId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub config_id: Option<Option<String>>,
+    #[serde(rename = "configId", deserialize_with = "Option::deserialize")]
+    pub config_id: Option<String>,
     /// The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue.
-    #[serde(
-        rename = "queueId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub queue_id: Option<Option<String>>,
+    #[serde(rename = "queueId", deserialize_with = "Option::deserialize")]
+    pub queue_id: Option<String>,
     /// The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
     #[serde(rename = "environment")]
     pub environment: String,
@@ -87,7 +67,11 @@ impl TextScoreV1 {
         timestamp: chrono::DateTime<chrono::FixedOffset>,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
+        author_user_id: Option<String>,
+        comment: Option<String>,
         metadata: Option<serde_json::Value>,
+        config_id: Option<String>,
+        queue_id: Option<String>,
         environment: String,
         string_value: String,
     ) -> TextScoreV1 {
@@ -100,11 +84,11 @@ impl TextScoreV1 {
             timestamp,
             created_at,
             updated_at,
-            author_user_id: None,
-            comment: None,
+            author_user_id,
+            comment,
             metadata,
-            config_id: None,
-            queue_id: None,
+            config_id,
+            queue_id,
             environment,
             string_value,
         }

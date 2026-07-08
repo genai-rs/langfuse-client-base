@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -17,13 +17,8 @@ pub struct AnnotationQueue {
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub description: Option<Option<String>>,
+    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    pub description: Option<String>,
     #[serde(rename = "scoreConfigIds")]
     pub score_config_ids: Vec<String>,
     #[serde(rename = "createdAt")]
@@ -36,6 +31,7 @@ impl AnnotationQueue {
     pub fn new(
         id: String,
         name: String,
+        description: Option<String>,
         score_config_ids: Vec<String>,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
@@ -43,7 +39,7 @@ impl AnnotationQueue {
         AnnotationQueue {
             id,
             name,
-            description: None,
+            description,
             score_config_ids,
             created_at,
             updated_at,

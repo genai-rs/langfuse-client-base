@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -27,21 +27,14 @@ pub struct DatasetItem {
     #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
     pub metadata: Option<serde_json::Value>,
     /// The trace ID that sourced this dataset item
-    #[serde(
-        rename = "sourceTraceId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub source_trace_id: Option<Option<String>>,
+    #[serde(rename = "sourceTraceId", deserialize_with = "Option::deserialize")]
+    pub source_trace_id: Option<String>,
     /// The observation ID that sourced this dataset item
     #[serde(
         rename = "sourceObservationId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
+        deserialize_with = "Option::deserialize"
     )]
-    pub source_observation_id: Option<Option<String>>,
+    pub source_observation_id: Option<String>,
     #[serde(rename = "datasetId")]
     pub dataset_id: String,
     #[serde(rename = "datasetName")]
@@ -50,6 +43,9 @@ pub struct DatasetItem {
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    /// Resolved Langfuse media references found in input, expectedOutput, and metadata.
+    #[serde(rename = "mediaReferences")]
+    pub media_references: Vec<models::DatasetItemMediaReference>,
 }
 
 impl DatasetItem {
@@ -59,10 +55,13 @@ impl DatasetItem {
         input: Option<serde_json::Value>,
         expected_output: Option<serde_json::Value>,
         metadata: Option<serde_json::Value>,
+        source_trace_id: Option<String>,
+        source_observation_id: Option<String>,
         dataset_id: String,
         dataset_name: String,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
+        media_references: Vec<models::DatasetItemMediaReference>,
     ) -> DatasetItem {
         DatasetItem {
             id,
@@ -70,12 +69,13 @@ impl DatasetItem {
             input,
             expected_output,
             metadata,
-            source_trace_id: None,
-            source_observation_id: None,
+            source_trace_id,
+            source_observation_id,
             dataset_id,
             dataset_name,
             created_at,
             updated_at,
+            media_references,
         }
     }
 }

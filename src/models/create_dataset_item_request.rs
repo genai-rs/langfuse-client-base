@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -50,7 +50,7 @@ pub struct CreateDatasetItemRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub source_observation_id: Option<Option<String>>,
-    /// Dataset items are upserted on their id. Id needs to be unique (project-level) and cannot be reused across datasets.
+    /// Dataset items are upserted on their id. Id needs to be unique (project-level), cannot be reused across datasets, and must be at most 255 characters.
     #[serde(
         rename = "id",
         default,

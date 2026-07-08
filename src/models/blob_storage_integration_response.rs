@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -21,22 +21,12 @@ pub struct BlobStorageIntegrationResponse {
     pub r#type: models::BlobStorageIntegrationType,
     #[serde(rename = "bucketName")]
     pub bucket_name: String,
-    #[serde(
-        rename = "endpoint",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub endpoint: Option<Option<String>>,
+    #[serde(rename = "endpoint", deserialize_with = "Option::deserialize")]
+    pub endpoint: Option<String>,
     #[serde(rename = "region")]
     pub region: String,
-    #[serde(
-        rename = "accessKeyId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub access_key_id: Option<Option<String>>,
+    #[serde(rename = "accessKeyId", deserialize_with = "Option::deserialize")]
+    pub access_key_id: Option<String>,
     #[serde(rename = "prefix")]
     pub prefix: String,
     #[serde(rename = "exportFrequency")]
@@ -46,56 +36,26 @@ pub struct BlobStorageIntegrationResponse {
     #[serde(rename = "forcePathStyle")]
     pub force_path_style: bool,
     #[serde(rename = "fileType")]
-    pub file_type: models::BlobStorageIntegrationFileType,
+    pub file_type: models::BlobStorageIntegrationFileTypeResponse,
     #[serde(rename = "exportMode")]
     pub export_mode: models::BlobStorageExportMode,
-    #[serde(
-        rename = "exportStartDate",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub export_start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "exportStartDate", deserialize_with = "Option::deserialize")]
+    pub export_start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
     #[serde(rename = "compressed")]
     pub compressed: bool,
     #[serde(rename = "exportSource")]
     pub export_source: models::BlobStorageExportSource,
-    /// Field groups included in each exported row for `OBSERVATIONS_V2` / `LEGACY_TRACES_AND_ENRICHED_OBSERVATIONS` sources. Always `null` when exportSource is `LEGACY_TRACES_OBSERVATIONS` (the field does not apply to that source; any legacy DB value is hidden from the public surface).
-    #[serde(
-        rename = "exportFieldGroups",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub export_field_groups: Option<Option<Vec<models::BlobStorageExportFieldGroup>>>,
-    #[serde(
-        rename = "nextSyncAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub next_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
-    #[serde(
-        rename = "lastSyncAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
-    #[serde(
-        rename = "lastError",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_error: Option<Option<String>>,
-    #[serde(
-        rename = "lastErrorAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_error_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    /// Field groups included in each exported observation row. An empty list is treated as all groups during export.
+    #[serde(rename = "exportFieldGroups", deserialize_with = "Option::deserialize")]
+    pub export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
+    #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
+    pub next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
+    pub last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
+    pub last_error: Option<String>,
+    #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
+    pub last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
@@ -108,15 +68,23 @@ impl BlobStorageIntegrationResponse {
         project_id: String,
         r#type: models::BlobStorageIntegrationType,
         bucket_name: String,
+        endpoint: Option<String>,
         region: String,
+        access_key_id: Option<String>,
         prefix: String,
         export_frequency: models::BlobStorageExportFrequency,
         enabled: bool,
         force_path_style: bool,
-        file_type: models::BlobStorageIntegrationFileType,
+        file_type: models::BlobStorageIntegrationFileTypeResponse,
         export_mode: models::BlobStorageExportMode,
+        export_start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
         compressed: bool,
         export_source: models::BlobStorageExportSource,
+        export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
+        next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        last_error: Option<String>,
+        last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> BlobStorageIntegrationResponse {
@@ -125,23 +93,23 @@ impl BlobStorageIntegrationResponse {
             project_id,
             r#type,
             bucket_name,
-            endpoint: None,
+            endpoint,
             region,
-            access_key_id: None,
+            access_key_id,
             prefix,
             export_frequency,
             enabled,
             force_path_style,
             file_type,
             export_mode,
-            export_start_date: None,
+            export_start_date,
             compressed,
             export_source,
-            export_field_groups: None,
-            next_sync_at: None,
-            last_sync_at: None,
-            last_error: None,
-            last_error_at: None,
+            export_field_groups,
+            next_sync_at,
+            last_sync_at,
+            last_error,
+            last_error_at,
             created_at,
             updated_at,
         }

@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -22,37 +22,17 @@ pub struct BlobStorageIntegrationStatusResponse {
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// End of the last successfully exported time window. Compare against your ETL bookmark to determine if new data is available. Null if the integration has never synced.
-    #[serde(
-        rename = "lastSyncAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
+    pub last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// When the next export is scheduled. Null if no sync has occurred yet.
-    #[serde(
-        rename = "nextSyncAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub next_sync_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
+    pub next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     /// Raw error message from the storage provider (S3/Azure/GCS) if the last export failed. Cleared on successful export.
-    #[serde(
-        rename = "lastError",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_error: Option<Option<String>>,
+    #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
+    pub last_error: Option<String>,
     /// When the last error occurred. Cleared on successful export.
-    #[serde(
-        rename = "lastErrorAt",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub last_error_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
+    pub last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
 }
 
 impl BlobStorageIntegrationStatusResponse {
@@ -61,16 +41,20 @@ impl BlobStorageIntegrationStatusResponse {
         project_id: String,
         sync_status: models::BlobStorageSyncStatus,
         enabled: bool,
+        last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        last_error: Option<String>,
+        last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     ) -> BlobStorageIntegrationStatusResponse {
         BlobStorageIntegrationStatusResponse {
             id,
             project_id,
             sync_status,
             enabled,
-            last_sync_at: None,
-            next_sync_at: None,
-            last_error: None,
-            last_error_at: None,
+            last_sync_at,
+            next_sync_at,
+            last_error,
+            last_error_at,
         }
     }
 }

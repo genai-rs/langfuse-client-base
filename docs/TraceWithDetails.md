@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | The unique identifier of a trace | 
 **timestamp** | **chrono::DateTime<chrono::FixedOffset>** | The timestamp when the trace was created | 
-**name** | Option<**String**> | The name of the trace | [optional]
+**name** | Option<**String**> | The name of the trace | 
 **input** | Option<**serde_json::Value**> | The input data of the trace. Can be any JSON. | [optional]
 **output** | Option<**serde_json::Value**> | The output data of the trace. Can be any JSON. | [optional]
-**session_id** | Option<**String**> | The session identifier associated with the trace | [optional]
-**release** | Option<**String**> | The release version of the application when the trace was created | [optional]
-**version** | Option<**String**> | The version of the trace | [optional]
-**user_id** | Option<**String**> | The user identifier associated with the trace | [optional]
+**session_id** | Option<**String**> | The session identifier associated with the trace | 
+**release** | Option<**String**> | The release version of the application when the trace was created | 
+**version** | Option<**String**> | The version of the trace | 
+**user_id** | Option<**String**> | The user identifier associated with the trace | 
 **metadata** | Option<**serde_json::Value**> | The metadata associated with the trace. Can be any JSON. | [optional]
 **tags** | **Vec<String>** | The tags associated with the trace. | 
 **public** | **bool** | Public traces are accessible via url without login | 

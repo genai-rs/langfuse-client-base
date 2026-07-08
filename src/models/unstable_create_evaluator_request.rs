@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -11,33 +11,31 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableCreateEvaluatorRequest : Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableCreateEvaluatorRequest {
-    /// Evaluator name within the authenticated project.
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Prompt template used by the evaluator.
-    #[serde(rename = "prompt")]
-    pub prompt: String,
-    #[serde(rename = "outputDefinition")]
-    pub output_definition: Box<models::UnstableEvaluatorOutputDefinition>,
-    #[serde(rename = "modelConfig", skip_serializing_if = "Option::is_none")]
-    pub model_config: Option<Box<models::UnstableEvaluatorModelConfig>>,
+/// UnstableCreateEvaluatorRequest : Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
+/// Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableCreateEvaluatorRequest {
+    UnstableCreateEvaluatorRequestOneOf(Box<models::UnstableCreateEvaluatorRequestOneOf>),
+    UnstableCreateEvaluatorRequestOneOf1(Box<models::UnstableCreateEvaluatorRequestOneOf1>),
 }
 
-impl UnstableCreateEvaluatorRequest {
-    /// Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically.
-    pub fn new(
-        name: String,
-        prompt: String,
-        output_definition: models::UnstableEvaluatorOutputDefinition,
-    ) -> UnstableCreateEvaluatorRequest {
-        UnstableCreateEvaluatorRequest {
-            name,
-            prompt,
-            output_definition: Box::new(output_definition),
-            model_config: None,
-        }
+impl Default for UnstableCreateEvaluatorRequest {
+    fn default() -> Self {
+        Self::UnstableCreateEvaluatorRequestOneOf(Default::default())
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "llm_as_judge")]
+    LlmAsJudge,
+    #[serde(rename = "code")]
+    Code,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::LlmAsJudge
     }
 }

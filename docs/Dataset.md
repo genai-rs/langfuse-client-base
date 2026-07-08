@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
-**description** | Option<**String**> | Description of the dataset | [optional]
+**description** | Option<**String**> | Description of the dataset | 
 **metadata** | Option<**serde_json::Value**> | Metadata associated with the dataset | 
-**input_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item inputs | [optional]
-**expected_output_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item expected outputs | [optional]
+**input_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item inputs | 
+**expected_output_schema** | Option<**serde_json::Value**> | JSON Schema for validating dataset item expected outputs | 
 **project_id** | **String** |  | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
