@@ -11,7 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-///
+/// BlobStorageIntegrationFileType : File format for exported data. `PARQUET` is a columnar binary format encoded and compressed by the storage engine; gzip compression does not apply to it. Note that the model-price columns (`input_price`, `output_price`, `total_price`) are not included in Parquet observation exports.
+/// File format for exported data. `PARQUET` is a columnar binary format encoded and compressed by the storage engine; gzip compression does not apply to it. Note that the model-price columns (`input_price`, `output_price`, `total_price`) are not included in Parquet observation exports.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum BlobStorageIntegrationFileType {
     #[serde(rename = "JSON")]
@@ -20,6 +21,8 @@ pub enum BlobStorageIntegrationFileType {
     Csv,
     #[serde(rename = "JSONL")]
     Jsonl,
+    #[serde(rename = "PARQUET")]
+    Parquet,
 }
 
 impl std::fmt::Display for BlobStorageIntegrationFileType {
@@ -28,6 +31,7 @@ impl std::fmt::Display for BlobStorageIntegrationFileType {
             Self::Json => write!(f, "JSON"),
             Self::Csv => write!(f, "CSV"),
             Self::Jsonl => write!(f, "JSONL"),
+            Self::Parquet => write!(f, "PARQUET"),
         }
     }
 }
