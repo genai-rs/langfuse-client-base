@@ -7,6 +7,7 @@
 | Input | input |
 | Output | output |
 | Metadata | metadata |
+| ToolCalls | tool_calls |
 | ExpectedOutput | expected_output |
 | ExperimentItemMetadata | experiment_item_metadata |
 
