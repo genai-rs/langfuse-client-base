@@ -27,7 +27,64 @@ pub enum UnstableDashboardWidgetsCreateError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create a reusable dashboard widget.  This endpoint creates the widget. It does not place the widget on a dashboard grid, this has to be done in the UI.  Supported views are `observations`, `scores-numeric`, and `scores-categorical`. The legacy `traces` view is not supported by this unstable API, `minVersion` defaults to `2`; values below `2` are rejected.  Unstable API note: - This surface may evolve while dashboard/widget APIs are being finalized.
+/// struct for typed errors of method [`unstable_dashboard_widgets_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableDashboardWidgetsDeleteError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    Status409(models::UnstablePublicApiError),
+    Status429(models::UnstablePublicApiError),
+    Status500(models::UnstablePublicApiError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`unstable_dashboard_widgets_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableDashboardWidgetsGetError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    Status429(models::UnstablePublicApiError),
+    Status500(models::UnstablePublicApiError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`unstable_dashboard_widgets_list`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableDashboardWidgetsListError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    Status429(models::UnstablePublicApiError),
+    Status500(models::UnstablePublicApiError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`unstable_dashboard_widgets_update`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnstableDashboardWidgetsUpdateError {
+    Status400(serde_json::Value),
+    Status401(serde_json::Value),
+    Status403(serde_json::Value),
+    Status404(serde_json::Value),
+    Status405(serde_json::Value),
+    Status429(models::UnstablePublicApiError),
+    Status500(models::UnstablePublicApiError),
+    UnknownValue(serde_json::Value),
+}
+
+/// Create a dashboard widget (a standalone chart definition you place on any dashboard).  This endpoint creates the widget only; place it on a dashboard via `POST /dashboards/{dashboardId}/placements`.  Supported views are `observations`, `scores-numeric`, and `scores-categorical`. The legacy `traces` view is not supported by this unstable API. Widgets are created as v2 internally.  `chartConfig` is optional and defaults to the plain config for `chartType`; when `chartConfig.type` is given it must match `chartType`.  Unstable API note: - This surface may evolve while dashboard/widget APIs are being finalized.
 #[bon::builder]
 pub async fn unstable_dashboard_widgets_create(
     configuration: &configuration::Configuration,
@@ -73,6 +130,231 @@ pub async fn unstable_dashboard_widgets_create(
     } else {
         let content = resp.text().await?;
         let entity: Option<UnstableDashboardWidgetsCreateError> =
+            serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Delete a dashboard widget.  The API returns `409` while the widget is still placed on a dashboard. Remove those placements first.
+#[bon::builder]
+pub async fn unstable_dashboard_widgets_delete(
+    configuration: &configuration::Configuration,
+    widget_id: &str,
+) -> Result<models::UnstableDeleteDashboardWidgetResponse, Error<UnstableDashboardWidgetsDeleteError>>
+{
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_widget_id = widget_id;
+
+    let uri_str = format!(
+        "{}/api/public/unstable/dashboard-widgets/{widgetId}",
+        configuration.base_path,
+        widgetId = crate::apis::urlencode(p_path_widget_id)
+    );
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<UnstableDashboardWidgetsDeleteError> =
+            serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Get a dashboard widget by id.  The response may use `view: traces` for legacy widgets.
+#[bon::builder]
+pub async fn unstable_dashboard_widgets_get(
+    configuration: &configuration::Configuration,
+    widget_id: &str,
+) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsGetError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_widget_id = widget_id;
+
+    let uri_str = format!(
+        "{}/api/public/unstable/dashboard-widgets/{widgetId}",
+        configuration.base_path,
+        widgetId = crate::apis::urlencode(p_path_widget_id)
+    );
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<UnstableDashboardWidgetsGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// List dashboard widgets in the project, ordered by most recently updated first.  Responses may include legacy `traces` widgets created before this API existed. New widgets cannot be created with `view: traces`.
+#[bon::builder]
+pub async fn unstable_dashboard_widgets_list(
+    configuration: &configuration::Configuration,
+    page: Option<i32>,
+    limit: Option<i32>,
+) -> Result<models::UnstableDashboardWidgetList, Error<UnstableDashboardWidgetsListError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_query_page = page;
+    let p_query_limit = limit;
+
+    let uri_str = format!(
+        "{}/api/public/unstable/dashboard-widgets",
+        configuration.base_path
+    );
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_query_page {
+        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidgetList`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidgetList`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<UnstableDashboardWidgetsListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
+    }
+}
+
+/// Update a dashboard widget.  All fields are optional; at least one field is required. Changing `chartType` without sending `chartConfig` resets the config to the new chart type's defaults. When `chartConfig.type` is given it must match the widget's (possibly updated) `chartType`.  `view` cannot be changed to the legacy `traces` value. Existing `traces` widgets may be updated on other fields.
+#[bon::builder]
+pub async fn unstable_dashboard_widgets_update(
+    configuration: &configuration::Configuration,
+    widget_id: &str,
+    unstable_update_dashboard_widget_request: models::UnstableUpdateDashboardWidgetRequest,
+) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_path_widget_id = widget_id;
+    let p_body_unstable_update_dashboard_widget_request = unstable_update_dashboard_widget_request;
+
+    let uri_str = format!(
+        "{}/api/public/unstable/dashboard-widgets/{widgetId}",
+        configuration.base_path,
+        widgetId = crate::apis::urlencode(p_path_widget_id)
+    );
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::PATCH, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref auth_conf) = configuration.basic_auth {
+        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+    };
+    req_builder = req_builder.json(&p_body_unstable_update_dashboard_widget_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<UnstableDashboardWidgetsUpdateError> =
             serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,

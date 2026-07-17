@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableDashboardWidget {
+pub struct UnstableDashboard {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
@@ -23,46 +23,31 @@ pub struct UnstableDashboardWidget {
     pub name: String,
     #[serde(rename = "description")]
     pub description: String,
-    #[serde(rename = "view")]
-    pub view: models::UnstableDashboardWidgetViewWithLegacy,
-    #[serde(rename = "dimensions")]
-    pub dimensions: Vec<models::UnstableDashboardWidgetDimension>,
-    #[serde(rename = "metrics")]
-    pub metrics: Vec<models::UnstableDashboardWidgetMetric>,
+    #[serde(rename = "definition")]
+    pub definition: Box<models::UnstableDashboardDefinition>,
+    /// Dashboard-level filters applied to all widgets on the dashboard.
     #[serde(rename = "filters")]
     pub filters: Vec<models::UnstableDashboardWidgetFilter>,
-    #[serde(rename = "chartType")]
-    pub chart_type: models::UnstableDashboardWidgetChartType,
-    #[serde(rename = "chartConfig")]
-    pub chart_config: Box<models::UnstableDashboardWidgetChartConfig>,
 }
 
-impl UnstableDashboardWidget {
+impl UnstableDashboard {
     pub fn new(
         id: String,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         name: String,
         description: String,
-        view: models::UnstableDashboardWidgetViewWithLegacy,
-        dimensions: Vec<models::UnstableDashboardWidgetDimension>,
-        metrics: Vec<models::UnstableDashboardWidgetMetric>,
+        definition: models::UnstableDashboardDefinition,
         filters: Vec<models::UnstableDashboardWidgetFilter>,
-        chart_type: models::UnstableDashboardWidgetChartType,
-        chart_config: models::UnstableDashboardWidgetChartConfig,
-    ) -> UnstableDashboardWidget {
-        UnstableDashboardWidget {
+    ) -> UnstableDashboard {
+        UnstableDashboard {
             id,
             created_at,
             updated_at,
             name,
             description,
-            view,
-            dimensions,
-            metrics,
+            definition: Box::new(definition),
             filters,
-            chart_type,
-            chart_config: Box::new(chart_config),
         }
     }
 }
