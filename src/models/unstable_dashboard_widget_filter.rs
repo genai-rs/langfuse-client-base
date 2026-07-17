@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableDashboardWidgetFilter : A dashboard widget filter in Langfuse filter-state shape.  Filter shapes depend on `type`, for example string filters use a string `value`, option filters use a list of strings, and object filters include `key`.
+/// UnstableDashboardWidgetFilter : A filter in Langfuse filter-state shape. The `value` shape and the allowed operators depend on `type`:  | `type` | `value` | operators | |---|---|---| | `string` | string | `=`, `contains`, `does not contain`, `starts with`, `ends with` | | `number` | number | `=`, `>`, `<`, `>=`, `<=` | | `datetime` | ISO datetime string | `>`, `<`, `>=`, `<=` | | `boolean` | boolean | `=`, `<>` | | `null` | `\"\"` | `is null`, `is not null` | | `stringOptions` | list of strings | `any of`, `none of` | | `arrayOptions` | list of strings | `any of`, `none of`, `all of` | | `categoryOptions` | list of strings (requires `key`) | `any of`, `none of` | | `stringObject` | string (requires `key`, e.g. a metadata key) | same as `string` | | `numberObject` | number (requires `key`, e.g. a score name) | same as `number` | | `booleanObject` | boolean (requires `key`) | `=`, `<>` |
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableDashboardWidgetFilter {
     #[serde(rename = "column")]
@@ -37,7 +37,7 @@ pub struct UnstableDashboardWidgetFilter {
 }
 
 impl UnstableDashboardWidgetFilter {
-    /// A dashboard widget filter in Langfuse filter-state shape.  Filter shapes depend on `type`, for example string filters use a string `value`, option filters use a list of strings, and object filters include `key`.
+    /// A filter in Langfuse filter-state shape. The `value` shape and the allowed operators depend on `type`:  | `type` | `value` | operators | |---|---|---| | `string` | string | `=`, `contains`, `does not contain`, `starts with`, `ends with` | | `number` | number | `=`, `>`, `<`, `>=`, `<=` | | `datetime` | ISO datetime string | `>`, `<`, `>=`, `<=` | | `boolean` | boolean | `=`, `<>` | | `null` | `\"\"` | `is null`, `is not null` | | `stringOptions` | list of strings | `any of`, `none of` | | `arrayOptions` | list of strings | `any of`, `none of`, `all of` | | `categoryOptions` | list of strings (requires `key`) | `any of`, `none of` | | `stringObject` | string (requires `key`, e.g. a metadata key) | same as `string` | | `numberObject` | number (requires `key`, e.g. a score name) | same as `number` | | `booleanObject` | boolean (requires `key`) | `=`, `<>` |
     pub fn new(column: String, operator: String, r#type: String) -> UnstableDashboardWidgetFilter {
         UnstableDashboardWidgetFilter {
             column,

@@ -15,8 +15,14 @@ use serde::{Deserialize, Serialize};
 pub struct UnstableCreateDashboardWidgetRequest {
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "description")]
-    pub description: String,
+    /// Defaults to an empty string.
+    #[serde(
+        rename = "description",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub description: Option<Option<String>>,
     #[serde(rename = "view")]
     pub view: models::UnstableDashboardWidgetView,
     #[serde(rename = "dimensions")]
@@ -27,38 +33,28 @@ pub struct UnstableCreateDashboardWidgetRequest {
     pub filters: Vec<models::UnstableDashboardWidgetFilter>,
     #[serde(rename = "chartType")]
     pub chart_type: models::UnstableDashboardWidgetChartType,
-    #[serde(rename = "chartConfig")]
-    pub chart_config: Box<models::UnstableDashboardWidgetChartConfig>,
-    #[serde(
-        rename = "minVersion",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub min_version: Option<Option<i32>>,
+    #[serde(rename = "chartConfig", skip_serializing_if = "Option::is_none")]
+    pub chart_config: Option<Box<models::UnstableDashboardWidgetChartConfigInput>>,
 }
 
 impl UnstableCreateDashboardWidgetRequest {
     pub fn new(
         name: String,
-        description: String,
         view: models::UnstableDashboardWidgetView,
         dimensions: Vec<models::UnstableDashboardWidgetDimension>,
         metrics: Vec<models::UnstableDashboardWidgetMetric>,
         filters: Vec<models::UnstableDashboardWidgetFilter>,
         chart_type: models::UnstableDashboardWidgetChartType,
-        chart_config: models::UnstableDashboardWidgetChartConfig,
     ) -> UnstableCreateDashboardWidgetRequest {
         UnstableCreateDashboardWidgetRequest {
             name,
-            description,
+            description: None,
             view,
             dimensions,
             metrics,
             filters,
             chart_type,
-            chart_config: Box::new(chart_config),
-            min_version: None,
+            chart_config: None,
         }
     }
 }
