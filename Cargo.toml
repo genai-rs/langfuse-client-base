@@ -32,7 +32,7 @@ reqwest-middleware = { version = "^0.5.2", features = ["json", "multipart", "que
 chrono = { version = "^0.4.45",  features = ["serde"] }
 
 [dev-dependencies]
-tokio = { version = "1.52.3", features = ["full"] }
+tokio = { version = "1.53.0", features = ["full"] }
 
 [features]
 default = ["rustls"]
