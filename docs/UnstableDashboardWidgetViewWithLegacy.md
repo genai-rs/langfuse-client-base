@@ -6,6 +6,7 @@
 |---- | -----|
 | Observations | observations |
 | ScoresNumeric | scores-numeric |
+| ScoresBoolean | scores-boolean |
 | ScoresCategorical | scores-categorical |
 | Traces | traces |
 

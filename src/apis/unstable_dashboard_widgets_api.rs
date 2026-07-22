@@ -84,7 +84,7 @@ pub enum UnstableDashboardWidgetsUpdateError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create a dashboard widget (a standalone chart definition you place on any dashboard).  This endpoint creates the widget only; place it on a dashboard via `POST /dashboards/{dashboardId}/placements`.  Supported views are `observations`, `scores-numeric`, and `scores-categorical`. The legacy `traces` view is not supported by this unstable API. Widgets are created as v2 internally.  `chartConfig` is optional and defaults to the plain config for `chartType`; when `chartConfig.type` is given it must match `chartType`.  Unstable API note: - This surface may evolve while dashboard/widget APIs are being finalized.
+/// Create a dashboard widget (a standalone chart definition you place on any dashboard).  This endpoint creates the widget only; place it on a dashboard via `POST /dashboards/{dashboardId}/placements`.  Supported views are `observations`, `scores-numeric`, `scores-boolean`, and `scores-categorical`. The legacy `traces` view is not supported by this unstable API. Widgets are created as v2 internally.  `chartConfig` is optional and defaults to the plain config for `chartType`; when `chartConfig.type` is given it must match `chartType`.  Unstable API note: - This surface may evolve while dashboard/widget APIs are being finalized.
 #[bon::builder]
 pub async fn unstable_dashboard_widgets_create(
     configuration: &configuration::Configuration,

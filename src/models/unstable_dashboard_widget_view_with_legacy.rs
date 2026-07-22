@@ -19,6 +19,8 @@ pub enum UnstableDashboardWidgetViewWithLegacy {
     Observations,
     #[serde(rename = "scores-numeric")]
     ScoresNumeric,
+    #[serde(rename = "scores-boolean")]
+    ScoresBoolean,
     #[serde(rename = "scores-categorical")]
     ScoresCategorical,
     #[serde(rename = "traces")]
@@ -30,6 +32,7 @@ impl std::fmt::Display for UnstableDashboardWidgetViewWithLegacy {
         match self {
             Self::Observations => write!(f, "observations"),
             Self::ScoresNumeric => write!(f, "scores-numeric"),
+            Self::ScoresBoolean => write!(f, "scores-boolean"),
             Self::ScoresCategorical => write!(f, "scores-categorical"),
             Self::Traces => write!(f, "traces"),
         }
