@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.13.1...v0.14.0) - 2026-07-24
+
+### Fixed
+
+- *(generate)* strip OpenAPI 3.1 const keyword during normalization
+
+### Other
+
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update Rust crate tokio to 1.53.0
+- *(deps)* Update rust patch updates
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update openapitools/openapi-generator-cli Docker tag to v7.23.0
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update actions/cache action to v6
+- *(deps)* Update rust patch updates to 3.9.3
+- *(deps)* Update github-actions to v7
+- *(deps)* Update rust patch updates to 3.9.2
+- *(deps)* Update rust patch updates to ^0.4.45
+- *(deps)* Update rust minor updates to ^3.21.0
+- update generated client from latest OpenAPI spec
+- *(deps)* Update Rust crate reqwest to ^0.13.4
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update rust patch updates
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+
 ## [0.13.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.13.0...v0.13.1) - 2026-05-19
 
 ### Other
