@@ -129,6 +129,7 @@ pub mod dataset_items_api;
 pub mod dataset_run_items_api;
 pub mod datasets_api;
 pub mod experiments_api;
+pub mod feedback_api;
 pub mod health_api;
 pub mod ingestion_api;
 pub mod legacy_metrics_v1_api;
