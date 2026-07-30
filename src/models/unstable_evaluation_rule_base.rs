@@ -11,8 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// UnstableEvaluationRuleBase : Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each evaluator variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableEvaluationRule {
+pub struct UnstableEvaluationRuleBase {
     /// Stable evaluation rule identifier.
     #[serde(rename = "id")]
     pub id: String,
@@ -41,17 +42,10 @@ pub struct UnstableEvaluationRule {
     /// Timestamp when the evaluation rule was last updated.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
-    #[serde(rename = "target")]
-    pub target: models::UnstableEvaluationRuleTarget,
-    /// List of filter conditions used to decide whether a target should be evaluated.
-    #[serde(rename = "filter")]
-    pub filter: Vec<models::UnstableEvaluationRuleFilter>,
-    /// Variable mappings used to populate evaluator runtime variables from the live target object.
-    #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
 }
 
-impl UnstableEvaluationRule {
+impl UnstableEvaluationRuleBase {
+    /// Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each evaluator variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
     pub fn new(
         id: String,
         name: String,
@@ -63,11 +57,8 @@ impl UnstableEvaluationRule {
         sampling: f64,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
-        target: models::UnstableEvaluationRuleTarget,
-        filter: Vec<models::UnstableEvaluationRuleFilter>,
-        mapping: Vec<models::UnstableEvaluationRuleMapping>,
-    ) -> UnstableEvaluationRule {
-        UnstableEvaluationRule {
+    ) -> UnstableEvaluationRuleBase {
+        UnstableEvaluationRuleBase {
             id,
             name,
             evaluator: Box::new(evaluator),
@@ -78,9 +69,6 @@ impl UnstableEvaluationRule {
             sampling,
             created_at,
             updated_at,
-            target,
-            filter,
-            mapping,
         }
     }
 }

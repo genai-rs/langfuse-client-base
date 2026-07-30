@@ -16,12 +16,17 @@ pub struct LegacyMetricsResponse {
     /// The metrics data. Each item in the list contains the metric values and dimensions requested in the query. Format varies based on the query parameters. Histograms will return an array with [lower, upper, height] tuples.
     #[serde(rename = "data")]
     pub data: Vec<std::collections::HashMap<String, serde_json::Value>>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl LegacyMetricsResponse {
     pub fn new(
         data: Vec<std::collections::HashMap<String, serde_json::Value>>,
     ) -> LegacyMetricsResponse {
-        LegacyMetricsResponse { data }
+        LegacyMetricsResponse {
+            data,
+            _deprecation: None,
+        }
     }
 }

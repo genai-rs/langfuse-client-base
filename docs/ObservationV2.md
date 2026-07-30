@@ -9,8 +9,9 @@ Name | Type | Description | Notes
 **start_time** | **chrono::DateTime<chrono::FixedOffset>** | The start time of the observation | 
 **end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The end time of the observation | 
 **project_id** | **String** | The project ID this observation belongs to | 
-**parent_observation_id** | Option<**String**> | The parent observation ID | 
+**parent_observation_id** | Option<**String**> | The physical parent observation ID, if present. Observations marked as app roots by the SDK may retain a non-null parent ID. | 
 **r#type** | **String** | The type of the observation (e.g. GENERATION, SPAN, EVENT) | 
+**is_root_observation** | Option<**bool**> | Whether this observation is a logical root. This is true for observations without a physical parent and observations marked as app roots by the SDK. | [optional]
 **name** | Option<**String**> | The name of the observation | [optional]
 **level** | Option<[**models::ObservationLevel**](ObservationLevel.md)> |  | [optional]
 **status_message** | Option<**String**> | The status message of the observation | [optional]

@@ -4,9 +4,40 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**scores_create**](ScoresApi.md#scores_create) | **POST** /api/public/scores | 
 [**scores_get_by_id**](ScoresApi.md#scores_get_by_id) | **GET** /api/public/v2/scores/{scoreId} | 
 [**scores_get_many**](ScoresApi.md#scores_get_many) | **GET** /api/public/v2/scores | 
 
+
+
+## scores_create
+
+> models::CreateScoreResponse scores_create(create_score_request)
+
+
+Create a score (supports trace, observation, session, and dataset run scores)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**create_score_request** | [**CreateScoreRequest**](CreateScoreRequest.md) |  | [required] |
+
+### Return type
+
+[**models::CreateScoreResponse**](CreateScoreResponse.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## scores_get_by_id

@@ -42,7 +42,7 @@ pub enum LegacyObservationsV1GetManyError {
 pub async fn legacy_observations_v1_get(
     configuration: &configuration::Configuration,
     observation_id: &str,
-) -> Result<models::ObservationsView, Error<LegacyObservationsV1GetError>> {
+) -> Result<models::ObservationsViewSingle, Error<LegacyObservationsV1GetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_observation_id = observation_id;
 
@@ -75,8 +75,8 @@ pub async fn legacy_observations_v1_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsView`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsView`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsViewSingle`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsViewSingle`")))),
         }
     } else {
         let content = resp.text().await?;

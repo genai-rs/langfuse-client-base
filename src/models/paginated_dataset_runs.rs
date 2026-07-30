@@ -17,6 +17,8 @@ pub struct PaginatedDatasetRuns {
     pub data: Vec<models::DatasetRun>,
     #[serde(rename = "meta")]
     pub meta: Box<models::UtilsMetaResponse>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl PaginatedDatasetRuns {
@@ -27,6 +29,7 @@ impl PaginatedDatasetRuns {
         PaginatedDatasetRuns {
             data,
             meta: Box::new(meta),
+            _deprecation: None,
         }
     }
 }

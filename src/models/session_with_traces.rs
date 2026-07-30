@@ -24,6 +24,8 @@ pub struct SessionWithTraces {
     pub environment: String,
     #[serde(rename = "traces")]
     pub traces: Vec<models::Trace>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl SessionWithTraces {
@@ -40,6 +42,7 @@ impl SessionWithTraces {
             project_id,
             environment,
             traces,
+            _deprecation: None,
         }
     }
 }

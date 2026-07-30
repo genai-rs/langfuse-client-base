@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **total_cost** | Option<**f64**> | Cost of trace in USD | [optional]
 **observations** | [**Vec<models::ObservationsView>**](ObservationsView.md) | List of observations | 
 **scores** | [**Vec<models::ScoreV1>**](ScoreV1.md) | List of scores | 
+**_deprecation** | Option<[**models::Deprecation**](Deprecation.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

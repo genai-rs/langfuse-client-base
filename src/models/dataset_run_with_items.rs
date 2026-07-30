@@ -39,6 +39,8 @@ pub struct DatasetRunWithItems {
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "datasetRunItems")]
     pub dataset_run_items: Vec<models::DatasetRunItem>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl DatasetRunWithItems {
@@ -63,6 +65,7 @@ impl DatasetRunWithItems {
             created_at,
             updated_at,
             dataset_run_items,
+            _deprecation: None,
         }
     }
 }

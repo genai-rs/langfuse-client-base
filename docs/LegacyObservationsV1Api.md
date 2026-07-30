@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## legacy_observations_v1_get
 
-> models::ObservationsView legacy_observations_v1_get(observation_id)
+> models::ObservationsViewSingle legacy_observations_v1_get(observation_id)
 
 
 Get a observation
@@ -25,7 +25,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::ObservationsView**](ObservationsView.md)
+[**models::ObservationsViewSingle**](ObservationsViewSingle.md)
 
 ### Authorization
 
