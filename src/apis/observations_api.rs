@@ -25,7 +25,7 @@ pub enum ObservationsGetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata (truncated to 200 chars by default, use `expandMetadata` to get full values) - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost, usagePricingTierName - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken - `trace_context` - tags, release, traceName  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
+/// Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId, isRootObservation - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata (truncated to 200 chars by default, use `expandMetadata` to get full values) - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost, usagePricingTierName - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken - `trace_context` - tags, release, traceName  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
 #[bon::builder]
 pub async fn observations_get_many(
     configuration: &configuration::Configuration,
@@ -40,6 +40,7 @@ pub async fn observations_get_many(
     trace_id: Option<&str>,
     level: Option<models::ObservationLevel>,
     parent_observation_id: Option<&str>,
+    is_root_observation: Option<bool>,
     environment: Option<Vec<String>>,
     from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
@@ -58,6 +59,7 @@ pub async fn observations_get_many(
     let p_query_trace_id = trace_id;
     let p_query_level = level;
     let p_query_parent_observation_id = parent_observation_id;
+    let p_query_is_root_observation = is_root_observation;
     let p_query_environment = environment;
     let p_query_from_start_time = from_start_time;
     let p_query_to_start_time = to_start_time;
@@ -99,6 +101,9 @@ pub async fn observations_get_many(
     }
     if let Some(ref param_value) = p_query_parent_observation_id {
         req_builder = req_builder.query(&[("parentObservationId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_is_root_observation {
+        req_builder = req_builder.query(&[("isRootObservation", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_environment {
         req_builder = match "multi" {

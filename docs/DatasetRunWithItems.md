@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | The date and time when the dataset run was created | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** | The date and time when the dataset run was last updated | 
 **dataset_run_items** | [**Vec<models::DatasetRunItem>**](DatasetRunItem.md) |  | 
+**_deprecation** | Option<[**models::Deprecation**](Deprecation.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | **Vec<std::collections::HashMap<String, serde_json::Value>>** | The metrics data. Each item in the list contains the metric values and dimensions requested in the query. Format varies based on the query parameters. Histograms will return an array with [lower, upper, height] tuples. | 
+**_deprecation** | Option<[**models::Deprecation**](Deprecation.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

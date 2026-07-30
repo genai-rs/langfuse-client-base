@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableEvaluationRule {
+pub struct UnstableLegacyEvaluationRule {
     /// Stable evaluation rule identifier.
     #[serde(rename = "id")]
     pub id: String,
@@ -42,16 +42,22 @@ pub struct UnstableEvaluationRule {
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "target")]
-    pub target: models::UnstableEvaluationRuleTarget,
-    /// List of filter conditions used to decide whether a target should be evaluated.
+    pub target: models::UnstableLegacyEvaluationRuleTarget,
+    /// Delay in milliseconds before the legacy evaluation job runs.
+    #[serde(rename = "delay")]
+    pub delay: i32,
+    /// Whether the legacy rule evaluates newly ingested data, existing data, or both.
+    #[serde(rename = "timeScope")]
+    pub time_scope: Vec<models::UnstableEvaluationRuleTimeScope>,
+    /// Stored filters used by the legacy trace or dataset rule.
     #[serde(rename = "filter")]
     pub filter: Vec<models::UnstableEvaluationRuleFilter>,
-    /// Variable mappings used to populate evaluator runtime variables from the live target object.
+    /// Stored variable mappings, including the trace, dataset item, or named observation selected for each variable.
     #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
+    pub mapping: Vec<models::UnstableLegacyEvaluationRuleMapping>,
 }
 
-impl UnstableEvaluationRule {
+impl UnstableLegacyEvaluationRule {
     pub fn new(
         id: String,
         name: String,
@@ -63,11 +69,13 @@ impl UnstableEvaluationRule {
         sampling: f64,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
-        target: models::UnstableEvaluationRuleTarget,
+        target: models::UnstableLegacyEvaluationRuleTarget,
+        delay: i32,
+        time_scope: Vec<models::UnstableEvaluationRuleTimeScope>,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
-        mapping: Vec<models::UnstableEvaluationRuleMapping>,
-    ) -> UnstableEvaluationRule {
-        UnstableEvaluationRule {
+        mapping: Vec<models::UnstableLegacyEvaluationRuleMapping>,
+    ) -> UnstableLegacyEvaluationRule {
+        UnstableLegacyEvaluationRule {
             id,
             name,
             evaluator: Box::new(evaluator),
@@ -79,6 +87,8 @@ impl UnstableEvaluationRule {
             created_at,
             updated_at,
             target,
+            delay,
+            time_scope,
             filter,
             mapping,
         }

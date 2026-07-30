@@ -74,10 +74,10 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_evaluation_rules_get
 
-> models::UnstableEvaluationRule unstable_evaluation_rules_get(evaluation_rule_id)
+> models::UnstableReadableEvaluationRule unstable_evaluation_rules_get(evaluation_rule_id)
 
 
-Get one evaluation rule by its identifier.  Use this endpoint to inspect the current evaluator, target, mapping, filters, and effective runtime status.
+Get one evaluation rule by its identifier.  Use this endpoint to inspect the current evaluator, target, mapping, filters, execution timing, and effective runtime status. Legacy `trace` and `dataset` rules are returned for migration and are read-only through this API.
 
 ### Parameters
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableEvaluationRule**](unstableEvaluationRule.md)
+[**models::UnstableReadableEvaluationRule**](unstableReadableEvaluationRule.md)
 
 ### Authorization
 
@@ -107,7 +107,7 @@ Name | Type | Description  | Required | Notes
 > models::UnstableEvaluationRules unstable_evaluation_rules_list(page, limit)
 
 
-List evaluation rules in the authenticated project.  Each item describes one live evaluation rule and its effective runtime status.
+List evaluation rules in the authenticated project.  This includes legacy `trace` and `dataset` rules so they can be inspected and migrated to v4 rules. Legacy rules are read-only through this API; create, update, and delete continue to support only `observation` and `experiment` rules.
 
 ### Parameters
 

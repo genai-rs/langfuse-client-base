@@ -1,5 +1,5 @@
 /*
- * langfuse
+ * server
  *
  * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
  *
@@ -92,6 +92,8 @@ pub struct CreateScoreRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub config_id: Option<Option<String>>,
+    #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
+    pub source: Option<models::CreateScoreSource>,
 }
 
 impl CreateScoreRequest {
@@ -110,6 +112,7 @@ impl CreateScoreRequest {
             queue_id: None,
             data_type: None,
             config_id: None,
+            source: None,
         }
     }
 }

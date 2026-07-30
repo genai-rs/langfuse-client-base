@@ -197,12 +197,12 @@ pub async fn unstable_evaluation_rules_delete(
     }
 }
 
-/// Get one evaluation rule by its identifier.  Use this endpoint to inspect the current evaluator, target, mapping, filters, and effective runtime status.
+/// Get one evaluation rule by its identifier.  Use this endpoint to inspect the current evaluator, target, mapping, filters, execution timing, and effective runtime status. Legacy `trace` and `dataset` rules are returned for migration and are read-only through this API.
 #[bon::builder]
 pub async fn unstable_evaluation_rules_get(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
-) -> Result<models::UnstableEvaluationRule, Error<UnstableEvaluationRulesGetError>> {
+) -> Result<models::UnstableReadableEvaluationRule, Error<UnstableEvaluationRulesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
 
@@ -235,8 +235,8 @@ pub async fn unstable_evaluation_rules_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableEvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableEvaluationRule`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableReadableEvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableReadableEvaluationRule`")))),
         }
     } else {
         let content = resp.text().await?;
@@ -249,7 +249,7 @@ pub async fn unstable_evaluation_rules_get(
     }
 }
 
-/// List evaluation rules in the authenticated project.  Each item describes one live evaluation rule and its effective runtime status.
+/// List evaluation rules in the authenticated project.  This includes legacy `trace` and `dataset` rules so they can be inspected and migrated to v4 rules. Legacy rules are read-only through this API; create, update, and delete continue to support only `observation` and `experiment` rules.
 #[bon::builder]
 pub async fn unstable_evaluation_rules_list(
     configuration: &configuration::Configuration,

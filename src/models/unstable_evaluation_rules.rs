@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct UnstableEvaluationRules {
     /// Evaluation rules in the current page.
     #[serde(rename = "data")]
-    pub data: Vec<models::UnstableEvaluationRule>,
+    pub data: Vec<models::UnstableReadableEvaluationRule>,
     #[serde(rename = "meta")]
     pub meta: Box<models::UtilsMetaResponse>,
 }
@@ -24,7 +24,7 @@ pub struct UnstableEvaluationRules {
 impl UnstableEvaluationRules {
     /// Paginated list of evaluation rules.
     pub fn new(
-        data: Vec<models::UnstableEvaluationRule>,
+        data: Vec<models::UnstableReadableEvaluationRule>,
         meta: models::UtilsMetaResponse,
     ) -> UnstableEvaluationRules {
         UnstableEvaluationRules {

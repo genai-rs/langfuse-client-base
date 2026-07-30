@@ -92,6 +92,8 @@ pub struct TraceWithFullDetails {
     /// List of scores
     #[serde(rename = "scores")]
     pub scores: Vec<models::ScoreV1>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl TraceWithFullDetails {
@@ -129,6 +131,7 @@ impl TraceWithFullDetails {
             total_cost: None,
             observations,
             scores,
+            _deprecation: None,
         }
     }
 }

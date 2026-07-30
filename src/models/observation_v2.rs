@@ -29,7 +29,7 @@ pub struct ObservationV2 {
     /// The project ID this observation belongs to
     #[serde(rename = "projectId")]
     pub project_id: String,
-    /// The parent observation ID
+    /// The physical parent observation ID, if present. Observations marked as app roots by the SDK may retain a non-null parent ID.
     #[serde(
         rename = "parentObservationId",
         deserialize_with = "Option::deserialize"
@@ -38,6 +38,14 @@ pub struct ObservationV2 {
     /// The type of the observation (e.g. GENERATION, SPAN, EVENT)
     #[serde(rename = "type")]
     pub r#type: String,
+    /// Whether this observation is a logical root. This is true for observations without a physical parent and observations marked as app roots by the SDK.
+    #[serde(
+        rename = "isRootObservation",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub is_root_observation: Option<Option<bool>>,
     /// The name of the observation
     #[serde(
         rename = "name",
@@ -309,6 +317,7 @@ impl ObservationV2 {
             project_id,
             parent_observation_id,
             r#type,
+            is_root_observation: None,
             name: None,
             level: None,
             status_message: None,

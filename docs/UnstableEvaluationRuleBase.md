@@ -1,4 +1,4 @@
-# UnstableEvaluationRule
+# UnstableEvaluationRuleBase
 
 ## Properties
 
@@ -14,9 +14,6 @@ Name | Type | Description | Notes
 **sampling** | **f64** | Fraction of matching target objects that should be evaluated.  Must be greater than `0` and less than or equal to `1`. - `1` means evaluate every matching target. - `0.25` means evaluate approximately 25% of matching targets. | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was created. | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was last updated. | 
-**target** | [**models::UnstableEvaluationRuleTarget**](UnstableEvaluationRuleTarget.md) |  | 
-**filter** | [**Vec<models::UnstableEvaluationRuleFilter>**](UnstableEvaluationRuleFilter.md) | List of filter conditions used to decide whether a target should be evaluated. | 
-**mapping** | [**Vec<models::UnstableEvaluationRuleMapping>**](UnstableEvaluationRuleMapping.md) | Variable mappings used to populate evaluator runtime variables from the live target object. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
