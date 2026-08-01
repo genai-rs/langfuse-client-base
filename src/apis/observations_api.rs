@@ -36,6 +36,7 @@ pub async fn observations_get_many(
     parse_io_as_json: Option<bool>,
     name: Option<&str>,
     user_id: Option<&str>,
+    session_id: Option<&str>,
     r#type: Option<&str>,
     trace_id: Option<&str>,
     level: Option<models::ObservationLevel>,
@@ -55,6 +56,7 @@ pub async fn observations_get_many(
     let p_query_parse_io_as_json = parse_io_as_json;
     let p_query_name = name;
     let p_query_user_id = user_id;
+    let p_query_session_id = session_id;
     let p_query_type = r#type;
     let p_query_trace_id = trace_id;
     let p_query_level = level;
@@ -89,6 +91,9 @@ pub async fn observations_get_many(
     }
     if let Some(ref param_value) = p_query_user_id {
         req_builder = req_builder.query(&[("userId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_session_id {
+        req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_type {
         req_builder = req_builder.query(&[("type", &param_value.to_string())]);

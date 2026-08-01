@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## observations_get_many
 
-> models::ObservationsV2Response observations_get_many(fields, expand_metadata, limit, cursor, parse_io_as_json, name, user_id, r#type, trace_id, level, parent_observation_id, is_root_observation, environment, from_start_time, to_start_time, version, filter)
+> models::ObservationsV2Response observations_get_many(fields, expand_metadata, limit, cursor, parse_io_as_json, name, user_id, session_id, r#type, trace_id, level, parent_observation_id, is_root_observation, environment, from_start_time, to_start_time, version, filter)
 
 
 Get a list of observations with cursor-based pagination and flexible field selection.  ## Cursor-based Pagination This endpoint uses cursor-based pagination for efficient traversal of large datasets. The cursor is returned in the response metadata and should be passed in subsequent requests to retrieve the next page of results.  ## Field Selection Use the `fields` parameter to control which observation fields are returned: - `core` - Always included: id, traceId, startTime, endTime, projectId, parentObservationId, type - `basic` - name, level, statusMessage, version, environment, bookmarked, public, userId, sessionId, isRootObservation - `time` - completionStartTime, createdAt, updatedAt - `io` - input, output - `metadata` - metadata (truncated to 200 chars by default, use `expandMetadata` to get full values) - `model` - providedModelName, internalModelId, modelParameters - `usage` - usageDetails, costDetails, totalCost, usagePricingTierName - `prompt` - promptId, promptName, promptVersion - `metrics` - latency, timeToFirstToken - `trace_context` - tags, release, traceName  If not specified, `core` and `basic` field groups are returned.  ## Filters Multiple filtering options are available via query parameters or the structured `filter` parameter. When using the `filter` parameter, it takes precedence over individual query parameter filters.
@@ -27,6 +27,7 @@ Name | Type | Description  | Required | Notes
 **parse_io_as_json** | Option<**bool**> | **Deprecated.** Setting this to `true` will return a 400 error. Input/output fields are always returned as raw strings. Remove this parameter or set it to `false`. |  |
 **name** | Option<**String**> |  |  |
 **user_id** | Option<**String**> |  |  |
+**session_id** | Option<**String**> | Filter by session ID. |  |
 **r#type** | Option<**String**> | Filter by observation type (e.g., \"GENERATION\", \"SPAN\", \"EVENT\", \"AGENT\", \"TOOL\", \"CHAIN\", \"RETRIEVER\", \"EVALUATOR\", \"EMBEDDING\", \"GUARDRAIL\") |  |
 **trace_id** | Option<**String**> |  |  |
 **level** | Option<[**ObservationLevel**](ObservationLevel.md)> | Optional filter for observations with a specific level (e.g. \"DEBUG\", \"DEFAULT\", \"WARNING\", \"ERROR\"). |  |
