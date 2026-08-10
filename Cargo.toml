@@ -23,7 +23,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 bon = "3.9.3"
 serde = { version = "^1.0.229", features = ["derive"] }
 serde_with = { version = "^3.21.0", default-features = false, features = ["base64", "std", "macros"] }
-serde_json = "^1.0.150"
+serde_json = "^1.0.151"
 serde_repr = "^0.1.21"
 url = "^2.5.8"
 reqwest = { version = "^0.13.4", default-features = false, features = ["json", "multipart", "query"] }
@@ -32,7 +32,7 @@ reqwest-middleware = { version = "^0.5.2", features = ["json", "multipart", "que
 chrono = { version = "^0.4.45",  features = ["serde"] }
 
 [dev-dependencies]
-tokio = { version = "1.53.0", features = ["full"] }
+tokio = { version = "1.53.1", features = ["full"] }
 
 [features]
 default = ["rustls"]
