@@ -25,7 +25,7 @@ pub struct CreateCommentRequest {
     /// The content of the comment. May include markdown. Currently limited to 5000 characters.
     #[serde(rename = "content")]
     pub content: String,
-    /// The id of the user who created the comment.
+    /// The id of the user who created the comment. Must be a member of the organization that owns the project, otherwise an error will be thrown.
     #[serde(
         rename = "authorUserId",
         default,
