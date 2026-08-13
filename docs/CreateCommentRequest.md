@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **object_type** | **String** | The type of the object to attach the comment to (trace, observation, session, prompt). | 
 **object_id** | **String** | The id of the object to attach the comment to. If this does not reference a valid existing object, an error will be thrown. | 
 **content** | **String** | The content of the comment. May include markdown. Currently limited to 5000 characters. | 
-**author_user_id** | Option<**String**> | The id of the user who created the comment. | [optional]
+**author_user_id** | Option<**String**> | The id of the user who created the comment. Must be a member of the organization that owns the project, otherwise an error will be thrown. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
