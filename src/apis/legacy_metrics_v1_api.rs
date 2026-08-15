@@ -25,7 +25,8 @@ pub enum LegacyMetricsV1MetricsError {
     UnknownValue(serde_json::Value),
 }
 
-/// Get metrics from the Langfuse project using a query object.  Consider using the [v2 metrics endpoint](/api-reference#tag/metricsv2/GET/api/public/v2/metrics) for better performance.  For more details, see the [Metrics API documentation](https://langfuse.com/docs/metrics/features/metrics-api).
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. Use `GET /api/public/v2/metrics?query=<urlencoded json query>` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get metrics from the Langfuse project using a query object.  Consider using the [v2 metrics endpoint](/api-reference#tag/metricsv2/GET/api/public/v2/metrics) for better performance.  For more details, see the [Metrics API documentation](https://langfuse.com/docs/metrics/features/metrics-api).
+#[deprecated]
 #[bon::builder]
 pub async fn legacy_metrics_v1_metrics(
     configuration: &configuration::Configuration,

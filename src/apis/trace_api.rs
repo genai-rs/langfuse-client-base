@@ -166,7 +166,8 @@ pub async fn trace_delete_multiple(
     }
 }
 
-/// Get a specific trace
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a specific trace
+#[deprecated]
 #[bon::builder]
 pub async fn trace_get(
     configuration: &configuration::Configuration,
@@ -223,7 +224,8 @@ pub async fn trace_get(
     }
 }
 
-/// Get list of traces
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get list of traces
+#[deprecated]
 #[bon::builder]
 pub async fn trace_list(
     configuration: &configuration::Configuration,

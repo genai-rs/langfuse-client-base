@@ -136,7 +136,8 @@ pub async fn datasets_create(
     }
 }
 
-/// Delete a dataset run and all its run items. This action is irreversible.
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
+#[deprecated]
 #[bon::builder]
 pub async fn datasets_delete_run(
     configuration: &configuration::Configuration,
@@ -245,7 +246,8 @@ pub async fn datasets_get(
     }
 }
 
-/// Get a dataset run and its items
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
+#[deprecated]
 #[bon::builder]
 pub async fn datasets_get_run(
     configuration: &configuration::Configuration,
@@ -300,7 +302,8 @@ pub async fn datasets_get_run(
     }
 }
 
-/// Get dataset runs
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
+#[deprecated]
 #[bon::builder]
 pub async fn datasets_get_runs(
     configuration: &configuration::Configuration,

@@ -37,7 +37,8 @@ pub enum DatasetRunItemsListError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create a dataset run item
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, create experiment data via the SDK experiment runner or the OpenTelemetry endpoint at POST /api/public/otel/v1/traces. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Create a dataset run item
+#[deprecated]
 #[bon::builder]
 pub async fn dataset_run_items_create(
     configuration: &configuration::Configuration,
@@ -88,7 +89,8 @@ pub async fn dataset_run_items_create(
     }
 }
 
-/// List dataset run items
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset run items are replaced by experiment items; use `GET /api/public/experiment-items?fromStartTime=<from>&toStartTime=<to>` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  List dataset run items
+#[deprecated]
 #[bon::builder]
 pub async fn dataset_run_items_list(
     configuration: &configuration::Configuration,
