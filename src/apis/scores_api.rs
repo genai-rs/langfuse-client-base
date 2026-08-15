@@ -100,7 +100,8 @@ pub async fn scores_create(
     }
 }
 
-/// **Deprecated.** Use `GET /api/public/v3/scores` with the `id` filter instead. This endpoint is no longer available on Langfuse v4 and later.  Get a score (supports both trace and session scores)
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint is not available on Langfuse v4 and later and will be removed in a future release. Use `GET /api/public/v3/scores` with the `id` filter instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a score (supports both trace and session scores)
+#[deprecated]
 #[bon::builder]
 pub async fn scores_get_by_id(
     configuration: &configuration::Configuration,
@@ -152,7 +153,8 @@ pub async fn scores_get_by_id(
     }
 }
 
-/// **Deprecated.** Use `GET /api/public/v3/scores` instead. This endpoint is no longer available on Langfuse v4 and later.  Get a list of scores (supports both trace and session scores)
+/// **Deprecated:** Langfuse v3 is deprecated; this endpoint is not available on Langfuse v4 and later and will be removed in a future release. Use `GET /api/public/v3/scores` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of scores (supports both trace and session scores)
+#[deprecated]
 #[bon::builder]
 pub async fn scores_get_many(
     configuration: &configuration::Configuration,

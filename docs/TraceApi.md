@@ -76,7 +76,7 @@ Name | Type | Description  | Required | Notes
 > models::TraceWithFullDetails trace_get(trace_id, fields)
 
 
-Get a specific trace
+**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a specific trace
 
 ### Parameters
 
@@ -107,7 +107,7 @@ Name | Type | Description  | Required | Notes
 > models::Traces trace_list(page, limit, user_id, name, session_id, from_timestamp, to_timestamp, order_by, tags, version, release, environment, fields, filter)
 
 
-Get list of traces
+**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get list of traces
 
 ### Parameters
 
