@@ -48,7 +48,7 @@ Name | Type | Description  | Required | Notes
 > models::DeleteDatasetRunResponse datasets_delete_run(dataset_name, run_name)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
+**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
 
 ### Parameters
 
@@ -109,7 +109,7 @@ Name | Type | Description  | Required | Notes
 > models::DatasetRunWithItems datasets_get_run(dataset_name, run_name)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
+**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
 
 ### Parameters
 
@@ -140,7 +140,7 @@ Name | Type | Description  | Required | Notes
 > models::PaginatedDatasetRuns datasets_get_runs(dataset_name, page, limit)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed in a future release. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
+**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
 
 ### Parameters
 
