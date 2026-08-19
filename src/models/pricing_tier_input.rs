@@ -23,7 +23,7 @@ pub struct PricingTierInput {
     /// Priority for tier matching evaluation. Lower numbers = higher priority (evaluated first).  Must be unique within the model. The default tier must have priority=0. Conditional tiers should use priority 1, 2, 3, etc. based on their specificity.
     #[serde(rename = "priority")]
     pub priority: i32,
-    /// Array of conditions that must ALL be met for this tier to match (AND logic).  The default tier must have an empty array (conditions=[]). Conditional tiers should define one or more conditions that specify when this tier's pricing applies.  Each condition specifies a regex pattern, operator, and threshold value for matching against usage details.
+    /// Array of conditions that must ALL be met for this tier to match (AND logic).  The default tier must have an empty array (conditions=[]). Conditional tiers should define one or more conditions that specify when this tier's pricing applies.  Conditions can compare summed matching usage details to a numeric threshold, or exactly match a top-level model parameter or metadata value.
     #[serde(rename = "conditions")]
     pub conditions: Vec<models::PricingTierCondition>,
     /// Prices (USD) by usage type for this tier. At least one price must be defined.  Common usage types: \"input\", \"output\", \"total\", \"request\", \"image\" Prices are in USD per unit (e.g., per token).  Example: {\"input\": 0.000003, \"output\": 0.000015} represents $3 per million input tokens and $15 per million output tokens.

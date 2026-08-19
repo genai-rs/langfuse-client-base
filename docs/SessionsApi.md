@@ -14,7 +14,7 @@ Method | HTTP request | Description
 > models::SessionWithTraces sessions_get(session_id)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a session.  Please note that `traces` on this endpoint are not paginated. For large sessions or new data extraction workflows, use the v2 observations endpoint with a URL-encoded `sessionId` filter and a bounded time range: `GET /api/public/v2/observations?filter=<sessionId filter>&fromStartTime=<from>&toStartTime=<to>`.
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a session.  Please note that `traces` on this endpoint are not paginated. For large sessions or new data extraction workflows, use the v2 observations endpoint with a URL-encoded `sessionId` filter and a bounded time range: `GET /api/public/v2/observations?filter=<sessionId filter>&fromStartTime=<from>&toStartTime=<to>`.
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Required | Notes
 > models::PaginatedSessions sessions_list(page, limit, from_timestamp, to_timestamp, environment)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get sessions.  This legacy endpoint is not recommended for new data extraction workflows. Use the v2 observations endpoint with a bounded time range and group rows by `sessionId` instead: `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`.
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get sessions.  This legacy endpoint is not recommended for new data extraction workflows. Use the v2 observations endpoint with a bounded time range and group rows by `sessionId` instead: `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`.
 
 ### Parameters
 

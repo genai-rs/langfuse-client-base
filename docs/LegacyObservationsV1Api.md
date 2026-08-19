@@ -14,7 +14,7 @@ Method | HTTP request | Description
 > models::ObservationsViewSingle legacy_observations_v1_get(observation_id)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a observation
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a observation
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Required | Notes
 > models::LegacyObservationsViews legacy_observations_v1_get_many(page, limit, name, user_id, r#type, trace_id, level, parent_observation_id, environment, from_start_time, to_start_time, version, filter)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
 
 ### Parameters
 
