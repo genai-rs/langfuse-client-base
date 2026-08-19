@@ -166,7 +166,7 @@ pub async fn trace_delete_multiple(
     }
 }
 
-/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a specific trace
+/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a specific trace
 #[deprecated]
 #[bon::builder]
 pub async fn trace_get(
@@ -224,7 +224,7 @@ pub async fn trace_get(
     }
 }
 
-/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get list of traces
+/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read span and trace data via `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get list of traces
 #[deprecated]
 #[bon::builder]
 pub async fn trace_list(

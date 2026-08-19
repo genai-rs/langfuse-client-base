@@ -11,35 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// PricingTierCondition : Condition for matching a pricing tier based on usage details. Used to implement tiered pricing models where costs vary based on usage thresholds.  How it works: 1. The regex pattern matches against usage detail keys (e.g., \"input_tokens\", \"input_cached\") 2. Values of all matching keys are summed together 3. The sum is compared against the threshold value using the specified operator 4. All conditions in a tier must be met (AND logic) for the tier to match  Common use cases: - Threshold-based pricing: Match when accumulated usage exceeds a certain amount - Usage-type-specific pricing: Different rates for cached vs non-cached tokens, or input vs output - Volume-based pricing: Different rates based on total request or token count
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct PricingTierCondition {
-    /// Regex pattern to match against usage detail keys. All matching keys' values are summed for threshold comparison.  Examples: - \"^input\" matches \"input\", \"input_tokens\", \"input_cached\", etc. - \"^(input|prompt)\" matches both \"input_tokens\" and \"prompt_tokens\" - \"_cache$\" matches \"input_cache\", \"output_cache\", etc.  The pattern is case-insensitive by default. If no keys match, the sum is treated as zero.
-    #[serde(rename = "usageDetailPattern")]
-    pub usage_detail_pattern: String,
-    #[serde(rename = "operator")]
-    pub operator: models::PricingTierOperator,
-    /// Threshold value for comparison. For token-based pricing, this is typically the token count threshold (e.g., 200000 for a 200K token threshold).
-    #[serde(rename = "value")]
-    pub value: f64,
-    /// Whether the regex pattern matching is case-sensitive. Default is false (case-insensitive matching).
-    #[serde(rename = "caseSensitive")]
-    pub case_sensitive: bool,
+/// PricingTierCondition : Condition for matching a pricing tier against usage details or observation attributes.  Usage-detail conditions treat usageDetailPattern as a regex, sum all matching usage values, and compare the sum to the numeric value. Model-parameter and metadata conditions match an exact top-level key against one or more string values.
+/// Condition for matching a pricing tier against usage details or observation attributes.  Usage-detail conditions treat usageDetailPattern as a regex, sum all matching usage values, and compare the sum to the numeric value. Model-parameter and metadata conditions match an exact top-level key against one or more string values.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PricingTierCondition {
+    PricingTierUsageCondition(Box<models::PricingTierUsageCondition>),
+    PricingTierAttributeCondition(Box<models::PricingTierAttributeCondition>),
 }
 
-impl PricingTierCondition {
-    /// Condition for matching a pricing tier based on usage details. Used to implement tiered pricing models where costs vary based on usage thresholds.  How it works: 1. The regex pattern matches against usage detail keys (e.g., \"input_tokens\", \"input_cached\") 2. Values of all matching keys are summed together 3. The sum is compared against the threshold value using the specified operator 4. All conditions in a tier must be met (AND logic) for the tier to match  Common use cases: - Threshold-based pricing: Match when accumulated usage exceeds a certain amount - Usage-type-specific pricing: Different rates for cached vs non-cached tokens, or input vs output - Volume-based pricing: Different rates based on total request or token count
-    pub fn new(
-        usage_detail_pattern: String,
-        operator: models::PricingTierOperator,
-        value: f64,
-        case_sensitive: bool,
-    ) -> PricingTierCondition {
-        PricingTierCondition {
-            usage_detail_pattern,
-            operator,
-            value,
-            case_sensitive,
-        }
+impl Default for PricingTierCondition {
+    fn default() -> Self {
+        Self::PricingTierUsageCondition(Default::default())
     }
 }

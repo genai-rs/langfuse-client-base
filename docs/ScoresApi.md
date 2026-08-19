@@ -45,7 +45,7 @@ Name | Type | Description  | Required | Notes
 > models::Score scores_get_by_id(score_id)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint is not available on Langfuse v4 and later and will be removed on November 16, 2026. Use `GET /api/public/v3/scores` with the `id` filter instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a score (supports both trace and session scores)
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` with the `id` filter instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a score (supports both trace and session scores)
 
 ### Parameters
 
@@ -75,7 +75,7 @@ Name | Type | Description  | Required | Notes
 > models::GetScoresResponse scores_get_many(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, observation_id, queue_id, data_type, trace_tags, fields, filter)
 
 
-**Deprecated:** Langfuse v3 is deprecated; this endpoint is not available on Langfuse v4 and later and will be removed on November 16, 2026. Use `GET /api/public/v3/scores` instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of scores (supports both trace and session scores)
+**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of scores (supports both trace and session scores)
 
 ### Parameters
 

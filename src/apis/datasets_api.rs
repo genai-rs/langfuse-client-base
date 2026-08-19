@@ -136,7 +136,7 @@ pub async fn datasets_create(
     }
 }
 
-/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
+/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
 #[deprecated]
 #[bon::builder]
 pub async fn datasets_delete_run(
@@ -246,7 +246,7 @@ pub async fn datasets_get(
     }
 }
 
-/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
+/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
 #[deprecated]
 #[bon::builder]
 pub async fn datasets_get_run(
@@ -302,7 +302,7 @@ pub async fn datasets_get_run(
     }
 }
 
-/// **Deprecated:** Langfuse v3 is deprecated; this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
+/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
 #[deprecated]
 #[bon::builder]
 pub async fn datasets_get_runs(
