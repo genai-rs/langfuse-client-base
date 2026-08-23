@@ -41,14 +41,17 @@ pub struct UnstableEvaluationRule {
     /// Timestamp when the evaluation rule was last updated.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    /// Evaluators attached to this rule in deterministic assignment order. A `null` mapping inherits the evaluator version's default mapping.
+    #[serde(rename = "evaluators")]
+    pub evaluators: Vec<models::UnstableEvaluationRuleEvaluatorAssignment>,
     #[serde(rename = "target")]
     pub target: models::UnstableEvaluationRuleTarget,
     /// List of filter conditions used to decide whether a target should be evaluated.
     #[serde(rename = "filter")]
     pub filter: Vec<models::UnstableEvaluationRuleFilter>,
-    /// Variable mappings used to populate evaluator runtime variables from the live target object.
+    /// Deprecated compatibility alias containing the effective mapping for `evaluators[0]`.
     #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
+    pub mapping: Vec<models::UnstableEvaluationRuleReadMapping>,
 }
 
 impl UnstableEvaluationRule {
@@ -63,9 +66,10 @@ impl UnstableEvaluationRule {
         sampling: f64,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
+        evaluators: Vec<models::UnstableEvaluationRuleEvaluatorAssignment>,
         target: models::UnstableEvaluationRuleTarget,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
-        mapping: Vec<models::UnstableEvaluationRuleMapping>,
+        mapping: Vec<models::UnstableEvaluationRuleReadMapping>,
     ) -> UnstableEvaluationRule {
         UnstableEvaluationRule {
             id,
@@ -78,6 +82,7 @@ impl UnstableEvaluationRule {
             sampling,
             created_at,
             updated_at,
+            evaluators,
             target,
             filter,
             mapping,

@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluatorOutputDefinition : Structured output definition to send when creating an evaluator.  Agent guidance: - `dataType` is required. - Do not send `version`; that is an internal storage detail and is not part of the public request contract. - For `NUMERIC` and `BOOLEAN`, provide `reasoning.description` and `score.description`. - For `CATEGORICAL`, also provide `score.categories` and `score.shouldAllowMultipleMatches`.
-/// Structured output definition to send when creating an evaluator.  Agent guidance: - `dataType` is required. - Do not send `version`; that is an internal storage detail and is not part of the public request contract. - For `NUMERIC` and `BOOLEAN`, provide `reasoning.description` and `score.description`. - For `CATEGORICAL`, also provide `score.categories` and `score.shouldAllowMultipleMatches`.
+/// UnstableEvaluatorOutputDefinition : Structured output definition to send when creating an evaluator.  Agent guidance: - `dataType` is required. - Do not send `version`; that is an internal storage detail and is not part of the public request contract. - For `NUMERIC` and `BOOLEAN`, provide `reasoning.description` and `score.description`. - For `NUMERIC`, `score.minValue` and `score.maxValue` optionally define inclusive bounds. If both are set, `minValue` must not exceed `maxValue`. - For `CATEGORICAL`, also provide `score.categories` and `score.shouldAllowMultipleMatches`.
+/// Structured output definition to send when creating an evaluator.  Agent guidance: - `dataType` is required. - Do not send `version`; that is an internal storage detail and is not part of the public request contract. - For `NUMERIC` and `BOOLEAN`, provide `reasoning.description` and `score.description`. - For `NUMERIC`, `score.minValue` and `score.maxValue` optionally define inclusive bounds. If both are set, `minValue` must not exceed `maxValue`. - For `CATEGORICAL`, also provide `score.categories` and `score.shouldAllowMultipleMatches`.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableEvaluatorOutputDefinition {

@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableCreateEvaluationRuleRequest : Request body for creating an evaluation rule.  Checklist for agents and SDK clients: - reference an existing evaluator family by `evaluator.name` and `evaluator.scope` - choose `target=observation` or `target=experiment` - if `target=experiment` and you want a dataset filter, call `GET /api/public/v2/datasets` first and use dataset `id` values in `filter[].value` - for `llm_as_judge`, fetch or inspect the evaluator first and provide a complete variable mapping for every evaluator variable - for `code`, do not send variables or mappings; Langfuse stores the fixed code runtime mapping automatically - optionally narrow execution with `filter` - set `enabled=true` only when you want live execution immediately
-/// Request body for creating an evaluation rule.  Checklist for agents and SDK clients: - reference an existing evaluator family by `evaluator.name` and `evaluator.scope` - choose `target=observation` or `target=experiment` - if `target=experiment` and you want a dataset filter, call `GET /api/public/v2/datasets` first and use dataset `id` values in `filter[].value` - for `llm_as_judge`, fetch or inspect the evaluator first and provide a complete variable mapping for every evaluator variable - for `code`, do not send variables or mappings; Langfuse stores the fixed code runtime mapping automatically - optionally narrow execution with `filter` - set `enabled=true` only when you want live execution immediately
+/// UnstableCreateEvaluationRuleRequest : Request body for creating an evaluation rule.  Checklist for agents and SDK clients: - reference an existing evaluator family by `evaluator.name` and `evaluator.type` - choose `target=observation` or `target=experiment` - if `target=experiment` and you want a dataset filter, call `GET /api/public/v2/datasets` first and use dataset `id` values in `filter[].value` - for `llm_as_judge`, fetch or inspect the evaluator first and provide a complete variable mapping for every evaluator variable - for `code`, do not send variables or mappings; Langfuse stores the fixed code runtime mapping automatically - optionally narrow execution with `filter` - set `enabled=true` only when you want live execution immediately
+/// Request body for creating an evaluation rule.  Checklist for agents and SDK clients: - reference an existing evaluator family by `evaluator.name` and `evaluator.type` - choose `target=observation` or `target=experiment` - if `target=experiment` and you want a dataset filter, call `GET /api/public/v2/datasets` first and use dataset `id` values in `filter[].value` - for `llm_as_judge`, fetch or inspect the evaluator first and provide a complete variable mapping for every evaluator variable - for `code`, do not send variables or mappings; Langfuse stores the fixed code runtime mapping automatically - optionally narrow execution with `filter` - set `enabled=true` only when you want live execution immediately
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableCreateEvaluationRuleRequest {
@@ -20,6 +20,9 @@ pub enum UnstableCreateEvaluationRuleRequest {
         Box<models::UnstableCreateLlmAsJudgeEvaluationRuleRequest>,
     ),
     UnstableCreateCodeEvaluationRuleRequest(Box<models::UnstableCreateCodeEvaluationRuleRequest>),
+    UnstableCreateEvaluationRuleWithEvaluatorsRequest(
+        Box<models::UnstableCreateEvaluationRuleWithEvaluatorsRequest>,
+    ),
 }
 
 impl Default for UnstableCreateEvaluationRuleRequest {

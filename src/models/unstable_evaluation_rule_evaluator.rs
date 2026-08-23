@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleEvaluator : Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name`, `scope`, and `type` identify the evaluator family conceptually.
+/// UnstableEvaluationRuleEvaluator : Resolved evaluator currently used by the evaluation rule.  `id` identifies the evaluator family. Evaluation runs automatically use the latest available evaluator version.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluationRuleEvaluator {
     /// Identifier of the exact evaluator version currently used by the rule.
@@ -20,25 +20,17 @@ pub struct UnstableEvaluationRuleEvaluator {
     /// Evaluator family name.
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "scope")]
-    pub scope: models::UnstableEvaluatorScope,
     #[serde(rename = "type")]
     pub r#type: models::UnstableEvaluatorType,
 }
 
 impl UnstableEvaluationRuleEvaluator {
-    /// Resolved evaluator currently used by the evaluation rule.  `id` is the exact active evaluator version. `name`, `scope`, and `type` identify the evaluator family conceptually.
+    /// Resolved evaluator currently used by the evaluation rule.  `id` identifies the evaluator family. Evaluation runs automatically use the latest available evaluator version.
     pub fn new(
         id: String,
         name: String,
-        scope: models::UnstableEvaluatorScope,
         r#type: models::UnstableEvaluatorType,
     ) -> UnstableEvaluationRuleEvaluator {
-        UnstableEvaluationRuleEvaluator {
-            id,
-            name,
-            scope,
-            r#type,
-        }
+        UnstableEvaluationRuleEvaluator { id, name, r#type }
     }
 }

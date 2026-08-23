@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableCreateEvaluatorRequest : Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
-/// Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules in the same project are then moved to that new latest version automatically. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
+/// UnstableCreateEvaluatorRequest : Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules automatically use the latest evaluator version. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
+/// Request body for creating an evaluator.  If the same `name` already exists in your project, Langfuse creates the next version and returns it. Existing evaluation rules automatically use the latest evaluator version. If `type` is omitted, Langfuse defaults it to `llm_as_judge` for backwards compatibility.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableCreateEvaluatorRequest {

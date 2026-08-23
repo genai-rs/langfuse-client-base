@@ -17,22 +17,13 @@ pub struct UnstableLlmAsJudgeEvaluationRuleEvaluatorReference {
     /// Evaluator family name.
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "scope")]
-    pub scope: models::UnstableEvaluatorScope,
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub r#type: Option<models::UnstableLlmAsJudgeEvaluatorType>,
 }
 
 impl UnstableLlmAsJudgeEvaluationRuleEvaluatorReference {
     /// LLM-as-judge evaluator family reference used when creating an evaluation rule.
-    pub fn new(
-        name: String,
-        scope: models::UnstableEvaluatorScope,
-    ) -> UnstableLlmAsJudgeEvaluationRuleEvaluatorReference {
-        UnstableLlmAsJudgeEvaluationRuleEvaluatorReference {
-            name,
-            scope,
-            r#type: None,
-        }
+    pub fn new(name: String) -> UnstableLlmAsJudgeEvaluationRuleEvaluatorReference {
+        UnstableLlmAsJudgeEvaluationRuleEvaluatorReference { name, r#type: None }
     }
 }

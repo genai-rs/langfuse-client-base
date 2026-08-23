@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 /// UnstableLegacyEvaluationRuleMapping : Maps one evaluator variable to a trace, dataset item, or field on a named observation in a legacy rule.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableLegacyEvaluationRuleMapping {
-    /// Evaluator prompt variable populated by this mapping.
     #[serde(rename = "variable")]
     pub variable: String,
     #[serde(rename = "langfuseObject")]
@@ -22,10 +21,8 @@ pub struct UnstableLegacyEvaluationRuleMapping {
     /// Observation name to match, or `null` when `langfuseObject` is `trace` or `dataset_item`.
     #[serde(rename = "objectName", deserialize_with = "Option::deserialize")]
     pub object_name: Option<String>,
-    /// Stored field selected from the trace, dataset item, or observation.
     #[serde(rename = "source")]
     pub source: String,
-    /// Optional JSONPath selector applied to the selected field.
     #[serde(
         rename = "jsonPath",
         default,
