@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | Option<**String**> | Updated deployment name. | [optional]
+**evaluators** | Option<[**Vec<models::UnstableCreateEvaluationRuleEvaluatorAssignment>**](UnstableCreateEvaluationRuleEvaluatorAssignment.md)> | Full replacement of the rule's evaluator assignments: entries that are not listed are detached.  Mutually exclusive with the deprecated `evaluator` and `mapping` fields. | [optional]
 **evaluator** | Option<[**models::UnstableEvaluationRuleEvaluatorReference**](UnstableEvaluationRuleEvaluatorReference.md)> |  | [optional]
 **target** | Option<[**models::UnstableEvaluationRuleTarget**](UnstableEvaluationRuleTarget.md)> |  | [optional]
 **enabled** | Option<**bool**> | Updated desired enabled state. | [optional]

@@ -1,12 +1,11 @@
-# UnstableEvaluationRuleEvaluator
+# UnstableCreateEvaluationRuleEvaluatorReference
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** | Identifier of the exact evaluator version currently used by the rule. | 
-**name** | **String** | Evaluator family name. | 
-**r#type** | [**models::UnstableEvaluatorType**](UnstableEvaluatorType.md) |  | 
+**name** | **String** |  | 
+**r#type** | Option<[**models::UnstableEvaluatorType**](UnstableEvaluatorType.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

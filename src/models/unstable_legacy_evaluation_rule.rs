@@ -41,6 +41,9 @@ pub struct UnstableLegacyEvaluationRule {
     /// Timestamp when the evaluation rule was last updated.
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    /// Evaluators attached to this rule in deterministic assignment order.
+    #[serde(rename = "evaluators")]
+    pub evaluators: Vec<models::UnstableLegacyEvaluationRuleEvaluatorAssignment>,
     #[serde(rename = "target")]
     pub target: models::UnstableLegacyEvaluationRuleTarget,
     /// Delay in milliseconds before the legacy evaluation job runs.
@@ -69,6 +72,7 @@ impl UnstableLegacyEvaluationRule {
         sampling: f64,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
+        evaluators: Vec<models::UnstableLegacyEvaluationRuleEvaluatorAssignment>,
         target: models::UnstableLegacyEvaluationRuleTarget,
         delay: i32,
         time_scope: Vec<models::UnstableEvaluationRuleTimeScope>,
@@ -86,6 +90,7 @@ impl UnstableLegacyEvaluationRule {
             sampling,
             created_at,
             updated_at,
+            evaluators,
             target,
             delay,
             time_scope,

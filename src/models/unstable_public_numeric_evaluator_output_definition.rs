@@ -18,14 +18,14 @@ pub struct UnstablePublicNumericEvaluatorOutputDefinition {
     #[serde(rename = "reasoning")]
     pub reasoning: Box<models::UnstableEvaluatorOutputFieldDefinition>,
     #[serde(rename = "score")]
-    pub score: Box<models::UnstableEvaluatorOutputFieldDefinition>,
+    pub score: Box<models::UnstablePublicNumericEvaluatorOutputScoreDefinition>,
 }
 
 impl UnstablePublicNumericEvaluatorOutputDefinition {
     pub fn new(
         data_type: models::UnstableEvaluatorOutputDataType,
         reasoning: models::UnstableEvaluatorOutputFieldDefinition,
-        score: models::UnstableEvaluatorOutputFieldDefinition,
+        score: models::UnstablePublicNumericEvaluatorOutputScoreDefinition,
     ) -> UnstablePublicNumericEvaluatorOutputDefinition {
         UnstablePublicNumericEvaluatorOutputDefinition {
             data_type,

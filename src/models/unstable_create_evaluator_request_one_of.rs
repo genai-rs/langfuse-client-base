@@ -23,6 +23,14 @@ pub struct UnstableCreateEvaluatorRequestOneOf {
     pub output_definition: Box<models::UnstableEvaluatorOutputDefinition>,
     #[serde(rename = "modelConfig", skip_serializing_if = "Option::is_none")]
     pub model_config: Option<Box<models::UnstableEvaluatorModelConfig>>,
+    /// Optional default variable mapping inherited by rule assignments that do not provide an override.
+    #[serde(
+        rename = "mapping",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub mapping: Option<Option<Vec<models::UnstableEvaluationRuleMapping>>>,
     #[serde(rename = "type")]
     pub r#type: Type,
 }
@@ -39,6 +47,7 @@ impl UnstableCreateEvaluatorRequestOneOf {
             prompt,
             output_definition: Box::new(output_definition),
             model_config: None,
+            mapping: None,
             r#type,
         }
     }

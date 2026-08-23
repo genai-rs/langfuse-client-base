@@ -11,22 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleEvaluatorReference : Evaluator family reference used when updating an evaluation rule.  `name` and `scope` identify the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
+/// UnstableEvaluationRuleEvaluatorReference : Evaluator family reference used when updating an evaluation rule.  `name` identifies the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluationRuleEvaluatorReference {
     /// Evaluator family name.
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "scope")]
-    pub scope: models::UnstableEvaluatorScope,
 }
 
 impl UnstableEvaluationRuleEvaluatorReference {
-    /// Evaluator family reference used when updating an evaluation rule.  `name` and `scope` identify the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
-    pub fn new(
-        name: String,
-        scope: models::UnstableEvaluatorScope,
-    ) -> UnstableEvaluationRuleEvaluatorReference {
-        UnstableEvaluationRuleEvaluatorReference { name, scope }
+    /// Evaluator family reference used when updating an evaluation rule.  `name` identifies the evaluator family in the authenticated project context. A rule's evaluator type cannot be changed, so this reference does not accept a `type`; the family must match the rule's current evaluator type.
+    pub fn new(name: String) -> UnstableEvaluationRuleEvaluatorReference {
+        UnstableEvaluationRuleEvaluatorReference { name }
     }
 }

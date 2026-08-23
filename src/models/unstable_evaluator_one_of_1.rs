@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluatorOneOf1 {
-    /// Identifier of this evaluator.
+    /// Stable identifier of this evaluator across all versions.
     #[serde(rename = "id")]
     pub id: String,
     /// Evaluator name.
@@ -22,12 +22,13 @@ pub struct UnstableEvaluatorOneOf1 {
     /// Version number of this evaluator.
     #[serde(rename = "version")]
     pub version: i32,
-    #[serde(rename = "scope")]
-    pub scope: models::UnstableEvaluatorScope,
     /// Variables that can be mapped when creating an evaluation rule.  LLM evaluators require every variable to be mapped exactly once. Code evaluators always expose the fixed runtime payload fields and Langfuse maps them automatically.
     #[serde(rename = "variables")]
     pub variables: Vec<String>,
-    /// Number of evaluation rules in the project that currently use this evaluator version.
+    /// Default variable mapping for this evaluator version, or `null` when no default is configured.  An entry's `source` is `null` when that variable was never fully configured, and sources are not restricted by rule `target` here, because the default is stored on the evaluator rather than on any one rule.
+    #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
+    pub mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+    /// Number of evaluation rules in the project that currently use this evaluator.
     #[serde(rename = "evaluationRuleCount")]
     pub evaluation_rule_count: i32,
     /// Timestamp when this evaluator was created.
@@ -50,8 +51,8 @@ impl UnstableEvaluatorOneOf1 {
         id: String,
         name: String,
         version: i32,
-        scope: models::UnstableEvaluatorScope,
         variables: Vec<String>,
+        mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
         evaluation_rule_count: i32,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
@@ -63,8 +64,8 @@ impl UnstableEvaluatorOneOf1 {
             id,
             name,
             version,
-            scope,
             variables,
+            mapping,
             evaluation_rule_count,
             created_at,
             updated_at,

@@ -11,20 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableCodeEvaluationRuleEvaluatorReference : Code evaluator family reference used when creating an evaluation rule.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct UnstableCodeEvaluationRuleEvaluatorReference {
-    /// Evaluator family name.
+pub struct UnstableCreateEvaluationRuleEvaluatorReference {
     #[serde(rename = "name")]
     pub name: String,
-    /// Must be `code`.
-    #[serde(rename = "type")]
-    pub r#type: String,
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<models::UnstableEvaluatorType>,
 }
 
-impl UnstableCodeEvaluationRuleEvaluatorReference {
-    /// Code evaluator family reference used when creating an evaluation rule.
-    pub fn new(name: String, r#type: String) -> UnstableCodeEvaluationRuleEvaluatorReference {
-        UnstableCodeEvaluationRuleEvaluatorReference { name, r#type }
+impl UnstableCreateEvaluationRuleEvaluatorReference {
+    pub fn new(name: String) -> UnstableCreateEvaluationRuleEvaluatorReference {
+        UnstableCreateEvaluationRuleEvaluatorReference { name, r#type: None }
     }
 }

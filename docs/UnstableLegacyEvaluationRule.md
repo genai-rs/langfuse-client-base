@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **sampling** | **f64** | Fraction of matching target objects that should be evaluated.  Must be greater than `0` and less than or equal to `1`. - `1` means evaluate every matching target. - `0.25` means evaluate approximately 25% of matching targets. | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was created. | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was last updated. | 
+**evaluators** | [**Vec<models::UnstableLegacyEvaluationRuleEvaluatorAssignment>**](UnstableLegacyEvaluationRuleEvaluatorAssignment.md) | Evaluators attached to this rule in deterministic assignment order. | 
 **target** | [**models::UnstableLegacyEvaluationRuleTarget**](UnstableLegacyEvaluationRuleTarget.md) |  | 
 **delay** | **i32** | Delay in milliseconds before the legacy evaluation job runs. | 
 **time_scope** | [**Vec<models::UnstableEvaluationRuleTimeScope>**](UnstableEvaluationRuleTimeScope.md) | Whether the legacy rule evaluates newly ingested data, existing data, or both. | 
