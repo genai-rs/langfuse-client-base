@@ -27,8 +27,8 @@ pub struct CreateModelRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
-    #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
-    pub unit: Option<models::ModelUsageUnit>,
+    #[serde(rename = "unit")]
+    pub unit: models::ModelUsageUnit,
     /// Deprecated. Use 'pricingTiers' instead. Price (USD) per input unit. Creates a default tier if pricingTiers not provided.
     #[serde(
         rename = "inputPrice",
@@ -61,14 +61,8 @@ pub struct CreateModelRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub pricing_tiers: Option<Option<Vec<models::PricingTierInput>>>,
-    /// Optional. Tokenizer to be applied to observations which match to this model. See docs for more details.
-    #[serde(
-        rename = "tokenizerId",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub tokenizer_id: Option<Option<String>>,
+    #[serde(rename = "tokenizerId", skip_serializing_if = "Option::is_none")]
+    pub tokenizer_id: Option<models::ModelTokenizerId>,
     /// Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details.
     #[serde(
         rename = "tokenizerConfig",
@@ -80,12 +74,16 @@ pub struct CreateModelRequest {
 }
 
 impl CreateModelRequest {
-    pub fn new(model_name: String, match_pattern: String) -> CreateModelRequest {
+    pub fn new(
+        model_name: String,
+        match_pattern: String,
+        unit: models::ModelUsageUnit,
+    ) -> CreateModelRequest {
         CreateModelRequest {
             model_name,
             match_pattern,
             start_date: None,
-            unit: None,
+            unit,
             input_price: None,
             output_price: None,
             total_price: None,
