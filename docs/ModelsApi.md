@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**models_delete**](ModelsApi.md#models_delete) | **DELETE** /api/public/models/{id} | 
 [**models_get**](ModelsApi.md#models_get) | **GET** /api/public/models/{id} | 
 [**models_list**](ModelsApi.md#models_list) | **GET** /api/public/models | 
+[**models_upsert**](ModelsApi.md#models_upsert) | **PUT** /api/public/models/{id} | 
 
 
 
@@ -127,6 +128,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## models_upsert
+
+> models::Model models_upsert(id, create_model_request)
+
+
+Create or replace a project-owned model using its id. Built-in models cannot be modified.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**create_model_request** | [**CreateModelRequest**](CreateModelRequest.md) |  | [required] |
+
+### Return type
+
+[**models::Model**](Model.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

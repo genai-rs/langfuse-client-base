@@ -17,15 +17,20 @@ pub struct PricingTierInput {
     /// Name of the pricing tier for display and identification purposes.  Must be unique within the model. Common patterns: \"Standard\", \"High Volume Tier\", \"Extended Context\"
     #[serde(rename = "name")]
     pub name: String,
-    /// Whether this is the default tier. Exactly one tier per model must be marked as default.  Requirements for default tier: - Must have isDefault=true - Must have priority=0 - Must have empty conditions array (conditions=[])  The default tier acts as a fallback when no conditional tiers match.
-    #[serde(rename = "isDefault")]
-    pub is_default: bool,
+    /// Whether this is the default tier. Exactly one tier per model must be marked as default.  Requirements for default tier: - Must have isDefault=true - Must have priority=0 - Must have empty conditions array (conditions=[])  The default tier acts as a fallback when no conditional tiers match. Defaults to false when omitted.
+    #[serde(
+        rename = "isDefault",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub is_default: Option<Option<bool>>,
     /// Priority for tier matching evaluation. Lower numbers = higher priority (evaluated first).  Must be unique within the model. The default tier must have priority=0. Conditional tiers should use priority 1, 2, 3, etc. based on their specificity.
     #[serde(rename = "priority")]
     pub priority: i32,
     /// Array of conditions that must ALL be met for this tier to match (AND logic).  The default tier must have an empty array (conditions=[]). Conditional tiers should define one or more conditions that specify when this tier's pricing applies.  Conditions can compare summed matching usage details to a numeric threshold, or exactly match a top-level model parameter or metadata value.
     #[serde(rename = "conditions")]
-    pub conditions: Vec<models::PricingTierCondition>,
+    pub conditions: Vec<models::PricingTierConditionInput>,
     /// Prices (USD) by usage type for this tier. At least one price must be defined.  Common usage types: \"input\", \"output\", \"total\", \"request\", \"image\" Prices are in USD per unit (e.g., per token).  Example: {\"input\": 0.000003, \"output\": 0.000015} represents $3 per million input tokens and $15 per million output tokens.
     #[serde(rename = "prices")]
     pub prices: std::collections::HashMap<String, f64>,
@@ -35,14 +40,13 @@ impl PricingTierInput {
     /// Input schema for creating a pricing tier. The tier ID will be automatically generated server-side.  When creating a model with pricing tiers: - Exactly one tier must have isDefault=true (the fallback tier) - The default tier must have priority=0 and conditions=[] - All tier names and priorities must be unique within the model - Each tier must define at least one price  See PricingTier for detailed information about how tiers work and why they're useful.
     pub fn new(
         name: String,
-        is_default: bool,
         priority: i32,
-        conditions: Vec<models::PricingTierCondition>,
+        conditions: Vec<models::PricingTierConditionInput>,
         prices: std::collections::HashMap<String, f64>,
     ) -> PricingTierInput {
         PricingTierInput {
             name,
-            is_default,
+            is_default: None,
             priority,
             conditions,
             prices,
