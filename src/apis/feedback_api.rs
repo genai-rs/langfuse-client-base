@@ -26,7 +26,7 @@ pub enum FeedbackSubmitError {
     UnknownValue(serde_json::Value),
 }
 
-/// Submit explicit user-approved feedback about Langfuse skills, MCP tools, CLI, docs, or public API. Do not include secrets, credentials, customer data, trace payloads, or unrelated use-case details.
+/// Submit explicit user-approved feedback about Langfuse skills, MCP tools, CLI, docs, or public API. Do not include secrets, credentials, customer data, trace payloads, or unrelated use-case details.  Not available in the HIPAA cloud region.
 #[bon::builder]
 pub async fn feedback_submit(
     configuration: &configuration::Configuration,

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 > models::SubmitFeedbackResponse feedback_submit(submit_feedback_request)
 
 
-Submit explicit user-approved feedback about Langfuse skills, MCP tools, CLI, docs, or public API. Do not include secrets, credentials, customer data, trace payloads, or unrelated use-case details.
+Submit explicit user-approved feedback about Langfuse skills, MCP tools, CLI, docs, or public API. Do not include secrets, credentials, customer data, trace payloads, or unrelated use-case details.  Not available in the HIPAA cloud region.
 
 ### Parameters
 
