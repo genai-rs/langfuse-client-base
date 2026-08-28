@@ -4,16 +4,16 @@
 
 | Name | Description |
 |---- | -----|
-| IngestionEventOneOf |  |
-| IngestionEventOneOf1 |  |
-| IngestionEventOneOf2 |  |
-| IngestionEventOneOf3 |  |
-| IngestionEventOneOf4 |  |
-| IngestionEventOneOf5 |  |
-| IngestionEventOneOf6 |  |
-| IngestionEventOneOf7 |  |
-| IngestionEventOneOf8 |  |
-| IngestionEventOneOf9 |  |
+| CreateEventEvent1 |  |
+| CreateGenerationEvent1 |  |
+| CreateObservationEvent1 |  |
+| CreateSpanEvent1 |  |
+| ScoreEvent1 |  |
+| SdkLogEvent1 |  |
+| TraceEvent1 |  |
+| UpdateGenerationEvent1 |  |
+| UpdateObservationEvent1 |  |
+| UpdateSpanEvent1 |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

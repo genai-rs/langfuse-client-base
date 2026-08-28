@@ -14,15 +14,15 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ScoreV1 {
-    ScoreV1OneOf(Box<models::ScoreV1OneOf>),
-    ScoreV1OneOf1(Box<models::ScoreV1OneOf1>),
-    ScoreV1OneOf2(Box<models::ScoreV1OneOf2>),
-    ScoreV1OneOf3(Box<models::ScoreV1OneOf3>),
+    NumericScoreV11(Box<models::NumericScoreV11>),
+    CategoricalScoreV11(Box<models::CategoricalScoreV11>),
+    BooleanScoreV11(Box<models::BooleanScoreV11>),
+    TextScoreV11(Box<models::TextScoreV11>),
 }
 
 impl Default for ScoreV1 {
     fn default() -> Self {
-        Self::ScoreV1OneOf(Default::default())
+        Self::NumericScoreV11(Default::default())
     }
 }
 ///

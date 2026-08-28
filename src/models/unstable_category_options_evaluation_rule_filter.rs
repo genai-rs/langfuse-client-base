@@ -23,6 +23,8 @@ pub struct UnstableCategoryOptionsEvaluationRuleFilter {
     pub operator: models::UnstableEvaluationRuleOptionsFilterOperator,
     #[serde(rename = "value")]
     pub value: Vec<String>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCategoryOptionsEvaluationRuleFilter {
@@ -31,12 +33,26 @@ impl UnstableCategoryOptionsEvaluationRuleFilter {
         key: String,
         operator: models::UnstableEvaluationRuleOptionsFilterOperator,
         value: Vec<String>,
+        r#type: Type,
     ) -> UnstableCategoryOptionsEvaluationRuleFilter {
         UnstableCategoryOptionsEvaluationRuleFilter {
             column,
             key,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "categoryOptions")]
+    CategoryOptions,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::CategoryOptions
     }
 }

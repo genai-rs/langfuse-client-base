@@ -16,13 +16,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableEvaluator {
-    UnstableEvaluatorOneOf(Box<models::UnstableEvaluatorOneOf>),
-    UnstableEvaluatorOneOf1(Box<models::UnstableEvaluatorOneOf1>),
+    UnstableLlmAsJudgeEvaluator(Box<models::UnstableLlmAsJudgeEvaluator>),
+    UnstableCodeEvaluator(Box<models::UnstableCodeEvaluator>),
 }
 
 impl Default for UnstableEvaluator {
     fn default() -> Self {
-        Self::UnstableEvaluatorOneOf(Default::default())
+        Self::UnstableLlmAsJudgeEvaluator(Default::default())
     }
 }
 ///

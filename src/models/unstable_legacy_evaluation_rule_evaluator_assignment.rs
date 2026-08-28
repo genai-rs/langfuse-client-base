@@ -11,18 +11,20 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// UnstableLegacyEvaluationRuleEvaluatorAssignment : **Deprecated:** Evaluator assignment on a legacy trace or dataset rule.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableLegacyEvaluationRuleEvaluatorAssignment {
     #[serde(rename = "evaluator")]
     pub evaluator: Box<models::UnstableEvaluationRuleEvaluator>,
     #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
-    pub mapping: Option<Vec<models::UnstableLegacyEvaluationRuleMapping>>,
+    pub mapping: Option<Vec<models::UnstableLegacyPromptVariableMapping>>,
 }
 
 impl UnstableLegacyEvaluationRuleEvaluatorAssignment {
+    /// **Deprecated:** Evaluator assignment on a legacy trace or dataset rule.
     pub fn new(
         evaluator: models::UnstableEvaluationRuleEvaluator,
-        mapping: Option<Vec<models::UnstableLegacyEvaluationRuleMapping>>,
+        mapping: Option<Vec<models::UnstableLegacyPromptVariableMapping>>,
     ) -> UnstableLegacyEvaluationRuleEvaluatorAssignment {
         UnstableLegacyEvaluationRuleEvaluatorAssignment {
             evaluator: Box::new(evaluator),

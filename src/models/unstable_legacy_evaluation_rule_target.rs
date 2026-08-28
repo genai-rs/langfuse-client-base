@@ -11,7 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-///
+/// UnstableLegacyEvaluationRuleTarget : **Deprecated:** Legacy trace or dataset evaluation target.
+/// **Deprecated:** Legacy trace or dataset evaluation target.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstableLegacyEvaluationRuleTarget {
     #[serde(rename = "trace")]

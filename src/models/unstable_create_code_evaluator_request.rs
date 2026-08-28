@@ -21,6 +21,8 @@ pub struct UnstableCreateCodeEvaluatorRequest {
     pub source_code: String,
     #[serde(rename = "sourceCodeLanguage")]
     pub source_code_language: models::UnstableCodeEvaluatorSourceCodeLanguage,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCreateCodeEvaluatorRequest {
@@ -28,11 +30,25 @@ impl UnstableCreateCodeEvaluatorRequest {
         name: String,
         source_code: String,
         source_code_language: models::UnstableCodeEvaluatorSourceCodeLanguage,
+        r#type: Type,
     ) -> UnstableCreateCodeEvaluatorRequest {
         UnstableCreateCodeEvaluatorRequest {
             name,
             source_code,
             source_code_language,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "code")]
+    Code,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Code
     }
 }

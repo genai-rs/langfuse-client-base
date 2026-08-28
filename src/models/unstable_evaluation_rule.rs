@@ -51,7 +51,7 @@ pub struct UnstableEvaluationRule {
     pub filter: Vec<models::UnstableEvaluationRuleFilter>,
     /// Deprecated compatibility alias containing the effective mapping for `evaluators[0]`.
     #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableEvaluationRuleReadMapping>,
+    pub mapping: Vec<models::UnstablePromptVariableMappingRead>,
 }
 
 impl UnstableEvaluationRule {
@@ -69,7 +69,7 @@ impl UnstableEvaluationRule {
         evaluators: Vec<models::UnstableEvaluationRuleEvaluatorAssignment>,
         target: models::UnstableEvaluationRuleTarget,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
-        mapping: Vec<models::UnstableEvaluationRuleReadMapping>,
+        mapping: Vec<models::UnstablePromptVariableMappingRead>,
     ) -> UnstableEvaluationRule {
         UnstableEvaluationRule {
             id,

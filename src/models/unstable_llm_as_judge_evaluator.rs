@@ -27,7 +27,7 @@ pub struct UnstableLlmAsJudgeEvaluator {
     pub variables: Vec<String>,
     /// Default variable mapping for this evaluator version, or `null` when no default is configured.  An entry's `source` is `null` when that variable was never fully configured, and sources are not restricted by rule `target` here, because the default is stored on the evaluator rather than on any one rule.
     #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
-    pub mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+    pub mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
     /// Number of evaluation rules in the project that currently use this evaluator.
     #[serde(rename = "evaluationRuleCount")]
     pub evaluation_rule_count: i32,
@@ -44,6 +44,8 @@ pub struct UnstableLlmAsJudgeEvaluator {
     pub output_definition: Box<models::UnstablePublicEvaluatorOutputDefinition>,
     #[serde(rename = "modelConfig")]
     pub model_config: Box<models::UnstableEvaluatorModelConfig>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableLlmAsJudgeEvaluator {
@@ -52,13 +54,14 @@ impl UnstableLlmAsJudgeEvaluator {
         name: String,
         version: i32,
         variables: Vec<String>,
-        mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+        mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
         evaluation_rule_count: i32,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         prompt: String,
         output_definition: models::UnstablePublicEvaluatorOutputDefinition,
         model_config: models::UnstableEvaluatorModelConfig,
+        r#type: Type,
     ) -> UnstableLlmAsJudgeEvaluator {
         UnstableLlmAsJudgeEvaluator {
             id,
@@ -72,6 +75,19 @@ impl UnstableLlmAsJudgeEvaluator {
             prompt,
             output_definition: Box::new(output_definition),
             model_config: Box::new(model_config),
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "llm_as_judge")]
+    LlmAsJudge,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::LlmAsJudge
     }
 }

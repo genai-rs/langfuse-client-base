@@ -128,6 +128,8 @@ pub mod comments_api;
 pub mod dataset_items_api;
 pub mod dataset_run_items_api;
 pub mod datasets_api;
+pub mod evaluation_rules_api;
+pub mod evaluators_api;
 pub mod experiments_api;
 pub mod feedback_api;
 pub mod health_api;

@@ -4,11 +4,11 @@
 
 | Name | Description |
 |---- | -----|
-| GetScoresResponseDataOneOf |  |
-| GetScoresResponseDataOneOf1 |  |
-| GetScoresResponseDataOneOf2 |  |
-| GetScoresResponseDataOneOf3 |  |
-| GetScoresResponseDataOneOf4 |  |
+| GetScoresResponseDataBoolean1 |  |
+| GetScoresResponseDataCategorical1 |  |
+| GetScoresResponseDataCorrection1 |  |
+| GetScoresResponseDataNumeric1 |  |
+| GetScoresResponseDataText1 |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

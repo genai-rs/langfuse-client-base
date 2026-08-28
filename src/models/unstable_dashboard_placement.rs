@@ -16,13 +16,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableDashboardPlacement {
-    UnstableDashboardPlacementOneOf(Box<models::UnstableDashboardPlacementOneOf>),
-    UnstableDashboardPlacementOneOf1(Box<models::UnstableDashboardPlacementOneOf1>),
+    UnstableWidgetPlacement(Box<models::UnstableWidgetPlacement>),
+    UnstablePresetPlacement(Box<models::UnstablePresetPlacement>),
 }
 
 impl Default for UnstableDashboardPlacement {
     fn default() -> Self {
-        Self::UnstableDashboardPlacementOneOf(Default::default())
+        Self::UnstableWidgetPlacement(Default::default())
     }
 }
 ///

@@ -14,21 +14,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IngestionEvent {
-    IngestionEventOneOf(Box<models::IngestionEventOneOf>),
-    IngestionEventOneOf1(Box<models::IngestionEventOneOf1>),
-    IngestionEventOneOf2(Box<models::IngestionEventOneOf2>),
-    IngestionEventOneOf3(Box<models::IngestionEventOneOf3>),
-    IngestionEventOneOf4(Box<models::IngestionEventOneOf4>),
-    IngestionEventOneOf5(Box<models::IngestionEventOneOf5>),
-    IngestionEventOneOf6(Box<models::IngestionEventOneOf6>),
-    IngestionEventOneOf7(Box<models::IngestionEventOneOf7>),
-    IngestionEventOneOf8(Box<models::IngestionEventOneOf8>),
-    IngestionEventOneOf9(Box<models::IngestionEventOneOf9>),
+    TraceEvent1(Box<models::TraceEvent1>),
+    ScoreEvent1(Box<models::ScoreEvent1>),
+    CreateSpanEvent1(Box<models::CreateSpanEvent1>),
+    UpdateSpanEvent1(Box<models::UpdateSpanEvent1>),
+    CreateGenerationEvent1(Box<models::CreateGenerationEvent1>),
+    UpdateGenerationEvent1(Box<models::UpdateGenerationEvent1>),
+    CreateEventEvent1(Box<models::CreateEventEvent1>),
+    SdkLogEvent1(Box<models::SdkLogEvent1>),
+    CreateObservationEvent1(Box<models::CreateObservationEvent1>),
+    UpdateObservationEvent1(Box<models::UpdateObservationEvent1>),
 }
 
 impl Default for IngestionEvent {
     fn default() -> Self {
-        Self::IngestionEventOneOf(Default::default())
+        Self::TraceEvent1(Default::default())
     }
 }
 ///

@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **evaluators** | [**Vec<models::UnstableEvaluationRuleEvaluatorAssignment>**](UnstableEvaluationRuleEvaluatorAssignment.md) | Evaluators attached to this rule in deterministic assignment order. A `null` mapping inherits the evaluator version's default mapping. | 
 **target** | [**models::UnstableEvaluationRuleTarget**](UnstableEvaluationRuleTarget.md) |  | 
 **filter** | [**Vec<models::UnstableEvaluationRuleFilter>**](UnstableEvaluationRuleFilter.md) | List of filter conditions used to decide whether a target should be evaluated. | 
-**mapping** | [**Vec<models::UnstableEvaluationRuleReadMapping>**](UnstableEvaluationRuleReadMapping.md) | Deprecated compatibility alias containing the effective mapping for `evaluators[0]`. | 
+**mapping** | [**Vec<models::UnstablePromptVariableMappingRead>**](UnstablePromptVariableMappingRead.md) | Deprecated compatibility alias containing the effective mapping for `evaluators[0]`. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

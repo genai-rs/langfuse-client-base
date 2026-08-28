@@ -20,6 +20,8 @@ pub struct UnstableBooleanEvaluationRuleFilter {
     pub operator: models::UnstableEvaluationRuleBooleanFilterOperator,
     #[serde(rename = "value")]
     pub value: bool,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableBooleanEvaluationRuleFilter {
@@ -27,11 +29,25 @@ impl UnstableBooleanEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleBooleanFilterOperator,
         value: bool,
+        r#type: Type,
     ) -> UnstableBooleanEvaluationRuleFilter {
         UnstableBooleanEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "boolean")]
+    Boolean,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Boolean
     }
 }

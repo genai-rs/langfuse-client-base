@@ -57,7 +57,7 @@ pub struct UnstableLegacyEvaluationRule {
     pub filter: Vec<models::UnstableEvaluationRuleFilter>,
     /// Stored variable mappings, including the trace, dataset item, or named observation selected for each variable.
     #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableLegacyEvaluationRuleMapping>,
+    pub mapping: Vec<models::UnstableLegacyPromptVariableMapping>,
 }
 
 impl UnstableLegacyEvaluationRule {
@@ -77,7 +77,7 @@ impl UnstableLegacyEvaluationRule {
         delay: i32,
         time_scope: Vec<models::UnstableEvaluationRuleTimeScope>,
         filter: Vec<models::UnstableEvaluationRuleFilter>,
-        mapping: Vec<models::UnstableLegacyEvaluationRuleMapping>,
+        mapping: Vec<models::UnstableLegacyPromptVariableMapping>,
     ) -> UnstableLegacyEvaluationRule {
         UnstableLegacyEvaluationRule {
             id,

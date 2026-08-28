@@ -21,6 +21,8 @@ pub struct UnstableStringOptionsEvaluationRuleFilter {
     /// One or more allowed string values.
     #[serde(rename = "value")]
     pub value: Vec<String>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableStringOptionsEvaluationRuleFilter {
@@ -28,11 +30,25 @@ impl UnstableStringOptionsEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleOptionsFilterOperator,
         value: Vec<String>,
+        r#type: Type,
     ) -> UnstableStringOptionsEvaluationRuleFilter {
         UnstableStringOptionsEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "stringOptions")]
+    StringOptions,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::StringOptions
     }
 }

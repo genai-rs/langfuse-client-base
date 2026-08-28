@@ -1,0 +1,15 @@
+# CreateObservationEvent1
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **String** | UUID v4 that identifies the event | 
+**timestamp** | **String** | Datetime (ISO 8601) of event creation in client. Should be as close to actual event creation in client as possible, this timestamp will be used for ordering of events in future release. Resolution: milliseconds (required), microseconds (optimal). | 
+**metadata** | Option<**serde_json::Value**> | Optional. Metadata field used by the Langfuse SDKs for debugging. | [optional]
+**body** | [**models::ObservationBody**](ObservationBody.md) |  | 
+**r#type** | **Type** |  (enum: observation-create) | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

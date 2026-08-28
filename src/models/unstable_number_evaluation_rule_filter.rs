@@ -20,6 +20,8 @@ pub struct UnstableNumberEvaluationRuleFilter {
     pub operator: models::UnstableEvaluationRuleNumberFilterOperator,
     #[serde(rename = "value")]
     pub value: f64,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableNumberEvaluationRuleFilter {
@@ -27,11 +29,25 @@ impl UnstableNumberEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleNumberFilterOperator,
         value: f64,
+        r#type: Type,
     ) -> UnstableNumberEvaluationRuleFilter {
         UnstableNumberEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "number")]
+    Number,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Number
     }
 }

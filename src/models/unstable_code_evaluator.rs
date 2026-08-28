@@ -27,7 +27,7 @@ pub struct UnstableCodeEvaluator {
     pub variables: Vec<String>,
     /// Default variable mapping for this evaluator version, or `null` when no default is configured.  An entry's `source` is `null` when that variable was never fully configured, and sources are not restricted by rule `target` here, because the default is stored on the evaluator rather than on any one rule.
     #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
-    pub mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+    pub mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
     /// Number of evaluation rules in the project that currently use this evaluator.
     #[serde(rename = "evaluationRuleCount")]
     pub evaluation_rule_count: i32,
@@ -42,6 +42,8 @@ pub struct UnstableCodeEvaluator {
     pub source_code: String,
     #[serde(rename = "sourceCodeLanguage")]
     pub source_code_language: models::UnstableCodeEvaluatorSourceCodeLanguage,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCodeEvaluator {
@@ -50,12 +52,13 @@ impl UnstableCodeEvaluator {
         name: String,
         version: i32,
         variables: Vec<String>,
-        mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+        mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
         evaluation_rule_count: i32,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         source_code: String,
         source_code_language: models::UnstableCodeEvaluatorSourceCodeLanguage,
+        r#type: Type,
     ) -> UnstableCodeEvaluator {
         UnstableCodeEvaluator {
             id,
@@ -68,6 +71,19 @@ impl UnstableCodeEvaluator {
             updated_at,
             source_code,
             source_code_language,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "code")]
+    Code,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Code
     }
 }

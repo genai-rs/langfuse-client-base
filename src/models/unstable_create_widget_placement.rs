@@ -55,10 +55,12 @@ pub struct UnstableCreateWidgetPlacement {
         skip_serializing_if = "Option::is_none"
     )]
     pub height: Option<Option<i32>>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCreateWidgetPlacement {
-    pub fn new(widget_id: String) -> UnstableCreateWidgetPlacement {
+    pub fn new(widget_id: String, r#type: Type) -> UnstableCreateWidgetPlacement {
         UnstableCreateWidgetPlacement {
             id: None,
             widget_id,
@@ -66,6 +68,19 @@ impl UnstableCreateWidgetPlacement {
             y: None,
             width: None,
             height: None,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "widget")]
+    Widget,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Widget
     }
 }

@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **delay** | **i32** | Delay in milliseconds before the legacy evaluation job runs. | 
 **time_scope** | [**Vec<models::UnstableEvaluationRuleTimeScope>**](UnstableEvaluationRuleTimeScope.md) | Whether the legacy rule evaluates newly ingested data, existing data, or both. | 
 **filter** | [**Vec<models::UnstableEvaluationRuleFilter>**](UnstableEvaluationRuleFilter.md) | Stored filters used by the legacy trace or dataset rule. | 
-**mapping** | [**Vec<models::UnstableLegacyEvaluationRuleMapping>**](UnstableLegacyEvaluationRuleMapping.md) | Stored variable mappings, including the trace, dataset item, or named observation selected for each variable. | 
+**mapping** | [**Vec<models::UnstableLegacyPromptVariableMapping>**](UnstableLegacyPromptVariableMapping.md) | Stored variable mappings, including the trace, dataset item, or named observation selected for each variable. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

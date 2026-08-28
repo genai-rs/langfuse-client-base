@@ -39,9 +39,9 @@ pub struct UnstableCreateLlmAsJudgeEvaluationRuleRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub filter: Option<Option<Vec<models::UnstableEvaluationRuleFilter>>>,
-    /// LLM-as-judge variable mappings.  Every evaluator variable must appear exactly once. Build this list from the evaluator `variables` array returned by the evaluator endpoints.
+    /// LLM-as-judge variable mappings.  Every prompt variable must appear exactly once. Build this list from the evaluator's `variables` array.
     #[serde(rename = "mapping")]
-    pub mapping: Vec<models::UnstableEvaluationRuleMapping>,
+    pub mapping: Vec<models::UnstablePromptVariableMappingInput>,
 }
 
 impl UnstableCreateLlmAsJudgeEvaluationRuleRequest {
@@ -50,7 +50,7 @@ impl UnstableCreateLlmAsJudgeEvaluationRuleRequest {
         evaluator: models::UnstableLlmAsJudgeEvaluationRuleEvaluatorReference,
         target: models::UnstableEvaluationRuleTarget,
         enabled: bool,
-        mapping: Vec<models::UnstableEvaluationRuleMapping>,
+        mapping: Vec<models::UnstablePromptVariableMappingInput>,
     ) -> UnstableCreateLlmAsJudgeEvaluationRuleRequest {
         UnstableCreateLlmAsJudgeEvaluationRuleRequest {
             name,

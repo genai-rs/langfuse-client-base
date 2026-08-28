@@ -16,21 +16,25 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableEvaluationRuleFilter {
-    UnstableEvaluationRuleFilterOneOf(Box<models::UnstableEvaluationRuleFilterOneOf>),
-    UnstableEvaluationRuleFilterOneOf1(Box<models::UnstableEvaluationRuleFilterOneOf1>),
-    UnstableEvaluationRuleFilterOneOf2(Box<models::UnstableEvaluationRuleFilterOneOf2>),
-    UnstableEvaluationRuleFilterOneOf3(Box<models::UnstableEvaluationRuleFilterOneOf3>),
-    UnstableEvaluationRuleFilterOneOf4(Box<models::UnstableEvaluationRuleFilterOneOf4>),
-    UnstableEvaluationRuleFilterOneOf5(Box<models::UnstableEvaluationRuleFilterOneOf5>),
-    UnstableEvaluationRuleFilterOneOf6(Box<models::UnstableEvaluationRuleFilterOneOf6>),
-    UnstableEvaluationRuleFilterOneOf7(Box<models::UnstableEvaluationRuleFilterOneOf7>),
-    UnstableEvaluationRuleFilterOneOf8(Box<models::UnstableEvaluationRuleFilterOneOf8>),
-    UnstableEvaluationRuleFilterOneOf9(Box<models::UnstableEvaluationRuleFilterOneOf9>),
+    UnstableDateTimeEvaluationRuleFilter(Box<models::UnstableDateTimeEvaluationRuleFilter>),
+    UnstableStringEvaluationRuleFilter(Box<models::UnstableStringEvaluationRuleFilter>),
+    UnstableNumberEvaluationRuleFilter(Box<models::UnstableNumberEvaluationRuleFilter>),
+    UnstableStringOptionsEvaluationRuleFilter(
+        Box<models::UnstableStringOptionsEvaluationRuleFilter>,
+    ),
+    UnstableCategoryOptionsEvaluationRuleFilter(
+        Box<models::UnstableCategoryOptionsEvaluationRuleFilter>,
+    ),
+    UnstableArrayOptionsEvaluationRuleFilter(Box<models::UnstableArrayOptionsEvaluationRuleFilter>),
+    UnstableStringObjectEvaluationRuleFilter(Box<models::UnstableStringObjectEvaluationRuleFilter>),
+    UnstableNumberObjectEvaluationRuleFilter(Box<models::UnstableNumberObjectEvaluationRuleFilter>),
+    UnstableBooleanEvaluationRuleFilter(Box<models::UnstableBooleanEvaluationRuleFilter>),
+    UnstableNullEvaluationRuleFilter(Box<models::UnstableNullEvaluationRuleFilter>),
 }
 
 impl Default for UnstableEvaluationRuleFilter {
     fn default() -> Self {
-        Self::UnstableEvaluationRuleFilterOneOf(Default::default())
+        Self::UnstableDateTimeEvaluationRuleFilter(Default::default())
     }
 }
 ///

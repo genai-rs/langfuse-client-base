@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluatorType : The evaluator engine type.  The unstable public API supports LLM-as-a-judge and code evaluators.
-/// The evaluator engine type.  The unstable public API supports LLM-as-a-judge and code evaluators.
+/// UnstableEvaluatorType : The evaluator type.  The unstable public API supports LLM-as-a-judge and code evaluators.
+/// The evaluator type.  The unstable public API supports LLM-as-a-judge and code evaluators.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstableEvaluatorType {
     #[serde(rename = "llm_as_judge")]

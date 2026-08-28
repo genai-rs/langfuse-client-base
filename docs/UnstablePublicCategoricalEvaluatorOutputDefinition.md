@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data_type** | [**models::UnstableEvaluatorOutputDataType**](UnstableEvaluatorOutputDataType.md) |  | 
+**data_type** | **DataType** |  (enum: CATEGORICAL) | 
 **reasoning** | [**models::UnstableEvaluatorOutputFieldDefinition**](UnstableEvaluatorOutputFieldDefinition.md) |  | 
 **score** | [**models::UnstablePublicCategoricalEvaluatorOutputScoreDefinition**](UnstablePublicCategoricalEvaluatorOutputScoreDefinition.md) |  | 
 

@@ -27,7 +27,7 @@ pub struct UnstableEvaluatorBase {
     pub variables: Vec<String>,
     /// Default variable mapping for this evaluator version, or `null` when no default is configured.  An entry's `source` is `null` when that variable was never fully configured, and sources are not restricted by rule `target` here, because the default is stored on the evaluator rather than on any one rule.
     #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
-    pub mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+    pub mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
     /// Number of evaluation rules in the project that currently use this evaluator.
     #[serde(rename = "evaluationRuleCount")]
     pub evaluation_rule_count: i32,
@@ -45,7 +45,7 @@ impl UnstableEvaluatorBase {
         name: String,
         version: i32,
         variables: Vec<String>,
-        mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+        mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
         evaluation_rule_count: i32,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
