@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **enabled** | **bool** | Whether the deployment should be active immediately after creation. | 
 **sampling** | Option<**f64**> | Optional sampling fraction. Defaults to `1`. | [optional]
 **filter** | Option<[**Vec<models::UnstableEvaluationRuleFilter>**](UnstableEvaluationRuleFilter.md)> | Optional filter list.  Omit or pass an empty list to evaluate all matching targets for the selected `target`. Each filter object must use a column that is valid for that `target`. For `target=experiment`, `column=datasetId` expects dataset `id` values from `GET /api/public/v2/datasets`, not dataset names. | [optional]
-**mapping** | [**Vec<models::UnstableEvaluationRuleMapping>**](UnstableEvaluationRuleMapping.md) | LLM-as-judge variable mappings.  Every evaluator variable must appear exactly once. Build this list from the evaluator `variables` array returned by the evaluator endpoints. | 
+**mapping** | [**Vec<models::UnstablePromptVariableMappingInput>**](UnstablePromptVariableMappingInput.md) | LLM-as-judge variable mappings.  Every prompt variable must appear exactly once. Build this list from the evaluator's `variables` array. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

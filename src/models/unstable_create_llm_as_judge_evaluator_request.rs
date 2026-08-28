@@ -30,7 +30,9 @@ pub struct UnstableCreateLlmAsJudgeEvaluatorRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub mapping: Option<Option<Vec<models::UnstableEvaluationRuleMapping>>>,
+    pub mapping: Option<Option<Vec<models::UnstablePromptVariableMappingInput>>>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCreateLlmAsJudgeEvaluatorRequest {
@@ -38,6 +40,7 @@ impl UnstableCreateLlmAsJudgeEvaluatorRequest {
         name: String,
         prompt: String,
         output_definition: models::UnstableEvaluatorOutputDefinition,
+        r#type: Type,
     ) -> UnstableCreateLlmAsJudgeEvaluatorRequest {
         UnstableCreateLlmAsJudgeEvaluatorRequest {
             name,
@@ -45,6 +48,19 @@ impl UnstableCreateLlmAsJudgeEvaluatorRequest {
             output_definition: Box::new(output_definition),
             model_config: None,
             mapping: None,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "llm_as_judge")]
+    LlmAsJudge,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::LlmAsJudge
     }
 }

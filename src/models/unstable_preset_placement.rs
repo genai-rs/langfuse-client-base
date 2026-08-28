@@ -25,6 +25,8 @@ pub struct UnstablePresetPlacement {
     pub width: i32,
     #[serde(rename = "height")]
     pub height: i32,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstablePresetPlacement {
@@ -35,6 +37,7 @@ impl UnstablePresetPlacement {
         y: i32,
         width: i32,
         height: i32,
+        r#type: Type,
     ) -> UnstablePresetPlacement {
         UnstablePresetPlacement {
             id,
@@ -43,6 +46,19 @@ impl UnstablePresetPlacement {
             y,
             width,
             height,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "preset")]
+    Preset,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Preset
     }
 }

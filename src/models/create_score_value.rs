@@ -16,12 +16,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScoreValue {
-    Number(f64),
+    DoubleNumber(f64),
     String(String),
 }
 
 impl Default for CreateScoreValue {
     fn default() -> Self {
-        Self::Number(Default::default())
+        Self::DoubleNumber(Default::default())
     }
 }

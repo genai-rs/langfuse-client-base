@@ -17,13 +17,13 @@ pub struct UnstableEvaluationRuleEvaluatorAssignment {
     pub evaluator: Box<models::UnstableEvaluationRuleEvaluator>,
     /// Rule-specific override, or `null` to inherit the evaluator version's default mapping.
     #[serde(rename = "mapping", deserialize_with = "Option::deserialize")]
-    pub mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+    pub mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
 }
 
 impl UnstableEvaluationRuleEvaluatorAssignment {
     pub fn new(
         evaluator: models::UnstableEvaluationRuleEvaluator,
-        mapping: Option<Vec<models::UnstableEvaluationRuleReadMapping>>,
+        mapping: Option<Vec<models::UnstablePromptVariableMappingRead>>,
     ) -> UnstableEvaluationRuleEvaluatorAssignment {
         UnstableEvaluationRuleEvaluatorAssignment {
             evaluator: Box::new(evaluator),

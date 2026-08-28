@@ -16,9 +16,9 @@ use serde::{Deserialize, Serialize};
 pub enum MapValue {
     String(String),
     Integer(i32),
-    Number(f32),
+    FloatNumber(f32),
     Boolean(bool),
-    ArrayVecString(Vec<String>),
+    Array(Vec<String>),
 }
 
 impl Default for MapValue {

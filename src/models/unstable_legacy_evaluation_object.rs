@@ -11,7 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-///
+/// UnstableLegacyEvaluationObject : **Deprecated:** Legacy Langfuse object used by a trace or dataset evaluation rule.
+/// **Deprecated:** Legacy Langfuse object used by a trace or dataset evaluation rule.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstableLegacyEvaluationObject {
     #[serde(rename = "trace")]

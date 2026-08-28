@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicCategoricalEvaluatorOutputDefinition {
     #[serde(rename = "dataType")]
-    pub data_type: models::UnstableEvaluatorOutputDataType,
+    pub data_type: DataType,
     #[serde(rename = "reasoning")]
     pub reasoning: Box<models::UnstableEvaluatorOutputFieldDefinition>,
     #[serde(rename = "score")]
@@ -23,7 +23,7 @@ pub struct UnstablePublicCategoricalEvaluatorOutputDefinition {
 
 impl UnstablePublicCategoricalEvaluatorOutputDefinition {
     pub fn new(
-        data_type: models::UnstableEvaluatorOutputDataType,
+        data_type: DataType,
         reasoning: models::UnstableEvaluatorOutputFieldDefinition,
         score: models::UnstablePublicCategoricalEvaluatorOutputScoreDefinition,
     ) -> UnstablePublicCategoricalEvaluatorOutputDefinition {
@@ -32,5 +32,17 @@ impl UnstablePublicCategoricalEvaluatorOutputDefinition {
             reasoning: Box::new(reasoning),
             score: Box::new(score),
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum DataType {
+    #[serde(rename = "CATEGORICAL")]
+    Categorical,
+}
+
+impl Default for DataType {
+    fn default() -> DataType {
+        Self::Categorical
     }
 }

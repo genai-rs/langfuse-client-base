@@ -14,13 +14,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Prompt {
-    PromptOneOf(Box<models::PromptOneOf>),
-    PromptOneOf1(Box<models::PromptOneOf1>),
+    ChatPrompt1(Box<models::ChatPrompt1>),
+    TextPrompt1(Box<models::TextPrompt1>),
 }
 
 impl Default for Prompt {
     fn default() -> Self {
-        Self::PromptOneOf(Default::default())
+        Self::ChatPrompt1(Default::default())
     }
 }
 ///

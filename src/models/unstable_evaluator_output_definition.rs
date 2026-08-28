@@ -16,13 +16,19 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableEvaluatorOutputDefinition {
-    UnstableEvaluatorOutputDefinitionOneOf(Box<models::UnstableEvaluatorOutputDefinitionOneOf>),
-    UnstableEvaluatorOutputDefinitionOneOf1(Box<models::UnstableEvaluatorOutputDefinitionOneOf1>),
-    UnstableEvaluatorOutputDefinitionOneOf2(Box<models::UnstableEvaluatorOutputDefinitionOneOf2>),
+    UnstablePublicNumericEvaluatorOutputDefinition(
+        Box<models::UnstablePublicNumericEvaluatorOutputDefinition>,
+    ),
+    UnstablePublicBooleanEvaluatorOutputDefinition(
+        Box<models::UnstablePublicBooleanEvaluatorOutputDefinition>,
+    ),
+    UnstablePublicCategoricalEvaluatorOutputDefinition(
+        Box<models::UnstablePublicCategoricalEvaluatorOutputDefinition>,
+    ),
 }
 
 impl Default for UnstableEvaluatorOutputDefinition {
     fn default() -> Self {
-        Self::UnstableEvaluatorOutputDefinitionOneOf(Default::default())
+        Self::UnstablePublicNumericEvaluatorOutputDefinition(Default::default())
     }
 }

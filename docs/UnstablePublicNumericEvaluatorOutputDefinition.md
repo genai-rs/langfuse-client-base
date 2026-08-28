@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data_type** | [**models::UnstableEvaluatorOutputDataType**](UnstableEvaluatorOutputDataType.md) |  | 
+**data_type** | **DataType** |  (enum: NUMERIC) | 
 **reasoning** | [**models::UnstableEvaluatorOutputFieldDefinition**](UnstableEvaluatorOutputFieldDefinition.md) |  | 
 **score** | [**models::UnstablePublicNumericEvaluatorOutputScoreDefinition**](UnstablePublicNumericEvaluatorOutputScoreDefinition.md) |  | 
 

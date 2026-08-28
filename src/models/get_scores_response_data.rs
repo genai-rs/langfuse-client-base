@@ -14,16 +14,16 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetScoresResponseData {
-    GetScoresResponseDataOneOf(Box<models::GetScoresResponseDataOneOf>),
-    GetScoresResponseDataOneOf1(Box<models::GetScoresResponseDataOneOf1>),
-    GetScoresResponseDataOneOf2(Box<models::GetScoresResponseDataOneOf2>),
-    GetScoresResponseDataOneOf3(Box<models::GetScoresResponseDataOneOf3>),
-    GetScoresResponseDataOneOf4(Box<models::GetScoresResponseDataOneOf4>),
+    GetScoresResponseDataNumeric1(Box<models::GetScoresResponseDataNumeric1>),
+    GetScoresResponseDataCategorical1(Box<models::GetScoresResponseDataCategorical1>),
+    GetScoresResponseDataBoolean1(Box<models::GetScoresResponseDataBoolean1>),
+    GetScoresResponseDataCorrection1(Box<models::GetScoresResponseDataCorrection1>),
+    GetScoresResponseDataText1(Box<models::GetScoresResponseDataText1>),
 }
 
 impl Default for GetScoresResponseData {
     fn default() -> Self {
-        Self::GetScoresResponseDataOneOf(Default::default())
+        Self::GetScoresResponseDataNumeric1(Default::default())
     }
 }
 ///

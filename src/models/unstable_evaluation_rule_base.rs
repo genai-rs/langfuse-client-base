@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstableEvaluationRuleBase : Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each evaluator variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
+/// UnstableEvaluationRuleBase : Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each prompt variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableEvaluationRuleBase {
     /// Stable evaluation rule identifier.
@@ -45,7 +45,7 @@ pub struct UnstableEvaluationRuleBase {
 }
 
 impl UnstableEvaluationRuleBase {
-    /// Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each evaluator variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
+    /// Live evaluation rule for incoming data.  An evaluation rule answers: - which evaluator should be used - which target objects should trigger scoring - how often scoring should run - which target fields should populate each prompt variable - whether the deployment is active, inactive, or paused  Important status semantics: - `enabled` is the desired on/off setting from the client - `status` is the effective runtime state after Langfuse applies validation and blocking rules - `enabled=true` with `status=paused` means the rule should run, but Langfuse has paused it until the underlying problem is fixed
     pub fn new(
         id: String,
         name: String,

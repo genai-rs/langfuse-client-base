@@ -20,6 +20,8 @@ pub struct UnstableStringEvaluationRuleFilter {
     pub operator: models::UnstableEvaluationRuleStringFilterOperator,
     #[serde(rename = "value")]
     pub value: String,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableStringEvaluationRuleFilter {
@@ -27,11 +29,25 @@ impl UnstableStringEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleStringFilterOperator,
         value: String,
+        r#type: Type,
     ) -> UnstableStringEvaluationRuleFilter {
         UnstableStringEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "string")]
+    String,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::String
     }
 }

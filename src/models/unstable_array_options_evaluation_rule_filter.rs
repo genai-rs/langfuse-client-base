@@ -21,6 +21,8 @@ pub struct UnstableArrayOptionsEvaluationRuleFilter {
     /// One or more array elements to match.
     #[serde(rename = "value")]
     pub value: Vec<String>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableArrayOptionsEvaluationRuleFilter {
@@ -28,11 +30,25 @@ impl UnstableArrayOptionsEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleArrayOptionsFilterOperator,
         value: Vec<String>,
+        r#type: Type,
     ) -> UnstableArrayOptionsEvaluationRuleFilter {
         UnstableArrayOptionsEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "arrayOptions")]
+    ArrayOptions,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::ArrayOptions
     }
 }

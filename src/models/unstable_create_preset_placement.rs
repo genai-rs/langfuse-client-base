@@ -55,10 +55,12 @@ pub struct UnstableCreatePresetPlacement {
         skip_serializing_if = "Option::is_none"
     )]
     pub height: Option<Option<i32>>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableCreatePresetPlacement {
-    pub fn new(preset_id: String) -> UnstableCreatePresetPlacement {
+    pub fn new(preset_id: String, r#type: Type) -> UnstableCreatePresetPlacement {
         UnstableCreatePresetPlacement {
             id: None,
             preset_id,
@@ -66,6 +68,19 @@ impl UnstableCreatePresetPlacement {
             y: None,
             width: None,
             height: None,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "preset")]
+    Preset,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Preset
     }
 }

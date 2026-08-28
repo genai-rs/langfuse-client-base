@@ -14,17 +14,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableCreateDashboardPlacementRequest {
-    UnstableCreateDashboardPlacementRequestOneOf(
-        Box<models::UnstableCreateDashboardPlacementRequestOneOf>,
-    ),
-    UnstableCreateDashboardPlacementRequestOneOf1(
-        Box<models::UnstableCreateDashboardPlacementRequestOneOf1>,
-    ),
+    UnstableCreateWidgetPlacement(Box<models::UnstableCreateWidgetPlacement>),
+    UnstableCreatePresetPlacement(Box<models::UnstableCreatePresetPlacement>),
 }
 
 impl Default for UnstableCreateDashboardPlacementRequest {
     fn default() -> Self {
-        Self::UnstableCreateDashboardPlacementRequestOneOf(Default::default())
+        Self::UnstableCreateWidgetPlacement(Default::default())
     }
 }
 ///

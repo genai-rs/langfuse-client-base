@@ -26,17 +26,33 @@ pub struct UnstableNullEvaluationRuleFilter {
         skip_serializing_if = "Option::is_none"
     )]
     pub value: Option<Option<String>>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableNullEvaluationRuleFilter {
     pub fn new(
         column: String,
         operator: models::UnstableEvaluationRuleNullFilterOperator,
+        r#type: Type,
     ) -> UnstableNullEvaluationRuleFilter {
         UnstableNullEvaluationRuleFilter {
             column,
             operator,
             value: None,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "null")]
+    Null,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Null
     }
 }

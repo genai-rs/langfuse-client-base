@@ -21,6 +21,8 @@ pub struct UnstableDateTimeEvaluationRuleFilter {
     /// Datetime value to compare against.
     #[serde(rename = "value")]
     pub value: chrono::DateTime<chrono::FixedOffset>,
+    #[serde(rename = "type")]
+    pub r#type: Type,
 }
 
 impl UnstableDateTimeEvaluationRuleFilter {
@@ -28,11 +30,25 @@ impl UnstableDateTimeEvaluationRuleFilter {
         column: String,
         operator: models::UnstableEvaluationRuleNumberFilterOperator,
         value: chrono::DateTime<chrono::FixedOffset>,
+        r#type: Type,
     ) -> UnstableDateTimeEvaluationRuleFilter {
         UnstableDateTimeEvaluationRuleFilter {
             column,
             operator,
             value,
+            r#type,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Type {
+    #[serde(rename = "datetime")]
+    Datetime,
+}
+
+impl Default for Type {
+    fn default() -> Type {
+        Self::Datetime
     }
 }

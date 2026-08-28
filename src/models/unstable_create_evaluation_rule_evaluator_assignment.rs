@@ -22,7 +22,7 @@ pub struct UnstableCreateEvaluationRuleEvaluatorAssignment {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub mapping: Option<Option<Vec<models::UnstableEvaluationRuleMapping>>>,
+    pub mapping: Option<Option<Vec<models::UnstablePromptVariableMappingInput>>>,
 }
 
 impl UnstableCreateEvaluationRuleEvaluatorAssignment {
