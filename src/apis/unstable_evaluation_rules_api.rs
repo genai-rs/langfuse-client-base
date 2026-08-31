@@ -319,7 +319,7 @@ pub async fn unstable_evaluation_rules_update(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
     unstable_update_evaluation_rule_request: models::UnstableUpdateEvaluationRuleRequest,
-) -> Result<models::UnstableEvaluationRule, Error<UnstableEvaluationRulesUpdateError>> {
+) -> Result<models::UnstableReadableV2EvaluationRule, Error<UnstableEvaluationRulesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
     let p_body_unstable_update_evaluation_rule_request = unstable_update_evaluation_rule_request;
@@ -356,8 +356,8 @@ pub async fn unstable_evaluation_rules_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableEvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableEvaluationRule`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableReadableV2EvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableReadableV2EvaluationRule`")))),
         }
     } else {
         let content = resp.text().await?;
