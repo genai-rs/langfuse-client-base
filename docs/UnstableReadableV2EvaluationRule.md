@@ -1,0 +1,24 @@
+# UnstableReadableV2EvaluationRule
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **String** | Stable evaluation rule identifier. | 
+**name** | **String** | Human-readable deployment name. This is independent from the evaluator name. | 
+**evaluator** | [**models::UnstableEvaluationRuleEvaluator**](UnstableEvaluationRuleEvaluator.md) |  | 
+**enabled** | **bool** | Desired enabled state configured by the client. | 
+**status** | [**models::UnstableEvaluationRuleStatus**](UnstableEvaluationRuleStatus.md) |  | 
+**paused_reason** | Option<**String**> | Machine-readable reason when `status=paused`, otherwise `null`. | 
+**paused_message** | Option<**String**> | Human-readable explanation when `status=paused`, otherwise `null`. | 
+**sampling** | **f64** | Fraction of matching target objects that should be evaluated.  Must be greater than `0` and less than or equal to `1`. - `1` means evaluate every matching target. - `0.25` means evaluate approximately 25% of matching targets. | 
+**created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was created. | 
+**updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluation rule was last updated. | 
+**evaluators** | [**Vec<models::UnstableEvaluationRuleEvaluatorAssignment>**](UnstableEvaluationRuleEvaluatorAssignment.md) | Evaluators attached to this rule in deterministic assignment order. A `null` mapping inherits the evaluator version's default mapping. | 
+**target** | [**models::UnstableEvaluationRuleTarget**](UnstableEvaluationRuleTarget.md) |  | 
+**filter** | [**Vec<models::EvaluationRuleReadFilter>**](EvaluationRuleReadFilter.md) | List of stored filter conditions returned verbatim. Historical filters remain readable even when the current write contract no longer accepts their shape. | 
+**mapping** | [**Vec<models::UnstablePromptVariableMappingRead>**](UnstablePromptVariableMappingRead.md) | Deprecated compatibility alias containing the effective mapping for `evaluators[0]`. | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

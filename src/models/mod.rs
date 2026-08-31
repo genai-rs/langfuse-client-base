@@ -896,6 +896,8 @@ pub mod unstable_public_numeric_evaluator_output_score_definition;
 pub use self::unstable_public_numeric_evaluator_output_score_definition::UnstablePublicNumericEvaluatorOutputScoreDefinition;
 pub mod unstable_readable_evaluation_rule;
 pub use self::unstable_readable_evaluation_rule::UnstableReadableEvaluationRule;
+pub mod unstable_readable_v2_evaluation_rule;
+pub use self::unstable_readable_v2_evaluation_rule::UnstableReadableV2EvaluationRule;
 pub mod unstable_string_evaluation_rule_filter;
 pub use self::unstable_string_evaluation_rule_filter::UnstableStringEvaluationRuleFilter;
 pub mod unstable_string_object_evaluation_rule_filter;

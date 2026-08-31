@@ -135,7 +135,7 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_evaluation_rules_update
 
-> models::UnstableEvaluationRule unstable_evaluation_rules_update(evaluation_rule_id, unstable_update_evaluation_rule_request)
+> models::UnstableReadableV2EvaluationRule unstable_evaluation_rules_update(evaluation_rule_id, unstable_update_evaluation_rule_request)
 
 
 **Deprecated:** On Langfuse Cloud, this unstable endpoint is deprecated and will be removed on September 4, 2026. Use the stable `/api/public/v2/evaluation-rules` API instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Update an evaluation rule.  Typical uses: - enable or disable live execution - switch to another evaluator - adjust sampling - change filters - update LLM-as-judge variable mappings  Important behavior: - provide only the fields you want to change - if you provide `evaluator`, Langfuse resolves that evaluator family to its latest version before saving - changing `target`, `filter`, or an LLM-as-judge `mapping` must still produce a valid target-specific configuration - if you change `target` for an LLM-as-judge rule, also send a compatible `filter` and `mapping` in the same request unless the existing ones are still valid for the new target - for `code` evaluator rules, omit `mapping`; Langfuse stores the fixed code runtime mapping automatically - if the resulting config is enabled, Langfuse re-validates that the selected evaluator can run - if the update would move a non-active evaluation rule into the active state and the project already has 500 active evaluation rules, the API returns `409`  Recovery guidance: - if an LLM-as-judge update fails with `missing_variable_mapping` or `invalid_variable_mapping` after changing `evaluator` or `target`, resend the request with a complete new `mapping` - if the update fails with `invalid_filter_value` after changing `target`, resend the request with a target-compatible `filter`
@@ -150,7 +150,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableEvaluationRule**](unstableEvaluationRule.md)
+[**models::UnstableReadableV2EvaluationRule**](unstableReadableV2EvaluationRule.md)
 
 ### Authorization
 

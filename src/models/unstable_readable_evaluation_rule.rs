@@ -16,12 +16,12 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnstableReadableEvaluationRule {
-    UnstableEvaluationRule(Box<models::UnstableEvaluationRule>),
+    UnstableReadableV2EvaluationRule(Box<models::UnstableReadableV2EvaluationRule>),
     UnstableLegacyEvaluationRule(Box<models::UnstableLegacyEvaluationRule>),
 }
 
 impl Default for UnstableReadableEvaluationRule {
     fn default() -> Self {
-        Self::UnstableEvaluationRule(Default::default())
+        Self::UnstableReadableV2EvaluationRule(Default::default())
     }
 }
