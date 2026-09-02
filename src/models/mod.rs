@@ -280,6 +280,8 @@ pub mod evaluator_base;
 pub use self::evaluator_base::EvaluatorBase;
 pub mod evaluator_chat_message;
 pub use self::evaluator_chat_message::EvaluatorChatMessage;
+pub mod evaluator_chat_message_role;
+pub use self::evaluator_chat_message_role::EvaluatorChatMessageRole;
 pub mod evaluator_chat_prompt_input;
 pub use self::evaluator_chat_prompt_input::EvaluatorChatPromptInput;
 pub mod evaluator_model_config;

@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when this evaluator version was created. | 
 **created_by** | [**models::Creator**](Creator.md) |  | 
 **r#type** | **Type** |  (enum: llm_as_judge) | 
-**prompt** | [**Vec<models::EvaluatorChatMessage>**](EvaluatorChatMessage.md) | A list containing exactly one user chat message. | 
+**prompt** | [**Vec<models::EvaluatorChatMessage>**](EvaluatorChatMessage.md) | An ordered list of chat messages. A system message is only allowed as the first message. | 
 **variables** | **Vec<String>** | Variables extracted from the prompt and available for evaluation-rule mappings.  Every variable must be mapped exactly once when a rule provides an explicit mapping. | 
 **variable_mapping** | Option<[**Vec<models::PromptVariableMappingRead>**](PromptVariableMappingRead.md)> | Default variable mapping for this evaluator version, or `null` when no default is configured. | 
 **model_config** | [**models::EvaluatorModelConfig**](EvaluatorModelConfig.md) |  | 

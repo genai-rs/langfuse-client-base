@@ -11,19 +11,19 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// EvaluatorChatMessage : One user chat message in an evaluator prompt.
+/// EvaluatorChatMessage : One chat message in an evaluator prompt.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluatorChatMessage {
     #[serde(rename = "role")]
-    pub role: String,
+    pub role: models::EvaluatorChatMessageRole,
     /// Message content. Evaluator variables use `{{variable}}` syntax.
     #[serde(rename = "content")]
     pub content: String,
 }
 
 impl EvaluatorChatMessage {
-    /// One user chat message in an evaluator prompt.
-    pub fn new(role: String, content: String) -> EvaluatorChatMessage {
+    /// One chat message in an evaluator prompt.
+    pub fn new(role: models::EvaluatorChatMessageRole, content: String) -> EvaluatorChatMessage {
         EvaluatorChatMessage { role, content }
     }
 }

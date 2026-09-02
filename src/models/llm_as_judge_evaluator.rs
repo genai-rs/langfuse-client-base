@@ -58,7 +58,7 @@ pub struct LlmAsJudgeEvaluator {
     /// Evaluator type.
     #[serde(rename = "type")]
     pub r#type: String,
-    /// A list containing exactly one user chat message.
+    /// An ordered list of chat messages. A system message is only allowed as the first message.
     #[serde(rename = "prompt")]
     pub prompt: Vec<models::EvaluatorChatMessage>,
     /// Variables extracted from the latest prompt and available for evaluation-rule mappings.

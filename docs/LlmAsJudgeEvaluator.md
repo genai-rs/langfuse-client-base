@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **version_created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the latest evaluator version was created. | 
 **version_created_by** | [**models::Creator**](Creator.md) |  | 
 **r#type** | **String** | Evaluator type. | 
-**prompt** | [**Vec<models::EvaluatorChatMessage>**](EvaluatorChatMessage.md) | A list containing exactly one user chat message. | 
+**prompt** | [**Vec<models::EvaluatorChatMessage>**](EvaluatorChatMessage.md) | An ordered list of chat messages. A system message is only allowed as the first message. | 
 **variables** | **Vec<String>** | Variables extracted from the latest prompt and available for evaluation-rule mappings. | 
 **variable_mapping** | Option<[**Vec<models::PromptVariableMappingRead>**](PromptVariableMappingRead.md)> | Default variable mapping for the latest version, or `null` when no default is configured. | 
 **model_config** | [**models::EvaluatorModelConfig**](EvaluatorModelConfig.md) |  | 
