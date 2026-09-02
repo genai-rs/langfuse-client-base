@@ -11,13 +11,13 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// EvaluatorChatPromptInput : A user prompt string, or a list containing exactly one user chat message.
-/// A user prompt string, or a list containing exactly one user chat message.
+/// EvaluatorChatPromptInput : A user prompt string shortcut, or an ordered list of chat messages.
+/// A user prompt string shortcut, or an ordered list of chat messages.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluatorChatPromptInput {
     String(String),
-    /// A list containing exactly one user chat message.
+    /// An ordered list of chat messages. A system message is only allowed as the first message.
     EvaluatorChatPrompt(Vec<models::EvaluatorChatMessage>),
 }
 
