@@ -29,7 +29,7 @@ pub struct CreateBlobStorageIntegrationRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub endpoint: Option<Option<String>>,
-    /// Storage region
+    /// Storage region used by S3-compatible clients (AWS, GCS, Cloudflare R2, MinIO, Azure location IDs such as eastus, OCI). Leading and trailing whitespace is removed. The remaining value must be 1-63 letters, numbers, or hyphens, and cannot start or end with a hyphen. Examples: us-east-1, europe-west1, eastus, auto.
     #[serde(rename = "region")]
     pub region: String,
     /// Access key ID for authentication

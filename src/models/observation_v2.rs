@@ -162,12 +162,12 @@ pub struct ObservationV2 {
     pub metadata: Option<Option<serde_json::Value>>,
     /// The model name as provided by the user
     #[serde(
-        rename = "providedModelName",
+        rename = "model",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub provided_model_name: Option<Option<String>>,
+    pub model: Option<Option<String>>,
     /// The internal model ID matched by Langfuse
     #[serde(
         rename = "internalModelId",
@@ -333,7 +333,7 @@ impl ObservationV2 {
             input: None,
             output: None,
             metadata: None,
-            provided_model_name: None,
+            model: None,
             internal_model_id: None,
             model_parameters: None,
             usage_details: None,
