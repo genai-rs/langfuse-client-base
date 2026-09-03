@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **r#type** | [**models::BlobStorageIntegrationType**](BlobStorageIntegrationType.md) |  | 
 **bucket_name** | **String** | Name of the storage bucket. For AZURE_BLOB_STORAGE, must be a valid Azure container name (3-63 chars, lowercase letters, numbers, and hyphens only, must start and end with a letter or number, no consecutive hyphens). | 
 **endpoint** | Option<**String**> | Custom endpoint URL (required for S3_COMPATIBLE type) | [optional]
-**region** | **String** | Storage region | 
+**region** | **String** | Storage region used by S3-compatible clients (AWS, GCS, Cloudflare R2, MinIO, Azure location IDs such as eastus, OCI). Leading and trailing whitespace is removed. The remaining value must be 1-63 letters, numbers, or hyphens, and cannot start or end with a hyphen. Examples: us-east-1, europe-west1, eastus, auto. | 
 **access_key_id** | Option<**String**> | Access key ID for authentication | [optional]
 **secret_access_key** | Option<**String**> | Secret access key for authentication (will be encrypted when stored) | [optional]
 **prefix** | Option<**String**> | Path prefix for exported files (must end with forward slash if provided) | [optional]

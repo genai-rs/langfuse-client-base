@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **input** | Option<**serde_json::Value**> | The input data of the observation | [optional]
 **output** | Option<**serde_json::Value**> | The output data of the observation | [optional]
 **metadata** | Option<**serde_json::Value**> | Additional metadata of the observation | [optional]
-**provided_model_name** | Option<**String**> | The model name as provided by the user | [optional]
+**model** | Option<**String**> | The model name as provided by the user | [optional]
 **internal_model_id** | Option<**String**> | The internal model ID matched by Langfuse | [optional]
 **model_parameters** | Option<**serde_json::Value**> | The parameters of the model used for the observation | [optional]
 **usage_details** | Option<**std::collections::HashMap<String, i32>**> | The usage details of the observation. Key is the usage metric name, value is the number of units consumed. | [optional]
