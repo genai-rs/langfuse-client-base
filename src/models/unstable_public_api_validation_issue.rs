@@ -11,22 +11,19 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstablePublicApiValidationIssue : One validation issue returned for malformed request bodies or query parameters.  This mirrors the most important parts of a Zod issue: a machine-readable `code`, a human-readable `message`, and a structured `path`.
+/// UnstablePublicApiValidationIssue : A validation issue returned for malformed request bodies or query parameters.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicApiValidationIssue {
-    /// Machine-readable validation issue code emitted by the server validator.
     #[serde(rename = "code")]
     pub code: String,
-    /// Human-readable explanation of the validation failure.
     #[serde(rename = "message")]
     pub message: String,
-    /// Path to the invalid field, for example `[\"mapping\", 0, \"jsonPath\"]`.
     #[serde(rename = "path")]
     pub path: Vec<serde_json::Value>,
 }
 
 impl UnstablePublicApiValidationIssue {
-    /// One validation issue returned for malformed request bodies or query parameters.  This mirrors the most important parts of a Zod issue: a machine-readable `code`, a human-readable `message`, and a structured `path`.
+    /// A validation issue returned for malformed request bodies or query parameters.
     pub fn new(
         code: String,
         message: String,

@@ -11,8 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstablePublicApiErrorCode : Machine-readable error code returned by the unstable evaluators API.  SDKs, CLIs, and agents should branch on `code` rather than parsing the human-readable `message`. The HTTP status still indicates the broad error class, while `code` gives the specific failure reason.
-/// Machine-readable error code returned by the unstable evaluators API.  SDKs, CLIs, and agents should branch on `code` rather than parsing the human-readable `message`. The HTTP status still indicates the broad error class, while `code` gives the specific failure reason.
+/// UnstablePublicApiErrorCode : Machine-readable error code returned by unstable public API endpoints.
+/// Machine-readable error code returned by unstable public API endpoints.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UnstablePublicApiErrorCode {
     #[serde(rename = "authentication_failed")]
@@ -25,26 +25,10 @@ pub enum UnstablePublicApiErrorCode {
     InvalidQuery,
     #[serde(rename = "invalid_body")]
     InvalidBody,
-    #[serde(rename = "invalid_filter_value")]
-    InvalidFilterValue,
-    #[serde(rename = "invalid_json_path")]
-    InvalidJsonPath,
-    #[serde(rename = "invalid_variable_mapping")]
-    InvalidVariableMapping,
-    #[serde(rename = "missing_variable_mapping")]
-    MissingVariableMapping,
-    #[serde(rename = "duplicate_variable_mapping")]
-    DuplicateVariableMapping,
     #[serde(rename = "resource_not_found")]
     ResourceNotFound,
-    #[serde(rename = "name_conflict")]
-    NameConflict,
-    #[serde(rename = "evaluator_preflight_failed")]
-    EvaluatorPreflightFailed,
     #[serde(rename = "conflict")]
     Conflict,
-    #[serde(rename = "unprocessable_content")]
-    UnprocessableContent,
     #[serde(rename = "rate_limited")]
     RateLimited,
     #[serde(rename = "method_not_allowed")]
@@ -61,16 +45,8 @@ impl std::fmt::Display for UnstablePublicApiErrorCode {
             Self::InvalidRequest => write!(f, "invalid_request"),
             Self::InvalidQuery => write!(f, "invalid_query"),
             Self::InvalidBody => write!(f, "invalid_body"),
-            Self::InvalidFilterValue => write!(f, "invalid_filter_value"),
-            Self::InvalidJsonPath => write!(f, "invalid_json_path"),
-            Self::InvalidVariableMapping => write!(f, "invalid_variable_mapping"),
-            Self::MissingVariableMapping => write!(f, "missing_variable_mapping"),
-            Self::DuplicateVariableMapping => write!(f, "duplicate_variable_mapping"),
             Self::ResourceNotFound => write!(f, "resource_not_found"),
-            Self::NameConflict => write!(f, "name_conflict"),
-            Self::EvaluatorPreflightFailed => write!(f, "evaluator_preflight_failed"),
             Self::Conflict => write!(f, "conflict"),
-            Self::UnprocessableContent => write!(f, "unprocessable_content"),
             Self::RateLimited => write!(f, "rate_limited"),
             Self::MethodNotAllowed => write!(f, "method_not_allowed"),
             Self::InternalError => write!(f, "internal_error"),

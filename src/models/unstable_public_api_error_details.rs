@@ -11,10 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstablePublicApiErrorDetails : Optional structured context attached to an unstable-evals error.  The populated fields depend on the error `code`: - request parsing failures populate `issues` - filter validation failures populate `field`, `column`, `invalidValues`, and `allowedValues` - variable mapping failures populate `field`, `variable`, or `variables` - JSONPath validation failures populate `field`, `variable`, and `value` - evaluator preflight failures populate `evaluatorName`, `provider`, and `model` - rate limiting populates `retryAfterSeconds`, `limit`, `remaining`, and `resetAt`
+/// UnstablePublicApiErrorDetails : Optional structured context attached to an error.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicApiErrorDetails {
-    /// Validation issues for malformed request bodies or query parameters.
     #[serde(
         rename = "issues",
         default,
@@ -22,7 +21,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub issues: Option<Option<Vec<models::UnstablePublicApiValidationIssue>>>,
-    /// Path-like reference to the failing field, for example `mapping[1].jsonPath`.
     #[serde(
         rename = "field",
         default,
@@ -30,7 +28,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub field: Option<Option<String>>,
-    /// Filter column that failed validation.
     #[serde(
         rename = "column",
         default,
@@ -38,7 +35,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub column: Option<Option<String>>,
-    /// Unsupported values supplied by the caller.
     #[serde(
         rename = "invalidValues",
         default,
@@ -46,7 +42,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub invalid_values: Option<Option<Vec<String>>>,
-    /// Allowed values for the failing filter column.
     #[serde(
         rename = "allowedValues",
         default,
@@ -54,23 +49,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub allowed_values: Option<Option<Vec<String>>>,
-    /// Evaluator variable involved in the failure.
-    #[serde(
-        rename = "variable",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub variable: Option<Option<String>>,
-    /// Multiple evaluator variables involved in the failure, for example missing mappings.
-    #[serde(
-        rename = "variables",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub variables: Option<Option<Vec<String>>>,
-    /// Raw invalid value supplied by the caller.
     #[serde(
         rename = "value",
         default,
@@ -78,31 +56,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub value: Option<Option<String>>,
-    /// Evaluator name used during preflight validation.
-    #[serde(
-        rename = "evaluatorName",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub evaluator_name: Option<Option<String>>,
-    /// Provider resolved during evaluator preflight, if any.
-    #[serde(
-        rename = "provider",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub provider: Option<Option<String>>,
-    /// Model resolved during evaluator preflight, if any.
-    #[serde(
-        rename = "model",
-        default,
-        with = "::serde_with::rust::double_option",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub model: Option<Option<String>>,
-    /// Suggested retry delay for rate-limited requests.
     #[serde(
         rename = "retryAfterSeconds",
         default,
@@ -110,7 +63,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub retry_after_seconds: Option<Option<i32>>,
-    /// Numeric limit associated with the failure, for example the active evaluation-rule cap or the current rate-limit window.
     #[serde(
         rename = "limit",
         default,
@@ -118,7 +70,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub limit: Option<Option<i32>>,
-    /// Remaining requests in the current rate-limit window.
     #[serde(
         rename = "remaining",
         default,
@@ -126,7 +77,6 @@ pub struct UnstablePublicApiErrorDetails {
         skip_serializing_if = "Option::is_none"
     )]
     pub remaining: Option<Option<i32>>,
-    /// ISO-8601 timestamp when the current rate-limit window resets.
     #[serde(
         rename = "resetAt",
         default,
@@ -137,7 +87,7 @@ pub struct UnstablePublicApiErrorDetails {
 }
 
 impl UnstablePublicApiErrorDetails {
-    /// Optional structured context attached to an unstable-evals error.  The populated fields depend on the error `code`: - request parsing failures populate `issues` - filter validation failures populate `field`, `column`, `invalidValues`, and `allowedValues` - variable mapping failures populate `field`, `variable`, or `variables` - JSONPath validation failures populate `field`, `variable`, and `value` - evaluator preflight failures populate `evaluatorName`, `provider`, and `model` - rate limiting populates `retryAfterSeconds`, `limit`, `remaining`, and `resetAt`
+    /// Optional structured context attached to an error.
     pub fn new() -> UnstablePublicApiErrorDetails {
         UnstablePublicApiErrorDetails {
             issues: None,
@@ -145,12 +95,7 @@ impl UnstablePublicApiErrorDetails {
             column: None,
             invalid_values: None,
             allowed_values: None,
-            variable: None,
-            variables: None,
             value: None,
-            evaluator_name: None,
-            provider: None,
-            model: None,
             retry_after_seconds: None,
             limit: None,
             remaining: None,
