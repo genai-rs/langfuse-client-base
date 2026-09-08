@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// UnstablePublicApiError : Standard error envelope for the unstable evaluators API.  Response handling guidance: - Use the HTTP status code for the broad class of failure. - Use `code` for precise branching in SDKs, CLIs, or agents. - Inspect `details` for field-level validation context such as invalid filter values, malformed JSONPath expressions, or missing variable mappings. - Retry only after fixing the specific issue described by `code` and `details`.
+/// UnstablePublicApiError : Standard error envelope for unstable public API endpoints.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicApiError {
     /// Human-readable description of the failure.
@@ -24,7 +24,7 @@ pub struct UnstablePublicApiError {
 }
 
 impl UnstablePublicApiError {
-    /// Standard error envelope for the unstable evaluators API.  Response handling guidance: - Use the HTTP status code for the broad class of failure. - Use `code` for precise branching in SDKs, CLIs, or agents. - Inspect `details` for field-level validation context such as invalid filter values, malformed JSONPath expressions, or missing variable mappings. - Retry only after fixing the specific issue described by `code` and `details`.
+    /// Standard error envelope for unstable public API endpoints.
     pub fn new(
         message: String,
         code: models::UnstablePublicApiErrorCode,
