@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **object_id** | **String** | The id of the object to attach the comment to. If this does not reference a valid existing object, an error will be thrown. | 
 **content** | **String** | The content of the comment. May include markdown. Currently limited to 5000 characters. | 
 **author_user_id** | Option<**String**> | The id of the user who created the comment. Must be a member of the organization that owns the project, otherwise an error will be thrown. | [optional]
+**object_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The start time of the referenced object (for observations, the observation's start time). Optional performance hint - when provided, Langfuse narrows the lookup to validate the reference faster. It only affects speed - an incorrect or omitted value never changes the result. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

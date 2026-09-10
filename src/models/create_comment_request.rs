@@ -33,6 +33,14 @@ pub struct CreateCommentRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub author_user_id: Option<Option<String>>,
+    /// The start time of the referenced object (for observations, the observation's start time). Optional performance hint - when provided, Langfuse narrows the lookup to validate the reference faster. It only affects speed - an incorrect or omitted value never changes the result.
+    #[serde(
+        rename = "objectStartTime",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub object_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
 }
 
 impl CreateCommentRequest {
@@ -48,6 +56,7 @@ impl CreateCommentRequest {
             object_id,
             content,
             author_user_id: None,
+            object_start_time: None,
         }
     }
 }
