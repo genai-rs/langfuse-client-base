@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## legacy_observations_v1_get
 
-> models::ObservationsViewSingle legacy_observations_v1_get(observation_id)
+> models::ObservationsViewSingle legacy_observations_v1_get(observation_id, start_time)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a observation
@@ -22,6 +22,7 @@ Method | HTTP request | Description
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **observation_id** | **String** | The unique langfuse identifier of an observation, can be an event, span or generation | [required] |
+**start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The start time of the observation (ISO 8601 with offset, e.g. 2024-01-01T00:00:00Z). Optional performance hint - when provided, Langfuse narrows the lookup to make the request substantially faster. It only affects speed - an incorrect or omitted value never changes the result. |  |
 
 ### Return type
 

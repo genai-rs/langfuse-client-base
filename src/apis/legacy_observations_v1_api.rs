@@ -43,9 +43,11 @@ pub enum LegacyObservationsV1GetManyError {
 pub async fn legacy_observations_v1_get(
     configuration: &configuration::Configuration,
     observation_id: &str,
+    start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
 ) -> Result<models::ObservationsViewSingle, Error<LegacyObservationsV1GetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_observation_id = observation_id;
+    let p_query_start_time = start_time;
 
     let uri_str = format!(
         "{}/api/public/observations/{observationId}",
@@ -54,6 +56,9 @@ pub async fn legacy_observations_v1_get(
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_query_start_time {
+        req_builder = req_builder.query(&[("startTime", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
