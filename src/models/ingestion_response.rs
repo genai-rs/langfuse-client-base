@@ -17,6 +17,8 @@ pub struct IngestionResponse {
     pub successes: Vec<models::IngestionSuccess>,
     #[serde(rename = "errors")]
     pub errors: Vec<models::IngestionError>,
+    #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
+    pub _deprecation: Option<Box<models::Deprecation>>,
 }
 
 impl IngestionResponse {
@@ -24,6 +26,10 @@ impl IngestionResponse {
         successes: Vec<models::IngestionSuccess>,
         errors: Vec<models::IngestionError>,
     ) -> IngestionResponse {
-        IngestionResponse { successes, errors }
+        IngestionResponse {
+            successes,
+            errors,
+            _deprecation: None,
+        }
     }
 }
