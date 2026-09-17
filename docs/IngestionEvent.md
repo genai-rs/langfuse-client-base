@@ -9,7 +9,6 @@
 | CreateObservationEvent1 |  |
 | CreateSpanEvent1 |  |
 | ScoreEvent1 |  |
-| SdkLogEvent1 |  |
 | TraceEvent1 |  |
 | UpdateGenerationEvent1 |  |
 | UpdateObservationEvent1 |  |

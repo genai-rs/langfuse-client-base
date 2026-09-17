@@ -1,7 +1,7 @@
 /*
  * server
  *
- * ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Self-hosted deployments: interactive API reference at `/api/docs` and OpenAPI spec at `/api/openapi.yaml`
+ * ## Real-time data  The only real-time path to get tracing data is to ingest via OpenTelemetry (`POST /api/public/otel/v1/traces`) and retrieve via Observations API v2 (`GET /api/public/v2/observations`) and Metrics API v2 (`GET /api/public/v2/metrics`). Other public API write and read endpoints can delay data by about 10 minutes. Direct OpenTelemetry exporters must send the `x-langfuse-ingestion-version: 4` header; current Python and JS SDKs already do. See the [Public API docs](https://langfuse.com/docs/api-and-data-platform/features/public-api) and [real-time ingestion](https://langfuse.com/integrations/native/opentelemetry.md#real-time-ingestion).  ## Authentication  Authenticate with the API using [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication), get API keys in the project settings:  - username: Langfuse Public Key - password: Langfuse Secret Key  ## Exports  - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml - Self-hosted deployments: interactive API reference at `/api/docs` and OpenAPI spec at `/api/openapi.yaml`
  *
  * The version of the OpenAPI document:
  *
@@ -25,7 +25,7 @@ pub enum OpentelemetryExportTracesError {
     UnknownValue(serde_json::Value),
 }
 
-/// **OpenTelemetry Traces Ingestion Endpoint**  This endpoint implements the OTLP/HTTP specification for trace ingestion, providing native OpenTelemetry integration for Langfuse Observability.  **Supported Formats:** - Binary Protobuf: `Content-Type: application/x-protobuf` - JSON Protobuf: `Content-Type: application/json` - Supports gzip compression via `Content-Encoding: gzip` header  **Specification Compliance:** - Conforms to [OTLP/HTTP Trace Export](https://opentelemetry.io/docs/specs/otlp/#otlphttp) - Implements `ExportTraceServiceRequest` message format  **Documentation:** - Integration guide: https://langfuse.com/integrations/native/opentelemetry - Data model: https://langfuse.com/docs/observability/data-model
+/// **OpenTelemetry Traces Ingestion Endpoint**  This endpoint implements the OTLP/HTTP specification for trace ingestion, providing native OpenTelemetry integration for Langfuse Observability.  Together with Observations API v2 and Metrics API v2, this is the only real-time write path. Other public API endpoints can delay data by about 10 minutes. Direct exporters must send `x-langfuse-ingestion-version: 4`; current Python and JS SDKs already do.  **Supported Formats:** - Binary Protobuf: `Content-Type: application/x-protobuf` - JSON Protobuf: `Content-Type: application/json` - Supports gzip compression via `Content-Encoding: gzip` header  **Specification Compliance:** - Conforms to [OTLP/HTTP Trace Export](https://opentelemetry.io/docs/specs/otlp/#otlphttp) - Implements `ExportTraceServiceRequest` message format  **Documentation:** - Integration guide: https://langfuse.com/integrations/native/opentelemetry - Data model: https://langfuse.com/docs/observability/data-model
 #[bon::builder]
 pub async fn opentelemetry_export_traces(
     configuration: &configuration::Configuration,
