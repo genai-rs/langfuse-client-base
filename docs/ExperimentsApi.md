@@ -21,7 +21,7 @@ List experiments with cursor-based pagination. Results are ordered by latest exp
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Retrieve only experiments on or after this datetime. | [required] |
+**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Required. Retrieve only experiments with events on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with `toStartTime` to select a specific window. | [required] |
 **fields** | Option<**String**> | Comma-separated list of field groups to include. Available groups: `core`, `metadata`, `scores`. If omitted, `core` is returned. |  |
 **limit** | Option<**i32**> | Number of experiments to return per page. Maximum 100, default 50. |  |
 **score_limit** | Option<**i32**> | Number of scores to return per experiment when `fields=scores` is requested. Maximum 50, default 50. |  |
@@ -60,7 +60,7 @@ List experiment items with cursor-based pagination. Use this endpoint to export 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Retrieve only experiment items started on or after this datetime. | [required] |
+**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Required. Retrieve only experiment items started on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with `toStartTime` to select a specific window. | [required] |
 **fields** | Option<**String**> | Comma-separated list of field groups to include. Available groups: `core`, `dataset`, `io`, `metadata`, `itemMetadata`, `experimentMetadata`, `scores`. If omitted, `core,dataset` is returned. |  |
 **limit** | Option<**i32**> | Number of experiment items to return per page. Maximum 100, default 50. |  |
 **score_limit** | Option<**i32**> | Number of scores to return per experiment item when `fields=scores` is requested. Maximum 50, default 50. |  |
