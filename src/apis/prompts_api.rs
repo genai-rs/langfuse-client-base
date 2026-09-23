@@ -243,6 +243,7 @@ pub async fn prompts_list(
     limit: Option<i32>,
     from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    filter: Option<&str>,
 ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_name = name;
@@ -252,6 +253,7 @@ pub async fn prompts_list(
     let p_query_limit = limit;
     let p_query_from_updated_at = from_updated_at;
     let p_query_to_updated_at = to_updated_at;
+    let p_query_filter = filter;
 
     let uri_str = format!("{}/api/public/v2/prompts", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -276,6 +278,9 @@ pub async fn prompts_list(
     }
     if let Some(ref param_value) = p_query_to_updated_at {
         req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_filter {
+        req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
