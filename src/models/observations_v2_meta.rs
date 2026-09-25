@@ -11,10 +11,10 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// ObservationsV2Meta : Metadata for cursor-based pagination
+/// ObservationsV2Meta : Metadata for cursor-based pagination.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsV2Meta {
-    /// Base64-encoded cursor to use for retrieving the next page. If not present, there are no more results.
+    /// Opaque cursor for the next page. Omitted when there is no next page.
     #[serde(
         rename = "cursor",
         default,
@@ -25,7 +25,7 @@ pub struct ObservationsV2Meta {
 }
 
 impl ObservationsV2Meta {
-    /// Metadata for cursor-based pagination
+    /// Metadata for cursor-based pagination.
     pub fn new() -> ObservationsV2Meta {
         ObservationsV2Meta { cursor: None }
     }

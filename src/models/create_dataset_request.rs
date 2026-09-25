@@ -36,7 +36,7 @@ pub struct CreateDatasetRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub input_schema: Option<Option<serde_json::Value>>,
+    pub input_schema: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// JSON Schema for validating dataset item expected outputs. When set, all new and existing dataset items will be validated against this schema.
     #[serde(
         rename = "expectedOutputSchema",
@@ -44,7 +44,8 @@ pub struct CreateDatasetRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub expected_output_schema: Option<Option<serde_json::Value>>,
+    pub expected_output_schema:
+        Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
 }
 
 impl CreateDatasetRequest {

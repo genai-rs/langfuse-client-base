@@ -85,7 +85,7 @@ pub struct OtelSpan {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub status: Option<Option<serde_json::Value>>,
+    pub status: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
 }
 
 impl OtelSpan {

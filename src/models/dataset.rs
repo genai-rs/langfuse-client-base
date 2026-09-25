@@ -25,13 +25,13 @@ pub struct Dataset {
     pub metadata: Option<serde_json::Value>,
     /// JSON Schema for validating dataset item inputs
     #[serde(rename = "inputSchema", deserialize_with = "Option::deserialize")]
-    pub input_schema: Option<serde_json::Value>,
+    pub input_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// JSON Schema for validating dataset item expected outputs
     #[serde(
         rename = "expectedOutputSchema",
         deserialize_with = "Option::deserialize"
     )]
-    pub expected_output_schema: Option<serde_json::Value>,
+    pub expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "createdAt")]
@@ -46,8 +46,8 @@ impl Dataset {
         name: String,
         description: Option<String>,
         metadata: Option<serde_json::Value>,
-        input_schema: Option<serde_json::Value>,
-        expected_output_schema: Option<serde_json::Value>,
+        input_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
+        expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
         project_id: String,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,

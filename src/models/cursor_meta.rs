@@ -11,6 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// CursorMeta : Cursor pagination metadata.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CursorMeta {
     /// Opaque cursor for the next page. Omitted when there is no next page.
@@ -24,6 +25,7 @@ pub struct CursorMeta {
 }
 
 impl CursorMeta {
+    /// Cursor pagination metadata.
     pub fn new() -> CursorMeta {
         CursorMeta { cursor: None }
     }

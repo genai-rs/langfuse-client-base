@@ -1,4 +1,4 @@
-# ExperimentsResponseMeta
+# UtilsCursorMetaResponse
 
 ## Properties
 

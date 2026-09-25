@@ -11,8 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
+/// UtilsCursorMetaResponse : Metadata for cursor-based pagination.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
-pub struct GetScoresV3Meta {
+pub struct UtilsCursorMetaResponse {
     /// Opaque cursor for the next page. Omitted when there is no next page.
     #[serde(
         rename = "cursor",
@@ -21,15 +22,11 @@ pub struct GetScoresV3Meta {
         skip_serializing_if = "Option::is_none"
     )]
     pub cursor: Option<Option<String>>,
-    #[serde(rename = "limit")]
-    pub limit: i32,
 }
 
-impl GetScoresV3Meta {
-    pub fn new(limit: i32) -> GetScoresV3Meta {
-        GetScoresV3Meta {
-            cursor: None,
-            limit,
-        }
+impl UtilsCursorMetaResponse {
+    /// Metadata for cursor-based pagination.
+    pub fn new() -> UtilsCursorMetaResponse {
+        UtilsCursorMetaResponse { cursor: None }
     }
 }
