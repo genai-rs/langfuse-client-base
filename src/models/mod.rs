@@ -814,5 +814,7 @@ pub mod usage_details;
 pub use self::usage_details::UsageDetails;
 pub mod user_meta;
 pub use self::user_meta::UserMeta;
+pub mod utils_cursor_meta_response;
+pub use self::utils_cursor_meta_response::UtilsCursorMetaResponse;
 pub mod utils_meta_response;
 pub use self::utils_meta_response::UtilsMetaResponse;

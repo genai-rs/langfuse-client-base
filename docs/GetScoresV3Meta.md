@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**cursor** | Option<**String**> | Opaque cursor for the next page. Omitted when there is no next page. | [optional]
 **limit** | **i32** |  | 
-**cursor** | Option<**String**> | URL-safe base64 (base64url) cursor for the next page. Absent when there are no more results. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

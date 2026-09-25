@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **start_time_unix_nano** | Option<**serde_json::Value**> | Start time in nanoseconds since Unix epoch | [optional]
 **end_time_unix_nano** | Option<**serde_json::Value**> | End time in nanoseconds since Unix epoch | [optional]
 **attributes** | Option<[**Vec<models::OtelAttribute>**](OtelAttribute.md)> | Span attributes including Langfuse-specific attributes (langfuse.observation.*) | [optional]
-**status** | Option<**serde_json::Value**> | Span status object | [optional]
+**status** | Option<**std::collections::HashMap<String, serde_json::Value>**> | Span status object | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
