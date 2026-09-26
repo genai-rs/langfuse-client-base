@@ -155,5 +155,6 @@ pub mod sessions_api;
 pub mod trace_api;
 pub mod unstable_dashboard_widgets_api;
 pub mod unstable_dashboards_api;
+pub mod unstable_skills_api;
 
 pub mod configuration;
