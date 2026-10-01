@@ -49,10 +49,10 @@ pub enum UnstableSkillsGetError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`unstable_skills_get_file_content`]
+/// struct for typed errors of method [`unstable_skills_get_file_contents`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UnstableSkillsGetFileContentError {
+pub enum UnstableSkillsGetFileContentsError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
     Status403(serde_json::Value),
@@ -205,7 +205,7 @@ pub async fn unstable_skills_delete_version(
     }
 }
 
-/// Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's id with getFileContent to read its text content.
+/// Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's sha256Hash with getFileContents, individually or in batches across manifests.
 #[bon::builder]
 pub async fn unstable_skills_get(
     configuration: &configuration::Configuration,
@@ -267,22 +267,22 @@ pub async fn unstable_skills_get(
     }
 }
 
-/// Read one text file from a persisted skill version using its file id, not its blob id. Returns JSON containing the text content with Cache-Control no-store.
+/// Read a batch of text contents by canonical base64-encoded SHA-256 hashes.
 #[bon::builder]
-pub async fn unstable_skills_get_file_content(
+pub async fn unstable_skills_get_file_contents(
     configuration: &configuration::Configuration,
-    file_id: &str,
-) -> Result<models::UnstableSkillFileContentResponse, Error<UnstableSkillsGetFileContentError>> {
+    sha256_hashes: &str,
+) -> Result<models::UnstableSkillFileContentsResponse, Error<UnstableSkillsGetFileContentsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_path_file_id = file_id;
+    let p_query_sha256_hashes = sha256_hashes;
 
     let uri_str = format!(
-        "{}/api/public/unstable/skills/files/{fileId}/content",
-        configuration.base_path,
-        fileId = crate::apis::urlencode(p_path_file_id)
+        "{}/api/public/unstable/skills/files/content",
+        configuration.base_path
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    req_builder = req_builder.query(&[("sha256Hashes", &p_query_sha256_hashes.to_string())]);
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -305,12 +305,13 @@ pub async fn unstable_skills_get_file_content(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableSkillFileContentResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableSkillFileContentResponse`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableSkillFileContentsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableSkillFileContentsResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<UnstableSkillsGetFileContentError> = serde_json::from_str(&content).ok();
+        let entity: Option<UnstableSkillsGetFileContentsError> =
+            serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,

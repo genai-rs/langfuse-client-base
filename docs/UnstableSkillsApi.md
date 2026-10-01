@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**unstable_skills_create_version**](UnstableSkillsApi.md#unstable_skills_create_version) | **POST** /api/public/unstable/skills | 
 [**unstable_skills_delete_version**](UnstableSkillsApi.md#unstable_skills_delete_version) | **DELETE** /api/public/unstable/skills/{skillName}/versions/{skillVersion} | 
 [**unstable_skills_get**](UnstableSkillsApi.md#unstable_skills_get) | **GET** /api/public/unstable/skills/{skillName} | 
-[**unstable_skills_get_file_content**](UnstableSkillsApi.md#unstable_skills_get_file_content) | **GET** /api/public/unstable/skills/files/{fileId}/content | 
+[**unstable_skills_get_file_contents**](UnstableSkillsApi.md#unstable_skills_get_file_contents) | **GET** /api/public/unstable/skills/files/content | 
 [**unstable_skills_list**](UnstableSkillsApi.md#unstable_skills_list) | **GET** /api/public/unstable/skills | 
 [**unstable_skills_set_labels**](UnstableSkillsApi.md#unstable_skills_set_labels) | **PATCH** /api/public/unstable/skills/{skillName}/versions/{skillVersion} | 
 [**unstable_skills_update**](UnstableSkillsApi.md#unstable_skills_update) | **PATCH** /api/public/unstable/skills/{skillName} | 
@@ -80,7 +80,7 @@ Name | Type | Description  | Required | Notes
 > models::UnstableSkillVersion unstable_skills_get(skill_name, version, label)
 
 
-Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's id with getFileContent to read its text content.
+Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's sha256Hash with getFileContents, individually or in batches across manifests.
 
 ### Parameters
 
@@ -107,23 +107,23 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## unstable_skills_get_file_content
+## unstable_skills_get_file_contents
 
-> models::UnstableSkillFileContentResponse unstable_skills_get_file_content(file_id)
+> models::UnstableSkillFileContentsResponse unstable_skills_get_file_contents(sha256_hashes)
 
 
-Read one text file from a persisted skill version using its file id, not its blob id. Returns JSON containing the text content with Cache-Control no-store.
+Read a batch of text contents by canonical base64-encoded SHA-256 hashes.
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**file_id** | **String** |  | [required] |
+**sha256_hashes** | **String** | Comma-separated list of one to 50 canonical base64-encoded SHA-256 hashes from skill file manifests. URL-encode the value, including +, /, and = characters. | [required] |
 
 ### Return type
 
-[**models::UnstableSkillFileContentResponse**](unstableSkillFileContentResponse.md)
+[**models::UnstableSkillFileContentsResponse**](unstableSkillFileContentsResponse.md)
 
 ### Authorization
 
