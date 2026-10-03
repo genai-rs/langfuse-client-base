@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **release** | Option<**String**> | The release version of the application when the trace was created | 
 **version** | Option<**String**> | The version of the trace | 
 **user_id** | Option<**String**> | The user identifier associated with the trace | 
-**metadata** | Option<**serde_json::Value**> | The metadata associated with the trace. Can be any JSON. | [optional]
+**metadata** | Option<**std::collections::HashMap<String, serde_json::Value>**> | The metadata associated with the trace. Values can be any JSON; non-object metadata sent at ingestion is returned under the `metadata` key. | [optional]
 **tags** | **Vec<String>** | The tags associated with the trace. | 
 **public** | **bool** | Public traces are accessible via url without login | 
 **environment** | **String** | The environment from which this trace originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 

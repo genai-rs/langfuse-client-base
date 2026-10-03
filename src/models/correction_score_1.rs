@@ -64,8 +64,8 @@ pub struct CorrectionScore1 {
     #[serde(rename = "comment", deserialize_with = "Option::deserialize")]
     pub comment: Option<String>,
     /// Metadata associated with the score
-    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
-    pub metadata: Option<serde_json::Value>,
+    #[serde(rename = "metadata")]
+    pub metadata: std::collections::HashMap<String, serde_json::Value>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
     #[serde(rename = "configId", deserialize_with = "Option::deserialize")]
     pub config_id: Option<String>,
@@ -95,7 +95,7 @@ impl CorrectionScore1 {
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         author_user_id: Option<String>,
         comment: Option<String>,
-        metadata: Option<serde_json::Value>,
+        metadata: std::collections::HashMap<String, serde_json::Value>,
         config_id: Option<String>,
         queue_id: Option<String>,
         environment: String,

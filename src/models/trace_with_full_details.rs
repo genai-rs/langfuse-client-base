@@ -50,14 +50,14 @@ pub struct TraceWithFullDetails {
     /// The user identifier associated with the trace
     #[serde(rename = "userId", deserialize_with = "Option::deserialize")]
     pub user_id: Option<String>,
-    /// The metadata associated with the trace. Can be any JSON.
+    /// The metadata associated with the trace. Values can be any JSON; non-object metadata sent at ingestion is returned under the `metadata` key.
     #[serde(
         rename = "metadata",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// The tags associated with the trace.
     #[serde(rename = "tags")]
     pub tags: Vec<String>,

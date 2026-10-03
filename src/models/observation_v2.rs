@@ -159,7 +159,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub metadata: Option<Option<serde_json::Value>>,
+    pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// The model name as provided by the user
     #[serde(
         rename = "model",

@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The last update timestamp of the observation | [optional]
 **input** | Option<**serde_json::Value**> | The input data of the observation | [optional]
 **output** | Option<**serde_json::Value**> | The output data of the observation | [optional]
-**metadata** | Option<**serde_json::Value**> | Additional metadata of the observation | [optional]
+**metadata** | Option<**std::collections::HashMap<String, serde_json::Value>**> | Additional metadata of the observation | [optional]
 **model** | Option<**String**> | The model name as provided by the user | [optional]
 **internal_model_id** | Option<**String**> | The internal model ID matched by Langfuse | [optional]
 **model_parameters** | Option<**serde_json::Value**> | The parameters of the model used for the observation | [optional]
