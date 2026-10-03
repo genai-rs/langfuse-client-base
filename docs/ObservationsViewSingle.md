@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **model_parameters** | Option<**serde_json::Value**> | The parameters of the model used for the observation | 
 **input** | Option<**serde_json::Value**> | The input data of the observation | 
 **version** | Option<**String**> | The version of the observation | 
-**metadata** | Option<**serde_json::Value**> | Additional metadata of the observation | 
+**metadata** | **std::collections::HashMap<String, serde_json::Value>** | Additional metadata of the observation | 
 **output** | Option<**serde_json::Value**> | The output data of the observation | 
 **usage** | [**models::Usage**](Usage.md) |  | 
 **level** | [**models::ObservationLevel**](ObservationLevel.md) |  | 

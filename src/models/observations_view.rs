@@ -50,8 +50,8 @@ pub struct ObservationsView {
     #[serde(rename = "version", deserialize_with = "Option::deserialize")]
     pub version: Option<String>,
     /// Additional metadata of the observation
-    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
-    pub metadata: Option<serde_json::Value>,
+    #[serde(rename = "metadata")]
+    pub metadata: std::collections::HashMap<String, serde_json::Value>,
     /// The output data of the observation
     #[serde(rename = "output", deserialize_with = "Option::deserialize")]
     pub output: Option<serde_json::Value>,
@@ -137,7 +137,7 @@ impl ObservationsView {
         model_parameters: Option<serde_json::Value>,
         input: Option<serde_json::Value>,
         version: Option<String>,
-        metadata: Option<serde_json::Value>,
+        metadata: std::collections::HashMap<String, serde_json::Value>,
         output: Option<serde_json::Value>,
         usage: models::Usage,
         level: models::ObservationLevel,
