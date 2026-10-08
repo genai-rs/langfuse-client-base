@@ -12,21 +12,21 @@ Method | HTTP request | Description
 
 ## scores_create
 
-> models::CreateScoreResponse scores_create(create_score_request)
+> models::CreateScoresResponse scores_create(create_scores_request)
 
 
-Create a score (supports trace, observation, session, and dataset run scores)
+Create scores asynchronously. Single score: 200 with ID. Batch: 202 if accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; batches return 202 or 207.
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**create_score_request** | [**CreateScoreRequest**](CreateScoreRequest.md) |  | [required] |
+**create_scores_request** | [**CreateScoresRequest**](CreateScoresRequest.md) |  | [required] |
 
 ### Return type
 
-[**models::CreateScoreResponse**](CreateScoreResponse.md)
+[**models::CreateScoresResponse**](CreateScoresResponse.md)
 
 ### Authorization
 

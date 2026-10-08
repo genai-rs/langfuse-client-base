@@ -13,7 +13,15 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ProjectsCreateApiKeyRequest {
-    /// Optional note for the API key
+    /// Optional name for the API key. Cannot be provided together with note, even if either value is an empty string.
+    #[serde(
+        rename = "name",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub name: Option<Option<String>>,
+    /// Deprecated alias for name. Cannot be provided together with name, even if either value is an empty string.
     #[serde(
         rename = "note",
         default,
@@ -21,6 +29,14 @@ pub struct ProjectsCreateApiKeyRequest {
         skip_serializing_if = "Option::is_none"
     )]
     pub note: Option<Option<String>>,
+    /// Optional expiration timestamp in ISO 8601 format. Must be in the future. Omit or set to null for a key that does not expire.
+    #[serde(
+        rename = "expiresAt",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// Optional predefined public key. Must start with 'pk-lf-'. If provided, secretKey must also be provided.
     #[serde(
         rename = "publicKey",
@@ -42,7 +58,9 @@ pub struct ProjectsCreateApiKeyRequest {
 impl ProjectsCreateApiKeyRequest {
     pub fn new() -> ProjectsCreateApiKeyRequest {
         ProjectsCreateApiKeyRequest {
+            name: None,
             note: None,
+            expires_at: None,
             public_key: None,
             secret_key: None,
         }

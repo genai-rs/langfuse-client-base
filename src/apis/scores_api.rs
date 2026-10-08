@@ -49,14 +49,14 @@ pub enum ScoresGetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create a score (supports trace, observation, session, and dataset run scores)
+/// Create scores asynchronously. Single score: 200 with ID. Batch: 202 if accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; batches return 202 or 207.
 #[bon::builder]
 pub async fn scores_create(
     configuration: &configuration::Configuration,
-    create_score_request: models::CreateScoreRequest,
-) -> Result<models::CreateScoreResponse, Error<ScoresCreateError>> {
+    create_scores_request: models::CreateScoresRequest,
+) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_body_create_score_request = create_score_request;
+    let p_body_create_scores_request = create_scores_request;
 
     let uri_str = format!("{}/api/public/scores", configuration.base_path);
     let mut req_builder = configuration
@@ -69,7 +69,7 @@ pub async fn scores_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_score_request);
+    req_builder = req_builder.json(&p_body_create_scores_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -86,8 +86,8 @@ pub async fn scores_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateScoreResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateScoreResponse`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateScoresResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateScoresResponse`")))),
         }
     } else {
         let content = resp.text().await?;

@@ -64,8 +64,13 @@ pub struct GetScoresResponseDataBoolean {
     #[serde(rename = "comment", deserialize_with = "Option::deserialize")]
     pub comment: Option<String>,
     /// Metadata associated with the score
-    #[serde(rename = "metadata")]
-    pub metadata: std::collections::HashMap<String, serde_json::Value>,
+    #[serde(
+        rename = "metadata",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
     #[serde(rename = "configId", deserialize_with = "Option::deserialize")]
     pub config_id: Option<String>,
@@ -95,7 +100,6 @@ impl GetScoresResponseDataBoolean {
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         author_user_id: Option<String>,
         comment: Option<String>,
-        metadata: std::collections::HashMap<String, serde_json::Value>,
         config_id: Option<String>,
         queue_id: Option<String>,
         environment: String,
@@ -115,7 +119,7 @@ impl GetScoresResponseDataBoolean {
             updated_at,
             author_user_id,
             comment,
-            metadata,
+            metadata: None,
             config_id,
             queue_id,
             environment,
