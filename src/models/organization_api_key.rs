@@ -17,6 +17,7 @@ pub struct OrganizationApiKey {
     pub id: String,
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    /// Expiration timestamp. Null if the key does not expire.
     #[serde(
         rename = "expiresAt",
         default,
@@ -31,6 +32,15 @@ pub struct OrganizationApiKey {
         skip_serializing_if = "Option::is_none"
     )]
     pub last_used_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    /// Name of the API key. Contains the same value as note; null if no name was provided.
+    #[serde(
+        rename = "name",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub name: Option<Option<String>>,
+    /// Deprecated alias for name. Contains the same value as name.
     #[serde(
         rename = "note",
         default,
@@ -56,6 +66,7 @@ impl OrganizationApiKey {
             created_at,
             expires_at: None,
             last_used_at: None,
+            name: None,
             note: None,
             public_key,
             display_secret_key,

@@ -20,7 +20,8 @@ pub struct StringObjectEvaluationRuleFilter1 {
     #[serde(rename = "key")]
     pub key: String,
     #[serde(rename = "operator")]
-    pub operator: models::EvaluationRuleStringFilterOperator,
+    pub operator: models::EvaluationRuleStringObjectFilterOperator,
+    /// Value to compare against. Ignored for `is set` / `is not set`; send `\"\"`.
     #[serde(rename = "value")]
     pub value: String,
     #[serde(rename = "type")]
@@ -31,7 +32,7 @@ impl StringObjectEvaluationRuleFilter1 {
     pub fn new(
         column: String,
         key: String,
-        operator: models::EvaluationRuleStringFilterOperator,
+        operator: models::EvaluationRuleStringObjectFilterOperator,
         value: String,
         r#type: Type,
     ) -> StringObjectEvaluationRuleFilter1 {

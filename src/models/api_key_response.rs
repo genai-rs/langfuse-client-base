@@ -18,12 +18,29 @@ pub struct ApiKeyResponse {
     pub id: String,
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    /// Expiration timestamp. Null if the key does not expire.
+    #[serde(
+        rename = "expiresAt",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(rename = "publicKey")]
     pub public_key: String,
     #[serde(rename = "secretKey")]
     pub secret_key: String,
     #[serde(rename = "displaySecretKey")]
     pub display_secret_key: String,
+    /// Name of the API key. Contains the same value as note; null if no name was provided.
+    #[serde(
+        rename = "name",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub name: Option<Option<String>>,
+    /// Deprecated alias for name. Contains the same value as name.
     #[serde(
         rename = "note",
         default,
@@ -45,9 +62,11 @@ impl ApiKeyResponse {
         ApiKeyResponse {
             id,
             created_at,
+            expires_at: None,
             public_key,
             secret_key,
             display_secret_key,
+            name: None,
             note: None,
         }
     }
