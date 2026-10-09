@@ -20,6 +20,8 @@ pub enum BlobStorageIntegrationType {
     S3Compatible,
     #[serde(rename = "AZURE_BLOB_STORAGE")]
     AzureBlobStorage,
+    #[serde(rename = "GOOGLE_CLOUD_STORAGE")]
+    GoogleCloudStorage,
 }
 
 impl std::fmt::Display for BlobStorageIntegrationType {
@@ -28,6 +30,7 @@ impl std::fmt::Display for BlobStorageIntegrationType {
             Self::S3 => write!(f, "S3"),
             Self::S3Compatible => write!(f, "S3_COMPATIBLE"),
             Self::AzureBlobStorage => write!(f, "AZURE_BLOB_STORAGE"),
+            Self::GoogleCloudStorage => write!(f, "GOOGLE_CLOUD_STORAGE"),
         }
     }
 }

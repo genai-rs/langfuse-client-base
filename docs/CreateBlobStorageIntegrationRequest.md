@@ -6,11 +6,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **project_id** | **String** | ID of the project in which to configure the blob storage integration | 
 **r#type** | [**models::BlobStorageIntegrationType**](BlobStorageIntegrationType.md) |  | 
-**bucket_name** | **String** | Name of the storage bucket. For AZURE_BLOB_STORAGE, must be a valid Azure container name (3-63 chars, lowercase letters, numbers, and hyphens only, must start and end with a letter or number, no consecutive hyphens). | 
-**endpoint** | Option<**String**> | Custom endpoint URL (required for S3_COMPATIBLE type) | [optional]
-**region** | **String** | Storage region used by S3-compatible clients (AWS, GCS, Cloudflare R2, MinIO, Azure location IDs such as eastus, OCI). Leading and trailing whitespace is removed. The remaining value must be 1-63 letters, numbers, or hyphens, and cannot start or end with a hyphen. Examples: us-east-1, europe-west1, eastus, auto. | 
-**access_key_id** | Option<**String**> | Access key ID for authentication | [optional]
-**secret_access_key** | Option<**String**> | Secret access key for authentication (will be encrypted when stored) | [optional]
+**bucket_name** | **String** | Name of the storage bucket. For AZURE_BLOB_STORAGE, must be a valid Azure container name (3-63 chars, lowercase letters, numbers, and hyphens only, must start and end with a letter or number, no consecutive hyphens). For GOOGLE_CLOUD_STORAGE with default credentials, the bucket must be listed in `LANGFUSE_BLOB_STORAGE_GCS_ALLOWED_BUCKETS`. | 
+**endpoint** | Option<**String**> | Custom endpoint URL (required for S3_COMPATIBLE type). Ignored for GOOGLE_CLOUD_STORAGE. | [optional]
+**region** | **String** | Storage region used by S3-compatible clients (AWS, GCS, Cloudflare R2, MinIO, Azure location IDs such as eastus, OCI). Leading and trailing whitespace is removed. The remaining value must be 1-63 letters, numbers, or hyphens, and cannot start or end with a hyphen. Examples: us-east-1, europe-west1, eastus, auto. Not used by GOOGLE_CLOUD_STORAGE; pass auto. | 
+**access_key_id** | Option<**String**> | Access key ID for authentication. Not used for GOOGLE_CLOUD_STORAGE. | [optional]
+**secret_access_key** | Option<**String**> | Secret access key for authentication (will be encrypted when stored). When omitted on update, the stored secret is kept, unless the type changes between GOOGLE_CLOUD_STORAGE and another type.  For GOOGLE_CLOUD_STORAGE, a GCP service account JSON key. On self-hosted deployments, pass `__GCS_DEFAULT_CREDENTIALS__` instead to use the deployment's Application Default Credentials; the bucket must then be listed in `LANGFUSE_BLOB_STORAGE_GCS_ALLOWED_BUCKETS`. Default credentials are not available on Langfuse Cloud. | [optional]
 **prefix** | Option<**String**> | Path prefix for exported files (must end with forward slash if provided) | [optional]
 **export_frequency** | [**models::BlobStorageExportFrequency**](BlobStorageExportFrequency.md) |  | 
 **enabled** | **bool** | Whether the integration is active | 
