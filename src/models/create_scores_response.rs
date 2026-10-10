@@ -14,13 +14,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScoresResponse {
+    CreateScoreBatchResults(Box<models::CreateScoreBatchResults>),
     CreateScoreResponse(Box<models::CreateScoreResponse>),
     CreateScoreBatchResponse(Box<models::CreateScoreBatchResponse>),
-    CreateScoreBatchResults(Box<models::CreateScoreBatchResults>),
 }
 
 impl Default for CreateScoresResponse {
     fn default() -> Self {
-        Self::CreateScoreResponse(Default::default())
+        Self::CreateScoreBatchResults(Default::default())
     }
 }
