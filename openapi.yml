@@ -15921,6 +15921,9 @@ components:
       properties:
         name:
           type: string
+          description: >-
+            The full prompt name, including any folder path, with at most 255
+            characters.
         prompt:
           type: array
           items:
@@ -15955,6 +15958,9 @@ components:
       properties:
         name:
           type: string
+          description: >-
+            The full prompt name, including any folder path, with at most 255
+            characters.
         prompt:
           type: string
         config:
