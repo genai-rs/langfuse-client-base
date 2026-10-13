@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateChatPromptRequest {
+    /// The full prompt name, including any folder path, with at most 255 characters.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "prompt")]

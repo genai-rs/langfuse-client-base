@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **String** |  | 
+**name** | **String** | The full prompt name, including any folder path, with at most 255 characters. | 
 **prompt** | **String** |  | 
 **config** | Option<**serde_json::Value**> |  | [optional]
 **r#type** | Option<[**models::CreateTextPromptType**](CreateTextPromptType.md)> |  | [optional]
