@@ -205,18 +205,20 @@ pub async fn unstable_skills_delete_version(
     }
 }
 
-/// Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's sha256Hash with getFileContents, individually or in batches across manifests.
+/// Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Set includeContent to return file contents inline, or use each file's sha256Hash with getFileContents.
 #[bon::builder]
 pub async fn unstable_skills_get(
     configuration: &configuration::Configuration,
     skill_name: &str,
     version: Option<i32>,
     label: Option<&str>,
+    include_content: Option<bool>,
 ) -> Result<models::UnstableSkillVersion, Error<UnstableSkillsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
     let p_query_version = version;
     let p_query_label = label;
+    let p_query_include_content = include_content;
 
     let uri_str = format!(
         "{}/api/public/unstable/skills/{skillName}",
@@ -230,6 +232,9 @@ pub async fn unstable_skills_get(
     }
     if let Some(ref param_value) = p_query_label {
         req_builder = req_builder.query(&[("label", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_include_content {
+        req_builder = req_builder.query(&[("includeContent", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

@@ -25,6 +25,14 @@ pub struct UnstableSkillFile {
     pub content_type: String,
     #[serde(rename = "contentLength")]
     pub content_length: i64,
+    /// UTF-8 text content, included when fetching a skill with includeContent enabled.
+    #[serde(
+        rename = "content",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub content: Option<Option<String>>,
 }
 
 impl UnstableSkillFile {
@@ -43,6 +51,7 @@ impl UnstableSkillFile {
             sha256_hash,
             content_type,
             content_length,
+            content: None,
         }
     }
 }

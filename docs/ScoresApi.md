@@ -5,24 +5,24 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**scores_create**](ScoresApi.md#scores_create) | **POST** /api/public/scores | 
-[**scores_get_by_id**](ScoresApi.md#scores_get_by_id) | **GET** /api/public/v2/scores/{scoreId} | 
-[**scores_get_many**](ScoresApi.md#scores_get_many) | **GET** /api/public/v2/scores | 
+[**scores_delete**](ScoresApi.md#scores_delete) | **DELETE** /api/public/scores/{scoreId} | 
+[**scores_get_many**](ScoresApi.md#scores_get_many) | **GET** /api/public/v3/scores | 
 
 
 
 ## scores_create
 
-> models::CreateScoresResponse scores_create(create_scores_request)
+> models::CreateScoresResponse scores_create(create_score_request)
 
 
-Create scores asynchronously. Single score: 200 with ID. Batch: 202 if accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; batches return 202 or 207.
+Create scores asynchronously from a list of scores. Returns 202 if all scores are accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; the endpoint returns 202 or 207.
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**create_scores_request** | [**CreateScoresRequest**](CreateScoresRequest.md) |  | [required] |
+**create_score_request** | [**Vec<models::CreateScoreRequest>**](CreateScoreRequest.md) |  | [required] |
 
 ### Return type
 
@@ -40,12 +40,12 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## scores_get_by_id
+## scores_delete
 
-> models::Score scores_get_by_id(score_id)
+> scores_delete(score_id)
 
 
-**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` with the `id` filter instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a score (supports both trace and session scores)
+Delete a score (supports both trace and session scores)
 
 ### Parameters
 
@@ -56,7 +56,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::Score**](Score.md)
+ (empty response body)
 
 ### Authorization
 
@@ -72,41 +72,40 @@ Name | Type | Description  | Required | Notes
 
 ## scores_get_many
 
-> models::GetScoresResponse scores_get_many(page, limit, user_id, name, from_timestamp, to_timestamp, environment, source, operator, value, score_ids, config_id, session_id, dataset_run_id, trace_id, observation_id, queue_id, data_type, trace_tags, fields, filter)
+> models::GetScoresV3Response scores_get_many(limit, cursor, fields, id, name, source, data_type, environment, config_id, queue_id, author_user_id, value, value_min, value_max, trace_id, session_id, observation_id, experiment_id, from_timestamp, to_timestamp)
 
 
-**Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of scores (supports both trace and session scores)
+Get a list of scores with a polymorphic `value` field (v3).  The `value` field type depends on `dataType`: - `NUMERIC` → number - `BOOLEAN` → boolean - `CATEGORICAL`, `TEXT`, `CORRECTION` → string  The response always includes the core fields: id, projectId, name, value, dataType, source, timestamp, environment, createdAt, updatedAt.  Additional field groups can be requested via the `fields` parameter: - `details` — adds comment, configId, metadata - `subject` — adds the subject object describing the entity the score   is attached to: kind (trace, observation, session, or experiment),   id, and traceId for observation-level scores - `annotation` — adds authorUserId, queueId  Unknown group names return HTTP 400.
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**page** | Option<**i32**> | Page number, starts at 1. |  |
-**limit** | Option<**i32**> | Limit of items per page. Maximum 100. Defaults to 50. Requests with a limit greater than 100 return HTTP 400. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
-**user_id** | Option<**String**> | Retrieve only scores with this userId associated to the trace. |  |
-**name** | Option<**String**> | Retrieve only scores with this name. |  |
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include scores created on or after a certain datetime (ISO 8601) |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include scores created before a certain datetime (ISO 8601) |  |
-**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for scores where the environment is one of the provided values. |  |
-**source** | Option<[**ScoreSource**](ScoreSource.md)> | Retrieve only scores from a specific source. |  |
-**operator** | Option<**String**> | Retrieve only scores with <operator> value. |  |
-**value** | Option<**f64**> | Retrieve only scores with <operator> value. |  |
-**score_ids** | Option<**String**> | Comma-separated list of score IDs to limit the results to. |  |
-**config_id** | Option<**String**> | Retrieve only scores with a specific configId. |  |
-**session_id** | Option<**String**> | Retrieve only scores with a specific sessionId. |  |
-**dataset_run_id** | Option<**String**> | Retrieve only scores with a specific datasetRunId. |  |
-**trace_id** | Option<**String**> | Retrieve only scores with a specific traceId. |  |
-**observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter scores by. |  |
-**queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
-**data_type** | Option<[**ScoreDataType**](ScoreDataType.md)> | Retrieve only scores with a specific dataType. |  |
-**trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
-**fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment, sessionId). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
-**filter** | Option<**String**> | A JSON stringified array of filter objects. Each object requires type, column, operator, and value. Supports filtering by score metadata using the stringObject type. Example: [{\"type\":\"stringObject\",\"column\":\"metadata\",\"key\":\"user_id\",\"operator\":\"=\",\"value\":\"abc123\"}]. Supported types: stringObject (metadata key-value filtering), string, number, datetime, stringOptions, arrayOptions. Supported operators for stringObject: =, contains, does not contain, starts with, ends with, is set, is not set. Use is set / is not set to filter on metadata key presence. An empty value for contains, starts with, or ends with is treated as is set (key presence). |  |
+**limit** | Option<**i32**> | Number of items per page. Maximum 100, default 50. Requests with a limit greater than 100 return HTTP 400. |  |
+**cursor** | Option<**String**> | URL-safe base64 (base64url) cursor for pagination. Use the cursor from the previous response to get the next page. Absent on the final page. |  |
+**fields** | Option<**String**> | Comma-separated field groups to include in addition to the always-returned core fields. Allowed: details, subject, annotation — see the endpoint description for the fields each group adds. Unknown names return HTTP 400. |  |
+**id** | Option<**String**> | Comma-separated list of score IDs to filter by (OR within, AND across filters). |  |
+**name** | Option<**String**> | Comma-separated list of score names to filter by. |  |
+**source** | Option<**String**> | Comma-separated list of score sources to filter by (e.g. API, ANNOTATION, EVAL). Case-insensitive — `api` and `API` are equivalent. |  |
+**data_type** | Option<**String**> | Comma-separated list of data types to filter by (NUMERIC, BOOLEAN, CATEGORICAL, TEXT, CORRECTION). Case-insensitive — `numeric` and `NUMERIC` are equivalent. Must be a single value when used with value, valueMin, or valueMax; otherwise the request returns HTTP 400. Must be NUMERIC when used with valueMin or valueMax. |  |
+**environment** | Option<**String**> | Comma-separated list of environments to filter by. |  |
+**config_id** | Option<**String**> | Comma-separated list of score config IDs to filter by. |  |
+**queue_id** | Option<**String**> | Comma-separated list of annotation queue IDs to filter by. |  |
+**author_user_id** | Option<**String**> | Comma-separated list of author user IDs to filter by. |  |
+**value** | Option<**String**> | Comma-separated list of exact values to filter by. Requires a single dataType from NUMERIC, BOOLEAN, or CATEGORICAL; any other dataType, multiple dataTypes, or omitting dataType returns HTTP 400. For BOOLEAN, each value must be \"true\" or \"false\"; for NUMERIC, each value must be a finite number. Otherwise the request returns HTTP 400. |  |
+**value_min** | Option<**f64**> | Inclusive lower bound on the numeric value. Requires dataType=NUMERIC as a single value; otherwise the request returns HTTP 400. |  |
+**value_max** | Option<**f64**> | Inclusive upper bound on the numeric value. Requires dataType=NUMERIC as a single value; otherwise the request returns HTTP 400. |  |
+**trace_id** | Option<**String**> | Comma-separated list of trace IDs to filter by. Mutually exclusive with sessionId, experimentId. May be combined with observationId to scope the observation lookup to a specific trace. |  |
+**session_id** | Option<**String**> | Comma-separated list of session IDs to filter by. Mutually exclusive with traceId, observationId, experimentId. |  |
+**observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter by. Requires traceId to be specified, because observation IDs are scoped to a trace. Mutually exclusive with sessionId, experimentId. Returns HTTP 400 when used without traceId. |  |
+**experiment_id** | Option<**String**> | Comma-separated list of dataset run IDs (experiment IDs) to filter by. Mutually exclusive with traceId, sessionId, observationId. |  |
+**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Inclusive lower bound on the score timestamp. |  |
+**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Exclusive upper bound on the score timestamp. |  |
 
 ### Return type
 
-[**models::GetScoresResponse**](GetScoresResponse.md)
+[**models::GetScoresV3Response**](GetScoresV3Response.md)
 
 ### Authorization
 

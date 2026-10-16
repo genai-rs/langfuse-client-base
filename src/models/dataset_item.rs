@@ -43,6 +43,14 @@ pub struct DatasetItem {
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "updatedAt")]
     pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    /// When this version of the dataset item became current. Listing dataset items with a `version` at or after this timestamp returns this item version, until the item is changed again. Self-hosted deployments that set `LANGFUSE_DATASET_SERVICE_WRITE_TO_VERSIONED_IMPLEMENTATION=false` update items in place, so there it stays at the item's first write.
+    #[serde(
+        rename = "version",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub version: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     /// Resolved Langfuse media references found in input, expectedOutput, and metadata.
     #[serde(rename = "mediaReferences")]
     pub media_references: Vec<models::DatasetItemMediaReference>,
@@ -75,6 +83,7 @@ impl DatasetItem {
             dataset_name,
             created_at,
             updated_at,
+            version: None,
             media_references,
         }
     }

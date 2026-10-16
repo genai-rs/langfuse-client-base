@@ -94,6 +94,14 @@ pub struct CreateScoreRequest {
     pub config_id: Option<Option<String>>,
     #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
     pub source: Option<models::CreateScoreSource>,
+    /// The timestamp of the score, as an ISO 8601 datetime with a timezone offset. Defaults to the time the request is received. To update an existing score, send it again with the same id and timestamp.
+    #[serde(
+        rename = "timestamp",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub timestamp: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
 }
 
 impl CreateScoreRequest {
@@ -113,6 +121,7 @@ impl CreateScoreRequest {
             data_type: None,
             config_id: None,
             source: None,
+            timestamp: None,
         }
     }
 }

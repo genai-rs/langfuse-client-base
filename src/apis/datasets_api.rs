@@ -25,46 +25,10 @@ pub enum DatasetsCreateError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`datasets_delete_run`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum DatasetsDeleteRunError {
-    Status400(serde_json::Value),
-    Status401(serde_json::Value),
-    Status403(serde_json::Value),
-    Status404(serde_json::Value),
-    Status405(serde_json::Value),
-    UnknownValue(serde_json::Value),
-}
-
 /// struct for typed errors of method [`datasets_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DatasetsGetError {
-    Status400(serde_json::Value),
-    Status401(serde_json::Value),
-    Status403(serde_json::Value),
-    Status404(serde_json::Value),
-    Status405(serde_json::Value),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`datasets_get_run`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum DatasetsGetRunError {
-    Status400(serde_json::Value),
-    Status401(serde_json::Value),
-    Status403(serde_json::Value),
-    Status404(serde_json::Value),
-    Status405(serde_json::Value),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`datasets_get_runs`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum DatasetsGetRunsError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
     Status403(serde_json::Value),
@@ -136,64 +100,6 @@ pub async fn datasets_create(
     }
 }
 
-/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Delete a dataset run and all its run items. This action is irreversible.
-#[deprecated]
-#[bon::builder]
-pub async fn datasets_delete_run(
-    configuration: &configuration::Configuration,
-    dataset_name: &str,
-    run_name: &str,
-) -> Result<models::DeleteDatasetRunResponse, Error<DatasetsDeleteRunError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_path_dataset_name = dataset_name;
-    let p_path_run_name = run_name;
-
-    let uri_str = format!(
-        "{}/api/public/datasets/{datasetName}/runs/{runName}",
-        configuration.base_path,
-        datasetName = crate::apis::urlencode(p_path_dataset_name),
-        runName = crate::apis::urlencode(p_path_run_name)
-    );
-    let mut req_builder = configuration
-        .client
-        .request(reqwest::Method::DELETE, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteDatasetRunResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteDatasetRunResponse`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<DatasetsDeleteRunError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
-            status,
-            content,
-            entity,
-        }))
-    }
-}
-
 /// Get a dataset
 #[bon::builder]
 pub async fn datasets_get(
@@ -238,125 +144,6 @@ pub async fn datasets_get(
     } else {
         let content = resp.text().await?;
         let entity: Option<DatasetsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
-            status,
-            content,
-            entity,
-        }))
-    }
-}
-
-/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a dataset run and its items
-#[deprecated]
-#[bon::builder]
-pub async fn datasets_get_run(
-    configuration: &configuration::Configuration,
-    dataset_name: &str,
-    run_name: &str,
-) -> Result<models::DatasetRunWithItems, Error<DatasetsGetRunError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_path_dataset_name = dataset_name;
-    let p_path_run_name = run_name;
-
-    let uri_str = format!(
-        "{}/api/public/datasets/{datasetName}/runs/{runName}",
-        configuration.base_path,
-        datasetName = crate::apis::urlencode(p_path_dataset_name),
-        runName = crate::apis::urlencode(p_path_run_name)
-    );
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DatasetRunWithItems`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DatasetRunWithItems`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<DatasetsGetRunError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
-            status,
-            content,
-            entity,
-        }))
-    }
-}
-
-/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset runs are replaced by experiments; use GET /api/public/experiments instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get dataset runs
-#[deprecated]
-#[bon::builder]
-pub async fn datasets_get_runs(
-    configuration: &configuration::Configuration,
-    dataset_name: &str,
-    page: Option<i32>,
-    limit: Option<i32>,
-) -> Result<models::PaginatedDatasetRuns, Error<DatasetsGetRunsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_path_dataset_name = dataset_name;
-    let p_query_page = page;
-    let p_query_limit = limit;
-
-    let uri_str = format!(
-        "{}/api/public/datasets/{datasetName}/runs",
-        configuration.base_path,
-        datasetName = crate::apis::urlencode(p_path_dataset_name)
-    );
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref param_value) = p_query_page {
-        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_limit {
-        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
-    }
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedDatasetRuns`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedDatasetRuns`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<DatasetsGetRunsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,

@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **dataset_name** | **String** |  | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**version** | Option<**chrono::DateTime<chrono::FixedOffset>**> | When this version of the dataset item became current. Listing dataset items with a `version` at or after this timestamp returns this item version, until the item is changed again. Self-hosted deployments that set `LANGFUSE_DATASET_SERVICE_WRITE_TO_VERSIONED_IMPLEMENTATION=false` update items in place, so there it stays at the item's first write. | [optional]
 **media_references** | [**Vec<models::DatasetItemMediaReference>**](DatasetItemMediaReference.md) | Resolved Langfuse media references found in input, expectedOutput, and metadata. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
