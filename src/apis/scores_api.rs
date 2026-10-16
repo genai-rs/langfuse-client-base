@@ -25,10 +25,10 @@ pub enum ScoresCreateError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`scores_get_by_id`]
+/// struct for typed errors of method [`scores_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ScoresGetByIdError {
+pub enum ScoresDeleteError {
     Status400(serde_json::Value),
     Status401(serde_json::Value),
     Status403(serde_json::Value),
@@ -49,14 +49,14 @@ pub enum ScoresGetManyError {
     UnknownValue(serde_json::Value),
 }
 
-/// Create scores asynchronously. Single score: 200 with ID. Batch: 202 if accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; batches return 202 or 207.
+/// Create scores asynchronously from a list of scores. Returns 202 if all scores are accepted, or 207 with accepted/rejected counts and error messages. Do not automatically retry a 207 batch. The generated reference shows only 200; the endpoint returns 202 or 207.
 #[bon::builder]
 pub async fn scores_create(
     configuration: &configuration::Configuration,
-    create_scores_request: models::CreateScoresRequest,
+    create_score_request: Vec<models::CreateScoreRequest>,
 ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_body_create_scores_request = create_scores_request;
+    let p_body_create_score_request = create_score_request;
 
     let uri_str = format!("{}/api/public/scores", configuration.base_path);
     let mut req_builder = configuration
@@ -69,7 +69,7 @@ pub async fn scores_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_scores_request);
+    req_builder = req_builder.json(&p_body_create_score_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -100,22 +100,23 @@ pub async fn scores_create(
     }
 }
 
-/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` with the `id` filter instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a score (supports both trace and session scores)
-#[deprecated]
+/// Delete a score (supports both trace and session scores)
 #[bon::builder]
-pub async fn scores_get_by_id(
+pub async fn scores_delete(
     configuration: &configuration::Configuration,
     score_id: &str,
-) -> Result<models::Score, Error<ScoresGetByIdError>> {
+) -> Result<(), Error<ScoresDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_score_id = score_id;
 
     let uri_str = format!(
-        "{}/api/public/v2/scores/{scoreId}",
+        "{}/api/public/scores/{scoreId}",
         configuration.base_path,
         scoreId = crate::apis::urlencode(p_path_score_id)
     );
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+    let mut req_builder = configuration
+        .client
+        .request(reqwest::Method::DELETE, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -128,23 +129,12 @@ pub async fn scores_get_by_id(
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Score`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Score`")))),
-        }
+        Ok(())
     } else {
         let content = resp.text().await?;
-        let entity: Option<ScoresGetByIdError> = serde_json::from_str(&content).ok();
+        let entity: Option<ScoresDeleteError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent {
             status,
             content,
@@ -153,153 +143,115 @@ pub async fn scores_get_by_id(
     }
 }
 
-/// **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v3/scores` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of scores (supports both trace and session scores)
-#[deprecated]
+/// Get a list of scores with a polymorphic `value` field (v3).  The `value` field type depends on `dataType`: - `NUMERIC` → number - `BOOLEAN` → boolean - `CATEGORICAL`, `TEXT`, `CORRECTION` → string  The response always includes the core fields: id, projectId, name, value, dataType, source, timestamp, environment, createdAt, updatedAt.  Additional field groups can be requested via the `fields` parameter: - `details` — adds comment, configId, metadata - `subject` — adds the subject object describing the entity the score   is attached to: kind (trace, observation, session, or experiment),   id, and traceId for observation-level scores - `annotation` — adds authorUserId, queueId  Unknown group names return HTTP 400.
 #[bon::builder]
 pub async fn scores_get_many(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
     limit: Option<i32>,
-    user_id: Option<&str>,
+    cursor: Option<&str>,
+    fields: Option<&str>,
+    id: Option<&str>,
     name: Option<&str>,
+    source: Option<&str>,
+    data_type: Option<&str>,
+    environment: Option<&str>,
+    config_id: Option<&str>,
+    queue_id: Option<&str>,
+    author_user_id: Option<&str>,
+    value: Option<&str>,
+    value_min: Option<f64>,
+    value_max: Option<f64>,
+    trace_id: Option<&str>,
+    session_id: Option<&str>,
+    observation_id: Option<&str>,
+    experiment_id: Option<&str>,
     from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    environment: Option<Vec<String>>,
-    source: Option<models::ScoreSource>,
-    operator: Option<&str>,
-    value: Option<f64>,
-    score_ids: Option<&str>,
-    config_id: Option<&str>,
-    session_id: Option<&str>,
-    dataset_run_id: Option<&str>,
-    trace_id: Option<&str>,
-    observation_id: Option<&str>,
-    queue_id: Option<&str>,
-    data_type: Option<models::ScoreDataType>,
-    trace_tags: Option<Vec<String>>,
-    fields: Option<&str>,
-    filter: Option<&str>,
-) -> Result<models::GetScoresResponse, Error<ScoresGetManyError>> {
+) -> Result<models::GetScoresV3Response, Error<ScoresGetManyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_query_page = page;
     let p_query_limit = limit;
-    let p_query_user_id = user_id;
+    let p_query_cursor = cursor;
+    let p_query_fields = fields;
+    let p_query_id = id;
     let p_query_name = name;
+    let p_query_source = source;
+    let p_query_data_type = data_type;
+    let p_query_environment = environment;
+    let p_query_config_id = config_id;
+    let p_query_queue_id = queue_id;
+    let p_query_author_user_id = author_user_id;
+    let p_query_value = value;
+    let p_query_value_min = value_min;
+    let p_query_value_max = value_max;
+    let p_query_trace_id = trace_id;
+    let p_query_session_id = session_id;
+    let p_query_observation_id = observation_id;
+    let p_query_experiment_id = experiment_id;
     let p_query_from_timestamp = from_timestamp;
     let p_query_to_timestamp = to_timestamp;
-    let p_query_environment = environment;
-    let p_query_source = source;
-    let p_query_operator = operator;
-    let p_query_value = value;
-    let p_query_score_ids = score_ids;
-    let p_query_config_id = config_id;
-    let p_query_session_id = session_id;
-    let p_query_dataset_run_id = dataset_run_id;
-    let p_query_trace_id = trace_id;
-    let p_query_observation_id = observation_id;
-    let p_query_queue_id = queue_id;
-    let p_query_data_type = data_type;
-    let p_query_trace_tags = trace_tags;
-    let p_query_fields = fields;
-    let p_query_filter = filter;
 
-    let uri_str = format!("{}/api/public/v2/scores", configuration.base_path);
+    let uri_str = format!("{}/api/public/v3/scores", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_query_page {
-        req_builder = req_builder.query(&[("page", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_query_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_query_user_id {
-        req_builder = req_builder.query(&[("userId", &param_value.to_string())]);
+    if let Some(ref param_value) = p_query_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_fields {
+        req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_id {
+        req_builder = req_builder.query(&[("id", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_name {
         req_builder = req_builder.query(&[("name", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_source {
+        req_builder = req_builder.query(&[("source", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_data_type {
+        req_builder = req_builder.query(&[("dataType", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_environment {
+        req_builder = req_builder.query(&[("environment", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_config_id {
+        req_builder = req_builder.query(&[("configId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_queue_id {
+        req_builder = req_builder.query(&[("queueId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_author_user_id {
+        req_builder = req_builder.query(&[("authorUserId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_value {
+        req_builder = req_builder.query(&[("value", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_value_min {
+        req_builder = req_builder.query(&[("valueMin", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_value_max {
+        req_builder = req_builder.query(&[("valueMax", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_trace_id {
+        req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_session_id {
+        req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_observation_id {
+        req_builder = req_builder.query(&[("observationId", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_query_experiment_id {
+        req_builder = req_builder.query(&[("experimentId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
         req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
         req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_environment {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("environment".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "environment",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
-    }
-    if let Some(ref param_value) = p_query_source {
-        req_builder = req_builder.query(&[("source", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_operator {
-        req_builder = req_builder.query(&[("operator", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_value {
-        req_builder = req_builder.query(&[("value", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_score_ids {
-        req_builder = req_builder.query(&[("scoreIds", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_config_id {
-        req_builder = req_builder.query(&[("configId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_session_id {
-        req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_dataset_run_id {
-        req_builder = req_builder.query(&[("datasetRunId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_trace_id {
-        req_builder = req_builder.query(&[("traceId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_observation_id {
-        req_builder = req_builder.query(&[("observationId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_queue_id {
-        req_builder = req_builder.query(&[("queueId", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_data_type {
-        req_builder = req_builder.query(&[("dataType", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_trace_tags {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("traceTags".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "traceTags",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
-    }
-    if let Some(ref param_value) = p_query_fields {
-        req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_query_filter {
-        req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -323,8 +275,8 @@ pub async fn scores_get_many(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresResponse`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresV3Response`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresV3Response`")))),
         }
     } else {
         let content = resp.text().await?;

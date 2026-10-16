@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **data_type** | Option<[**models::ScoreDataType**](ScoreDataType.md)> |  | [optional]
 **config_id** | Option<**String**> | Reference a score config on a score. The unique langfuse identifier of a score config. When passing this field, the dataType and stringValue fields are automatically populated. | [optional]
 **source** | Option<[**models::CreateScoreSource**](CreateScoreSource.md)> |  | [optional]
+**timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | The timestamp of the score, as an ISO 8601 datetime with a timezone offset. Defaults to the time the request is received. To update an existing score, send it again with the same id and timestamp. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

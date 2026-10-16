@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**name** | **String** |  | 
+**name** | **String** | Score config name. Maximum 80 characters. | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
 **project_id** | **String** |  | 

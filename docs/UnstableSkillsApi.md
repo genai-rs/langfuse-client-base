@@ -77,10 +77,10 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_skills_get
 
-> models::UnstableSkillVersion unstable_skills_get(skill_name, version, label)
+> models::UnstableSkillVersion unstable_skills_get(skill_name, version, label, include_content)
 
 
-Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Use each file's sha256Hash with getFileContents, individually or in batches across manifests.
+Resolve a skill's metadata and file manifest by version or label. Defaults to the production label. Set includeContent to return file contents inline, or use each file's sha256Hash with getFileContents.
 
 ### Parameters
 
@@ -90,6 +90,7 @@ Name | Type | Description  | Required | Notes
 **skill_name** | **String** |  | [required] |
 **version** | Option<**i32**> |  |  |
 **label** | Option<**String**> |  |  |
+**include_content** | Option<**bool**> | Include UTF-8 text content in each file. Defaults to false. |  |
 
 ### Return type
 

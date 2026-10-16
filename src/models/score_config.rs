@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize};
 pub struct ScoreConfig {
     #[serde(rename = "id")]
     pub id: String,
+    /// Score config name. Maximum 80 characters.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "createdAt")]
