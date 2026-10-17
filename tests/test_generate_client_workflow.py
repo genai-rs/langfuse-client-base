@@ -1,11 +1,15 @@
 """Execute and guard the generation workflow's publication boundaries."""
 
 import ast
+import base64
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from itertools import product
+import os
 from pathlib import Path
 import re
 import subprocess
 import tempfile
+from threading import Thread
 from types import SimpleNamespace
 import unittest
 
@@ -273,6 +277,205 @@ class GenerateClientWorkflowTests(unittest.TestCase):
         create_pr = step_named(publish["steps"], "Create PR for the validated candidate")["run"]
         self.assertIn("git push origin --delete", create_pr)
         self.assertIn("VALIDATED_BASE_SHA", create_pr)
+        for name in ("Push the exact validated tree", "Create PR for the validated candidate"):
+            step = step_named(publish["steps"], name)
+            self.assertIn("GH_TOKEN", step["env"])
+
+    def test_raw_git_push_uses_temporary_auth_and_rejected_transport_fails_closed(self):
+        publish_steps = self.workflow["jobs"]["publish"]["steps"]
+        configure = step_named(publish_steps, "Configure temporary Git authentication")
+        push = step_named(publish_steps, "Push the exact validated tree")
+        cleanup = step_named(publish_steps, "Remove temporary Git authentication helper")
+        self.assertLess(
+            publish_steps.index(configure),
+            publish_steps.index(push),
+        )
+        self.assertLess(
+            publish_steps.index(step_named(publish_steps, "Create GitHub App token")),
+            publish_steps.index(configure),
+        )
+        self.assertIn("GH_TOKEN", configure["env"])
+        self.assertIn("always()", cleanup["if"])
+
+        token = "workflow-test-token"
+        auth_header = "Basic " + base64.b64encode(
+            f"x-access-token:{token}".encode("ascii")
+        ).decode("ascii")
+
+        class RejectingGitHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.server.auth_headers.append(self.headers.get("Authorization"))
+                if self.headers.get("Authorization") == auth_header:
+                    self.send_response(403)
+                else:
+                    self.send_response(401)
+                    self.send_header("WWW-Authenticate", 'Basic realm="mock git"')
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+
+            def do_POST(self):
+                self.server.post_requests += 1
+                self.send_response(403)
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+
+            def log_message(self, _format, *_args):
+                pass
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), RejectingGitHandler)
+        server.auth_headers = []
+        server.post_requests = 0
+        server_thread = Thread(target=server.serve_forever, daemon=True)
+        server_thread.start()
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                repo = Path(temp_dir)
+                runner_temp = repo / "runner-temp"
+                runner_temp.mkdir()
+                output_file = repo / "github-output"
+                mock_bin = repo / "mock-bin"
+                mock_bin.mkdir()
+                gh = mock_bin / "gh"
+                gh.write_text(
+                    "#!/bin/sh\nprintf '%s\\n' \"$VALIDATED_BASE_SHA\"\n",
+                    encoding="utf-8",
+                )
+                gh.chmod(0o700)
+
+                def git(*args):
+                    return subprocess.run(
+                        ["git", *args],
+                        cwd=repo,
+                        check=True,
+                        capture_output=True,
+                        text=True,
+                    ).stdout.strip()
+
+                git("init", "--quiet")
+                git("config", "user.name", "Workflow test")
+                git("config", "user.email", "workflow-test@example.invalid")
+                source = repo / "src.txt"
+                source.write_text("validated base\n", encoding="utf-8")
+                git("add", "src.txt")
+                git("commit", "--quiet", "-m", "base")
+                base_sha = git("rev-parse", "HEAD")
+                source.write_text("validated candidate\n", encoding="utf-8")
+                git("add", "src.txt")
+                tree_sha = git("write-tree")
+                git("remote", "add", "origin", f"http://127.0.0.1:{server.server_port}/repo.git")
+
+                env = os.environ.copy()
+                env.update(
+                    {
+                        "GH_TOKEN": token,
+                        "GITHUB_SERVER_URL": f"http://127.0.0.1:{server.server_port}",
+                        "GITHUB_REPOSITORY": "genai-rs/langfuse-client-base",
+                        "GITHUB_OUTPUT": str(output_file),
+                        "RUNNER_TEMP": str(runner_temp),
+                        "VALIDATED_BASE_SHA": base_sha,
+                        "VALIDATED_TREE_SHA": tree_sha,
+                        "RUN_ID": "123",
+                        "RUN_ATTEMPT": "1",
+                        "PATH": f"{mock_bin}{os.pathsep}{env['PATH']}",
+                        "GIT_TERMINAL_PROMPT": "0",
+                    }
+                )
+                configured = subprocess.run(
+                    ["bash", "-e", "-c", configure["run"]],
+                    cwd=repo,
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(configured.returncode, 0, configured.stderr)
+                auth_dir = Path(
+                    next(
+                        line.split("=", 1)[1]
+                        for line in output_file.read_text(encoding="utf-8").splitlines()
+                        if line.startswith("auth_dir=")
+                    )
+                )
+                helper = auth_dir / "credential-helper"
+                self.assertTrue(helper.is_file())
+                self.assertNotIn(token, helper.read_text(encoding="utf-8"))
+                self.assertNotIn(token, git("config", "--local", "--get", "credential.helper"))
+
+                pushed = subprocess.run(
+                    ["bash", "-e", "-c", push["run"]],
+                    cwd=repo,
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertNotEqual(pushed.returncode, 0)
+                self.assertIn(auth_header, server.auth_headers)
+                self.assertEqual(server.post_requests, 0)
+                branch = "automated/generate-client-123-1"
+                self.assertEqual(git("rev-parse", f"refs/heads/{branch}^{{tree}}"), tree_sha)
+
+                cleanup_env = env.copy()
+                cleanup_env["AUTH_DIR"] = str(auth_dir)
+                cleaned = subprocess.run(
+                    ["bash", "-e", "-c", cleanup["run"]],
+                    cwd=repo,
+                    env=cleanup_env,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(cleaned.returncode, 0, cleaned.stderr)
+                self.assertFalse(auth_dir.exists())
+        finally:
+            server.shutdown()
+            server.server_close()
+            server_thread.join(timeout=2)
+
+    def test_pr_body_keeps_manifest_filename_literal_in_expanding_heredoc(self):
+        publish_steps = self.workflow["jobs"]["publish"]["steps"]
+        create_pr = step_named(publish_steps, "Create PR for the validated candidate")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            mock_bin = root / "mock-bin"
+            mock_bin.mkdir()
+            body_path = root / "captured-pr-body.md"
+            gh = mock_bin / "gh"
+            gh.write_text(
+                "#!/bin/sh\n"
+                "if [ \"$1\" = api ]; then printf '%s\\n' \"$VALIDATED_BASE_SHA\"; exit 0; fi\n"
+                "if [ \"$1\" = pr ] && [ \"$2\" = create ]; then\n"
+                "  shift 2\n"
+                "  while [ \"$#\" -gt 0 ]; do\n"
+                "    if [ \"$1\" = --body-file ]; then cp \"$2\" \"$PR_BODY_CAPTURE\"; exit 0; fi\n"
+                "    shift\n"
+                "  done\n"
+                "fi\nexit 1\n",
+                encoding="utf-8",
+            )
+            gh.chmod(0o700)
+            env = os.environ.copy()
+            env.update(
+                {
+                    "PATH": f"{mock_bin}{os.pathsep}{env['PATH']}",
+                    "PR_BODY_CAPTURE": str(body_path),
+                    "VALIDATED_BASE_SHA": "base-sha",
+                    "VALIDATED_TREE_SHA": "tree-sha",
+                    "VALIDATED_BRANCH": "candidate-branch",
+                    "GITHUB_SERVER_URL": "https://github.com",
+                    "GITHUB_REPOSITORY": "genai-rs/langfuse-client-base",
+                    "GITHUB_RUN_ID": "123",
+                    "GIT_TERMINAL_PROMPT": "0",
+                }
+            )
+            result = subprocess.run(
+                ["bash", "-e", "-c", create_pr["run"]],
+                cwd=root,
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            body = body_path.read_text(encoding="utf-8")
+            self.assertIn("`generation-manifest.json` artifact", body)
+            self.assertNotIn("command not found", result.stderr)
 
     def test_app_token_and_writes_follow_read_only_preflight(self):
         publish = self.workflow["jobs"]["publish"]

@@ -175,6 +175,40 @@ jobs:
           permission-contents: write
           permission-pull-requests: write
 
+      - name: Configure temporary Git authentication
+        id: git-auth
+        if: steps.preflight.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          auth_dir="$(mktemp -d "$RUNNER_TEMP/generate-client-git-auth.XXXXXX")"
+          credential_helper="$auth_dir/credential-helper"
+          cat > "$credential_helper" <<'HELPER'
+          #!/bin/sh
+          set -eu
+          [ "$1" = "get" ] || exit 0
+          protocol=
+          host=
+          while IFS= read -r line; do
+            case "$line" in
+              protocol=*) protocol="${line#protocol=}" ;;
+              host=*) host="${line#host=}" ;;
+            esac
+          done
+          expected_protocol="${GITHUB_SERVER_URL%%://*}"
+          expected_host="${GITHUB_SERVER_URL#*://}"
+          expected_host="${expected_host%%/*}"
+          if [ "$protocol" = "$expected_protocol" ] &&
+            [ "$host" = "$expected_host" ] &&
+            [ -n "${GH_TOKEN:-}" ]; then
+            printf 'username=x-access-token\npassword=%s\n\n' "$GH_TOKEN"
+          fi
+          HELPER
+          chmod 700 "$credential_helper"
+          git config --local --replace-all credential.helper \
+            "$credential_helper"
+          echo "auth_dir=$auth_dir" >> "$GITHUB_OUTPUT"
+
       - name: Push the exact validated tree
         id: publish-branch
         if: steps.preflight.outputs.skip != 'true'
@@ -232,7 +266,7 @@ jobs:
           Validation run:
           $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
           Generation provenance is attached as the
-          `generation-manifest.json` artifact from that run.
+          \`generation-manifest.json\` artifact from that run.
           EOF
           if ! gh pr create \
             --base main \
@@ -242,6 +276,12 @@ jobs:
             git push origin --delete "$VALIDATED_BRANCH"
             exit 1
           fi
+
+      - name: Remove temporary Git authentication helper
+        if: always() && steps.git-auth.outputs.auth_dir != ''
+        env:
+          AUTH_DIR: ${{ steps.git-auth.outputs.auth_dir }}
+        run: rm -rf -- "$AUTH_DIR"
 
   keepalive:
     if: github.event_name == 'schedule' && github.ref == 'refs/heads/main'
