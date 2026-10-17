@@ -4,31 +4,115 @@ on:
   schedule:
     # Run every night at 2 AM UTC
     - cron: '0 2 * * *'
-  workflow_dispatch: # Allow manual triggering
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Create or update the generated client PR (main only)
+        type: boolean
+        required: false
+        default: false
 
 concurrency:
   group: generate-client
   cancel-in-progress: true
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  generate:
+  validate:
     runs-on: ubuntu-latest
+    outputs:
+      has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
 
-      # Mint short-lived GitHub App token (required)
+      - name: Install generation dependencies
+        run: python3 -m pip install -r scripts/requirements.txt
+
+      - name: Test generation compatibility rules
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Generate client
+        env:
+          UPDATE_SPEC: true
+        run: ./scripts/generate-openapi-client.sh
+
+      - name: Verify generated files
+        run: |
+          test -f src/lib.rs
+          test -f Cargo.toml
+          python3 -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Build all features
+        run: cargo build --all --all-features
+
+      - name: Run tests and doctests
+        run: cargo test --all --all-features
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Save validated changes
+        id: changes
+        run: |
+          if git diff --quiet &&
+            [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          git add --intent-to-add --all
+          git diff --binary HEAD > generated-client.patch
+
+      - name: Upload validated changes
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-client
+          path: generated-client.patch
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: validate
+    if: >-
+      needs.validate.result == 'success' &&
+      needs.validate.outputs.has_changes == 'true' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'schedule' ||
+       (github.event_name == 'workflow_dispatch' && inputs.publish == true))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Download validated changes
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-client
+
+      - name: Apply validated changes
+        run: git apply --binary generated-client.patch
+
+      # Mint the write token only after validation and patch application pass.
       - name: Create GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v3
@@ -36,55 +120,15 @@ jobs:
           client-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
 
-      - name: Install generation dependencies
-        run: python3 -m pip install -r scripts/requirements.txt
-
-      - name: Generate client
-        env:
-          UPDATE_SPEC: true
-        run: |
-          # The script handles everything internally:
-          # - Checks for Docker availability
-          # - Downloads latest OpenAPI spec (only if changed)
-          # - Runs generation using Docker
-          # - Preserves custom files
-          # - Formats the code
-          chmod +x ./scripts/generate-openapi-client.sh
-          ./scripts/generate-openapi-client.sh
-
-      - name: Verify generation succeeded
-        run: |
-          # Ensure critical files exist
-          test -f src/lib.rs || (echo "Error: src/lib.rs not found after generation" && exit 1)
-          test -f Cargo.toml || (echo "Error: Cargo.toml not found after generation" && exit 1)
-          
-          echo "✅ Generation finished. CI will validate build/test on the PR."
-
-      - name: Check for changes
-        id: check_changes
-        run: |
-          # Clean any build artifacts that shouldn't be committed
-          rm -rf target/
-          
-          # Check if there are any changes to commit
-          if git diff --quiet && git diff --staged --quiet; then
-            echo "No changes detected"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "Changes detected"
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            # Show what changed for the PR description
-            git diff --stat
-          fi
-
-      - name: Create or Update Pull Request
+      - name: Create or update pull request
         id: cpr
-        if: steps.check_changes.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ steps.app-token.outputs.token }}
-          commit-message: 'chore: update generated client from latest OpenAPI spec'
-          title: 'chore: update generated client from latest OpenAPI spec'
+          commit-message: >-
+            chore: update generated client from latest OpenAPI spec
+          title: >-
+            chore: update generated client from latest OpenAPI spec
           base: main
           add-paths: |
             src/
@@ -92,26 +136,14 @@ jobs:
             docs/
             openapi.yml
           body: |
-            ## 🤖 Auto-generated Update
-            
-            This PR updates the generated client based on the latest OpenAPI specification from Langfuse.
-            
-            ### Changes
-            - Updated OpenAPI specification (if changed)
-            - Updated generated code in `src/` from latest OpenAPI spec
-            - Applied automatic formatting
-            
-            ### Validation
-            CI checks will run on this PR (build, tests, clippy, fmt).
-            
-            To verify locally:
-            - cargo build --all-features
-            - cargo clippy --all-features --all-targets -- -D warnings
-            - cargo test --all
-            
-            ---
-            *This PR was automatically created by the nightly generation workflow.*
-          # Use unified automated prefix for easier CI routing
+            ## Auto-generated client update
+
+            This PR updates the generated client from the latest Langfuse
+            OpenAPI specification.
+
+            Generation, compatibility fixtures, build, tests, doctests,
+            formatting, and Clippy passed in the validation job before this PR
+            was created.
           branch: automated/generate-client
           delete-branch: true
           labels: |
@@ -120,19 +152,12 @@ jobs:
             automerge
 
       - name: Enable auto-merge for generated PR
-        if: steps.check_changes.outputs.has_changes == 'true' && steps.cpr.outputs.pull-request-number != ''
+        if: steps.cpr.outputs.pull-request-number != ''
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --auto --rebase --delete-branch
-
-      # No PAT fallback; fail early if token is missing
-      - name: Assert App token present
-        run: |
-          if [ -z "${{ steps.app-token.outputs.token }}" ]; then
-            echo "GitHub App token missing. Ensure BOT_APP_ID and BOT_PRIVATE_KEY are configured." >&2
-            exit 1
-          fi
+        run: >-
+          gh pr merge "${{ steps.cpr.outputs.pull-request-number }}"
+          --auto --rebase --delete-branch
 
       - name: Update existing PR branch from main
         uses: actions/github-script@v9
@@ -141,63 +166,70 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const head = 'automated/generate-client';
-            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main', head: `${owner}:${head}` });
+            const prs = await github.paginate(
+              github.rest.pulls.list,
+              {
+                owner,
+                repo,
+                state: 'open',
+                base: 'main',
+                head: `${owner}:${head}`
+              }
+            );
             if (!prs.length) {
               core.info('No open PR for automated/generate-client.');
               return;
             }
-            const number = prs[0].number;
-            core.info(`Updating PR #${number} from base main...`);
             try {
-              await github.rest.pulls.updateBranch({ owner, repo, pull_number: number });
+              await github.rest.pulls.updateBranch({
+                owner,
+                repo,
+                pull_number: prs[0].number
+              });
               core.info('Branch update triggered.');
             } catch (e) {
               core.warning(`Update not needed or failed: ${e.message}`);
             }
 
   keepalive:
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     steps:
       - name: Keepalive Workflow
         uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // This step ensures the workflow stays active even during periods of inactivity
-            // GitHub disables scheduled workflows after 60 days of repository inactivity
-            
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
+            const { owner, repo } = context.repo;
             const workflow_id = 'generate-client.yml';
-            
-            // Get the workflow
             const workflow = await github.rest.actions.getWorkflow({
               owner,
               repo,
               workflow_id
             });
-            
-            console.log(`Workflow ${workflow.data.name} is ${workflow.data.state}`);
-            
-            // If the workflow is disabled, re-enable it
+            core.info(
+              `Workflow ${workflow.data.name} is ${workflow.data.state}`
+            );
             if (workflow.data.state === 'disabled_inactivity') {
               await github.rest.actions.enableWorkflow({
                 owner,
                 repo,
                 workflow_id
               });
-              console.log('Workflow re-enabled');
+              core.info('Workflow re-enabled');
             }
-            
-            // Log the last run to show activity
             const runs = await github.rest.actions.listWorkflowRuns({
               owner,
               repo,
               workflow_id,
               per_page: 1
             });
-            
             if (runs.data.workflow_runs.length > 0) {
               const lastRun = runs.data.workflow_runs[0];
-              console.log(`Last run: ${lastRun.created_at} - Status: ${lastRun.status}`);
+              core.info(
+                `Last run: ${lastRun.created_at} - Status: ${lastRun.status}`
+              );
             }
