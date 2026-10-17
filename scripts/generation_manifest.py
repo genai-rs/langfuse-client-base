@@ -13,6 +13,15 @@ from typing import Any
 
 REVISION_RE = re.compile(r"^[0-9a-fA-F]{7,64}$")
 SOURCE_REVISION_RE = re.compile(r"/blob/([0-9a-fA-F]{7,64})/")
+TRANSFORMATION_SCRIPT_PATHS = (
+    "scripts/add_bon_builders.py",
+    "scripts/generate-openapi-client.sh",
+    "scripts/generation_manifest.py",
+    "scripts/merge_cargo_dependencies.py",
+    "scripts/normalize_openapi_schema.py",
+    "scripts/patch_generated.rs.sh",
+    "scripts/prepare_compatible_spec.py",
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -27,6 +36,7 @@ def build_manifest(
     *,
     upstream_url: str,
     upstream_revision: str | None,
+    project_root: Path,
     raw_spec: Path,
     composed_spec: Path,
     compatibility_file: Path,
@@ -47,6 +57,14 @@ def build_manifest(
     image_match = re.fullmatch(r"(.+):v?(\d+\.\d+\.\d+)", generator_image)
     if not image_match:
         raise ValueError("generator image must include a semantic version tag")
+
+    transformation_scripts = [
+        {
+            "path": relative_path,
+            "revision": sha256_file(project_root / relative_path),
+        }
+        for relative_path in sorted(TRANSFORMATION_SCRIPT_PATHS)
+    ]
 
     return {
         "schema_version": 1,
@@ -79,6 +97,7 @@ def build_manifest(
             "path": "scripts/patch_generated.rs.sh",
             "revision": sha256_file(patch_script),
         },
+        "transformation_scripts": transformation_scripts,
     }
 
 
@@ -93,6 +112,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--upstream-url", required=True)
     parser.add_argument("--upstream-revision", default="")
+    parser.add_argument("--project-root", type=Path, required=True)
     parser.add_argument("--raw-spec", type=Path, required=True)
     parser.add_argument("--composed-spec", type=Path, required=True)
     parser.add_argument("--compatibility-file", type=Path, required=True)
@@ -104,6 +124,7 @@ def main() -> int:
     manifest = build_manifest(
         upstream_url=args.upstream_url,
         upstream_revision=args.upstream_revision or None,
+        project_root=args.project_root,
         raw_spec=args.raw_spec,
         composed_spec=args.composed_spec,
         compatibility_file=args.compatibility_file,
