@@ -8,11 +8,18 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 BASE_CLIENT_DIR="$PROJECT_ROOT"
 OPENAPI_URL="https://cloud.langfuse.com/generated/api/openapi.yml"
 OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
+NORMALIZED_OPENAPI_FILE="$PROJECT_ROOT/.openapi-generator/normalized.yml"
+COMPATIBLE_OPENAPI_FILE="$PROJECT_ROOT/.openapi-generator/compatible.json"
+GENERATION_MANIFEST="$PROJECT_ROOT/.openapi-generator/generation-manifest.json"
+COMPATIBILITY_FILE="$SCRIPT_DIR/legacy_v3_compatibility.json"
+PATCH_SCRIPT="$SCRIPT_DIR/patch_generated.rs.sh"
 
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
 OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
+OPENAPI_GENERATOR_IMAGE="openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
+UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
@@ -26,7 +33,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
+GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) $OPENAPI_GENERATOR_IMAGE"
 
 # Download or use local OpenAPI specification
 if [ "$UPDATE_SPEC" = "true" ]; then
@@ -54,14 +61,31 @@ else
     echo "📝 Using local OpenAPI specification from $OPENAPI_FILE"
 fi
 
-# Normalize known upstream schema issues that break Rust generation
+# Keep openapi.yml as the untouched upstream snapshot. Normalize a copy before
+# composing the compatibility surface so the raw and composed inputs remain
+# independently identifiable in generation provenance.
 echo "🧪 Normalizing OpenAPI schema for Rust generation..."
-python3 "$SCRIPT_DIR/normalize_openapi_schema.py" "$OPENAPI_FILE"
+mkdir -p "$(dirname "$NORMALIZED_OPENAPI_FILE")"
+cp "$OPENAPI_FILE" "$NORMALIZED_OPENAPI_FILE"
+python3 "$SCRIPT_DIR/normalize_openapi_schema.py" "$NORMALIZED_OPENAPI_FILE"
 
 # Keep openapi.yml as the upstream snapshot. Compose the published v3 interface
 # into a separate generator input so nightly downloads cannot erase it.
-python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$OPENAPI_FILE" \
-    "$PROJECT_ROOT/.openapi-generator/compatible.json"
+python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$NORMALIZED_OPENAPI_FILE" \
+    "$COMPATIBLE_OPENAPI_FILE"
+
+# Record only reviewed, non-secret generation inputs. The helper uses a fixed
+# field set and validates optional revisions before writing the artifact.
+python3 "$SCRIPT_DIR/generation_manifest.py" \
+    --upstream-url "$OPENAPI_URL" \
+    --upstream-revision "$UPSTREAM_REVISION" \
+    --project-root "$PROJECT_ROOT" \
+    --raw-spec "$OPENAPI_FILE" \
+    --composed-spec "$COMPATIBLE_OPENAPI_FILE" \
+    --compatibility-file "$COMPATIBILITY_FILE" \
+    --patch-script "$PATCH_SCRIPT" \
+    --generator-image "$OPENAPI_GENERATOR_IMAGE" \
+    --output "$GENERATION_MANIFEST"
 
 # Backup our custom files before generation
 echo "📝 Backing up custom files..."
@@ -90,7 +114,10 @@ echo "🧹 Cleaning up generated files..."
 rm -f "$BASE_CLIENT_DIR/.travis.yml"
 rm -f "$BASE_CLIENT_DIR/.gitignore"
 rm -f "$BASE_CLIENT_DIR/git_push.sh"
-rm -rf "$BASE_CLIENT_DIR/.openapi-generator"
+# Drop OpenAPI Generator's transient metadata while keeping the provenance
+# manifest available for CI artifact upload and local review.
+find "$BASE_CLIENT_DIR/.openapi-generator" -mindepth 1 -maxdepth 1 \
+    ! -name "$(basename "$GENERATION_MANIFEST")" -exec rm -rf {} +
 
 # Restore our custom files
 echo "📝 Restoring custom files..."
