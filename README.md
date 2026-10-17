@@ -46,7 +46,6 @@ This crate provides low-level API bindings. Most users should use the ergonomic 
 
 ```rust
 use langfuse_client_base::apis::configuration::Configuration;
-use langfuse_client_base::apis::ingestion_api;
 
 let config = Configuration {
     base_path: "https://cloud.langfuse.com".to_string(),
@@ -55,6 +54,35 @@ let config = Configuration {
 };
 
 // Use the API...
+```
+
+### Legacy v3 compatibility
+
+The client retains the published v3 ingestion, traces, sessions, dataset-run,
+observations, metrics, and score bindings for existing self-hosted deployments.
+These bindings do not make legacy endpoints available on v4 servers. See the
+[Langfuse v3 to v4 migration guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4)
+for server availability and migration to OpenTelemetry ingestion and v2 reads.
+
+For a server that still supports v3 batch ingestion:
+
+```rust,no_run
+# #![allow(deprecated)]
+use langfuse_client_base::{apis::{configuration::Configuration, ingestion_api}, models};
+
+# async fn legacy_ingestion() -> Result<(), Box<dyn std::error::Error>> {
+let config = Configuration {
+    basic_auth: Some(("your-public-key".into(), Some("your-secret-key".into()))),
+    ..Default::default()
+};
+let request = models::IngestionBatchRequest::new(Vec::new());
+let response = ingestion_api::ingestion_batch()
+    .configuration(&config)
+    .ingestion_batch_request(request)
+    .call()
+    .await?;
+# Ok(())
+# }
 ```
 
 ### Using Environment Variables
@@ -124,12 +152,21 @@ RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --target x86_64-
 This client is generated from the OpenAPI specification using Docker for reproducible builds.
 
 ```bash
+python3 -m pip install -r scripts/requirements.txt
+
 # Generate client (always uses Docker)
 ./scripts/generate-openapi-client.sh
 
 # Update to latest OpenAPI spec and regenerate
 UPDATE_SPEC=true ./scripts/generate-openapi-client.sh
 ```
+
+Generation composes the upstream `openapi.yml` with
+`scripts/legacy_v3_compatibility.json`, a snapshot of the removed v3 operations
+and models from commit `28f072145f3e340274a18e0d477a186a3977edfc`.
+It also preserves the published score operation names and single-score unions.
+The upstream snapshot stays separate; compatibility rules are reapplied on every
+generation, including when the downloaded specification is unchanged.
 
 ## License
 
