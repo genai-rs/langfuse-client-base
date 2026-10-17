@@ -36,9 +36,8 @@ if [ "$UPDATE_SPEC" = "true" ]; then
     # Check if spec has changed
     if [ -f "$OPENAPI_FILE" ]; then
         if diff -q "$OPENAPI_FILE" "$OPENAPI_FILE.new" > /dev/null; then
-            echo "✅ OpenAPI spec unchanged, no update needed"
+            echo "✅ OpenAPI spec unchanged; regenerating with current compatibility rules"
             rm "$OPENAPI_FILE.new"
-            exit 0
         else
             echo "📝 OpenAPI spec has changed, updating..."
             mv "$OPENAPI_FILE.new" "$OPENAPI_FILE"
@@ -59,6 +58,11 @@ fi
 echo "🧪 Normalizing OpenAPI schema for Rust generation..."
 python3 "$SCRIPT_DIR/normalize_openapi_schema.py" "$OPENAPI_FILE"
 
+# Keep openapi.yml as the upstream snapshot. Compose the published v3 interface
+# into a separate generator input so nightly downloads cannot erase it.
+python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$OPENAPI_FILE" \
+    "$PROJECT_ROOT/.openapi-generator/compatible.json"
+
 # Backup our custom files before generation
 echo "📝 Backing up custom files..."
 cp "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.original" 2>/dev/null || true
@@ -70,7 +74,7 @@ echo "🏗️ Generating Rust client..."
 
 # Run the generator (Docker paths)
 $GENERATOR_CMD generate \
-    -i "/local/openapi.yml" \
+    -i "/local/.openapi-generator/compatible.json" \
     -g rust \
     -o "/local" \
     --additional-properties=packageName=langfuse-client-base \

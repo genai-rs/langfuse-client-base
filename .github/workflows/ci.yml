@@ -32,6 +32,11 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           components: rustfmt, clippy
+      - name: Test generation compatibility rules
+        if: matrix.rust == 'stable'
+        run: |
+          python3 -m pip install -r scripts/requirements.txt
+          python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Enable sccache
         uses: mozilla-actions/sccache-action@v0.0.11
       - name: Start sccache locally (no GHA cache)

@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum CreateScoresResponse {
     CreateScoreBatchResults(Box<models::CreateScoreBatchResults>),
+    CreateScoreResponse(Box<models::CreateScoreResponse>),
     CreateScoreBatchResponse(Box<models::CreateScoreBatchResponse>),
 }
 
