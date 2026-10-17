@@ -79,6 +79,7 @@ python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$NORMALIZED_OPENAPI_FILE" \
 python3 "$SCRIPT_DIR/generation_manifest.py" \
     --upstream-url "$OPENAPI_URL" \
     --upstream-revision "$UPSTREAM_REVISION" \
+    --project-root "$PROJECT_ROOT" \
     --raw-spec "$OPENAPI_FILE" \
     --composed-spec "$COMPATIBLE_OPENAPI_FILE" \
     --compatibility-file "$COMPATIBILITY_FILE" \

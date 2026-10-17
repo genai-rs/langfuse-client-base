@@ -18,11 +18,17 @@ class GenerationManifestTests(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.root = Path(self.temp_dir.name)
+        self.scripts_dir = self.root / "scripts"
+        self.scripts_dir.mkdir()
+        for relative_path in MODULE.TRANSFORMATION_SCRIPT_PATHS:
+            script = self.root / relative_path
+            script.parent.mkdir(parents=True, exist_ok=True)
+            script.write_text(f"# fixture for {relative_path}\n", encoding="utf-8")
         self.raw = self.root / "openapi.yml"
         self.raw.write_bytes(b"openapi: 3.0.1\ninfo: {title: raw}\n")
         self.composed = self.root / "compatible.json"
         self.composed.write_bytes(b'{"openapi":"3.0.1","info":{"title":"composed"}}\n')
-        self.compatibility = self.root / "compatibility.json"
+        self.compatibility = self.scripts_dir / "legacy_v3_compatibility.json"
         self.compatibility.write_text(
             json.dumps(
                 {
@@ -33,7 +39,7 @@ class GenerationManifestTests(unittest.TestCase):
             ),
             encoding="utf-8",
         )
-        self.patch = self.root / "patch_generated.rs.sh"
+        self.patch = self.scripts_dir / "patch_generated.rs.sh"
         self.patch.write_text("#!/bin/sh\necho patch\n", encoding="utf-8")
 
     def tearDown(self):
@@ -43,6 +49,7 @@ class GenerationManifestTests(unittest.TestCase):
         return MODULE.build_manifest(
             upstream_url="https://cloud.langfuse.com/generated/api/openapi.yml",
             upstream_revision=None,
+            project_root=self.root,
             raw_spec=self.raw,
             composed_spec=self.composed,
             compatibility_file=self.compatibility,
@@ -96,6 +103,8 @@ class GenerationManifestTests(unittest.TestCase):
         self.assertLess(first.index(b'"compatibility"'), first.index(b'"composed_input"'))
         self.assertLess(first.index(b'"composed_input"'), first.index(b'"generator"'))
         self.assertNotIn(b"must-not-be-recorded", first)
+        paths = [item["path"] for item in manifest["transformation_scripts"]]
+        self.assertEqual(paths, sorted(paths))
 
     def test_changed_compatibility_input_changes_only_its_hash(self):
         before = self.build()
@@ -111,11 +120,39 @@ class GenerationManifestTests(unittest.TestCase):
         self.assertEqual(before["upstream"], after["upstream"])
         self.assertEqual(before["composed_input"], after["composed_input"])
 
+    def test_changed_executed_patch_helper_changes_transformation_provenance(self):
+        before = self.build()
+        helper = self.scripts_dir / "add_bon_builders.py"
+        helper.write_text("DERIVE = 'bon::Builder'\n", encoding="utf-8")
+        after = self.build()
+
+        before_scripts = {
+            script["path"]: script["revision"]
+            for script in before["transformation_scripts"]
+        }
+        after_scripts = {
+            script["path"]: script["revision"]
+            for script in after["transformation_scripts"]
+        }
+        self.assertNotEqual(
+            before_scripts["scripts/add_bon_builders.py"],
+            after_scripts["scripts/add_bon_builders.py"],
+        )
+        self.assertEqual(
+            set(path for path in before_scripts if before_scripts[path] != after_scripts[path]),
+            {"scripts/add_bon_builders.py"},
+        )
+        self.assertEqual(before["upstream"], after["upstream"])
+        self.assertEqual(before["composed_input"], after["composed_input"])
+        self.assertEqual(before["compatibility"], after["compatibility"])
+        self.assertNotEqual(before, after)
+
     def test_upstream_revision_must_be_a_commit_id(self):
         with self.assertRaisesRegex(ValueError, "hexadecimal commit id"):
             MODULE.build_manifest(
                 upstream_url="https://cloud.langfuse.com/generated/api/openapi.yml",
                 upstream_revision="token=must-not-be-recorded",
+                project_root=self.root,
                 raw_spec=self.raw,
                 composed_spec=self.composed,
                 compatibility_file=self.compatibility,
@@ -127,6 +164,7 @@ class GenerationManifestTests(unittest.TestCase):
         manifest = MODULE.build_manifest(
             upstream_url="https://cloud.langfuse.com/generated/api/openapi.yml",
             upstream_revision="A" * 40,
+            project_root=self.root,
             raw_spec=self.raw,
             composed_spec=self.composed,
             compatibility_file=self.compatibility,
