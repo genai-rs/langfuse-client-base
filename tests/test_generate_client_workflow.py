@@ -4,6 +4,8 @@ import ast
 from itertools import product
 from pathlib import Path
 import re
+import subprocess
+import tempfile
 from types import SimpleNamespace
 import unittest
 
@@ -163,6 +165,81 @@ class GenerateClientWorkflowTests(unittest.TestCase):
             "validated-tree.sha",
         ):
             self.assertIn(required, verify)
+
+    def test_publish_applies_only_the_artifact_for_its_validated_base_and_tree(self):
+        publish_steps = self.workflow["jobs"]["publish"]["steps"]
+        verify = step_named(
+            publish_steps, "Verify validated base and candidate tree"
+        )["run"]
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo = Path(temp_dir)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=repo,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                ).stdout.strip()
+
+            git("init", "--quiet")
+            git("config", "user.name", "Workflow test")
+            git("config", "user.email", "workflow-test@example.invalid")
+            source = repo / "src.txt"
+            source.write_text("validated base\n", encoding="utf-8")
+            git("add", "src.txt")
+            git("commit", "--quiet", "-m", "base")
+            base_sha = git("rev-parse", "HEAD")
+
+            source.write_text("validated candidate\n", encoding="utf-8")
+            patch_file = repo / "validated.patch"
+            patch_file.write_text(
+                git("diff", "--binary", "HEAD") + "\n", encoding="utf-8"
+            )
+            git("add", "src.txt")
+            tree_sha = git("write-tree")
+            git("reset", "--hard", "HEAD")
+            (repo / "validated-base.sha").write_text(base_sha + "\n", encoding="utf-8")
+            (repo / "validated-tree.sha").write_text(tree_sha + "\n", encoding="utf-8")
+
+            command = (
+                verify.replace(
+                    "${{ needs.validate.outputs.validated_base_sha }}", base_sha
+                )
+                .replace("${{ needs.validate.outputs.validated_tree_sha }}", tree_sha)
+            )
+            accepted = subprocess.run(
+                ["bash", "-e", "-c", command],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(accepted.returncode, 0, accepted.stderr)
+            self.assertEqual(git("write-tree"), tree_sha)
+
+            git("reset", "--hard", "HEAD")
+            wrong_base = "0" * 40
+            wrong_base_command = command.replace(base_sha, wrong_base)
+            rejected_base = subprocess.run(
+                ["bash", "-e", "-c", wrong_base_command],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(rejected_base.returncode, 0)
+
+            wrong_tree = "0" * 40
+            (repo / "validated-tree.sha").write_text(wrong_tree + "\n", encoding="utf-8")
+            wrong_candidate = command.replace(tree_sha, wrong_tree)
+            rejected = subprocess.run(
+                ["bash", "-e", "-c", wrong_candidate],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(rejected.returncode, 0)
 
     def test_candidate_is_never_rebased_or_mutated_after_validation(self):
         publish = self.workflow["jobs"]["publish"]
