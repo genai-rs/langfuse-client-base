@@ -504,6 +504,30 @@ class GenerateClientWorkflowTests(unittest.TestCase):
         self.assertIn("validation-output/generation-manifest.json", upload["with"]["path"])
         self.assertNotIn("include-hidden-files", upload["with"])
 
+    def test_pinned_downstream_check_runs_after_candidate_tree_is_saved(self):
+        steps = self.workflow["jobs"]["validate"]["steps"]
+        names = [step["name"] for step in steps]
+        save_index = names.index("Save validated changes")
+        downstream_index = names.index("Check pinned downstream wrapper compatibility")
+        upload_index = names.index("Upload validated changes and generation provenance")
+        self.assertLess(save_index, downstream_index)
+        self.assertLess(downstream_index, upload_index)
+        downstream = steps[downstream_index]
+        self.assertEqual(downstream["run"], "./scripts/check-downstream.sh")
+        self.assertIn("github.event.pull_request.base.sha", downstream["env"]["BASELINE_SHA"])
+        self.assertIn("steps.changes.outputs.tree_sha", downstream["env"]["CANDIDATE_TREE_SHA"])
+        self.assertIn("validation-output/downstream-compatibility.json", steps[upload_index]["with"]["path"])
+        report_upload = step_named(steps, "Upload downstream compatibility report")
+        self.assertIn("always()", report_upload["if"])
+        self.assertEqual(report_upload["with"]["name"], "downstream-compatibility")
+
+    def test_downstream_gate_pins_accepted_wrapper_and_keeps_cases_offline(self):
+        script = (ROOT / "scripts/check-downstream.sh").read_text()
+        self.assertIn("9e7393f8416cb43d455fd1e7ad8b4cb4b765cce3", script)
+        self.assertIn("cargo test --all-targets --all-features --offline --locked", script)
+        self.assertIn("CARGO_BUILD_JOBS=2", script)
+        self.assertIn("baseline failed", script)
+
     def test_validation_runs_all_checks_before_saving_an_artifact(self):
         steps = self.workflow["jobs"]["validate"]["steps"]
         names = [step["name"] for step in steps]
