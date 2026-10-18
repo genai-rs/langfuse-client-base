@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly WRAPPER_REPOSITORY="${WRAPPER_REPOSITORY:-https://github.com/genai-rs/langfuse-client-base.git}"
+readonly WRAPPER_REPOSITORY="${WRAPPER_REPOSITORY:-https://github.com/genai-rs/langfuse-ergonomic.git}"
 readonly WRAPPER_REVISION="${WRAPPER_REVISION:-9e7393f8416cb43d455fd1e7ad8b4cb4b765cce3}"
 readonly BASELINE_SHA="${BASELINE_SHA:?BASELINE_SHA is required}"
 readonly CANDIDATE_TREE_SHA="${CANDIDATE_TREE_SHA:?CANDIDATE_TREE_SHA is required}"
@@ -21,22 +21,20 @@ git archive "$BASELINE_SHA" | tar -x -C "$WORK_DIR"
 mkdir -p "$WORK_DIR/candidate"
 git archive "$CANDIDATE_TREE_SHA" | tar -x -C "$WORK_DIR/candidate"
 
-if [[ -n "${WRAPPER_SOURCE:-}" ]]; then
-  cp -R "$WRAPPER_SOURCE" "$WORK_DIR/wrapper"
-  actual_wrapper_sha="${WRAPPER_ACTUAL_SHA:-$WRAPPER_REVISION}"
-else
-  git init -q "$WORK_DIR/wrapper"
-  git -C "$WORK_DIR/wrapper" fetch --quiet --depth=1 "$WRAPPER_REPOSITORY" "$WRAPPER_REVISION"
-  git -C "$WORK_DIR/wrapper" checkout --quiet --detach FETCH_HEAD
-  actual_wrapper_sha="$(git -C "$WORK_DIR/wrapper" rev-parse HEAD)"
-fi
+git init -q "$WORK_DIR/wrapper"
+git -C "$WORK_DIR/wrapper" fetch --quiet --depth=1 "$WRAPPER_REPOSITORY" "$WRAPPER_REVISION"
+git -C "$WORK_DIR/wrapper" checkout --quiet --detach FETCH_HEAD
+actual_wrapper_sha="$(git -C "$WORK_DIR/wrapper" rev-parse HEAD)"
 [[ "$actual_wrapper_sha" == "$WRAPPER_REVISION" ]] || fail "wrapper resolved to unexpected revision $actual_wrapper_sha"
 
 # Prime the pinned wrapper's locked dependency set before the offline checks.
 if [[ -f "$WORK_DIR/wrapper/Cargo.lock" ]]; then
   cargo fetch --locked --manifest-path "$WORK_DIR/wrapper/Cargo.toml"
 else
-  cargo generate-lockfile --offline --manifest-path "$WORK_DIR/wrapper/Cargo.toml"
+  cargo metadata --format-version 1 --offline \
+    --manifest-path "$WORK_DIR/wrapper/Cargo.toml" \
+    --config "patch.crates-io.langfuse-client-base.path=\"$WORK_DIR\"" \
+    > /dev/null
 fi
 
 mkdir -p "$(dirname "$REPORT_PATH")"
