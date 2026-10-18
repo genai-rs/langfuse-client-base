@@ -523,7 +523,7 @@ class GenerateClientWorkflowTests(unittest.TestCase):
 
     def test_downstream_gate_pins_accepted_wrapper_and_keeps_cases_offline(self):
         script = (ROOT / "scripts/check-downstream.sh").read_text()
-        self.assertIn("9e7393f8416cb43d455fd1e7ad8b4cb4b765cce3", script)
+        self.assertIn("dd57b2c10d387fdcbd180953a79f04e21ed2017d", script)
         self.assertIn("cargo test --all-targets --all-features --offline --locked", script)
         self.assertIn("CARGO_BUILD_JOBS=2", script)
         self.assertIn("baseline failed", script)
