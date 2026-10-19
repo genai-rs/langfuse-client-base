@@ -17,7 +17,7 @@ PATCH_SCRIPT="$SCRIPT_DIR/patch_generated.rs.sh"
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
-OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.26.0}"
 OPENAPI_GENERATOR_IMAGE="openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
 
