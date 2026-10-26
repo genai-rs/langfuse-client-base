@@ -9,6 +9,7 @@ repository = "https://github.com/genai-rs/langfuse-client-base"
 homepage = "https://github.com/genai-rs/langfuse-client-base"
 documentation = "https://docs.rs/langfuse-client-base"
 readme = "README.md"
+exclude = ["docs/", "openapi.yml", "scripts/", "tests/*.py", ".github/", "AUTOMATION_GUIDE.md"]
 keywords = ["langfuse", "openapi", "client", "api", "llm"]
 categories = ["api-bindings", "web-programming::http-client"]
 rust-version = "1.88"
