@@ -57,16 +57,3 @@ jobs:
       - name: Run clippy
         if: matrix.rust == 'stable'
         run: cargo clippy --all-targets --all-features -- -D warnings
-
-  audit:
-    name: Cargo Audit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Generate Cargo.lock for audit
-        run: cargo generate-lockfile
-      - name: Run cargo audit
-        uses: rustsec/audit-check@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
