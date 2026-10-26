@@ -26,3 +26,25 @@ jobs:
         uses: rustsec/audit-check@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  # License and dependency analysis
+  deny:
+    name: Cargo Deny
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      # Cargo.lock is not committed for this library crate.
+      - name: Generate Cargo.lock
+        run: cargo generate-lockfile
+
+      - name: Install cargo-deny
+        run: cargo install cargo-deny --locked
+
+      - name: Run cargo deny
+        run: cargo deny --locked check
