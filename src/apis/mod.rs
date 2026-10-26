@@ -98,7 +98,12 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
         return params;
     }
 
-    unimplemented!("Only objects are supported with style=deepObject")
+    // Non-object values (e.g. array items) are emitted as a plain key/value pair.
+    let value = match value {
+        serde_json::Value::String(s) => s.clone(),
+        _ => value.to_string(),
+    };
+    vec![(prefix.to_string(), value)]
 }
 
 /// Internal use only
