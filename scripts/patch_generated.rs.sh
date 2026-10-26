@@ -38,3 +38,22 @@ done
 
 # Add bon::Builder derives to structs
 python3 "$SCRIPT_DIR/add_bon_builders.py" "$ROOT"
+
+# parse_deep_object must not panic on non-object values; emit a plain key/value pair instead
+python3 - "$ROOT/src/apis/mod.rs" <<'PY'
+import sys
+
+path = sys.argv[1]
+text = open(path).read()
+old = '    unimplemented!("Only objects are supported with style=deepObject")\n'
+new = (
+    "    // Non-object values (e.g. array items) are emitted as a plain key/value pair.\n"
+    "    let value = match value {\n"
+    "        serde_json::Value::String(s) => s.clone(),\n"
+    "        _ => value.to_string(),\n"
+    "    };\n"
+    "    vec![(prefix.to_string(), value)]\n"
+)
+if old in text:
+    open(path, "w").write(text.replace(old, new))
+PY
