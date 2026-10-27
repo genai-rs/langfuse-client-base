@@ -2,7 +2,7 @@
 set -euo pipefail
 
 readonly WRAPPER_REPOSITORY="${WRAPPER_REPOSITORY:-https://github.com/genai-rs/langfuse-ergonomic.git}"
-readonly WRAPPER_REVISION="${WRAPPER_REVISION:-dd57b2c10d387fdcbd180953a79f04e21ed2017d}"
+readonly WRAPPER_REVISION="${WRAPPER_REVISION:-a5a63b6550d85903ba8b1f53fc1de40c996e6a6a}"
 readonly BASELINE_SHA="${BASELINE_SHA:?BASELINE_SHA is required}"
 readonly CANDIDATE_TREE_SHA="${CANDIDATE_TREE_SHA:?CANDIDATE_TREE_SHA is required}"
 readonly REPORT_PATH="${REPORT_PATH:-validation-output/downstream-compatibility.json}"
