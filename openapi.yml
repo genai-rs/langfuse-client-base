@@ -9143,6 +9143,7 @@ components:
           description: Exact top-level attribute key.
         operator:
           type: string
+          const: in
           description: Membership operator.
         values:
           type: array
@@ -9760,6 +9761,7 @@ components:
       properties:
         dataType:
           type: string
+          const: NUMERIC
           description: Numeric score output.
         minValue:
           type: number
@@ -9781,6 +9783,7 @@ components:
       properties:
         dataType:
           type: string
+          const: BOOLEAN
           description: Boolean score output.
       required:
         - dataType
@@ -9792,6 +9795,7 @@ components:
       properties:
         dataType:
           type: string
+          const: CATEGORICAL
           description: Categorical score output.
         categories:
           type: array
@@ -10085,6 +10089,7 @@ components:
           $ref: '#/components/schemas/EvaluationRuleNullFilterOperator'
         value:
           type: string
+          const: ''
           description: >-
             Required empty-string placeholder used by the runtime filter
             contract.
@@ -10203,6 +10208,7 @@ components:
       properties:
         mappingType:
           type: string
+          const: legacy
           description: Explicitly marks this as a legacy mapping.
         variable:
           type: string
@@ -10909,6 +10915,7 @@ components:
       properties:
         type:
           type: string
+          const: llm_as_judge
           description: Evaluator type.
         prompt:
           $ref: '#/components/schemas/EvaluatorChatPrompt'
@@ -10961,6 +10968,7 @@ components:
       properties:
         type:
           type: string
+          const: code
           description: Evaluator type.
         sourceCode:
           type: string
@@ -11114,6 +11122,7 @@ components:
       properties:
         type:
           type: string
+          const: llm_as_judge
           description: Evaluator type.
         prompt:
           $ref: '#/components/schemas/EvaluatorChatPrompt'
@@ -11157,6 +11166,7 @@ components:
       properties:
         type:
           type: string
+          const: code
           description: Evaluator type.
         sourceCode:
           type: string
@@ -11232,6 +11242,7 @@ components:
           description: Optional human-readable evaluator description.
         type:
           type: string
+          const: llm_as_judge
           description: Evaluator type.
         prompt:
           $ref: '#/components/schemas/EvaluatorChatPromptInput'
@@ -11275,6 +11286,7 @@ components:
           description: Optional human-readable evaluator description.
         type:
           type: string
+          const: code
           description: Evaluator type.
         sourceCode:
           type: string
@@ -11344,6 +11356,7 @@ components:
           description: New description. Set to `null` to clear it.
         type:
           type: string
+          const: llm_as_judge
           description: Evaluator type. The type of an existing evaluator cannot change.
         prompt:
           $ref: '#/components/schemas/EvaluatorChatPromptInput'
@@ -11387,6 +11400,7 @@ components:
           description: New description. Set to `null` to clear it.
         type:
           type: string
+          const: code
           description: Evaluator type. The type of an existing evaluator cannot change.
         sourceCode:
           type: string
@@ -13398,6 +13412,7 @@ components:
       properties:
         message:
           type: string
+          const: Accepted
       required:
         - message
     CreateScoreBatchResults:
