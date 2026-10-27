@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.16.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.15.0...v0.16.0) - 2026-10-27
+
+### Added
+
+- record generation input provenance
+
+### Fixed
+
+- do not panic on non-object deepObject query values
+- authenticate generated-client publication
+- include executed helpers in generation provenance
+- preserve published v3 APIs during client generation
+
+### Other
+
+- exclude generated docs and spec from the published package
+- run cargo-deny in security workflow and drop duplicate audit job
+- *(deps)* Update rust patch updates
+- pin accepted ergonomic wrapper revision
+- verify pinned wrapper checkout in fixtures
+- check generated clients against langfuse-ergonomic
+- exercise validated patch identity checks
+- validate generation before publishing
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- update generated client from latest OpenAPI spec
+- *(deps)* Update rust patch updates
+
 ## [0.15.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.14.0...v0.15.0) - 2026-10-03
 
 ### Other
