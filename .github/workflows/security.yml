@@ -2,49 +2,20 @@ name: Security
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
     - cron: '0 0 * * 1'  # Weekly on Monday at midnight UTC
 
 permissions:
   contents: read
-  checks: write
-  security-events: write
 
 jobs:
-  audit:
-    name: Cargo Audit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Generate Cargo.lock for audit
-        run: cargo generate-lockfile
-      - name: Run cargo audit
-        uses: rustsec/audit-check@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  # License and dependency analysis
-  deny:
-    name: Cargo Deny
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      # Cargo.lock is not committed for this library crate.
-      - name: Generate Cargo.lock
-        run: cargo generate-lockfile
-
-      - name: Install cargo-deny
-        run: cargo install cargo-deny --locked
-
-      - name: Run cargo deny
-        run: cargo deny --locked check
+  security:
+    uses: genai-rs/.github/.github/workflows/rust-security.yml@main
+    with:
+      # The previous workflow had no CodeQL or gitleaks; enable them via the shared defaults.
+      run-codeql: true
+      run-gitleaks: true
+    secrets: inherit

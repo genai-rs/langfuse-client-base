@@ -2,9 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -13,49 +12,22 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  CARGO_TERM_COLOR: always
-  RUSTFLAGS: -C debuginfo=0
-
 jobs:
-  test:
-    name: Test (${{ matrix.rust }})
+  ci:
+    uses: genai-rs/.github/.github/workflows/rust-ci.yml@main
+    with:
+      msrv: "1.88"
+      generated-crate: true
+      os-matrix: '["ubuntu-latest"]'
+    secrets: inherit
+
+  python-tests:
+    name: Generation compatibility tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        rust: [stable, beta, 1.88.0]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ matrix.rust }}
-          components: rustfmt, clippy
       - name: Test generation compatibility rules
-        if: matrix.rust == 'stable'
         run: |
           python3 -m pip install -r scripts/requirements.txt
           python3 -m unittest discover -s tests -p 'test_*.py'
-      - name: Enable sccache
-        uses: mozilla-actions/sccache-action@v0.0.11
-      - name: Start sccache locally (no GHA cache)
-        run: |
-          echo "SCCACHE_GHA_ENABLED=off" >> $GITHUB_ENV
-          sccache --start-server && echo "RUSTC_WRAPPER=sccache" >> $GITHUB_ENV || echo "sccache unavailable, proceeding without it"
-      - name: Cache Rust dependencies
-        uses: Swatinem/rust-cache@v2
-      - name: Build
-        run: cargo build --verbose
-      - name: Build documentation
-        run: cargo doc --no-deps --all-features
-        env:
-          RUSTDOCFLAGS: "-D warnings"
-      - name: Run tests
-        run: cargo test --verbose
-      - name: Check formatting
-        if: matrix.rust == 'stable'
-        run: cargo fmt --all -- --check
-      - name: Run clippy
-        if: matrix.rust == 'stable'
-        run: cargo clippy --all-targets --all-features -- -D warnings
