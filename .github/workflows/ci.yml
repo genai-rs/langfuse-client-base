@@ -49,6 +49,8 @@ jobs:
         run: cargo build --verbose
       - name: Build documentation
         run: cargo doc --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: "-D warnings"
       - name: Run tests
         run: cargo test --verbose
       - name: Check formatting
