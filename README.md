@@ -8,8 +8,7 @@
 
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
 
-> [!WARNING]
-> **Important:** most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead.
+> **Warning:** **Important:** most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead.
 > 
 > This is a low-level, auto-generated client intended as a building block for higher-level abstractions.
 > The ergonomic wrapper provides:
