@@ -18,13 +18,17 @@ PATCH_SCRIPT="$SCRIPT_DIR/patch_generated.rs.sh"
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
 OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
-OPENAPI_GENERATOR_IMAGE="openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_VERSION}"
+# Custom generator image (timvw-rust extends the stock rust generator; see
+# https://github.com/timvw/openapi-generator-timvw-rust). Override for local
+# builds of the generator, e.g. GENERATOR_IMAGE=timvw-rust:dev.
+GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:0.1.0}"
+GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
 
 echo "🔧 Generating Langfuse client from OpenAPI specification..."
 
 # Always use Docker for reproducible generation
-echo "🐳 Using Docker for generation (OpenAPI Generator v${OPENAPI_GENERATOR_VERSION})"
+echo "🐳 Using Docker for generation ($GENERATOR_IMAGE, generator $GENERATOR_NAME, OpenAPI Generator v${OPENAPI_GENERATOR_VERSION})"
 
 # Check if Docker is available
 if ! command -v docker &> /dev/null; then
@@ -33,7 +37,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) $OPENAPI_GENERATOR_IMAGE"
+GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) $GENERATOR_IMAGE"
 
 # Download or use local OpenAPI specification
 if [ "$UPDATE_SPEC" = "true" ]; then
@@ -84,7 +88,7 @@ python3 "$SCRIPT_DIR/generation_manifest.py" \
     --composed-spec "$COMPATIBLE_OPENAPI_FILE" \
     --compatibility-file "$COMPATIBILITY_FILE" \
     --patch-script "$PATCH_SCRIPT" \
-    --generator-image "$OPENAPI_GENERATOR_IMAGE" \
+    --generator-image "$GENERATOR_IMAGE" \
     --output "$GENERATION_MANIFEST"
 
 # Backup our custom files before generation
@@ -99,7 +103,7 @@ echo "🏗️ Generating Rust client..."
 # Run the generator (Docker paths)
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
-    -g rust \
+    -g "$GENERATOR_NAME" \
     -o "/local" \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
