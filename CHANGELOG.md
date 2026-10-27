@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.16.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.16.0...v0.16.1) - 2026-10-27
+
+### Other
+
+- grant shared security workflow its permissions
+- switch to shared genai-rs workflows
+- add mocked-HTTP smoke tests
+- tidy the README warning callout
+- replace GitHub alert syntax rustdoc 1.88 rejects
+- fail on rustdoc warnings, add docs.rs metadata and Renovate lockfile maintenance
+- pin downstream wrapper check to langfuse-ergonomic 0.16 bump
+- *(renovate)* move security-update settings into vulnerabilityAlerts
+
 ## [0.16.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.15.0...v0.16.0) - 2026-10-27
 
 ### Added
