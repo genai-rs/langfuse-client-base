@@ -57,3 +57,6 @@ new = (
 if old in text:
     open(path, "w").write(text.replace(old, new))
 PY
+
+# rustdoc (-D warnings) rejects bare URLs in doc comments: wrap them in <...>
+find "$ROOT/src" -name '*.rs' -print0 | xargs -0 perl -pi -e 'if (m{^\s*//[/!]}) { s{(?<![<(\[`"/\w])(https?://[^\s<>)\]`"]*[^\s<>)\]`".,;:])}{<$1>}g }'
