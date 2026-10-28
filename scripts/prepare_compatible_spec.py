@@ -11,8 +11,39 @@ import yaml
 COMPATIBILITY_FILE = Path(__file__).with_name("legacy_v3_compatibility.json")
 
 
+SCHEMA_MAPS = ("properties", "patternProperties")
+
+
+def strip_const(node, keys_are_names: bool = False) -> int:
+    """Drop the JSON-Schema / OpenAPI-3.1 `const` keyword, in place.
+
+    Upstream declares `openapi: 3.0.1` yet uses `const` (e.g. on the `type`
+    discriminator of evaluator schemas), which the generator's 3.0 spec
+    validation rejects with "attribute components.schemas.<name>.const is
+    unexpected". `const: X` is semantically a single-value enum; dropping it
+    leaves the plain `type:`/`description:` a 3.0 document expects, exactly as
+    the generated code has always been shaped. Keys of a `properties` map are
+    property names, so a property literally called `const` is kept.
+    """
+    removed = 0
+    if isinstance(node, dict):
+        for key in list(node):
+            if key == "const" and not keys_are_names:
+                del node[key]
+                removed += 1
+                continue
+            removed += strip_const(
+                node[key], keys_are_names=key in SCHEMA_MAPS and not keys_are_names
+            )
+    elif isinstance(node, list):
+        for item in node:
+            removed += strip_const(item)
+    return removed
+
+
 def prepare_spec(spec: dict, compatibility: dict) -> dict:
     result = copy.deepcopy(spec)
+    strip_const(result)
     for path, methods in compatibility["paths"].items():
         target = result["paths"].setdefault(path, {})
         for method, legacy in methods.items():

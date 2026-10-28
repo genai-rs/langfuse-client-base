@@ -68,6 +68,22 @@ class CompatibleSpecTests(unittest.TestCase):
         self.assertIn({"$ref": "#/components/schemas/CreateScoreResponse"},
                       schemas["CreateScoresResponse"]["oneOf"])
 
+    def test_const_keyword_is_dropped_but_properties_named_const_are_kept(self):
+        self.upstream["components"]["schemas"]["Thing"] = {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "const": "thing"},
+                "const": {"type": "integer", "const": 1},
+            },
+            "oneOf": [{"const": "a"}, {"type": "string"}],
+        }
+        result = MODULE.prepare_spec(self.upstream, self.compatibility)
+        thing = result["components"]["schemas"]["Thing"]
+        self.assertEqual(thing["properties"]["type"], {"type": "string"})
+        self.assertEqual(thing["properties"]["const"], {"type": "integer"})
+        self.assertEqual(thing["oneOf"], [{}, {"type": "string"}])
+        self.assertEqual(MODULE.strip_const(result), 0)
+
     def test_preparation_is_idempotent_and_does_not_mutate_input(self):
         original = json.dumps(self.upstream)
         self.assertEqual(MODULE.prepare_spec(self.result, self.compatibility), self.result)
