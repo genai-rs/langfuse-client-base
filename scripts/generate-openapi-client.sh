@@ -69,8 +69,9 @@ fi
 
 # Keep openapi.yml as the untouched upstream snapshot. Compose the published v3
 # interface into a separate generator input so nightly downloads cannot erase
-# it. The spec is otherwise passed to the generator as upstream publishes it:
-# an invalid spec fails generation (spec validation) and is fixed upstream.
+# it, and drop the 3.1-only `const` keyword the 3.0 validation rejects. The
+# spec is otherwise passed to the generator as upstream publishes it: any other
+# invalid construct fails generation (spec validation) and is fixed upstream.
 echo "🧪 Composing the generator input..."
 mkdir -p "$(dirname "$COMPATIBLE_OPENAPI_FILE")"
 python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$OPENAPI_FILE" \
