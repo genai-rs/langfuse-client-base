@@ -33,6 +33,19 @@
       depNameTemplate: 'openapitools/openapi-generator-cli',
       versioningTemplate: 'docker',
     },
+    {
+      customType: 'regex',
+      description: 'Update the timvw-rust generator version',
+      managerFilePatterns: [
+        '/^scripts/generate-openapi-client\\.sh$/',
+      ],
+      matchStrings: [
+        'TIMVW_RUST_VERSION="\\${TIMVW_RUST_VERSION:-(?<currentValue>[\\d\\.]+)}"',
+      ],
+      datasourceTemplate: 'github-releases',
+      depNameTemplate: 'timvw/openapi-generator-timvw-rust',
+      extractVersionTemplate: '^v(?<version>.*)$',
+    },
   ],
   packageRules: [
     {
