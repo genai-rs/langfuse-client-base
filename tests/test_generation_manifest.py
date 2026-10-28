@@ -39,13 +39,11 @@ class GenerationManifestTests(unittest.TestCase):
             ),
             encoding="utf-8",
         )
-        self.patch = self.scripts_dir / "patch_generated.rs.sh"
-        self.patch.write_text("#!/bin/sh\necho patch\n", encoding="utf-8")
 
     def tearDown(self):
         self.temp_dir.cleanup()
 
-    def build(self):
+    def build(self, generator_image="ghcr.io/timvw/openapi-generator-timvw-rust:0.2.0-og7.25.0"):
         return MODULE.build_manifest(
             upstream_url="https://cloud.langfuse.com/generated/api/openapi.yml",
             upstream_revision=None,
@@ -53,8 +51,7 @@ class GenerationManifestTests(unittest.TestCase):
             raw_spec=self.raw,
             composed_spec=self.composed,
             compatibility_file=self.compatibility,
-            patch_script=self.patch,
-            generator_image="openapitools/openapi-generator-cli:v7.25.0",
+            generator_image=generator_image,
         )
 
     def test_manifest_has_stable_fields_and_separate_input_hashes(self):
@@ -85,9 +82,26 @@ class GenerationManifestTests(unittest.TestCase):
             manifest["compatibility"]["source_sha256"],
             MODULE.sha256_file(self.compatibility),
         )
+        self.assertEqual(manifest["generator"]["version"], "0.2.0")
+        self.assertEqual(manifest["generator"]["openapi_generator_version"], "7.25.0")
+        self.assertNotIn("patch_script", manifest)
+
+    def test_image_tag_without_openapi_generator_suffix_is_accepted(self):
+        manifest = self.build("openapitools/openapi-generator-cli:v7.25.0")
         self.assertEqual(manifest["generator"]["version"], "7.25.0")
+        self.assertIsNone(manifest["generator"]["openapi_generator_version"])
+        with self.assertRaisesRegex(ValueError, "semantic version tag"):
+            self.build("timvw-rust:dev")
+
+    def test_only_spec_composition_and_pipeline_are_transformation_scripts(self):
+        paths = [item["path"] for item in self.build()["transformation_scripts"]]
         self.assertEqual(
-            manifest["patch_script"]["revision"], MODULE.sha256_file(self.patch)
+            paths,
+            [
+                "scripts/generate-openapi-client.sh",
+                "scripts/generation_manifest.py",
+                "scripts/prepare_compatible_spec.py",
+            ],
         )
 
     def test_serialization_is_stable_and_sorted(self):
@@ -120,10 +134,10 @@ class GenerationManifestTests(unittest.TestCase):
         self.assertEqual(before["upstream"], after["upstream"])
         self.assertEqual(before["composed_input"], after["composed_input"])
 
-    def test_changed_executed_patch_helper_changes_transformation_provenance(self):
+    def test_changed_spec_composition_changes_transformation_provenance(self):
         before = self.build()
-        helper = self.scripts_dir / "add_bon_builders.py"
-        helper.write_text("DERIVE = 'bon::Builder'\n", encoding="utf-8")
+        helper = self.scripts_dir / "prepare_compatible_spec.py"
+        helper.write_text("LEGACY = 'v3'\n", encoding="utf-8")
         after = self.build()
 
         before_scripts = {
@@ -135,12 +149,12 @@ class GenerationManifestTests(unittest.TestCase):
             for script in after["transformation_scripts"]
         }
         self.assertNotEqual(
-            before_scripts["scripts/add_bon_builders.py"],
-            after_scripts["scripts/add_bon_builders.py"],
+            before_scripts["scripts/prepare_compatible_spec.py"],
+            after_scripts["scripts/prepare_compatible_spec.py"],
         )
         self.assertEqual(
             set(path for path in before_scripts if before_scripts[path] != after_scripts[path]),
-            {"scripts/add_bon_builders.py"},
+            {"scripts/prepare_compatible_spec.py"},
         )
         self.assertEqual(before["upstream"], after["upstream"])
         self.assertEqual(before["composed_input"], after["composed_input"])
@@ -156,8 +170,7 @@ class GenerationManifestTests(unittest.TestCase):
                 raw_spec=self.raw,
                 composed_spec=self.composed,
                 compatibility_file=self.compatibility,
-                patch_script=self.patch,
-                generator_image="openapitools/openapi-generator-cli:v7.25.0",
+                    generator_image="openapitools/openapi-generator-cli:v7.25.0",
             )
 
     def test_available_upstream_revision_is_recorded(self):
@@ -168,7 +181,6 @@ class GenerationManifestTests(unittest.TestCase):
             raw_spec=self.raw,
             composed_spec=self.composed,
             compatibility_file=self.compatibility,
-            patch_script=self.patch,
             generator_image="openapitools/openapi-generator-cli:v7.25.0",
         )
 

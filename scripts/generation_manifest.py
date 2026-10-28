@@ -13,15 +13,17 @@ from typing import Any
 
 REVISION_RE = re.compile(r"^[0-9a-fA-F]{7,64}$")
 SOURCE_REVISION_RE = re.compile(r"/blob/([0-9a-fA-F]{7,64})/")
+# Everything that shapes the generator input or output besides the generator
+# image itself. Rust-specific fixes live in the generator (timvw-rust), so only
+# the spec composition and this pipeline remain.
 TRANSFORMATION_SCRIPT_PATHS = (
-    "scripts/add_bon_builders.py",
     "scripts/generate-openapi-client.sh",
     "scripts/generation_manifest.py",
-    "scripts/merge_cargo_dependencies.py",
-    "scripts/normalize_openapi_schema.py",
-    "scripts/patch_generated.rs.sh",
     "scripts/prepare_compatible_spec.py",
 )
+# <generator version>[-og<openapi-generator version>]: the image bundles one
+# openapi-generator release, and the tag names both.
+IMAGE_TAG_RE = re.compile(r"(.+):v?(\d+\.\d+\.\d+)(?:-og(\d+\.\d+\.\d+))?")
 
 
 def sha256_file(path: Path) -> str:
@@ -40,7 +42,6 @@ def build_manifest(
     raw_spec: Path,
     composed_spec: Path,
     compatibility_file: Path,
-    patch_script: Path,
     generator_image: str,
 ) -> dict[str, Any]:
     if upstream_revision:
@@ -54,7 +55,7 @@ def build_manifest(
         raise ValueError("compatibility source must contain a source URL")
     source_revision_match = SOURCE_REVISION_RE.search(source_url)
 
-    image_match = re.fullmatch(r"(.+):v?(\d+\.\d+\.\d+)", generator_image)
+    image_match = IMAGE_TAG_RE.fullmatch(generator_image)
     if not image_match:
         raise ValueError("generator image must include a semantic version tag")
 
@@ -92,10 +93,7 @@ def build_manifest(
         "generator": {
             "image": generator_image,
             "version": image_match.group(2),
-        },
-        "patch_script": {
-            "path": "scripts/patch_generated.rs.sh",
-            "revision": sha256_file(patch_script),
+            "openapi_generator_version": image_match.group(3),
         },
         "transformation_scripts": transformation_scripts,
     }
@@ -116,7 +114,6 @@ def main() -> int:
     parser.add_argument("--raw-spec", type=Path, required=True)
     parser.add_argument("--composed-spec", type=Path, required=True)
     parser.add_argument("--compatibility-file", type=Path, required=True)
-    parser.add_argument("--patch-script", type=Path, required=True)
     parser.add_argument("--generator-image", required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -128,7 +125,6 @@ def main() -> int:
         raw_spec=args.raw_spec,
         composed_spec=args.composed_spec,
         compatibility_file=args.compatibility_file,
-        patch_script=args.patch_script,
         generator_image=args.generator_image,
     )
     write_manifest(manifest, args.output)

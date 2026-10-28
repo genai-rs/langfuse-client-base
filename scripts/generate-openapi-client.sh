@@ -8,20 +8,22 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 BASE_CLIENT_DIR="$PROJECT_ROOT"
 OPENAPI_URL="https://cloud.langfuse.com/generated/api/openapi.yml"
 OPENAPI_FILE="$PROJECT_ROOT/openapi.yml"
-NORMALIZED_OPENAPI_FILE="$PROJECT_ROOT/.openapi-generator/normalized.yml"
 COMPATIBLE_OPENAPI_FILE="$PROJECT_ROOT/.openapi-generator/compatible.json"
 GENERATION_MANIFEST="$PROJECT_ROOT/.openapi-generator/generation-manifest.json"
 COMPATIBILITY_FILE="$SCRIPT_DIR/legacy_v3_compatibility.json"
-PATCH_SCRIPT="$SCRIPT_DIR/patch_generated.rs.sh"
 
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
 OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
-# Custom generator image (timvw-rust extends the stock rust generator; see
-# https://github.com/timvw/openapi-generator-timvw-rust). Override for local
-# builds of the generator, e.g. GENERATOR_IMAGE=timvw-rust:dev.
-GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:0.1.0}"
+# Custom generator (timvw-rust extends the stock rust generator; see
+# https://github.com/timvw/openapi-generator-timvw-rust). Every Rust-specific
+# fix lives in the generator: this script only prepares the spec and formats
+# the output. The image tag names the generator version and the
+# openapi-generator version it bundles. Override the image for local builds of
+# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.2.0-og7.25.0.
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.2.0}"
+GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
 
@@ -43,7 +45,7 @@ GENERATOR_CMD="docker run --rm -v $PROJECT_ROOT:/local -u $(id -u):$(id -g) $GEN
 if [ "$UPDATE_SPEC" = "true" ]; then
     echo "📥 Downloading latest OpenAPI specification..."
     curl -o "$OPENAPI_FILE.new" "$OPENAPI_URL"
-    
+
     # Check if spec has changed
     if [ -f "$OPENAPI_FILE" ]; then
         if diff -q "$OPENAPI_FILE" "$OPENAPI_FILE.new" > /dev/null; then
@@ -65,17 +67,13 @@ else
     echo "📝 Using local OpenAPI specification from $OPENAPI_FILE"
 fi
 
-# Keep openapi.yml as the untouched upstream snapshot. Normalize a copy before
-# composing the compatibility surface so the raw and composed inputs remain
-# independently identifiable in generation provenance.
-echo "🧪 Normalizing OpenAPI schema for Rust generation..."
-mkdir -p "$(dirname "$NORMALIZED_OPENAPI_FILE")"
-cp "$OPENAPI_FILE" "$NORMALIZED_OPENAPI_FILE"
-python3 "$SCRIPT_DIR/normalize_openapi_schema.py" "$NORMALIZED_OPENAPI_FILE"
-
-# Keep openapi.yml as the upstream snapshot. Compose the published v3 interface
-# into a separate generator input so nightly downloads cannot erase it.
-python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$NORMALIZED_OPENAPI_FILE" \
+# Keep openapi.yml as the untouched upstream snapshot. Compose the published v3
+# interface into a separate generator input so nightly downloads cannot erase
+# it. The spec is otherwise passed to the generator as upstream publishes it:
+# an invalid spec fails generation (spec validation) and is fixed upstream.
+echo "🧪 Composing the generator input..."
+mkdir -p "$(dirname "$COMPATIBLE_OPENAPI_FILE")"
+python3 "$SCRIPT_DIR/prepare_compatible_spec.py" "$OPENAPI_FILE" \
     "$COMPATIBLE_OPENAPI_FILE"
 
 # Record only reviewed, non-secret generation inputs. The helper uses a fixed
@@ -87,17 +85,12 @@ python3 "$SCRIPT_DIR/generation_manifest.py" \
     --raw-spec "$OPENAPI_FILE" \
     --composed-spec "$COMPATIBLE_OPENAPI_FILE" \
     --compatibility-file "$COMPATIBILITY_FILE" \
-    --patch-script "$PATCH_SCRIPT" \
     --generator-image "$GENERATOR_IMAGE" \
     --output "$GENERATION_MANIFEST"
 
-# Backup our custom files before generation
-echo "📝 Backing up custom files..."
-cp "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.original" 2>/dev/null || true
-cp "$BASE_CLIENT_DIR/.gitignore" "$BASE_CLIENT_DIR/.gitignore.custom" 2>/dev/null || true
-cp "$BASE_CLIENT_DIR/README.md" "$BASE_CLIENT_DIR/README.md.custom" 2>/dev/null || true
-
-# Generate the client
+# Generate the client. Hand-maintained files (Cargo.toml, README.md,
+# .gitignore) and unwanted supporting files are listed in
+# .openapi-generator-ignore, which the generator honours.
 echo "🏗️ Generating Rust client..."
 
 # Run the generator (Docker paths)
@@ -113,61 +106,11 @@ $GENERATOR_CMD generate \
     --additional-properties=preferUnsignedInt=false \
     --additional-properties=useSingleRequestParameter=false
 
-# Clean up generated files we don't need
-echo "🧹 Cleaning up generated files..."
-rm -f "$BASE_CLIENT_DIR/.travis.yml"
-rm -f "$BASE_CLIENT_DIR/.gitignore"
-rm -f "$BASE_CLIENT_DIR/git_push.sh"
 # Drop OpenAPI Generator's transient metadata while keeping the provenance
 # manifest available for CI artifact upload and local review.
+echo "🧹 Cleaning up generated files..."
 find "$BASE_CLIENT_DIR/.openapi-generator" -mindepth 1 -maxdepth 1 \
     ! -name "$(basename "$GENERATION_MANIFEST")" -exec rm -rf {} +
-
-# Restore our custom files
-echo "📝 Restoring custom files..."
-if [ -f "$BASE_CLIENT_DIR/.gitignore.custom" ]; then
-    mv "$BASE_CLIENT_DIR/.gitignore.custom" "$BASE_CLIENT_DIR/.gitignore"
-fi
-if [ -f "$BASE_CLIENT_DIR/README.md.custom" ]; then
-    mv "$BASE_CLIENT_DIR/README.md.custom" "$BASE_CLIENT_DIR/README.md"
-fi
-
-# Merge Cargo.toml without letting the generator overwrite curated dependency versions
-echo "📝 Merging Cargo.toml changes..."
-if [ -f "$BASE_CLIENT_DIR/Cargo.toml.original" ]; then
-    mv "$BASE_CLIENT_DIR/Cargo.toml" "$BASE_CLIENT_DIR/Cargo.toml.generated"
-    mv "$BASE_CLIENT_DIR/Cargo.toml.original" "$BASE_CLIENT_DIR/Cargo.toml"
-
-    python3 "$SCRIPT_DIR/merge_cargo_dependencies.py" \
-        "$BASE_CLIENT_DIR/Cargo.toml" \
-        "$BASE_CLIENT_DIR/Cargo.toml.generated"
-
-    rm -f "$BASE_CLIENT_DIR/Cargo.toml.generated"
-fi
-
-# Remove any leftover backups if they still exist
-rm -f "$BASE_CLIENT_DIR/.gitignore.custom" \
-      "$BASE_CLIENT_DIR/README.md.custom" \
-      "$BASE_CLIENT_DIR/Cargo.toml.original"
-
-# Apply post-generation patches
-echo "🔧 Applying post-generation patches..."
-bash "$SCRIPT_DIR/patch_generated.rs.sh" "$BASE_CLIENT_DIR"
-
-# Inject crate-level docs from README into lib.rs for docs.rs discoverability
-echo "📚 Injecting crate-level docs into src/lib.rs..."
-if [ -f "$BASE_CLIENT_DIR/src/lib.rs" ]; then
-    # Only inject if not already present
-    if ! grep -q "#!\[doc = include_str!\(\"../README.md\"\)\]" "$BASE_CLIENT_DIR/src/lib.rs"; then
-        tmpfile=$(mktemp)
-        {
-            echo "#![doc = include_str!(\"../README.md\")]";
-            echo;
-            cat "$BASE_CLIENT_DIR/src/lib.rs";
-        } > "$tmpfile"
-        mv "$tmpfile" "$BASE_CLIENT_DIR/src/lib.rs"
-    fi
-fi
 
 # Format all code including examples
 echo "🎨 Formatting all code (src, tests, examples)..."

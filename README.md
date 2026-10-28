@@ -167,6 +167,14 @@ It also preserves the published score operation names and single-score unions.
 The upstream snapshot stays separate; compatibility rules are reapplied on every
 generation, including when the downloaded specification is unchanged.
 
+The composed spec is rendered by the
+[timvw-rust](https://github.com/timvw/openapi-generator-timvw-rust) generator,
+a build of openapi-generator's `rust` generator that already produces the
+crate's conventions (bon builders, crate docs from `README.md`, non-panicking
+`deepObject` queries, rustdoc-clean links). Nothing is patched after
+generation; `Cargo.toml`, `README.md` and `.gitignore` are hand-maintained and
+listed in `.openapi-generator-ignore`.
+
 ## License
 
 Licensed under either of:

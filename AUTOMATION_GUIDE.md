@@ -68,11 +68,14 @@ To regenerate the client from the latest OpenAPI specification:
 ```
 
 **Important**: The generation script:
-1. Downloads the latest OpenAPI spec
-2. Backs up the custom Cargo.toml
-3. Generates the client
-4. Restores the custom Cargo.toml
-5. Formats the generated code
+1. Downloads the latest OpenAPI spec (with `UPDATE_SPEC=true`)
+2. Composes the legacy v3 interface into the generator input
+3. Generates the client with the `timvw-rust` generator image
+4. Formats the generated code
+
+`Cargo.toml`, `README.md` and `.gitignore` are listed in `.openapi-generator-ignore`,
+so the generator never writes them. Rust-specific fixes belong in the generator
+(https://github.com/timvw/openapi-generator-timvw-rust), not in scripts.
 
 ### Handling Generated Code Issues
 
@@ -82,7 +85,7 @@ To regenerate the client from the latest OpenAPI specification:
   all = "allow"
   ```
 - Formatting is automatically applied after generation
-- The custom Cargo.toml is preserved across regenerations
+- The custom Cargo.toml is never overwritten (`.openapi-generator-ignore`)
 
 ## CI/CD
 
