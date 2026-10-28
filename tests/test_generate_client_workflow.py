@@ -525,6 +525,12 @@ class GenerateClientWorkflowTests(unittest.TestCase):
         script = (ROOT / "scripts/check-downstream.sh").read_text()
         self.assertIn("a5a63b6550d85903ba8b1f53fc1de40c996e6a6a", script)
         self.assertIn("cargo test --all-targets --all-features --offline --locked", script)
+        # The patch only wins over the wrapper's locked crates.io version after re-locking it.
+        self.assertIn("cargo update --offline -p langfuse-client-base", script)
+        self.assertLess(
+            script.index("cargo update --offline -p langfuse-client-base"),
+            script.index("cargo metadata --format-version 1 --offline --manifest-path"),
+        )
         self.assertIn("CARGO_BUILD_JOBS=2", script)
         self.assertIn("baseline failed", script)
 
