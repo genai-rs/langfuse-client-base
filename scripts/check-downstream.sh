@@ -42,7 +42,14 @@ export CARGO_BUILD_JOBS=2
 run_case() {
   local label="$1" source="$2" target="$WORK_DIR/target" resolved=not_resolved status=unknown
   local config=(--config "patch.crates-io.langfuse-client-base.path=\"$source\"")
-  if ! cargo metadata --format-version 1 --offline --manifest-path "$WORK_DIR/wrapper/Cargo.toml" "${config[@]}" >"$WORK_DIR/$label-metadata.json" 2>"$WORK_DIR/$label-metadata.err"; then
+  # The pinned wrapper's Cargo.lock holds the crates.io release it was built against.
+  # Cargo keeps a locked registry version over a [patch] whose version differs, so
+  # after every client-base version bump the patch would be ignored and the case
+  # would resolve to the registry crate. Re-lock only langfuse-client-base against
+  # the patch so the case always builds the tree under test.
+  if ! cargo update --offline -p langfuse-client-base --manifest-path "$WORK_DIR/wrapper/Cargo.toml" "${config[@]}" >"$WORK_DIR/$label-update.log" 2>&1; then
+    status=resolution_failed
+  elif ! cargo metadata --format-version 1 --offline --manifest-path "$WORK_DIR/wrapper/Cargo.toml" "${config[@]}" >"$WORK_DIR/$label-metadata.json" 2>"$WORK_DIR/$label-metadata.err"; then
     status=resolution_failed
   else
     resolved="$(python3 -c 'import json,sys; print(next(p["manifest_path"] for p in json.load(open(sys.argv[1]))["packages"] if p["name"] == "langfuse-client-base"))' "$WORK_DIR/$label-metadata.json")"
@@ -101,6 +108,9 @@ PY
 
 if [[ "$baseline_status" != passed ]]; then
   echo "downstream compatibility: baseline failed ($baseline_status); candidate result is diagnostic only" >&2
+  [[ ! -f "$WORK_DIR/baseline-update.log" ]] || cat "$WORK_DIR/baseline-update.log" >&2
+  [[ ! -s "$WORK_DIR/baseline-metadata.err" ]] || cat "$WORK_DIR/baseline-metadata.err" >&2
+  [[ "$baseline_status" != wrong_resolution ]] || echo "resolved manifest: $(cat "$WORK_DIR/baseline.resolved")" >&2
   [[ ! -f "$WORK_DIR/baseline-check.log" ]] || cat "$WORK_DIR/baseline-check.log" >&2
   [[ ! -f "$WORK_DIR/baseline-test.log" ]] || cat "$WORK_DIR/baseline-test.log" >&2
   [[ ! -f "$WORK_DIR/candidate-check.log" ]] || cat "$WORK_DIR/candidate-check.log" >&2
