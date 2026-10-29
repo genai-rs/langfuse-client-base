@@ -15,7 +15,7 @@ COMPATIBILITY_FILE="$SCRIPT_DIR/legacy_v3_compatibility.json"
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
-OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.26.0}"
 # Custom generator (timvw-rust extends the stock rust generator; see
 # https://github.com/timvw/openapi-generator-timvw-rust). Every Rust-specific
 # fix lives in the generator: this script only prepares the spec and formats
