@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -40,20 +41,31 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0  # tags are needed to find the last release
-      - name: Check public API against the last release
+      - name: Check public API
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
+          API_CHANGE_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'api-change') }}
         run: |
           # Strict only for PRs that change the generation pipeline: those must
-          # reproduce the released API or justify the diff. Spec-driven
+          # reproduce the API of their base commit, or justify the diff. The
+          # base commit, not the last release, is the reference: an intentional
+          # API change already merged to main (labelled api-change, release
+          # pending) must not fail every later pipeline PR. Spec-driven
           # regeneration PRs are expected to move the API and are reviewed via
           # the api-change report of generate-client.yml, so they only get a
-          # report here (as do pushes to main).
+          # report against the last release (as do pushes to main). A pipeline
+          # PR that changes the API on purpose carries the `api-change` label.
           if [ -z "$BASE" ] || git diff --quiet "$BASE...HEAD" -- scripts/ migration/ .github/workflows/generate-client.yml; then
             export ALLOW_API_CHANGES=1
-            echo "::notice::Generation pipeline unchanged; public-API diff is report-only"
+            echo "::notice::Generation pipeline unchanged; public-API diff against the last release is report-only"
+            scripts/check_public_api.sh
+          else
+            if [ "$API_CHANGE_LABEL" = "true" ]; then
+              export ALLOW_API_CHANGES=1
+              echo "::warning::PR is labelled api-change; public-API diff is report-only"
+            fi
+            scripts/check_public_api.sh "$BASE"
           fi
-          scripts/check_public_api.sh
       - name: Upload report
         uses: actions/upload-artifact@v4
         if: always()
