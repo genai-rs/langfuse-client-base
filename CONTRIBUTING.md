@@ -18,7 +18,7 @@ To update the client with the latest OpenAPI spec:
 
 `scripts/check_public_api.sh` compares the public Rust API in `src/` (model exports, struct fields, enum variants, function signatures, derives and serde attributes) against the latest release tag and writes `target/reports/public-api-diff.json`. It needs git tags (`git fetch --tags`) and exits 1 on any difference. Set `ALLOW_API_CHANGES=1` to let it pass when a change is intentional (for example a breaking release); document it in a migration note.
 
-CI runs it on every PR, but it only *fails* a PR that changes the generation pipeline (`scripts/`, `migration/`, the generate workflow): such a change must reproduce the released API, or ship the diff intentionally. Spec-driven regeneration PRs are expected to move the API, so for them the job is report-only.
+CI runs it on every PR, but it only *fails* a PR that changes the generation pipeline (`scripts/`, `migration/`, the generate workflow): such a change is compared against the PR's base commit and must reproduce that API, or ship the diff intentionally: label the PR `api-change` and add a migration note. Spec-driven regeneration PRs are expected to move the API, so for them the job is report-only.
 
 ## Reporting Issues
 
