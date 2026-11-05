@@ -172,4 +172,29 @@ with tempfile.TemporaryDirectory(prefix="downstream-crates-io-fixtures-") as dir
     commit(consumer, "Advance the default branch")
     env["DOWNSTREAM_COMMIT"] = wrapper_sha
     case("commit-override", bumped, 0, "SKIP", "SKIP", consumer_ref="DOWNSTREAM_COMMIT override")
+
+    # The real wrapper commits a Cargo.lock that pins the crates.io release. A
+    # compatible candidate with another version (a patch release) must still
+    # replace the locked crate instead of being ignored by Cargo.
+    del env["DOWNSTREAM_COMMIT"]
+    run("cargo", "generate-lockfile", cwd=consumer)
+    lock = (consumer / "Cargo.lock").read_text()
+    assert 'name = "langfuse-client-base"\nversion = "0.16.' in lock, "lockfile pins the release"
+    assert "registry+https://github.com/rust-lang/crates.io-index" in lock
+    locked_sha = commit(consumer, "Commit the lockfile")
+    manifest.write_text(manifest.read_text().replace('"0.17.0"', '"0.16.99"'))
+    patch_release = commit(base, "Release 0.16.99")
+    output = results / "locked-patch-release"
+    output.mkdir(exist_ok=True)
+    env["DOWNSTREAM_RESULTS_DIR"] = str(output)
+    env["DOWNSTREAM_REPORT_PATH"] = str(output / "copied/report.json")
+    with (output / "run.log").open("w") as log:
+        proc = subprocess.run(["bash", str(script), str(base), patch_release], env=env,
+                              stdout=log, stderr=subprocess.STDOUT)
+    assert proc.returncode == 0, ("locked-patch-release", proc.returncode)
+    summary = (output / "summary.md").read_text()
+    assert "| Candidate | PASS |" in summary and f"`{locked_sha}`" in summary
+    assert "Candidate langfuse-client-base version: `0.16.99`" in summary
+    assert run("git", "status", "--porcelain", cwd=consumer) == ""
+    print("PASS locked-patch-release: exit=0, candidate=PASS")
 print("All crates.io consumer fixture cases passed; candidate and consumer trees stayed unchanged.")
