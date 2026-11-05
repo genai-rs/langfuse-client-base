@@ -302,6 +302,11 @@ check_consumer() (
         echo '[patch.crates-io]'
         python3 -c 'import json, sys; print("langfuse-client-base = { path = " + json.dumps(sys.argv[1]) + " }")' "$base"
     } > "$config" || return
+    # The consumer's lockfile pins its crates.io release. Re-resolve only the
+    # base crate so a compatible candidate with another version (a patch or
+    # minor release) replaces the locked one; other locked versions stay.
+    echo '+ cargo update -p langfuse-client-base'
+    cargo --config "$config" update -p langfuse-client-base || return
     echo '+ cargo metadata --format-version 1 --all-features'
     cargo --config "$config" metadata --format-version 1 --all-features > "$scratch/$label.json" || return
     # Inspect Cargo's actual resolved graph. A source assertion or matching
