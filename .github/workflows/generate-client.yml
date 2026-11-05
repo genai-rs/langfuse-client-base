@@ -90,20 +90,24 @@ jobs:
           printf '%s\n' "$base_sha" > validated-base.sha
           printf '%s\n' "$tree_sha" > validated-tree.sha
 
-      - name: Check pinned downstream wrapper compatibility
+      - name: Check downstream consumer compatibility
         env:
-          BASELINE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
+          CARGO_BUILD_JOBS: '2'
           CANDIDATE_TREE_SHA: ${{ steps.changes.outputs.tree_sha }}
-          REPORT_PATH: validation-output/downstream-compatibility.json
-        run: ./scripts/check-downstream.sh
+          DOWNSTREAM_RESULTS_DIR: ${{ runner.temp }}/downstream-results
+          DOWNSTREAM_REPORT_PATH: validation-output/downstream-compatibility.json
+        run: |
+          # Record current main independently of the branch running generation.
+          git fetch --no-tags origin main
+          ./scripts/check-downstream.sh "$GITHUB_WORKSPACE" "$(git rev-parse FETCH_HEAD)"
 
       - name: Upload downstream compatibility report
-        if: always() && hashFiles('validation-output/downstream-compatibility.json') != ''
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: downstream-compatibility
-          path: validation-output/downstream-compatibility.json
-          if-no-files-found: error
+          path: ${{ runner.temp }}/downstream-results
+          if-no-files-found: ignore
           retention-days: 30
 
       - name: Upload validated changes and generation provenance
