@@ -504,35 +504,36 @@ class GenerateClientWorkflowTests(unittest.TestCase):
         self.assertIn("validation-output/generation-manifest.json", upload["with"]["path"])
         self.assertNotIn("include-hidden-files", upload["with"])
 
-    def test_pinned_downstream_check_runs_after_candidate_tree_is_saved(self):
+    def test_downstream_check_runs_after_candidate_tree_is_saved(self):
         steps = self.workflow["jobs"]["validate"]["steps"]
         names = [step["name"] for step in steps]
         save_index = names.index("Save validated changes")
-        downstream_index = names.index("Check pinned downstream wrapper compatibility")
+        downstream_index = names.index("Check downstream consumer compatibility")
         upload_index = names.index("Upload validated changes and generation provenance")
         self.assertLess(save_index, downstream_index)
         self.assertLess(downstream_index, upload_index)
         downstream = steps[downstream_index]
-        self.assertEqual(downstream["run"], "./scripts/check-downstream.sh")
-        self.assertIn("github.event.pull_request.base.sha", downstream["env"]["BASELINE_SHA"])
+        self.assertIn('./scripts/check-downstream.sh "$GITHUB_WORKSPACE" "$(git rev-parse FETCH_HEAD)"', downstream["run"])
+        self.assertIn("git fetch --no-tags origin main", downstream["run"])
         self.assertIn("steps.changes.outputs.tree_sha", downstream["env"]["CANDIDATE_TREE_SHA"])
+        self.assertEqual(downstream["env"]["DOWNSTREAM_REPORT_PATH"], "validation-output/downstream-compatibility.json")
         self.assertIn("validation-output/downstream-compatibility.json", steps[upload_index]["with"]["path"])
         report_upload = step_named(steps, "Upload downstream compatibility report")
         self.assertIn("always()", report_upload["if"])
         self.assertEqual(report_upload["with"]["name"], "downstream-compatibility")
+        self.assertEqual(report_upload["with"]["path"], downstream["env"]["DOWNSTREAM_RESULTS_DIR"])
 
-    def test_downstream_gate_pins_accepted_wrapper_and_keeps_cases_offline(self):
+    def test_downstream_check_targets_consumer_default_branch_via_crates_io_patch(self):
         script = (ROOT / "scripts/check-downstream.sh").read_text()
-        self.assertIn("a5a63b6550d85903ba8b1f53fc1de40c996e6a6a", script)
-        self.assertIn("cargo test --all-targets --all-features --offline --locked", script)
-        # The patch only wins over the wrapper's locked crates.io version after re-locking it.
-        self.assertIn("cargo update --offline -p langfuse-client-base", script)
-        self.assertLess(
-            script.index("cargo update --offline -p langfuse-client-base"),
-            script.index("cargo metadata --format-version 1 --offline --manifest-path"),
-        )
-        self.assertIn("CARGO_BUILD_JOBS=2", script)
-        self.assertIn("baseline failed", script)
+        self.assertIn("https://github.com/genai-rs/langfuse-ergonomic.git", script)
+        self.assertIn("git ls-remote --symref", script)
+        self.assertNotIn("WRAPPER_REVISION", script)
+        self.assertIn("[patch.crates-io]", script)
+        self.assertIn("Cargo did not resolve exclusively to the requested local base manifest", script)
+        self.assertIn("cargo --config \"$config\" test --offline --locked --all-features", script)
+        self.assertIn("SKIP: langfuse-client-base", script)
+        self.assertIn("Base main (diagnostic only)", script)
+        self.assertIn("unset LANGFUSE_PUBLIC_KEY LANGFUSE_SECRET_KEY", script)
 
     def test_validation_runs_all_checks_before_saving_an_artifact(self):
         steps = self.workflow["jobs"]["validate"]["steps"]
