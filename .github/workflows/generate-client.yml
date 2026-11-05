@@ -103,7 +103,7 @@ jobs:
 
       - name: Upload downstream compatibility report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: downstream-compatibility
           path: ${{ runner.temp }}/downstream-results
@@ -112,7 +112,7 @@ jobs:
 
       - name: Upload validated changes and generation provenance
         if: steps.changes.outputs.has_changes == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: generated-client
           path: |
@@ -147,7 +147,7 @@ jobs:
           persist-credentials: false
 
       - name: Download validated changes
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: generated-client
 
