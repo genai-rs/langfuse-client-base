@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.16.2](https://github.com/genai-rs/langfuse-client-base/compare/v0.16.1...v0.16.2) - 2026-11-05
+
+### Fixed
+
+- drop the 3.1 const keyword while composing the generator input
+
+### Other
+
+- re-resolve the base crate before checking the downstream patch
+- check downstream against the consumer's crates.io release line
+- compare pipeline PRs' public API against their base commit
+- *(deps)* Update Rust crate bon to 3.10.3
+- generate with timvw-rust 0.2.0 and drop the post-processing scripts
+- generate with the timvw-rust generator image
+- add public-API reference check
+
 ## [0.16.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.16.0...v0.16.1) - 2026-10-27
 
 ### Other
