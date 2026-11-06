@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// ObservationsV2Response : Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results.
+/// ObservationsV2Response : Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results. The array may contain fewer than the requested `limit` items, or be empty, while a cursor is present. Continue until the cursor is absent.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsV2Response {
     /// Array of observation objects. Fields included depend on the `fields` parameter in the request.
@@ -22,7 +22,7 @@ pub struct ObservationsV2Response {
 }
 
 impl ObservationsV2Response {
-    /// Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results.
+    /// Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results. The array may contain fewer than the requested `limit` items, or be empty, while a cursor is present. Continue until the cursor is absent.
     pub fn new(
         data: Vec<models::ObservationV2>,
         meta: models::ObservationsV2Meta,

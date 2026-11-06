@@ -157,9 +157,10 @@ pub mod score_configs_api;
 pub mod scores_api;
 pub mod scores_v3_api;
 pub mod sessions_api;
+pub mod skills_api;
 pub mod trace_api;
 pub mod unstable_dashboard_widgets_api;
 pub mod unstable_dashboards_api;
-pub mod unstable_skills_api;
+pub mod unstable_topics_api;
 
 pub mod configuration;

@@ -205,7 +205,7 @@ pub async fn projects_create_api_key(
     }
 }
 
-/// Delete a project by ID (requires organization-scoped API key). Project deletion is processed asynchronously.
+/// Delete a project by ID (requires organization-scoped API key). Project deletion is processed asynchronously. Deleting the AI Gateway ingestion project turns off the AI Gateway for the organization until another ingestion project is selected.
 #[bon::builder]
 pub async fn projects_delete(
     configuration: &configuration::Configuration,
