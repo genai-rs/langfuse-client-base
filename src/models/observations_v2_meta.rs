@@ -11,7 +11,6 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// ObservationsV2Meta : Metadata for cursor-based pagination.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsV2Meta {
     /// Opaque cursor for the next page. Omitted when there is no next page.
@@ -22,11 +21,21 @@ pub struct ObservationsV2Meta {
         skip_serializing_if = "Option::is_none"
     )]
     pub cursor: Option<Option<String>>,
+    /// Present when an empty page has a cursor; continue requesting pages until the cursor is absent.
+    #[serde(
+        rename = "comment",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub comment: Option<Option<String>>,
 }
 
 impl ObservationsV2Meta {
-    /// Metadata for cursor-based pagination.
     pub fn new() -> ObservationsV2Meta {
-        ObservationsV2Meta { cursor: None }
+        ObservationsV2Meta {
+            cursor: None,
+            comment: None,
+        }
     }
 }

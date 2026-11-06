@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **export_start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
 **compressed** | **bool** |  | 
 **export_source** | [**models::BlobStorageExportSource**](BlobStorageExportSource.md) |  | 
-**export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups included in each exported observation row. An empty list is treated as all groups during export. | 
+**export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups included in each exported observation and score row. An empty list is treated as all observation groups and no score groups during export. Core score columns are always exported. | 
 **next_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
 **last_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
 **last_error** | Option<**String**> |  | 

@@ -15,6 +15,8 @@
 | Metrics | metrics |
 | Tools | tools |
 | TraceContext | trace_context |
+| ScoreMetadata | score_metadata |
+| ScoreProvenance | score_provenance |
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

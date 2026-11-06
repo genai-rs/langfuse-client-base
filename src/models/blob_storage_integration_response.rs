@@ -45,7 +45,7 @@ pub struct BlobStorageIntegrationResponse {
     pub compressed: bool,
     #[serde(rename = "exportSource")]
     pub export_source: models::BlobStorageExportSource,
-    /// Field groups included in each exported observation row. An empty list is treated as all groups during export.
+    /// Field groups included in each exported observation and score row. An empty list is treated as all observation groups and no score groups during export. Core score columns are always exported.
     #[serde(rename = "exportFieldGroups", deserialize_with = "Option::deserialize")]
     pub export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
     #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
