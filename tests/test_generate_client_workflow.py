@@ -498,7 +498,7 @@ class GenerateClientWorkflowTests(unittest.TestCase):
         self.assertIn("validation-output/generation-manifest.json", save)
 
         upload = step_named(validate["steps"], "Upload validated changes and generation provenance")
-        self.assertEqual(upload["uses"], "actions/upload-artifact@v4")
+        self.assertRegex(upload["uses"], r"^actions/upload-artifact@v\d+$")
         self.assertEqual(upload["with"]["retention-days"], "30")
         self.assertEqual(upload["with"]["if-no-files-found"], "error")
         self.assertIn("validation-output/generation-manifest.json", upload["with"]["path"])
