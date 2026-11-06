@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.17.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.16.2...v0.17.0) - 2026-11-06
+
+### Other
+
+- update generated client
+- accept any upload-artifact major version
+- *(deps)* Update github-actions
+- *(deps)* Update Rust crate wiremock to 0.6.5
+
 ## [0.16.2](https://github.com/genai-rs/langfuse-client-base/compare/v0.16.1...v0.16.2) - 2026-11-05
 
 ### Fixed
