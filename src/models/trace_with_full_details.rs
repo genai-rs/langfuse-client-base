@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct TraceWithFullDetails {
     /// The unique identifier of a trace
     #[serde(rename = "id")]
@@ -93,7 +93,7 @@ pub struct TraceWithFullDetails {
     #[serde(rename = "scores")]
     pub scores: Vec<models::ScoreV1>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
-    pub _deprecation: Option<Box<models::Deprecation>>,
+    pub _deprecation: Option<models::Deprecation>,
 }
 
 impl TraceWithFullDetails {

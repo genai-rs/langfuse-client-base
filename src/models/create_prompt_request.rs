@@ -14,12 +14,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreatePromptRequest {
-    CreateChatPromptRequest(Box<models::CreateChatPromptRequest>),
-    CreateTextPromptRequest(Box<models::CreateTextPromptRequest>),
+    CreateChatPromptRequest(models::CreateChatPromptRequest),
+    CreateTextPromptRequest(models::CreateTextPromptRequest),
 }
 
-impl Default for CreatePromptRequest {
-    fn default() -> Self {
-        Self::CreateChatPromptRequest(Default::default())
+impl std::fmt::Display for CreatePromptRequest {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::CreateChatPromptRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateTextPromptRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

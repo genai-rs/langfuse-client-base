@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluationRuleReadFilterBase : Stored filter returned verbatim by evaluation-rule read endpoints.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluationRuleReadFilterBase {
     /// Stored filter type. This is not broken down into separate public response types.
     #[serde(rename = "type")]

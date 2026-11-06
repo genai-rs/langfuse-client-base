@@ -11,18 +11,18 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct BulkConfig {
     #[serde(rename = "supported")]
     pub supported: bool,
     #[serde(rename = "maxOperations")]
-    pub max_operations: i32,
+    pub max_operations: i64,
     #[serde(rename = "maxPayloadSize")]
-    pub max_payload_size: i32,
+    pub max_payload_size: i64,
 }
 
 impl BulkConfig {
-    pub fn new(supported: bool, max_operations: i32, max_payload_size: i32) -> BulkConfig {
+    pub fn new(supported: bool, max_operations: i64, max_payload_size: i64) -> BulkConfig {
         BulkConfig {
             supported,
             max_operations,

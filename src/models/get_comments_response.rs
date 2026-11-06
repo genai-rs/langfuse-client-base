@@ -11,19 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetCommentsResponse {
     #[serde(rename = "data")]
     pub data: Vec<models::Comment>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl GetCommentsResponse {
     pub fn new(data: Vec<models::Comment>, meta: models::UtilsMetaResponse) -> GetCommentsResponse {
-        GetCommentsResponse {
-            data,
-            meta: Box::new(meta),
-        }
+        GetCommentsResponse { data, meta }
     }
 }

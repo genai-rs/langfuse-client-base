@@ -11,14 +11,14 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Project {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "organization")]
-    pub organization: Box<models::Organization>,
+    pub organization: models::Organization,
     /// Metadata for the project
     #[serde(rename = "metadata")]
     pub metadata: std::collections::HashMap<String, serde_json::Value>,
@@ -29,7 +29,7 @@ pub struct Project {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub retention_days: Option<Option<i32>>,
+    pub retention_days: Option<Option<i64>>,
 }
 
 impl Project {
@@ -42,7 +42,7 @@ impl Project {
         Project {
             id,
             name,
-            organization: Box::new(organization),
+            organization,
             metadata,
             retention_days: None,
         }

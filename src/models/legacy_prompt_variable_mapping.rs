@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// LegacyPromptVariableMapping : **Deprecated:** Connects one prompt variable to data from a legacy trace or dataset evaluation rule.  `langfuseObject` selects the object kind. `objectName` separately selects a named observation and is `null` for trace and dataset-item mappings.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct LegacyPromptVariableMapping {
     /// Explicitly marks this as a legacy mapping.
     #[serde(rename = "mappingType")]

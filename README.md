@@ -171,8 +171,15 @@ The composed spec is rendered by the
 [timvw-rust](https://github.com/timvw/openapi-generator-timvw-rust) generator,
 a build of openapi-generator's `rust` generator that already produces the
 crate's conventions (bon builders, crate docs from `README.md`, non-panicking
-`deepObject` queries, rustdoc-clean links). Nothing is patched after
-generation; `Cargo.toml`, `README.md` and `.gitignore` are hand-maintained and
+`deepObject` queries, rustdoc-clean links). Its options, set in
+`scripts/generate-openapi-client.sh`, also decide the API's shape: models are
+held by value (boxed only on a cycle), inline schemas and union variants have
+stable names, unions with a tag decode by it, integers are `i64` unless the
+spec says `format: int32`, `Default` exists only where it is a valid value,
+closed enums implement `FromStr`, and an enum or tagged union a response can
+hold has an `Unknown` catch-all for values the spec does not list. See
+`migration/api-diff-0.16.2-to-0.17.0.md` for the move to these rules in 0.17.
+Nothing is patched after generation; `Cargo.toml`, `README.md` and `.gitignore` are hand-maintained and
 listed in `.openapi-generator-ignore`.
 
 ## License

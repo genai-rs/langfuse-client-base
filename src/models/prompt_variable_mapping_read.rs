@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PromptVariableMappingRead : Connects one prompt variable to source data.  `source` is `null` when the mapping is incomplete.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptVariableMappingRead {
     /// Prompt variable name without braces.
     #[serde(rename = "variable")]

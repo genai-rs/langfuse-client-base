@@ -158,8 +158,8 @@ pub async fn scores_get_by_id(
 #[bon::builder]
 pub async fn scores_get_many(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     user_id: Option<&str>,
     name: Option<&str>,
     from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,

@@ -32,6 +32,10 @@ pub enum UnstableDashboardWidgetChartType {
     Histogram,
     #[serde(rename = "PIVOT_TABLE")]
     PivotTable,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableDashboardWidgetChartType {
@@ -46,12 +50,57 @@ impl std::fmt::Display for UnstableDashboardWidgetChartType {
             Self::Number => write!(f, "NUMBER"),
             Self::Histogram => write!(f, "HISTOGRAM"),
             Self::PivotTable => write!(f, "PIVOT_TABLE"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableDashboardWidgetChartType {
-    fn default() -> UnstableDashboardWidgetChartType {
-        Self::LineTimeSeries
+impl ::std::str::FromStr for UnstableDashboardWidgetChartType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "LINE_TIME_SERIES" => Ok(Self::LineTimeSeries),
+            "AREA_TIME_SERIES" => Ok(Self::AreaTimeSeries),
+            "BAR_TIME_SERIES" => Ok(Self::BarTimeSeries),
+            "HORIZONTAL_BAR" => Ok(Self::HorizontalBar),
+            "VERTICAL_BAR" => Ok(Self::VerticalBar),
+            "PIE" => Ok(Self::Pie),
+            "NUMBER" => Ok(Self::Number),
+            "HISTOGRAM" => Ok(Self::Histogram),
+            "PIVOT_TABLE" => Ok(Self::PivotTable),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableDashboardWidgetChartType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableDashboardWidgetChartType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableDashboardWidgetChartType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableDashboardWidgetChartType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

@@ -39,6 +39,10 @@ pub enum LegacyEvaluationObject {
     Guardrail,
     #[serde(rename = "dataset_item")]
     DatasetItem,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for LegacyEvaluationObject {
@@ -56,12 +60,60 @@ impl std::fmt::Display for LegacyEvaluationObject {
             Self::Embedding => write!(f, "embedding"),
             Self::Guardrail => write!(f, "guardrail"),
             Self::DatasetItem => write!(f, "dataset_item"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for LegacyEvaluationObject {
-    fn default() -> LegacyEvaluationObject {
-        Self::Trace
+impl ::std::str::FromStr for LegacyEvaluationObject {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "trace" => Ok(Self::Trace),
+            "span" => Ok(Self::Span),
+            "generation" => Ok(Self::Generation),
+            "event" => Ok(Self::Event),
+            "agent" => Ok(Self::Agent),
+            "tool" => Ok(Self::Tool),
+            "chain" => Ok(Self::Chain),
+            "retriever" => Ok(Self::Retriever),
+            "evaluator" => Ok(Self::Evaluator),
+            "embedding" => Ok(Self::Embedding),
+            "guardrail" => Ok(Self::Guardrail),
+            "dataset_item" => Ok(Self::DatasetItem),
+            _ => Err(crate::models::ParseEnumError::new(
+                "LegacyEvaluationObject",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for LegacyEvaluationObject {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for LegacyEvaluationObject {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for LegacyEvaluationObject {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

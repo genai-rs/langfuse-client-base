@@ -29,8 +29,45 @@ impl std::fmt::Display for EvaluationRuleOptionsFilterOperator {
     }
 }
 
-impl Default for EvaluationRuleOptionsFilterOperator {
-    fn default() -> EvaluationRuleOptionsFilterOperator {
-        Self::AnyOf
+impl ::std::str::FromStr for EvaluationRuleOptionsFilterOperator {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "any of" => Ok(Self::AnyOf),
+            "none of" => Ok(Self::NoneOf),
+            _ => Err(crate::models::ParseEnumError::new(
+                "EvaluationRuleOptionsFilterOperator",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluationRuleOptionsFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluationRuleOptionsFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluationRuleOptionsFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

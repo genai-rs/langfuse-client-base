@@ -12,16 +12,27 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// CreateEvaluatorRequest : Initial evaluator definition with metadata and definition fields at the same level. The returned evaluator starts at version `1`.
-/// Initial evaluator definition with metadata and definition fields at the same level. The returned evaluator starts at version `1`.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateEvaluatorRequest {
-    CreateLlmAsJudgeEvaluatorRequest1(Box<models::CreateLlmAsJudgeEvaluatorRequest1>),
-    CreateCodeEvaluatorRequest1(Box<models::CreateCodeEvaluatorRequest1>),
+    CreateLlmAsJudgeEvaluatorRequest(
+        models::CreateEvaluatorRequestCreateLlmAsJudgeEvaluatorRequest,
+    ),
+    CreateCodeEvaluatorRequest(models::CreateEvaluatorRequestCreateCodeEvaluatorRequest),
 }
 
-impl Default for CreateEvaluatorRequest {
-    fn default() -> Self {
-        Self::CreateLlmAsJudgeEvaluatorRequest1(Default::default())
+impl std::fmt::Display for CreateEvaluatorRequest {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::CreateLlmAsJudgeEvaluatorRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateCodeEvaluatorRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

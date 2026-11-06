@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateLlmAsJudgeEvaluatorRequest {
     /// Human-readable evaluator name. Names are not identifiers and do not need to be unique.
     #[serde(rename = "name")]
@@ -28,9 +28,9 @@ pub struct CreateLlmAsJudgeEvaluatorRequest {
     #[serde(rename = "type")]
     pub r#type: String,
     #[serde(rename = "prompt")]
-    pub prompt: Box<models::EvaluatorChatPromptInput>,
+    pub prompt: models::EvaluatorChatPromptInput,
     #[serde(rename = "modelConfig", skip_serializing_if = "Option::is_none")]
-    pub model_config: Option<Box<models::EvaluatorModelConfig>>,
+    pub model_config: Option<models::EvaluatorModelConfig>,
     /// Default prompt-variable mapping, or `null` when no default is configured.
     #[serde(
         rename = "variableMapping",
@@ -40,7 +40,7 @@ pub struct CreateLlmAsJudgeEvaluatorRequest {
     )]
     pub variable_mapping: Option<Option<Vec<models::PromptVariableMappingInput>>>,
     #[serde(rename = "outputDefinition")]
-    pub output_definition: Box<models::EvaluatorOutputDefinition>,
+    pub output_definition: models::EvaluatorOutputDefinition,
 }
 
 impl CreateLlmAsJudgeEvaluatorRequest {
@@ -54,10 +54,10 @@ impl CreateLlmAsJudgeEvaluatorRequest {
             name,
             description: None,
             r#type,
-            prompt: Box::new(prompt),
+            prompt,
             model_config: None,
             variable_mapping: None,
-            output_definition: Box::new(output_definition),
+            output_definition,
         }
     }
 }

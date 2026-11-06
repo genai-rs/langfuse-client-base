@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicAssignment {
     #[serde(rename = "traceId")]
     pub trace_id: String,
@@ -23,7 +23,7 @@ pub struct UnstableTopicAssignment {
     #[serde(rename = "facetName")]
     pub facet_name: String,
     #[serde(rename = "facetVersion")]
-    pub facet_version: i32,
+    pub facet_version: i64,
     /// The rule whose map assigned the trace. Null when the project has no rule.
     #[serde(
         rename = "ruleId",
@@ -35,7 +35,7 @@ pub struct UnstableTopicAssignment {
     #[serde(rename = "status")]
     pub status: models::UnstableTopicAssignmentStatus,
     #[serde(rename = "topic", skip_serializing_if = "Option::is_none")]
-    pub topic: Option<Box<models::UnstableTopicAssignmentTopic>>,
+    pub topic: Option<models::UnstableTopicAssignmentTopic>,
     /// The run that assigned the trace. Null for assignments made as traces arrive.
     #[serde(
         rename = "runId",
@@ -54,7 +54,7 @@ impl UnstableTopicAssignment {
         timestamp: chrono::DateTime<chrono::FixedOffset>,
         facet_id: String,
         facet_name: String,
-        facet_version: i32,
+        facet_version: i64,
         status: models::UnstableTopicAssignmentStatus,
         assigned_at: chrono::DateTime<chrono::FixedOffset>,
     ) -> UnstableTopicAssignment {

@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTierInput : Input schema for creating a pricing tier. The tier ID will be automatically generated server-side.  When creating a model with pricing tiers: - Exactly one tier must have isDefault=true (the fallback tier) - The default tier must have priority=0 and conditions=[] - All tier names and priorities must be unique within the model - Each tier must define at least one price  See PricingTier for detailed information about how tiers work and why they're useful.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PricingTierInput {
     /// Name of the pricing tier for display and identification purposes.  Must be unique within the model. Common patterns: \"Standard\", \"High Volume Tier\", \"Extended Context\"
     #[serde(rename = "name")]
@@ -27,7 +27,7 @@ pub struct PricingTierInput {
     pub is_default: Option<Option<bool>>,
     /// Priority for tier matching evaluation. Lower numbers = higher priority (evaluated first).  Must be unique within the model. The default tier must have priority=0. Conditional tiers should use priority 1, 2, 3, etc. based on their specificity.
     #[serde(rename = "priority")]
-    pub priority: i32,
+    pub priority: i64,
     /// Array of conditions that must ALL be met for this tier to match (AND logic).  The default tier must have an empty array (conditions=[]). Conditional tiers should define one or more conditions that specify when this tier's pricing applies.  Conditions can compare summed matching usage details to a numeric threshold, or exactly match a top-level model parameter or metadata value.
     #[serde(rename = "conditions")]
     pub conditions: Vec<models::PricingTierConditionInput>,
@@ -40,7 +40,7 @@ impl PricingTierInput {
     /// Input schema for creating a pricing tier. The tier ID will be automatically generated server-side.  When creating a model with pricing tiers: - Exactly one tier must have isDefault=true (the fallback tier) - The default tier must have priority=0 and conditions=[] - All tier names and priorities must be unique within the model - Each tier must define at least one price  See PricingTier for detailed information about how tiers work and why they're useful.
     pub fn new(
         name: String,
-        priority: i32,
+        priority: i64,
         conditions: Vec<models::PricingTierConditionInput>,
         prices: std::collections::HashMap<String, f64>,
     ) -> PricingTierInput {

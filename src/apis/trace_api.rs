@@ -229,8 +229,8 @@ pub async fn trace_get(
 #[bon::builder]
 pub async fn trace_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     user_id: Option<&str>,
     name: Option<&str>,
     session_id: Option<&str>,

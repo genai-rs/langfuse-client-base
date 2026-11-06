@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationBody {
     #[serde(
         rename = "id",
@@ -100,7 +100,7 @@ pub struct ObservationBody {
     )]
     pub output: Option<Option<serde_json::Value>>,
     #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
-    pub usage: Option<Box<models::Usage>>,
+    pub usage: Option<models::Usage>,
     #[serde(rename = "level", skip_serializing_if = "Option::is_none")]
     pub level: Option<models::ObservationLevel>,
     #[serde(

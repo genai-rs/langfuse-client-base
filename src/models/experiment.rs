@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Experiment {
     #[serde(rename = "id")]
     pub id: String,
@@ -27,7 +27,7 @@ pub struct Experiment {
     pub end_time: chrono::DateTime<chrono::FixedOffset>,
     /// Number of experiment items within the requested time range.
     #[serde(rename = "itemCount")]
-    pub item_count: i32,
+    pub item_count: i64,
     /// Null when the experiment is not associated with a dataset.
     #[serde(rename = "datasetId", deserialize_with = "Option::deserialize")]
     pub dataset_id: Option<String>,
@@ -56,7 +56,7 @@ impl Experiment {
         description: Option<String>,
         start_time: chrono::DateTime<chrono::FixedOffset>,
         end_time: chrono::DateTime<chrono::FixedOffset>,
-        item_count: i32,
+        item_count: i64,
         dataset_id: Option<String>,
     ) -> Experiment {
         Experiment {

@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// ObservationV2 : An observation from the v2 API with field-group-based selection. Core fields are always present. Other fields are included only when their field group is requested.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationV2 {
     /// The unique identifier of the observation
     #[serde(rename = "id")]
@@ -191,7 +191,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub usage_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    pub usage_details: Option<Option<std::collections::HashMap<String, i64>>>,
     /// The cost details of the observation. Key is the cost metric name, value is the cost in USD.
     #[serde(
         rename = "costDetails",
@@ -239,7 +239,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub prompt_version: Option<Option<i32>>,
+    pub prompt_version: Option<Option<i64>>,
     /// The latency in seconds
     #[serde(
         rename = "latency",

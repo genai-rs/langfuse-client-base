@@ -12,36 +12,36 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// OpenAiCompletionUsageSchema : OpenAI Usage schema from (Chat-)Completion APIs
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct OpenAiCompletionUsageSchema {
     #[serde(rename = "prompt_tokens")]
-    pub prompt_tokens: i32,
+    pub prompt_tokens: i64,
     #[serde(rename = "completion_tokens")]
-    pub completion_tokens: i32,
+    pub completion_tokens: i64,
     #[serde(rename = "total_tokens")]
-    pub total_tokens: i32,
+    pub total_tokens: i64,
     #[serde(
         rename = "prompt_tokens_details",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub prompt_tokens_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    pub prompt_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
     #[serde(
         rename = "completion_tokens_details",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_tokens_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    pub completion_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
 }
 
 impl OpenAiCompletionUsageSchema {
     /// OpenAI Usage schema from (Chat-)Completion APIs
     pub fn new(
-        prompt_tokens: i32,
-        completion_tokens: i32,
-        total_tokens: i32,
+        prompt_tokens: i64,
+        completion_tokens: i64,
+        total_tokens: i64,
     ) -> OpenAiCompletionUsageSchema {
         OpenAiCompletionUsageSchema {
             prompt_tokens,

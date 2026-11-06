@@ -115,7 +115,7 @@ List evaluators in newest-first creation order.  Every evaluator includes its la
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> | Maximum number of items to return. Defaults to `50` and cannot exceed `100`. |  |
+**limit** | Option<**i64**> | Maximum number of items to return. Defaults to `50` and cannot exceed `100`. |  |
 **cursor** | Option<**String**> | Opaque cursor returned by the previous page. |  |
 
 ### Return type
@@ -147,7 +147,7 @@ List an evaluator's version history in newest-first order.  This endpoint is int
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **evaluator_id** | **String** | Stable evaluator identifier returned by the evaluator endpoints. | [required] |
-**limit** | Option<**i32**> | Maximum number of versions to return. Defaults to `50` and cannot exceed `100`. |  |
+**limit** | Option<**i64**> | Maximum number of versions to return. Defaults to `50` and cannot exceed `100`. |  |
 **cursor** | Option<**String**> | Opaque cursor returned by the previous page. |  |
 
 ### Return type

@@ -12,36 +12,36 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// OpenAiResponseUsageSchema : OpenAI Usage schema from Response API
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct OpenAiResponseUsageSchema {
     #[serde(rename = "input_tokens")]
-    pub input_tokens: i32,
+    pub input_tokens: i64,
     #[serde(rename = "output_tokens")]
-    pub output_tokens: i32,
+    pub output_tokens: i64,
     #[serde(rename = "total_tokens")]
-    pub total_tokens: i32,
+    pub total_tokens: i64,
     #[serde(
         rename = "input_tokens_details",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub input_tokens_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    pub input_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
     #[serde(
         rename = "output_tokens_details",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub output_tokens_details: Option<Option<std::collections::HashMap<String, i32>>>,
+    pub output_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
 }
 
 impl OpenAiResponseUsageSchema {
     /// OpenAI Usage schema from Response API
     pub fn new(
-        input_tokens: i32,
-        output_tokens: i32,
-        total_tokens: i32,
+        input_tokens: i64,
+        output_tokens: i64,
+        total_tokens: i64,
     ) -> OpenAiResponseUsageSchema {
         OpenAiResponseUsageSchema {
             input_tokens,

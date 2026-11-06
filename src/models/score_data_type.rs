@@ -38,8 +38,45 @@ impl std::fmt::Display for ScoreDataType {
     }
 }
 
-impl Default for ScoreDataType {
-    fn default() -> ScoreDataType {
-        Self::Numeric
+impl ::std::str::FromStr for ScoreDataType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "NUMERIC" => Ok(Self::Numeric),
+            "BOOLEAN" => Ok(Self::Boolean),
+            "CATEGORICAL" => Ok(Self::Categorical),
+            "CORRECTION" => Ok(Self::Correction),
+            "TEXT" => Ok(Self::Text),
+            _ => Err(crate::models::ParseEnumError::new("ScoreDataType", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ScoreDataType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ScoreDataType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ScoreDataType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

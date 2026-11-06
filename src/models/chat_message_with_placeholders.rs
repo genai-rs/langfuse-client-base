@@ -14,12 +14,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ChatMessageWithPlaceholders {
-    ChatMessage(Box<models::ChatMessage>),
-    PlaceholderMessage(Box<models::PlaceholderMessage>),
+    ChatMessage(models::ChatMessage),
+    PlaceholderMessage(models::PlaceholderMessage),
 }
 
-impl Default for ChatMessageWithPlaceholders {
-    fn default() -> Self {
-        Self::ChatMessage(Default::default())
+impl std::fmt::Display for ChatMessageWithPlaceholders {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::ChatMessage(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PlaceholderMessage(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

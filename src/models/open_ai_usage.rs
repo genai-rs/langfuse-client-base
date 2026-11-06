@@ -20,21 +20,21 @@ pub struct OpenAiUsage {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub prompt_tokens: Option<Option<i32>>,
+    pub prompt_tokens: Option<Option<i64>>,
     #[serde(
         rename = "completionTokens",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_tokens: Option<Option<i32>>,
+    pub completion_tokens: Option<Option<i64>>,
     #[serde(
         rename = "totalTokens",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub total_tokens: Option<Option<i32>>,
+    pub total_tokens: Option<Option<i64>>,
 }
 
 impl OpenAiUsage {

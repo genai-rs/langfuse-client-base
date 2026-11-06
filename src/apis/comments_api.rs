@@ -104,8 +104,8 @@ pub async fn comments_create(
 #[bon::builder]
 pub async fn comments_get(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     object_type: Option<&str>,
     object_id: Option<&str>,
     author_user_id: Option<&str>,

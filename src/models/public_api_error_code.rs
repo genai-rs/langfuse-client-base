@@ -35,6 +35,10 @@ pub enum PublicApiErrorCode {
     MethodNotAllowed,
     #[serde(rename = "internal_error")]
     InternalError,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for PublicApiErrorCode {
@@ -50,12 +54,58 @@ impl std::fmt::Display for PublicApiErrorCode {
             Self::RateLimited => write!(f, "rate_limited"),
             Self::MethodNotAllowed => write!(f, "method_not_allowed"),
             Self::InternalError => write!(f, "internal_error"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for PublicApiErrorCode {
-    fn default() -> PublicApiErrorCode {
-        Self::AuthenticationFailed
+impl ::std::str::FromStr for PublicApiErrorCode {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "authentication_failed" => Ok(Self::AuthenticationFailed),
+            "access_denied" => Ok(Self::AccessDenied),
+            "invalid_request" => Ok(Self::InvalidRequest),
+            "invalid_query" => Ok(Self::InvalidQuery),
+            "invalid_body" => Ok(Self::InvalidBody),
+            "resource_not_found" => Ok(Self::ResourceNotFound),
+            "conflict" => Ok(Self::Conflict),
+            "rate_limited" => Ok(Self::RateLimited),
+            "method_not_allowed" => Ok(Self::MethodNotAllowed),
+            "internal_error" => Ok(Self::InternalError),
+            _ => Err(crate::models::ParseEnumError::new(
+                "PublicApiErrorCode",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for PublicApiErrorCode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for PublicApiErrorCode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for PublicApiErrorCode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

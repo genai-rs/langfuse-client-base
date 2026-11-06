@@ -42,8 +42,49 @@ impl std::fmt::Display for PromptVariableMappingSource {
     }
 }
 
-impl Default for PromptVariableMappingSource {
-    fn default() -> PromptVariableMappingSource {
-        Self::Input
+impl ::std::str::FromStr for PromptVariableMappingSource {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "input" => Ok(Self::Input),
+            "output" => Ok(Self::Output),
+            "metadata" => Ok(Self::Metadata),
+            "tool_calls" => Ok(Self::ToolCalls),
+            "expected_output" => Ok(Self::ExpectedOutput),
+            "experiment_item_metadata" => Ok(Self::ExperimentItemMetadata),
+            _ => Err(crate::models::ParseEnumError::new(
+                "PromptVariableMappingSource",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for PromptVariableMappingSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for PromptVariableMappingSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for PromptVariableMappingSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

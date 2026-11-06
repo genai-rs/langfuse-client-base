@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UnstableDashboardWidgetChartConfig : Chart-specific widget configuration.  `type` must match the top-level `chartType`. `row_limit` applies to total-value charts and pivot tables. `bins` applies to histograms. `defaultSort` applies to pivot tables.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableDashboardWidgetChartConfig {
     #[serde(rename = "type")]
     pub r#type: models::UnstableDashboardWidgetChartType,
@@ -22,7 +22,7 @@ pub struct UnstableDashboardWidgetChartConfig {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub row_limit: Option<Option<i32>>,
+    pub row_limit: Option<Option<i64>>,
     #[serde(
         rename = "show_value_labels",
         default,
@@ -36,9 +36,9 @@ pub struct UnstableDashboardWidgetChartConfig {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub bins: Option<Option<i32>>,
+    pub bins: Option<Option<i64>>,
     #[serde(rename = "defaultSort", skip_serializing_if = "Option::is_none")]
-    pub default_sort: Option<Box<models::UnstableDashboardWidgetDefaultSort>>,
+    pub default_sort: Option<models::UnstableDashboardWidgetDefaultSort>,
 }
 
 impl UnstableDashboardWidgetChartConfig {

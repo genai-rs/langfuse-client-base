@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// CreateScoreValue : The value of the score. Must be passed as string for categorical and text scores, and numeric for boolean and numeric scores
-/// The value of the score. Must be passed as string for categorical and text scores, and numeric for boolean and numeric scores
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScoreValue {
@@ -20,8 +20,32 @@ pub enum CreateScoreValue {
     String(String),
 }
 
-impl Default for CreateScoreValue {
-    fn default() -> Self {
-        Self::DoubleNumber(Default::default())
+impl CreateScoreValue {
+    pub fn new_text(text: String) -> Self {
+        Self::String(text)
+    }
+}
+
+impl From<String> for CreateScoreValue {
+    fn from(s: String) -> Self {
+        Self::String(s)
+    }
+}
+
+impl From<&str> for CreateScoreValue {
+    fn from(s: &str) -> Self {
+        Self::String(s.to_string())
+    }
+}
+
+impl std::fmt::Display for CreateScoreValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::DoubleNumber(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::String(value) => write!(f, "{}", value),
+        }
     }
 }

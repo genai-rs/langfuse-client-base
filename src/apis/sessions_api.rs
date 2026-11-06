@@ -95,8 +95,8 @@ pub async fn sessions_get(
 #[bon::builder]
 pub async fn sessions_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     environment: Option<Vec<String>>,

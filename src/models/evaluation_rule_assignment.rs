@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluationRuleAssignment : Evaluation-rule assignment associated with this evaluator.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluationRuleAssignment {
     /// Stable identifier of the assigned evaluation rule.
     #[serde(rename = "evaluationRuleId")]

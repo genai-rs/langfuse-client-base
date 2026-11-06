@@ -11,14 +11,14 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PatchMediaBody {
     /// The date and time when the media record was uploaded
     #[serde(rename = "uploadedAt")]
     pub uploaded_at: chrono::DateTime<chrono::FixedOffset>,
     /// The HTTP status code of the upload
     #[serde(rename = "uploadHttpStatus")]
-    pub upload_http_status: i32,
+    pub upload_http_status: i64,
     /// The HTTP error message of the upload
     #[serde(
         rename = "uploadHttpError",
@@ -34,13 +34,13 @@ pub struct PatchMediaBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub upload_time_ms: Option<Option<i32>>,
+    pub upload_time_ms: Option<Option<i64>>,
 }
 
 impl PatchMediaBody {
     pub fn new(
         uploaded_at: chrono::DateTime<chrono::FixedOffset>,
-        upload_http_status: i32,
+        upload_http_status: i64,
     ) -> PatchMediaBody {
         PatchMediaBody {
             uploaded_at,

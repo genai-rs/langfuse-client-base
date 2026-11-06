@@ -12,12 +12,12 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// CreateScoreBatchResults : Acceptance counts and errors (HTTP 207).
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateScoreBatchResults {
     #[serde(rename = "accepted")]
-    pub accepted: i32,
+    pub accepted: i64,
     #[serde(rename = "rejected")]
-    pub rejected: i32,
+    pub rejected: i64,
     #[serde(rename = "errors")]
     pub errors: Vec<models::CreateScoreBatchError>,
 }
@@ -25,8 +25,8 @@ pub struct CreateScoreBatchResults {
 impl CreateScoreBatchResults {
     /// Acceptance counts and errors (HTTP 207).
     pub fn new(
-        accepted: i32,
-        rejected: i32,
+        accepted: i64,
+        rejected: i64,
         errors: Vec<models::CreateScoreBatchError>,
     ) -> CreateScoreBatchResults {
         CreateScoreBatchResults {

@@ -11,16 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct IngestionSuccess {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "status")]
-    pub status: i32,
+    pub status: i64,
 }
 
 impl IngestionSuccess {
-    pub fn new(id: String, status: i32) -> IngestionSuccess {
+    pub fn new(id: String, status: i64) -> IngestionSuccess {
         IngestionSuccess { id, status }
     }
 }

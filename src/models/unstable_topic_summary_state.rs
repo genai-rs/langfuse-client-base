@@ -20,6 +20,10 @@ pub enum UnstableTopicSummaryState {
     NotApplicable,
     #[serde(rename = "insufficient_input")]
     InsufficientInput,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableTopicSummaryState {
@@ -28,12 +32,51 @@ impl std::fmt::Display for UnstableTopicSummaryState {
             Self::Complete => write!(f, "complete"),
             Self::NotApplicable => write!(f, "not_applicable"),
             Self::InsufficientInput => write!(f, "insufficient_input"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableTopicSummaryState {
-    fn default() -> UnstableTopicSummaryState {
-        Self::Complete
+impl ::std::str::FromStr for UnstableTopicSummaryState {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "complete" => Ok(Self::Complete),
+            "not_applicable" => Ok(Self::NotApplicable),
+            "insufficient_input" => Ok(Self::InsufficientInput),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableTopicSummaryState",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableTopicSummaryState {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableTopicSummaryState {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableTopicSummaryState {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

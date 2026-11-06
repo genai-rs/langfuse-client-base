@@ -14,13 +14,26 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateScoresResponse {
-    CreateScoreBatchResults(Box<models::CreateScoreBatchResults>),
-    CreateScoreResponse(Box<models::CreateScoreResponse>),
-    CreateScoreBatchResponse(Box<models::CreateScoreBatchResponse>),
+    CreateScoreBatchResults(models::CreateScoreBatchResults),
+    CreateScoreResponse(models::CreateScoreResponse),
+    CreateScoreBatchResponse(models::CreateScoreBatchResponse),
 }
 
-impl Default for CreateScoresResponse {
-    fn default() -> Self {
-        Self::CreateScoreBatchResults(Default::default())
+impl std::fmt::Display for CreateScoresResponse {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::CreateScoreBatchResults(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateScoreResponse(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateScoreBatchResponse(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

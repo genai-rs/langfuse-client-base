@@ -11,50 +11,115 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum IngestionEvent {
-    TraceEvent1(Box<models::TraceEvent1>),
-    ScoreEvent1(Box<models::ScoreEvent1>),
-    CreateSpanEvent1(Box<models::CreateSpanEvent1>),
-    UpdateSpanEvent1(Box<models::UpdateSpanEvent1>),
-    CreateGenerationEvent1(Box<models::CreateGenerationEvent1>),
-    UpdateGenerationEvent1(Box<models::UpdateGenerationEvent1>),
-    CreateEventEvent1(Box<models::CreateEventEvent1>),
-    CreateObservationEvent1(Box<models::CreateObservationEvent1>),
-    UpdateObservationEvent1(Box<models::UpdateObservationEvent1>),
+    TraceEvent(models::IngestionEventTraceEvent),
+    ScoreEvent(models::IngestionEventScoreEvent),
+    CreateSpanEvent(models::IngestionEventCreateSpanEvent),
+    UpdateSpanEvent(models::IngestionEventUpdateSpanEvent),
+    CreateGenerationEvent(models::IngestionEventCreateGenerationEvent),
+    UpdateGenerationEvent(models::IngestionEventUpdateGenerationEvent),
+    CreateEventEvent(models::IngestionEventCreateEventEvent),
+    CreateObservationEvent(models::IngestionEventCreateObservationEvent),
+    UpdateObservationEvent(models::IngestionEventUpdateObservationEvent),
 }
 
-impl Default for IngestionEvent {
-    fn default() -> Self {
-        Self::TraceEvent1(Default::default())
+impl<'de> Deserialize<'de> for IngestionEvent {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        Self::dispatch(value).map_err(serde::de::Error::custom)
     }
 }
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Type {
-    #[serde(rename = "trace-create")]
-    TraceCreate,
-    #[serde(rename = "score-create")]
-    ScoreCreate,
-    #[serde(rename = "span-create")]
-    SpanCreate,
-    #[serde(rename = "span-update")]
-    SpanUpdate,
-    #[serde(rename = "generation-create")]
-    GenerationCreate,
-    #[serde(rename = "generation-update")]
-    GenerationUpdate,
-    #[serde(rename = "event-create")]
-    EventCreate,
-    #[serde(rename = "observation-create")]
-    ObservationCreate,
-    #[serde(rename = "observation-update")]
-    ObservationUpdate,
+
+impl IngestionEvent {
+    /// Decodes the variant that `type` selects, so an error is that variant's.
+    #[inline]
+    fn dispatch(value: serde_json::Value) -> Result<Self, String> {
+        use models::union_dispatch::{self as dispatch, Tag};
+        const UNION: &str = "IngestionEvent";
+        const TAG: &str = "type";
+        match dispatch::tag(&value, UNION, TAG)? {
+            Tag::Value("trace-create") => {
+                dispatch::decode(value, UNION, "TraceEvent").map(Self::TraceEvent)
+            }
+            Tag::Value("score-create") => {
+                dispatch::decode(value, UNION, "ScoreEvent").map(Self::ScoreEvent)
+            }
+            Tag::Value("span-create") => {
+                dispatch::decode(value, UNION, "CreateSpanEvent").map(Self::CreateSpanEvent)
+            }
+            Tag::Value("span-update") => {
+                dispatch::decode(value, UNION, "UpdateSpanEvent").map(Self::UpdateSpanEvent)
+            }
+            Tag::Value("generation-create") => {
+                dispatch::decode(value, UNION, "CreateGenerationEvent")
+                    .map(Self::CreateGenerationEvent)
+            }
+            Tag::Value("generation-update") => {
+                dispatch::decode(value, UNION, "UpdateGenerationEvent")
+                    .map(Self::UpdateGenerationEvent)
+            }
+            Tag::Value("event-create") => {
+                dispatch::decode(value, UNION, "CreateEventEvent").map(Self::CreateEventEvent)
+            }
+            Tag::Value("observation-create") => {
+                dispatch::decode(value, UNION, "CreateObservationEvent")
+                    .map(Self::CreateObservationEvent)
+            }
+            Tag::Value("observation-update") => {
+                dispatch::decode(value, UNION, "UpdateObservationEvent")
+                    .map(Self::UpdateObservationEvent)
+            }
+            Tag::Value(other) => Err(dispatch::unknown_tag(UNION, TAG, other)),
+            Tag::Missing => Err(dispatch::missing_tag(UNION, TAG)),
+            Tag::NotObject => Err(dispatch::not_an_object(&value, UNION, TAG)),
+        }
+    }
 }
 
-impl Default for Type {
-    fn default() -> Type {
-        Self::TraceCreate
+impl std::fmt::Display for IngestionEvent {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::TraceEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::ScoreEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateSpanEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::UpdateSpanEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateGenerationEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::UpdateGenerationEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateEventEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CreateObservationEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::UpdateObservationEvent(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

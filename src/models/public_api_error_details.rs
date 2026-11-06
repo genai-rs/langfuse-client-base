@@ -29,7 +29,7 @@ pub struct PublicApiErrorDetails {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub retry_after_seconds: Option<Option<i32>>,
+    pub retry_after_seconds: Option<Option<i64>>,
     /// Rate-limit request allowance.
     #[serde(
         rename = "limit",
@@ -37,7 +37,7 @@ pub struct PublicApiErrorDetails {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub limit: Option<Option<i32>>,
+    pub limit: Option<Option<i64>>,
     /// Remaining requests in the current rate-limit window.
     #[serde(
         rename = "remaining",
@@ -45,7 +45,7 @@ pub struct PublicApiErrorDetails {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub remaining: Option<Option<i32>>,
+    pub remaining: Option<Option<i64>>,
     /// Time when the current rate-limit window resets.
     #[serde(
         rename = "resetAt",

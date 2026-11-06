@@ -11,30 +11,81 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum GetScoresResponseData {
-    GetScoresResponseDataNumeric1(Box<models::GetScoresResponseDataNumeric1>),
-    GetScoresResponseDataCategorical1(Box<models::GetScoresResponseDataCategorical1>),
-    GetScoresResponseDataBoolean1(Box<models::GetScoresResponseDataBoolean1>),
-    GetScoresResponseDataCorrection1(Box<models::GetScoresResponseDataCorrection1>),
-    GetScoresResponseDataText1(Box<models::GetScoresResponseDataText1>),
+    GetScoresResponseDataNumeric(models::GetScoresResponseDataGetScoresResponseDataNumeric),
+    GetScoresResponseDataCategorical(models::GetScoresResponseDataGetScoresResponseDataCategorical),
+    GetScoresResponseDataBoolean(models::GetScoresResponseDataGetScoresResponseDataBoolean),
+    GetScoresResponseDataCorrection(models::GetScoresResponseDataGetScoresResponseDataCorrection),
+    GetScoresResponseDataText(models::GetScoresResponseDataGetScoresResponseDataText),
+    /// A `dataType` this client does not know, holding the value as it came, which is what it serializes to.
+    Unknown(serde_json::Value),
 }
 
-impl Default for GetScoresResponseData {
-    fn default() -> Self {
-        Self::GetScoresResponseDataNumeric1(Default::default())
+impl<'de> Deserialize<'de> for GetScoresResponseData {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        Self::dispatch(value).map_err(serde::de::Error::custom)
     }
 }
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum DataType {
-    #[serde(rename = "TEXT")]
-    Text,
+
+impl GetScoresResponseData {
+    /// Decodes the variant that `dataType` selects, so an error is that variant's.
+    #[inline]
+    fn dispatch(value: serde_json::Value) -> Result<Self, String> {
+        use models::union_dispatch::{self as dispatch, Tag};
+        const UNION: &str = "GetScoresResponseData";
+        const TAG: &str = "dataType";
+        match dispatch::tag(&value, UNION, TAG)? {
+            Tag::Value("NUMERIC") => dispatch::decode(value, UNION, "GetScoresResponseDataNumeric")
+                .map(Self::GetScoresResponseDataNumeric),
+            Tag::Value("CATEGORICAL") => {
+                dispatch::decode(value, UNION, "GetScoresResponseDataCategorical")
+                    .map(Self::GetScoresResponseDataCategorical)
+            }
+            Tag::Value("BOOLEAN") => dispatch::decode(value, UNION, "GetScoresResponseDataBoolean")
+                .map(Self::GetScoresResponseDataBoolean),
+            Tag::Value("CORRECTION") => {
+                dispatch::decode(value, UNION, "GetScoresResponseDataCorrection")
+                    .map(Self::GetScoresResponseDataCorrection)
+            }
+            Tag::Value("TEXT") => dispatch::decode(value, UNION, "GetScoresResponseDataText")
+                .map(Self::GetScoresResponseDataText),
+            Tag::Value(_) => Ok(Self::Unknown(value)),
+            Tag::Missing => Err(dispatch::missing_tag(UNION, TAG)),
+            Tag::NotObject => Err(dispatch::not_an_object(&value, UNION, TAG)),
+        }
+    }
 }
 
-impl Default for DataType {
-    fn default() -> DataType {
-        Self::Text
+impl std::fmt::Display for GetScoresResponseData {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::GetScoresResponseDataNumeric(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::GetScoresResponseDataCategorical(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::GetScoresResponseDataBoolean(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::GetScoresResponseDataCorrection(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::GetScoresResponseDataText(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Unknown(value) => write!(f, "{}", value),
+        }
     }
 }

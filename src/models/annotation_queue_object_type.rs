@@ -20,6 +20,10 @@ pub enum AnnotationQueueObjectType {
     Observation,
     #[serde(rename = "SESSION")]
     Session,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for AnnotationQueueObjectType {
@@ -28,12 +32,51 @@ impl std::fmt::Display for AnnotationQueueObjectType {
             Self::Trace => write!(f, "TRACE"),
             Self::Observation => write!(f, "OBSERVATION"),
             Self::Session => write!(f, "SESSION"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for AnnotationQueueObjectType {
-    fn default() -> AnnotationQueueObjectType {
-        Self::Trace
+impl ::std::str::FromStr for AnnotationQueueObjectType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "TRACE" => Ok(Self::Trace),
+            "OBSERVATION" => Ok(Self::Observation),
+            "SESSION" => Ok(Self::Session),
+            _ => Err(crate::models::ParseEnumError::new(
+                "AnnotationQueueObjectType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for AnnotationQueueObjectType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for AnnotationQueueObjectType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for AnnotationQueueObjectType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

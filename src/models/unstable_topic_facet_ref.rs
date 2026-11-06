@@ -11,18 +11,18 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicFacetRef {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
 }
 
 impl UnstableTopicFacetRef {
-    pub fn new(id: String, name: String, version: i32) -> UnstableTopicFacetRef {
+    pub fn new(id: String, name: String, version: i64) -> UnstableTopicFacetRef {
         UnstableTopicFacetRef { id, name, version }
     }
 }

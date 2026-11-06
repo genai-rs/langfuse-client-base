@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **invalid_values** | Option<**Vec<String>**> |  | [optional]
 **allowed_values** | Option<**Vec<String>**> |  | [optional]
 **value** | Option<**String**> |  | [optional]
-**retry_after_seconds** | Option<**i32**> |  | [optional]
-**limit** | Option<**i32**> |  | [optional]
-**remaining** | Option<**i32**> |  | [optional]
+**retry_after_seconds** | Option<**i64**> |  | [optional]
+**limit** | Option<**i64**> |  | [optional]
+**remaining** | Option<**i64**> |  | [optional]
 **reset_at** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

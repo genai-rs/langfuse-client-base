@@ -36,8 +36,47 @@ impl std::fmt::Display for BlobStorageIntegrationFileType {
     }
 }
 
-impl Default for BlobStorageIntegrationFileType {
-    fn default() -> BlobStorageIntegrationFileType {
-        Self::Json
+impl ::std::str::FromStr for BlobStorageIntegrationFileType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "JSON" => Ok(Self::Json),
+            "CSV" => Ok(Self::Csv),
+            "JSONL" => Ok(Self::Jsonl),
+            "PARQUET" => Ok(Self::Parquet),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageIntegrationFileType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageIntegrationFileType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageIntegrationFileType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageIntegrationFileType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

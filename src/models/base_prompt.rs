@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct BasePrompt {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
     #[serde(rename = "config", deserialize_with = "Option::deserialize")]
     pub config: Option<serde_json::Value>,
     /// List of deployment labels of this prompt version.
@@ -46,7 +46,7 @@ pub struct BasePrompt {
 impl BasePrompt {
     pub fn new(
         name: String,
-        version: i32,
+        version: i64,
         config: Option<serde_json::Value>,
         labels: Vec<String>,
         tags: Vec<String>,

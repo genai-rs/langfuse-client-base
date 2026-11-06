@@ -12,17 +12,17 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// Usage : (Deprecated. Use usageDetails and costDetails instead.) Standard interface for usage and cost
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Usage {
     /// Number of input units (e.g. tokens)
     #[serde(rename = "input")]
-    pub input: i32,
+    pub input: i64,
     /// Number of output units (e.g. tokens)
     #[serde(rename = "output")]
-    pub output: i32,
+    pub output: i64,
     /// Defaults to input+output if not set
     #[serde(rename = "total")]
-    pub total: i32,
+    pub total: i64,
     /// Unit of measurement
     #[serde(rename = "unit", deserialize_with = "Option::deserialize")]
     pub unit: Option<String>,
@@ -54,7 +54,7 @@ pub struct Usage {
 
 impl Usage {
     /// (Deprecated. Use usageDetails and costDetails instead.) Standard interface for usage and cost
-    pub fn new(input: i32, output: i32, total: i32, unit: Option<String>) -> Usage {
+    pub fn new(input: i64, output: i64, total: i64, unit: Option<String>) -> Usage {
         Usage {
             input,
             output,

@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTierAttributeCondition : Condition that matches any configured value for a top-level observation attribute.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PricingTierAttributeCondition {
     #[serde(rename = "source")]
     pub source: models::PricingTierAttributeSource,

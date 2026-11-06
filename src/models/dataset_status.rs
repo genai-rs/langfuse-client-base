@@ -18,6 +18,10 @@ pub enum DatasetStatus {
     Active,
     #[serde(rename = "ARCHIVED")]
     Archived,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for DatasetStatus {
@@ -25,12 +29,47 @@ impl std::fmt::Display for DatasetStatus {
         match self {
             Self::Active => write!(f, "ACTIVE"),
             Self::Archived => write!(f, "ARCHIVED"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for DatasetStatus {
-    fn default() -> DatasetStatus {
-        Self::Active
+impl ::std::str::FromStr for DatasetStatus {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "ACTIVE" => Ok(Self::Active),
+            "ARCHIVED" => Ok(Self::Archived),
+            _ => Err(crate::models::ParseEnumError::new("DatasetStatus", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for DatasetStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for DatasetStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for DatasetStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

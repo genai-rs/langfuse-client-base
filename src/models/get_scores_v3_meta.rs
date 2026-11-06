@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetScoresV3Meta {
     /// Opaque cursor for the next page. Omitted when there is no next page.
     #[serde(
@@ -22,11 +22,11 @@ pub struct GetScoresV3Meta {
     )]
     pub cursor: Option<Option<String>>,
     #[serde(rename = "limit")]
-    pub limit: i32,
+    pub limit: i64,
 }
 
 impl GetScoresV3Meta {
-    pub fn new(limit: i32) -> GetScoresV3Meta {
+    pub fn new(limit: i64) -> GetScoresV3Meta {
         GetScoresV3Meta {
             cursor: None,
             limit,

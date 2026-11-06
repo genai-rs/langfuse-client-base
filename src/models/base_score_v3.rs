@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct BaseScoreV3 {
     #[serde(rename = "id")]
     pub id: String,
@@ -71,7 +71,7 @@ pub struct BaseScoreV3 {
     )]
     pub queue_id: Option<Option<String>>,
     #[serde(rename = "subject", skip_serializing_if = "Option::is_none")]
-    pub subject: Option<Box<models::ScoreSubjectV3>>,
+    pub subject: Option<models::ScoreSubjectV3>,
 }
 
 impl BaseScoreV3 {

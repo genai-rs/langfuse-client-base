@@ -31,7 +31,7 @@ pub async fn observations_get_many(
     configuration: &configuration::Configuration,
     fields: Option<&str>,
     expand_metadata: Option<&str>,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
     parse_io_as_json: Option<bool>,
     name: Option<&str>,

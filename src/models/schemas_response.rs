@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SchemasResponse {
     #[serde(rename = "schemas")]
     pub schemas: Vec<String>,
     #[serde(rename = "totalResults")]
-    pub total_results: i32,
+    pub total_results: i64,
     #[serde(rename = "Resources")]
     pub resources: Vec<models::SchemaResource>,
 }
@@ -24,7 +24,7 @@ pub struct SchemasResponse {
 impl SchemasResponse {
     pub fn new(
         schemas: Vec<String>,
-        total_results: i32,
+        total_results: i64,
         resources: Vec<models::SchemaResource>,
     ) -> SchemasResponse {
         SchemasResponse {

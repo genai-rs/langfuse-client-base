@@ -114,7 +114,7 @@ List evaluation rules in newest-first creation order.  This includes legacy trac
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> | Maximum number of items to return. Defaults to `50` and cannot exceed `100`. |  |
+**limit** | Option<**i64**> | Maximum number of items to return. Defaults to `50` and cannot exceed `100`. |  |
 **cursor** | Option<**String**> | Opaque cursor returned by the previous page. |  |
 
 ### Return type

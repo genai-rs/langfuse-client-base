@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
-**version** | **i32** |  | 
+**version** | **i64** |  | 
 **config** | Option<**serde_json::Value**> |  | 
 **labels** | **Vec<String>** | List of deployment labels of this prompt version. | 
 **tags** | **Vec<String>** | List of tags. Used to filter via UI and API. The same across versions of a prompt. | 

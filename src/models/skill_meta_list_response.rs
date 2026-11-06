@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SkillMetaListResponse {
     #[serde(rename = "data")]
     pub data: Vec<models::SkillMeta>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::SkillListPagination>,
+    pub meta: models::SkillListPagination,
 }
 
 impl SkillMetaListResponse {
@@ -24,9 +24,6 @@ impl SkillMetaListResponse {
         data: Vec<models::SkillMeta>,
         meta: models::SkillListPagination,
     ) -> SkillMetaListResponse {
-        SkillMetaListResponse {
-            data,
-            meta: Box::new(meta),
-        }
+        SkillMetaListResponse { data, meta }
     }
 }

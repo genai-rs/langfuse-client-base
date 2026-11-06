@@ -226,8 +226,8 @@ pub async fn dataset_items_list(
     source_trace_id: Option<&str>,
     source_observation_id: Option<&str>,
     version: Option<chrono::DateTime<chrono::FixedOffset>>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_dataset_name = dataset_name;

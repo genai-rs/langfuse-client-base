@@ -11,16 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct FilterConfig {
     #[serde(rename = "supported")]
     pub supported: bool,
     #[serde(rename = "maxResults")]
-    pub max_results: i32,
+    pub max_results: i64,
 }
 
 impl FilterConfig {
-    pub fn new(supported: bool, max_results: i32) -> FilterConfig {
+    pub fn new(supported: bool, max_results: i64) -> FilterConfig {
         FilterConfig {
             supported,
             max_results,

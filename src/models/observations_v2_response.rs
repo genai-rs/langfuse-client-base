@@ -12,13 +12,13 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// ObservationsV2Response : Response containing observations with field-group-based filtering and cursor-based pagination.  The `data` array contains observation objects with only the requested field groups included. Use the `cursor` in `meta` to retrieve the next page of results. The array may contain fewer than the requested `limit` items, or be empty, while a cursor is present. Continue until the cursor is absent.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsV2Response {
     /// Array of observation objects. Fields included depend on the `fields` parameter in the request.
     #[serde(rename = "data")]
     pub data: Vec<models::ObservationV2>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::ObservationsV2Meta>,
+    pub meta: models::ObservationsV2Meta,
 }
 
 impl ObservationsV2Response {
@@ -27,9 +27,6 @@ impl ObservationsV2Response {
         data: Vec<models::ObservationV2>,
         meta: models::ObservationsV2Meta,
     ) -> ObservationsV2Response {
-        ObservationsV2Response {
-            data,
-            meta: Box::new(meta),
-        }
+        ObservationsV2Response { data, meta }
     }
 }

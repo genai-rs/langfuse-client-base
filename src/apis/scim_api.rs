@@ -394,8 +394,8 @@ pub async fn scim_get_user(
 pub async fn scim_list_users(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
-    start_index: Option<i32>,
-    count: Option<i32>,
+    start_index: Option<i64>,
+    count: Option<i64>,
 ) -> Result<models::ScimUsersListResponse, Error<ScimListUsersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;

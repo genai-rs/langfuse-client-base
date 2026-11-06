@@ -308,8 +308,8 @@ pub async fn datasets_get_run(
 pub async fn datasets_get_runs(
     configuration: &configuration::Configuration,
     dataset_name: &str,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedDatasetRuns, Error<DatasetsGetRunsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_dataset_name = dataset_name;
@@ -369,8 +369,8 @@ pub async fn datasets_get_runs(
 #[bon::builder]
 pub async fn datasets_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedDatasets, Error<DatasetsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

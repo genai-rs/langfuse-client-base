@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptMetaListResponse {
     #[serde(rename = "data")]
     pub data: Vec<models::PromptMeta>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl PromptMetaListResponse {
@@ -24,9 +24,6 @@ impl PromptMetaListResponse {
         data: Vec<models::PromptMeta>,
         meta: models::UtilsMetaResponse,
     ) -> PromptMetaListResponse {
-        PromptMetaListResponse {
-            data,
-            meta: Box::new(meta),
-        }
+        PromptMetaListResponse { data, meta }
     }
 }

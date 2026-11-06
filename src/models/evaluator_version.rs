@@ -14,12 +14,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluatorVersion {
-    LlmAsJudgeEvaluatorVersion1(Box<models::LlmAsJudgeEvaluatorVersion1>),
-    CodeEvaluatorVersion1(Box<models::CodeEvaluatorVersion1>),
+    LlmAsJudgeEvaluatorVersion(models::EvaluatorVersionLlmAsJudgeEvaluatorVersion),
+    CodeEvaluatorVersion(models::EvaluatorVersionCodeEvaluatorVersion),
 }
 
-impl Default for EvaluatorVersion {
-    fn default() -> Self {
-        Self::LlmAsJudgeEvaluatorVersion1(Default::default())
+impl std::fmt::Display for EvaluatorVersion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::LlmAsJudgeEvaluatorVersion(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CodeEvaluatorVersion(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

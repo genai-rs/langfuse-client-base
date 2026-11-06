@@ -30,7 +30,7 @@ pub enum PromptVersionUpdateError {
 pub async fn prompt_version_update(
     configuration: &configuration::Configuration,
     name: &str,
-    version: i32,
+    version: i64,
     prompt_version_update_request: models::PromptVersionUpdateRequest,
 ) -> Result<models::Prompt, Error<PromptVersionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions

@@ -35,8 +35,47 @@ impl std::fmt::Display for UnstableTopicsOrderBy {
     }
 }
 
-impl Default for UnstableTopicsOrderBy {
-    fn default() -> UnstableTopicsOrderBy {
-        Self::TraceCountDesc
+impl ::std::str::FromStr for UnstableTopicsOrderBy {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "traceCount.desc" => Ok(Self::TraceCountDesc),
+            "traceCount.asc" => Ok(Self::TraceCountAsc),
+            "name.asc" => Ok(Self::NameAsc),
+            "name.desc" => Ok(Self::NameDesc),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableTopicsOrderBy",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableTopicsOrderBy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableTopicsOrderBy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableTopicsOrderBy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

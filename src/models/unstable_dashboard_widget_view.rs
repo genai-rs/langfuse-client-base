@@ -35,8 +35,47 @@ impl std::fmt::Display for UnstableDashboardWidgetView {
     }
 }
 
-impl Default for UnstableDashboardWidgetView {
-    fn default() -> UnstableDashboardWidgetView {
-        Self::Observations
+impl ::std::str::FromStr for UnstableDashboardWidgetView {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "observations" => Ok(Self::Observations),
+            "scores-numeric" => Ok(Self::ScoresNumeric),
+            "scores-boolean" => Ok(Self::ScoresBoolean),
+            "scores-categorical" => Ok(Self::ScoresCategorical),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableDashboardWidgetView",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableDashboardWidgetView {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableDashboardWidgetView {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableDashboardWidgetView {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

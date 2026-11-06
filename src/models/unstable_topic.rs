@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopic {
     /// Stable topic id, kept across map updates.
     #[serde(rename = "id")]
@@ -24,7 +24,7 @@ pub struct UnstableTopic {
     #[serde(rename = "description")]
     pub description: String,
     #[serde(rename = "facet")]
-    pub facet: Box<models::UnstableTopicFacetRef>,
+    pub facet: models::UnstableTopicFacetRef,
     /// The rule whose live map has the topic. Null when the project has no rule.
     #[serde(
         rename = "ruleId",
@@ -38,7 +38,7 @@ pub struct UnstableTopic {
     pub run_id: String,
     /// Traces in the window whose current result for the facet is this topic.
     #[serde(rename = "traceCount")]
-    pub trace_count: i32,
+    pub trace_count: i64,
 }
 
 impl UnstableTopic {
@@ -49,14 +49,14 @@ impl UnstableTopic {
         description: String,
         facet: models::UnstableTopicFacetRef,
         run_id: String,
-        trace_count: i32,
+        trace_count: i64,
     ) -> UnstableTopic {
         UnstableTopic {
             id,
             version_id,
             name,
             description,
-            facet: Box::new(facet),
+            facet,
             rule_id: None,
             run_id,
             trace_count,

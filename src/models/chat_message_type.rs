@@ -16,18 +16,56 @@ use serde::{Deserialize, Serialize};
 pub enum ChatMessageType {
     #[serde(rename = "chatmessage")]
     Chatmessage,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for ChatMessageType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Chatmessage => write!(f, "chatmessage"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for ChatMessageType {
-    fn default() -> ChatMessageType {
-        Self::Chatmessage
+impl ::std::str::FromStr for ChatMessageType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "chatmessage" => Ok(Self::Chatmessage),
+            _ => Err(crate::models::ParseEnumError::new("ChatMessageType", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ChatMessageType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ChatMessageType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ChatMessageType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

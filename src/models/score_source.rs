@@ -20,6 +20,10 @@ pub enum ScoreSource {
     Api,
     #[serde(rename = "EVAL")]
     Eval,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for ScoreSource {
@@ -28,12 +32,48 @@ impl std::fmt::Display for ScoreSource {
             Self::Annotation => write!(f, "ANNOTATION"),
             Self::Api => write!(f, "API"),
             Self::Eval => write!(f, "EVAL"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for ScoreSource {
-    fn default() -> ScoreSource {
-        Self::Annotation
+impl ::std::str::FromStr for ScoreSource {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "ANNOTATION" => Ok(Self::Annotation),
+            "API" => Ok(Self::Api),
+            "EVAL" => Ok(Self::Eval),
+            _ => Err(crate::models::ParseEnumError::new("ScoreSource", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ScoreSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ScoreSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ScoreSource {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

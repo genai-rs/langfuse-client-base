@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicFacetPublishedRun {
     #[serde(rename = "id")]
     pub id: String,
@@ -23,11 +23,11 @@ pub struct UnstableTopicFacetPublishedRun {
     )]
     pub completed_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
     #[serde(rename = "topicCount")]
-    pub topic_count: i32,
+    pub topic_count: i64,
 }
 
 impl UnstableTopicFacetPublishedRun {
-    pub fn new(id: String, topic_count: i32) -> UnstableTopicFacetPublishedRun {
+    pub fn new(id: String, topic_count: i64) -> UnstableTopicFacetPublishedRun {
         UnstableTopicFacetPublishedRun {
             id,
             completed_at: None,

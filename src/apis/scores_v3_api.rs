@@ -29,7 +29,7 @@ pub enum ScoresV3GetManyV3Error {
 #[bon::builder]
 pub async fn scores_v3_get_many_v3(
     configuration: &configuration::Configuration,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
     fields: Option<&str>,
     id: Option<&str>,

@@ -11,16 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScimUsersListResponse {
     #[serde(rename = "schemas")]
     pub schemas: Vec<String>,
     #[serde(rename = "totalResults")]
-    pub total_results: i32,
+    pub total_results: i64,
     #[serde(rename = "startIndex")]
-    pub start_index: i32,
+    pub start_index: i64,
     #[serde(rename = "itemsPerPage")]
-    pub items_per_page: i32,
+    pub items_per_page: i64,
     #[serde(rename = "Resources")]
     pub resources: Vec<models::ScimUser>,
 }
@@ -28,9 +28,9 @@ pub struct ScimUsersListResponse {
 impl ScimUsersListResponse {
     pub fn new(
         schemas: Vec<String>,
-        total_results: i32,
-        start_index: i32,
-        items_per_page: i32,
+        total_results: i64,
+        start_index: i64,
+        items_per_page: i64,
         resources: Vec<models::ScimUser>,
     ) -> ScimUsersListResponse {
         ScimUsersListResponse {

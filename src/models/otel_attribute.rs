@@ -23,7 +23,7 @@ pub struct OtelAttribute {
     )]
     pub key: Option<Option<String>>,
     #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
-    pub value: Option<Box<models::OtelAttributeValue>>,
+    pub value: Option<models::OtelAttributeValue>,
 }
 
 impl OtelAttribute {

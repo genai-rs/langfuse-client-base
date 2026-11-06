@@ -18,6 +18,10 @@ pub enum AnnotationQueueStatus {
     Pending,
     #[serde(rename = "COMPLETED")]
     Completed,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for AnnotationQueueStatus {
@@ -25,12 +29,50 @@ impl std::fmt::Display for AnnotationQueueStatus {
         match self {
             Self::Pending => write!(f, "PENDING"),
             Self::Completed => write!(f, "COMPLETED"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for AnnotationQueueStatus {
-    fn default() -> AnnotationQueueStatus {
-        Self::Pending
+impl ::std::str::FromStr for AnnotationQueueStatus {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "PENDING" => Ok(Self::Pending),
+            "COMPLETED" => Ok(Self::Completed),
+            _ => Err(crate::models::ParseEnumError::new(
+                "AnnotationQueueStatus",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for AnnotationQueueStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for AnnotationQueueStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for AnnotationQueueStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

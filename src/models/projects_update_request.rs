@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ProjectsUpdateRequest {
     #[serde(rename = "name")]
     pub name: String,
@@ -30,7 +30,7 @@ pub struct ProjectsUpdateRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub retention: Option<Option<i32>>,
+    pub retention: Option<Option<i64>>,
 }
 
 impl ProjectsUpdateRequest {

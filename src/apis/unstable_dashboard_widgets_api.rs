@@ -251,8 +251,8 @@ pub async fn unstable_dashboard_widgets_get(
 #[bon::builder]
 pub async fn unstable_dashboard_widgets_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::UnstableDashboardWidgetList, Error<UnstableDashboardWidgetsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

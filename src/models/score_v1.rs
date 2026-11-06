@@ -11,29 +11,74 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ScoreV1 {
-    NumericScoreV11(Box<models::NumericScoreV11>),
-    CategoricalScoreV11(Box<models::CategoricalScoreV11>),
-    BooleanScoreV11(Box<models::BooleanScoreV11>),
-    TextScoreV11(Box<models::TextScoreV11>),
+    NumericScoreV1(models::ScoreV1NumericScoreV1),
+    CategoricalScoreV1(models::ScoreV1CategoricalScoreV1),
+    BooleanScoreV1(models::ScoreV1BooleanScoreV1),
+    TextScoreV1(models::ScoreV1TextScoreV1),
+    /// A `dataType` this client does not know, holding the value as it came, which is what it serializes to.
+    Unknown(serde_json::Value),
 }
 
-impl Default for ScoreV1 {
-    fn default() -> Self {
-        Self::NumericScoreV11(Default::default())
+impl<'de> Deserialize<'de> for ScoreV1 {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        Self::dispatch(value).map_err(serde::de::Error::custom)
     }
 }
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum DataType {
-    #[serde(rename = "TEXT")]
-    Text,
+
+impl ScoreV1 {
+    /// Decodes the variant that `dataType` selects, so an error is that variant's.
+    #[inline]
+    fn dispatch(value: serde_json::Value) -> Result<Self, String> {
+        use models::union_dispatch::{self as dispatch, Tag};
+        const UNION: &str = "ScoreV1";
+        const TAG: &str = "dataType";
+        match dispatch::tag(&value, UNION, TAG)? {
+            Tag::Value("NUMERIC") => {
+                dispatch::decode(value, UNION, "NumericScoreV1").map(Self::NumericScoreV1)
+            }
+            Tag::Value("CATEGORICAL") => {
+                dispatch::decode(value, UNION, "CategoricalScoreV1").map(Self::CategoricalScoreV1)
+            }
+            Tag::Value("BOOLEAN") => {
+                dispatch::decode(value, UNION, "BooleanScoreV1").map(Self::BooleanScoreV1)
+            }
+            Tag::Value("TEXT") => {
+                dispatch::decode(value, UNION, "TextScoreV1").map(Self::TextScoreV1)
+            }
+            Tag::Value(_) => Ok(Self::Unknown(value)),
+            Tag::Missing => Err(dispatch::missing_tag(UNION, TAG)),
+            Tag::NotObject => Err(dispatch::not_an_object(&value, UNION, TAG)),
+        }
+    }
 }
 
-impl Default for DataType {
-    fn default() -> DataType {
-        Self::Text
+impl std::fmt::Display for ScoreV1 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::NumericScoreV1(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CategoricalScoreV1(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::BooleanScoreV1(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::TextScoreV1(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Unknown(value) => write!(f, "{}", value),
+        }
     }
 }

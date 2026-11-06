@@ -11,24 +11,24 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UtilsMetaResponse {
     /// current page number
     #[serde(rename = "page")]
-    pub page: i32,
+    pub page: i64,
     /// number of items per page
     #[serde(rename = "limit")]
-    pub limit: i32,
+    pub limit: i64,
     /// number of total items given the current filters/selection (if any)
     #[serde(rename = "totalItems")]
-    pub total_items: i32,
+    pub total_items: i64,
     /// number of total pages given the current limit
     #[serde(rename = "totalPages")]
-    pub total_pages: i32,
+    pub total_pages: i64,
 }
 
 impl UtilsMetaResponse {
-    pub fn new(page: i32, limit: i32, total_items: i32, total_pages: i32) -> UtilsMetaResponse {
+    pub fn new(page: i64, limit: i64, total_items: i64, total_pages: i64) -> UtilsMetaResponse {
         UtilsMetaResponse {
             page,
             limit,

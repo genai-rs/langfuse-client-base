@@ -38,8 +38,48 @@ impl std::fmt::Display for EvaluationRuleStringFilterOperator {
     }
 }
 
-impl Default for EvaluationRuleStringFilterOperator {
-    fn default() -> EvaluationRuleStringFilterOperator {
-        Self::Equal
+impl ::std::str::FromStr for EvaluationRuleStringFilterOperator {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "=" => Ok(Self::Equal),
+            "contains" => Ok(Self::Contains),
+            "does not contain" => Ok(Self::DoesNotContain),
+            "starts with" => Ok(Self::StartsWith),
+            "ends with" => Ok(Self::EndsWith),
+            _ => Err(crate::models::ParseEnumError::new(
+                "EvaluationRuleStringFilterOperator",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluationRuleStringFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluationRuleStringFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluationRuleStringFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

@@ -299,8 +299,8 @@ pub async fn unstable_topics_list(
     to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     filter: Option<&str>,
     order_by: Option<models::UnstableTopicsOrderBy>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_from_timestamp = from_timestamp;
@@ -375,7 +375,7 @@ pub async fn unstable_topics_list_assignments(
     to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     filter: Option<&str>,
     order_by: Option<models::UnstableTopicResultsOrderBy>,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
 ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -452,8 +452,8 @@ pub async fn unstable_topics_list_assignments(
 pub async fn unstable_topics_list_facets(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::UnstableTopicFacetList, Error<UnstableTopicsListFacetsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;
@@ -516,8 +516,8 @@ pub async fn unstable_topics_list_facets(
 pub async fn unstable_topics_list_rules(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::UnstableTopicRuleList, Error<UnstableTopicsListRulesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;
@@ -584,7 +584,7 @@ pub async fn unstable_topics_list_summaries(
     filter: Option<&str>,
     truncate_summaries: Option<bool>,
     order_by: Option<models::UnstableTopicResultsOrderBy>,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
 ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>> {
     // add a prefix to parameters to efficiently prevent name collisions

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicSummary {
     #[serde(rename = "traceId")]
     pub trace_id: String,
@@ -27,7 +27,7 @@ pub struct UnstableTopicSummary {
     #[serde(rename = "facetName")]
     pub facet_name: String,
     #[serde(rename = "facetVersion")]
-    pub facet_version: i32,
+    pub facet_version: i64,
     #[serde(rename = "state")]
     pub state: models::UnstableTopicSummaryState,
     /// Set when `state` is `complete`.
@@ -52,7 +52,7 @@ impl UnstableTopicSummary {
         timestamp: chrono::DateTime<chrono::FixedOffset>,
         facet_id: String,
         facet_name: String,
-        facet_version: i32,
+        facet_version: i64,
         state: models::UnstableTopicSummaryState,
         summary_truncated: bool,
         processed_at: chrono::DateTime<chrono::FixedOffset>,

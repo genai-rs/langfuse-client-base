@@ -57,7 +57,7 @@ Delete one immutable skill version. Unreferenced blobs are retained for asynchro
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **skill_name** | **String** |  | [required] |
-**skill_version** | **i32** |  | [required] |
+**skill_version** | **i64** |  | [required] |
 
 ### Return type
 
@@ -88,7 +88,7 @@ Resolve a skill's metadata and file manifest by version or label. Defaults to th
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **skill_name** | **String** |  | [required] |
-**version** | Option<**i32**> |  |  |
+**version** | Option<**i64**> |  |  |
 **label** | Option<**String**> |  |  |
 **include_content** | Option<**bool**> | Include UTF-8 text content in each file. Defaults to false. |  |
 
@@ -153,8 +153,8 @@ Name | Type | Description  | Required | Notes
 **name** | Option<**String**> | Filter by exact skill name. |  |
 **search** | Option<**String**> | Case-insensitive search across skill names and latest-version descriptions. |  |
 **tag** | Option<**String**> | Filter by a shared skill tag. |  |
-**page** | Option<**i32**> |  |  |
-**limit** | Option<**i32**> |  |  |
+**page** | Option<**i64**> |  |  |
+**limit** | Option<**i64**> |  |  |
 **from_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Include skills whose latest version was updated at or after this timestamp. |  |
 **to_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Include skills whose latest version was updated before this timestamp. |  |
 
@@ -187,7 +187,7 @@ Replace the labels on a skill version and atomically move them from other versio
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **skill_name** | **String** |  | [required] |
-**skill_version** | **i32** |  | [required] |
+**skill_version** | **i64** |  | [required] |
 **update_skill_labels_request** | [**UpdateSkillLabelsRequest**](UpdateSkillLabelsRequest.md) |  | [required] |
 
 ### Return type

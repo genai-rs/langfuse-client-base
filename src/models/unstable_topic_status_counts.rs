@@ -12,28 +12,28 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UnstableTopicStatusCounts : Traces in the window by their current result for one facet.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicStatusCounts {
     #[serde(rename = "assigned")]
-    pub assigned: i32,
+    pub assigned: i64,
     #[serde(rename = "outlier")]
-    pub outlier: i32,
+    pub outlier: i64,
     #[serde(rename = "awaitingMap")]
-    pub awaiting_map: i32,
+    pub awaiting_map: i64,
     #[serde(rename = "notApplicable")]
-    pub not_applicable: i32,
+    pub not_applicable: i64,
     #[serde(rename = "insufficientInput")]
-    pub insufficient_input: i32,
+    pub insufficient_input: i64,
 }
 
 impl UnstableTopicStatusCounts {
     /// Traces in the window by their current result for one facet.
     pub fn new(
-        assigned: i32,
-        outlier: i32,
-        awaiting_map: i32,
-        not_applicable: i32,
-        insufficient_input: i32,
+        assigned: i64,
+        outlier: i64,
+        awaiting_map: i64,
+        not_applicable: i64,
+        insufficient_input: i64,
     ) -> UnstableTopicStatusCounts {
         UnstableTopicStatusCounts {
             assigned,

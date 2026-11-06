@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// Deprecation : Migration signal returned by deprecated endpoints. Optional fields are omitted when they have no value.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Deprecation {
     /// Human- and agent-readable summary of the deprecation and its replacement.
     #[serde(rename = "message")]

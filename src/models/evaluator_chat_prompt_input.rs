@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluatorChatPromptInput : A user prompt string shortcut, or an ordered list of chat messages.
-/// A user prompt string shortcut, or an ordered list of chat messages.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluatorChatPromptInput {
@@ -21,8 +21,35 @@ pub enum EvaluatorChatPromptInput {
     EvaluatorChatPrompt(Vec<models::EvaluatorChatMessage>),
 }
 
-impl Default for EvaluatorChatPromptInput {
-    fn default() -> Self {
-        Self::String(Default::default())
+impl EvaluatorChatPromptInput {
+    pub fn new_text(text: String) -> Self {
+        Self::String(text)
+    }
+    pub fn new_evaluatorchatprompt(items: Vec<models::EvaluatorChatMessage>) -> Self {
+        Self::EvaluatorChatPrompt(items)
+    }
+}
+
+impl From<String> for EvaluatorChatPromptInput {
+    fn from(s: String) -> Self {
+        Self::String(s)
+    }
+}
+
+impl From<&str> for EvaluatorChatPromptInput {
+    fn from(s: &str) -> Self {
+        Self::String(s.to_string())
+    }
+}
+
+impl std::fmt::Display for EvaluatorChatPromptInput {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::String(value) => write!(f, "{}", value),
+            Self::EvaluatorChatPrompt(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

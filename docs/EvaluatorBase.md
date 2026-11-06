@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluator was created. | 
 **updated_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the evaluator was last updated. | 
 **version_id** | **String** | Stable identifier of the latest evaluator version. | 
-**version** | **i32** | Monotonically increasing latest evaluator version number. | 
+**version** | **i64** | Monotonically increasing latest evaluator version number. | 
 **version_created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the latest evaluator version was created. | 
 **version_created_by** | [**models::Creator**](Creator.md) |  | 
 

@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// DeletedEvaluator : Confirmation returned after successful evaluator deletion.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DeletedEvaluator {
     /// Identifier of the deleted evaluator.
     #[serde(rename = "id")]

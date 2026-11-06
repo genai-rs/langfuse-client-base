@@ -179,8 +179,8 @@ List dashboards in the project, ordered by most recently updated first.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**page** | Option<**i32**> | 1-based page number. Defaults to `1`. |  |
-**limit** | Option<**i32**> | Maximum number of items per page. Defaults to `50`. |  |
+**page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
+**limit** | Option<**i64**> | Maximum number of items per page. Defaults to `50`. |  |
 
 ### Return type
 

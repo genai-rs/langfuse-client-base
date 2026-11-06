@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreBody {
     #[serde(
         rename = "id",
@@ -67,7 +67,7 @@ pub struct ScoreBody {
     )]
     pub queue_id: Option<Option<String>>,
     #[serde(rename = "value")]
-    pub value: Box<models::CreateScoreValue>,
+    pub value: models::CreateScoreValue,
     #[serde(
         rename = "comment",
         default,
@@ -105,7 +105,7 @@ impl ScoreBody {
             name,
             environment: None,
             queue_id: None,
-            value: Box::new(value),
+            value,
             comment: None,
             metadata: None,
             data_type: None,

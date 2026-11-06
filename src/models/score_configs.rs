@@ -11,19 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreConfigs {
     #[serde(rename = "data")]
     pub data: Vec<models::ScoreConfig>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl ScoreConfigs {
     pub fn new(data: Vec<models::ScoreConfig>, meta: models::UtilsMetaResponse) -> ScoreConfigs {
-        ScoreConfigs {
-            data,
-            meta: Box::new(meta),
-        }
+        ScoreConfigs { data, meta }
     }
 }

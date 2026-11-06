@@ -95,8 +95,8 @@ pub async fn legacy_observations_v1_get(
 #[bon::builder]
 pub async fn legacy_observations_v1_get_many(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     name: Option<&str>,
     user_id: Option<&str>,
     r#type: Option<&str>,

@@ -18,6 +18,10 @@ pub enum PromptType {
     Chat,
     #[serde(rename = "text")]
     Text,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for PromptType {
@@ -25,12 +29,47 @@ impl std::fmt::Display for PromptType {
         match self {
             Self::Chat => write!(f, "chat"),
             Self::Text => write!(f, "text"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for PromptType {
-    fn default() -> PromptType {
-        Self::Chat
+impl ::std::str::FromStr for PromptType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "chat" => Ok(Self::Chat),
+            "text" => Ok(Self::Text),
+            _ => Err(crate::models::ParseEnumError::new("PromptType", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for PromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for PromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for PromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

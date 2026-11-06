@@ -33,8 +33,46 @@ impl std::fmt::Display for EvaluatorOutputScoreType {
     }
 }
 
-impl Default for EvaluatorOutputScoreType {
-    fn default() -> EvaluatorOutputScoreType {
-        Self::Numeric
+impl ::std::str::FromStr for EvaluatorOutputScoreType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "NUMERIC" => Ok(Self::Numeric),
+            "BOOLEAN" => Ok(Self::Boolean),
+            "CATEGORICAL" => Ok(Self::Categorical),
+            _ => Err(crate::models::ParseEnumError::new(
+                "EvaluatorOutputScoreType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluatorOutputScoreType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluatorOutputScoreType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluatorOutputScoreType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

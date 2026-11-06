@@ -22,6 +22,10 @@ pub enum BlobStorageIntegrationType {
     AzureBlobStorage,
     #[serde(rename = "GOOGLE_CLOUD_STORAGE")]
     GoogleCloudStorage,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for BlobStorageIntegrationType {
@@ -31,12 +35,52 @@ impl std::fmt::Display for BlobStorageIntegrationType {
             Self::S3Compatible => write!(f, "S3_COMPATIBLE"),
             Self::AzureBlobStorage => write!(f, "AZURE_BLOB_STORAGE"),
             Self::GoogleCloudStorage => write!(f, "GOOGLE_CLOUD_STORAGE"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for BlobStorageIntegrationType {
-    fn default() -> BlobStorageIntegrationType {
-        Self::S3
+impl ::std::str::FromStr for BlobStorageIntegrationType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "S3" => Ok(Self::S3),
+            "S3_COMPATIBLE" => Ok(Self::S3Compatible),
+            "AZURE_BLOB_STORAGE" => Ok(Self::AzureBlobStorage),
+            "GOOGLE_CLOUD_STORAGE" => Ok(Self::GoogleCloudStorage),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageIntegrationType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageIntegrationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageIntegrationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageIntegrationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

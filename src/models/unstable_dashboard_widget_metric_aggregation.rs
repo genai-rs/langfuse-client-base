@@ -38,6 +38,10 @@ pub enum UnstableDashboardWidgetMetricAggregation {
     Histogram,
     #[serde(rename = "uniq")]
     Uniq,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableDashboardWidgetMetricAggregation {
@@ -55,12 +59,60 @@ impl std::fmt::Display for UnstableDashboardWidgetMetricAggregation {
             Self::P99 => write!(f, "p99"),
             Self::Histogram => write!(f, "histogram"),
             Self::Uniq => write!(f, "uniq"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableDashboardWidgetMetricAggregation {
-    fn default() -> UnstableDashboardWidgetMetricAggregation {
-        Self::Sum
+impl ::std::str::FromStr for UnstableDashboardWidgetMetricAggregation {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "sum" => Ok(Self::Sum),
+            "avg" => Ok(Self::Avg),
+            "count" => Ok(Self::Count),
+            "max" => Ok(Self::Max),
+            "min" => Ok(Self::Min),
+            "p50" => Ok(Self::P50),
+            "p75" => Ok(Self::P75),
+            "p90" => Ok(Self::P90),
+            "p95" => Ok(Self::P95),
+            "p99" => Ok(Self::P99),
+            "histogram" => Ok(Self::Histogram),
+            "uniq" => Ok(Self::Uniq),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableDashboardWidgetMetricAggregation",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableDashboardWidgetMetricAggregation {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableDashboardWidgetMetricAggregation {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableDashboardWidgetMetricAggregation {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

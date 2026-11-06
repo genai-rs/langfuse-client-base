@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTierUsageCondition : Condition that sums usage details whose keys match a regex.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PricingTierUsageCondition {
     /// Regex pattern matched against usage detail keys.
     #[serde(rename = "usageDetailPattern")]

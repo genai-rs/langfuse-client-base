@@ -41,8 +41,49 @@ impl std::fmt::Display for FeedbackTargetType {
     }
 }
 
-impl Default for FeedbackTargetType {
-    fn default() -> FeedbackTargetType {
-        Self::Skill
+impl ::std::str::FromStr for FeedbackTargetType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "skill" => Ok(Self::Skill),
+            "mcp-tool" => Ok(Self::McpTool),
+            "cli" => Ok(Self::Cli),
+            "docs" => Ok(Self::Docs),
+            "public-api" => Ok(Self::PublicApi),
+            "other" => Ok(Self::Other),
+            _ => Err(crate::models::ParseEnumError::new(
+                "FeedbackTargetType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for FeedbackTargetType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for FeedbackTargetType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for FeedbackTargetType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

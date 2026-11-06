@@ -193,8 +193,101 @@ impl std::fmt::Display for MediaContentType {
     }
 }
 
-impl Default for MediaContentType {
-    fn default() -> MediaContentType {
-        Self::ImageSlashPng
+impl ::std::str::FromStr for MediaContentType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "image/png" => Ok(Self::ImageSlashPng),
+            "image/jpeg" => Ok(Self::ImageSlashJpeg),
+            "image/jpg" => Ok(Self::ImageSlashJpg),
+            "image/webp" => Ok(Self::ImageSlashWebp),
+            "image/gif" => Ok(Self::ImageSlashGif),
+            "image/svg+xml" => Ok(Self::ImageSlashSvgPlusXml),
+            "image/tiff" => Ok(Self::ImageSlashTiff),
+            "image/bmp" => Ok(Self::ImageSlashBmp),
+            "image/avif" => Ok(Self::ImageSlashAvif),
+            "image/heic" => Ok(Self::ImageSlashHeic),
+            "audio/mpeg" => Ok(Self::AudioSlashMpeg),
+            "audio/mp3" => Ok(Self::AudioSlashMp3),
+            "audio/wav" => Ok(Self::AudioSlashWav),
+            "audio/ogg" => Ok(Self::AudioSlashOgg),
+            "audio/oga" => Ok(Self::AudioSlashOga),
+            "audio/aac" => Ok(Self::AudioSlashAac),
+            "audio/mp4" => Ok(Self::AudioSlashMp4),
+            "audio/flac" => Ok(Self::AudioSlashFlac),
+            "audio/opus" => Ok(Self::AudioSlashOpus),
+            "audio/webm" => Ok(Self::AudioSlashWebm),
+            "video/mp4" => Ok(Self::VideoSlashMp4),
+            "video/webm" => Ok(Self::VideoSlashWebm),
+            "video/ogg" => Ok(Self::VideoSlashOgg),
+            "video/mpeg" => Ok(Self::VideoSlashMpeg),
+            "video/quicktime" => Ok(Self::VideoSlashQuicktime),
+            "video/x-msvideo" => Ok(Self::VideoSlashXMsvideo),
+            "video/x-matroska" => Ok(Self::VideoSlashXMatroska),
+            "text/plain" => Ok(Self::TextSlashPlain),
+            "text/html" => Ok(Self::TextSlashHtml),
+            "text/css" => Ok(Self::TextSlashCss),
+            "text/csv" => Ok(Self::TextSlashCsv),
+            "text/markdown" => Ok(Self::TextSlashMarkdown),
+            "text/x-python" => Ok(Self::TextSlashXPython),
+            "application/javascript" => Ok(Self::ApplicationSlashJavascript),
+            "text/x-typescript" => Ok(Self::TextSlashXTypescript),
+            "application/x-yaml" => Ok(Self::ApplicationSlashXYaml),
+            "application/pdf" => Ok(Self::ApplicationSlashPdf),
+            "application/msword" => Ok(Self::ApplicationSlashMsword),
+            "application/vnd.ms-excel" => Ok(Self::ApplicationSlashVndMsExcel),
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => {
+                Ok(Self::ApplicationSlashVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet)
+            }
+            "application/zip" => Ok(Self::ApplicationSlashZip),
+            "application/json" => Ok(Self::ApplicationSlashJson),
+            "application/xml" => Ok(Self::ApplicationSlashXml),
+            "application/octet-stream" => Ok(Self::ApplicationSlashOctetStream),
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => {
+                Ok(Self::ApplicationSlashVndOpenxmlformatsOfficedocumentWordprocessingmlDocument)
+            }
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation" => {
+                Ok(Self::ApplicationSlashVndOpenxmlformatsOfficedocumentPresentationmlPresentation)
+            }
+            "application/rtf" => Ok(Self::ApplicationSlashRtf),
+            "application/x-ndjson" => Ok(Self::ApplicationSlashXNdjson),
+            "application/vnd.apache.parquet" => Ok(Self::ApplicationSlashVndApacheParquet),
+            "application/gzip" => Ok(Self::ApplicationSlashGzip),
+            "application/x-tar" => Ok(Self::ApplicationSlashXTar),
+            "application/x-7z-compressed" => Ok(Self::ApplicationSlashX7zCompressed),
+            _ => Err(crate::models::ParseEnumError::new(
+                "MediaContentType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for MediaContentType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for MediaContentType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for MediaContentType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

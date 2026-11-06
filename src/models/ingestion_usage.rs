@@ -14,12 +14,21 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IngestionUsage {
-    Usage(Box<models::Usage>),
-    OpenAiUsage(Box<models::OpenAiUsage>),
+    Usage(models::Usage),
+    OpenAiUsage(models::OpenAiUsage),
 }
 
-impl Default for IngestionUsage {
-    fn default() -> Self {
-        Self::Usage(Default::default())
+impl std::fmt::Display for IngestionUsage {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Usage(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::OpenAiUsage(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

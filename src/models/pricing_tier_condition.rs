@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTierCondition : Condition for matching a pricing tier against usage details or observation attributes.  Usage-detail conditions treat usageDetailPattern as a regex, sum all matching usage values, and compare the sum to the numeric value. Model-parameter and metadata conditions match an exact top-level key against one or more string values.
-/// Condition for matching a pricing tier against usage details or observation attributes.  Usage-detail conditions treat usageDetailPattern as a regex, sum all matching usage values, and compare the sum to the numeric value. Model-parameter and metadata conditions match an exact top-level key against one or more string values.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PricingTierCondition {
-    PricingTierUsageCondition(Box<models::PricingTierUsageCondition>),
-    PricingTierAttributeCondition(Box<models::PricingTierAttributeCondition>),
+    PricingTierUsageCondition(models::PricingTierUsageCondition),
+    PricingTierAttributeCondition(models::PricingTierAttributeCondition),
 }
 
-impl Default for PricingTierCondition {
-    fn default() -> Self {
-        Self::PricingTierUsageCondition(Default::default())
+impl std::fmt::Display for PricingTierCondition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::PricingTierUsageCondition(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PricingTierAttributeCondition(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

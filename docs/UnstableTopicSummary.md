@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **timestamp** | **chrono::DateTime<chrono::FixedOffset>** | Trace start time. | 
 **facet_id** | **String** |  | 
 **facet_name** | **String** |  | 
-**facet_version** | **i32** |  | 
+**facet_version** | **i64** |  | 
 **state** | [**models::UnstableTopicSummaryState**](UnstableTopicSummaryState.md) |  | 
 **summary** | Option<**String**> | Set when `state` is `complete`. | [optional]
 **summary_truncated** | **bool** |  | 

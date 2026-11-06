@@ -18,6 +18,10 @@ pub enum UnstableDashboardWidgetSortOrder {
     Asc,
     #[serde(rename = "DESC")]
     Desc,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableDashboardWidgetSortOrder {
@@ -25,12 +29,50 @@ impl std::fmt::Display for UnstableDashboardWidgetSortOrder {
         match self {
             Self::Asc => write!(f, "ASC"),
             Self::Desc => write!(f, "DESC"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableDashboardWidgetSortOrder {
-    fn default() -> UnstableDashboardWidgetSortOrder {
-        Self::Asc
+impl ::std::str::FromStr for UnstableDashboardWidgetSortOrder {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "ASC" => Ok(Self::Asc),
+            "DESC" => Ok(Self::Desc),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableDashboardWidgetSortOrder",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableDashboardWidgetSortOrder {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableDashboardWidgetSortOrder {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableDashboardWidgetSortOrder {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

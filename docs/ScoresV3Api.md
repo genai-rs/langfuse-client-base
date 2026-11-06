@@ -20,7 +20,7 @@ Get a list of scores with a polymorphic `value` field (v3).  The `value` field t
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> | Number of items per page. Maximum 100, default 50. Requests with a limit greater than 100 return HTTP 400. |  |
+**limit** | Option<**i64**> | Number of items per page. Maximum 100, default 50. Requests with a limit greater than 100 return HTTP 400. |  |
 **cursor** | Option<**String**> | URL-safe base64 (base64url) cursor for pagination. Use the cursor from the previous response to get the next page. Absent on the final page. |  |
 **fields** | Option<**String**> | Comma-separated field groups to include in addition to the always-returned core fields. Allowed: details, subject, annotation — see the endpoint description for the fields each group adds. Unknown names return HTTP 400. |  |
 **id** | Option<**String**> | Comma-separated list of score IDs to filter by (OR within, AND across filters). |  |

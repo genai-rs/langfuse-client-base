@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateSkillRequest {
     /// The complete set of tags to apply to every version of the skill. Pass an empty list to clear all tags.
     #[serde(rename = "tags")]

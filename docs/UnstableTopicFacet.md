@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **is_built_in** | **bool** |  | 
 **active** | **bool** | Whether a Topics rule runs the facet. True for all facets if the project has no rule. | 
 **rule_ids** | **Vec<String>** | The rules that run the facet. | 
-**version** | **i32** | Latest facet version. | 
+**version** | **i64** | Latest facet version. | 
 **prompt** | **String** | Prompt of the latest facet version. | 
 **published_run** | Option<[**models::UnstableTopicFacetPublishedRun**](UnstableTopicFacetPublishedRun.md)> |  | [optional]
 

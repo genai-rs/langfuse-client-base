@@ -12,17 +12,32 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PublicEvaluatorOutputDefinition : Flat evaluator output definition returned by the public API.  This response always includes `dataType` and never includes an internal output-definition `version`. Optional empty descriptions from legacy definitions are omitted.
-/// Flat evaluator output definition returned by the public API.  This response always includes `dataType` and never includes an internal output-definition `version`. Optional empty descriptions from legacy definitions are omitted.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PublicEvaluatorOutputDefinition {
-    PublicEvaluatorNumericScore1(Box<models::PublicEvaluatorNumericScore1>),
-    PublicEvaluatorBooleanScore1(Box<models::PublicEvaluatorBooleanScore1>),
-    PublicEvaluatorCategoricalScore1(Box<models::PublicEvaluatorCategoricalScore1>),
+    PublicEvaluatorNumericScore(models::PublicEvaluatorOutputDefinitionPublicEvaluatorNumericScore),
+    PublicEvaluatorBooleanScore(models::PublicEvaluatorOutputDefinitionPublicEvaluatorBooleanScore),
+    PublicEvaluatorCategoricalScore(
+        models::PublicEvaluatorOutputDefinitionPublicEvaluatorCategoricalScore,
+    ),
 }
 
-impl Default for PublicEvaluatorOutputDefinition {
-    fn default() -> Self {
-        Self::PublicEvaluatorNumericScore1(Default::default())
+impl std::fmt::Display for PublicEvaluatorOutputDefinition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::PublicEvaluatorNumericScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PublicEvaluatorBooleanScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PublicEvaluatorCategoricalScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

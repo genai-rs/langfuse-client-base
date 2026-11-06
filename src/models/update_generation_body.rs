@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateGenerationBody {
     #[serde(
         rename = "traceId",
@@ -116,7 +116,7 @@ pub struct UpdateGenerationBody {
     )]
     pub model_parameters: Option<Option<std::collections::HashMap<String, models::MapValue>>>,
     #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
-    pub usage: Option<Box<models::IngestionUsage>>,
+    pub usage: Option<models::IngestionUsage>,
     #[serde(
         rename = "promptName",
         default,
@@ -125,7 +125,7 @@ pub struct UpdateGenerationBody {
     )]
     pub prompt_name: Option<Option<String>>,
     #[serde(rename = "usageDetails", skip_serializing_if = "Option::is_none")]
-    pub usage_details: Option<Box<models::UsageDetails>>,
+    pub usage_details: Option<models::UsageDetails>,
     #[serde(
         rename = "costDetails",
         default,
@@ -139,7 +139,7 @@ pub struct UpdateGenerationBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub prompt_version: Option<Option<i32>>,
+    pub prompt_version: Option<Option<i64>>,
 }
 
 impl UpdateGenerationBody {

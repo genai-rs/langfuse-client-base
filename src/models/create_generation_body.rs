@@ -121,9 +121,9 @@ pub struct CreateGenerationBody {
     )]
     pub model_parameters: Option<Option<std::collections::HashMap<String, models::MapValue>>>,
     #[serde(rename = "usage", skip_serializing_if = "Option::is_none")]
-    pub usage: Option<Box<models::IngestionUsage>>,
+    pub usage: Option<models::IngestionUsage>,
     #[serde(rename = "usageDetails", skip_serializing_if = "Option::is_none")]
-    pub usage_details: Option<Box<models::UsageDetails>>,
+    pub usage_details: Option<models::UsageDetails>,
     #[serde(
         rename = "costDetails",
         default,
@@ -144,7 +144,7 @@ pub struct CreateGenerationBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub prompt_version: Option<Option<i32>>,
+    pub prompt_version: Option<Option<i64>>,
 }
 
 impl CreateGenerationBody {

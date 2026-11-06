@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PaginatedAnnotationQueues {
     #[serde(rename = "data")]
     pub data: Vec<models::AnnotationQueue>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl PaginatedAnnotationQueues {
@@ -24,9 +24,6 @@ impl PaginatedAnnotationQueues {
         data: Vec<models::AnnotationQueue>,
         meta: models::UtilsMetaResponse,
     ) -> PaginatedAnnotationQueues {
-        PaginatedAnnotationQueues {
-            data,
-            meta: Box::new(meta),
-        }
+        PaginatedAnnotationQueues { data, meta }
     }
 }
