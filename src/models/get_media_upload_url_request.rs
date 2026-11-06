@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// GetMediaUploadUrlRequest : Request a presigned media upload URL. Provide exactly one context: a trace (traceId, optionally observationId) or a dataset item (datasetId + datasetItemId). field is required and must match the chosen context.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetMediaUploadUrlRequest {
     /// The trace the media is associated with. Null for dataset item media uploads.
     #[serde(
@@ -50,7 +50,7 @@ pub struct GetMediaUploadUrlRequest {
     pub content_type: models::MediaContentType,
     /// The size of the media record in bytes
     #[serde(rename = "contentLength")]
-    pub content_length: i32,
+    pub content_length: i64,
     /// The SHA-256 hash of the media record
     #[serde(rename = "sha256Hash")]
     pub sha256_hash: String,
@@ -63,7 +63,7 @@ impl GetMediaUploadUrlRequest {
     /// Request a presigned media upload URL. Provide exactly one context: a trace (traceId, optionally observationId) or a dataset item (datasetId + datasetItemId). field is required and must match the chosen context.
     pub fn new(
         content_type: models::MediaContentType,
-        content_length: i32,
+        content_length: i64,
         sha256_hash: String,
         field: String,
     ) -> GetMediaUploadUrlRequest {

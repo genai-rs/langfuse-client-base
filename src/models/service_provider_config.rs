@@ -11,28 +11,28 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ServiceProviderConfig {
     #[serde(rename = "schemas")]
     pub schemas: Vec<String>,
     #[serde(rename = "documentationUri")]
     pub documentation_uri: String,
     #[serde(rename = "patch")]
-    pub patch: Box<models::ScimFeatureSupport>,
+    pub patch: models::ScimFeatureSupport,
     #[serde(rename = "bulk")]
-    pub bulk: Box<models::BulkConfig>,
+    pub bulk: models::BulkConfig,
     #[serde(rename = "filter")]
-    pub filter: Box<models::FilterConfig>,
+    pub filter: models::FilterConfig,
     #[serde(rename = "changePassword")]
-    pub change_password: Box<models::ScimFeatureSupport>,
+    pub change_password: models::ScimFeatureSupport,
     #[serde(rename = "sort")]
-    pub sort: Box<models::ScimFeatureSupport>,
+    pub sort: models::ScimFeatureSupport,
     #[serde(rename = "etag")]
-    pub etag: Box<models::ScimFeatureSupport>,
+    pub etag: models::ScimFeatureSupport,
     #[serde(rename = "authenticationSchemes")]
     pub authentication_schemes: Vec<models::AuthenticationScheme>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::ResourceMeta>,
+    pub meta: models::ResourceMeta,
 }
 
 impl ServiceProviderConfig {
@@ -51,14 +51,14 @@ impl ServiceProviderConfig {
         ServiceProviderConfig {
             schemas,
             documentation_uri,
-            patch: Box::new(patch),
-            bulk: Box::new(bulk),
-            filter: Box::new(filter),
-            change_password: Box::new(change_password),
-            sort: Box::new(sort),
-            etag: Box::new(etag),
+            patch,
+            bulk,
+            filter,
+            change_password,
+            sort,
+            etag,
             authentication_schemes,
-            meta: Box::new(meta),
+            meta,
         }
     }
 }

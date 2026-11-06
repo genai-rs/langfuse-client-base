@@ -22,6 +22,10 @@ pub enum BlobStorageExportFrequency {
     Daily,
     #[serde(rename = "weekly")]
     Weekly,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for BlobStorageExportFrequency {
@@ -31,12 +35,52 @@ impl std::fmt::Display for BlobStorageExportFrequency {
             Self::Hourly => write!(f, "hourly"),
             Self::Daily => write!(f, "daily"),
             Self::Weekly => write!(f, "weekly"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for BlobStorageExportFrequency {
-    fn default() -> BlobStorageExportFrequency {
-        Self::Every20Minutes
+impl ::std::str::FromStr for BlobStorageExportFrequency {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "every_20_minutes" => Ok(Self::Every20Minutes),
+            "hourly" => Ok(Self::Hourly),
+            "daily" => Ok(Self::Daily),
+            "weekly" => Ok(Self::Weekly),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageExportFrequency",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageExportFrequency {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageExportFrequency {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageExportFrequency {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

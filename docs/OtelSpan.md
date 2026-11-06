@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **span_id** | Option<**serde_json::Value**> | Span ID (8 bytes, hex-encoded string in JSON or Buffer in binary) | [optional]
 **parent_span_id** | Option<**serde_json::Value**> | Parent span ID if this is a child span | [optional]
 **name** | Option<**String**> | Span name describing the operation | [optional]
-**kind** | Option<**i32**> | Span kind (1=INTERNAL, 2=SERVER, 3=CLIENT, 4=PRODUCER, 5=CONSUMER) | [optional]
+**kind** | Option<**i64**> | Span kind (1=INTERNAL, 2=SERVER, 3=CLIENT, 4=PRODUCER, 5=CONSUMER) | [optional]
 **start_time_unix_nano** | Option<**serde_json::Value**> | Start time in nanoseconds since Unix epoch | [optional]
 **end_time_unix_nano** | Option<**serde_json::Value**> | End time in nanoseconds since Unix epoch | [optional]
 **attributes** | Option<[**Vec<models::OtelAttribute>**](OtelAttribute.md)> | Span attributes including Langfuse-specific attributes (langfuse.observation.*) | [optional]

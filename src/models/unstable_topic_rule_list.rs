@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicRuleList {
     #[serde(rename = "data")]
     pub data: Vec<models::UnstableTopicRule>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl UnstableTopicRuleList {
@@ -24,9 +24,6 @@ impl UnstableTopicRuleList {
         data: Vec<models::UnstableTopicRule>,
         meta: models::UtilsMetaResponse,
     ) -> UnstableTopicRuleList {
-        UnstableTopicRuleList {
-            data,
-            meta: Box::new(meta),
-        }
+        UnstableTopicRuleList { data, meta }
     }
 }

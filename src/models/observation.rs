@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Observation {
     /// The unique identifier of the observation
     #[serde(rename = "id")]
@@ -61,7 +61,7 @@ pub struct Observation {
     #[serde(rename = "output", deserialize_with = "Option::deserialize")]
     pub output: Option<serde_json::Value>,
     #[serde(rename = "usage")]
-    pub usage: Box<models::Usage>,
+    pub usage: models::Usage,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
@@ -78,7 +78,7 @@ pub struct Observation {
     pub prompt_id: Option<String>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
     #[serde(rename = "usageDetails")]
-    pub usage_details: std::collections::HashMap<String, i32>,
+    pub usage_details: std::collections::HashMap<String, i64>,
     /// The cost details of the observation. Key is the name of the cost metric, value is the cost in USD. The total key is the sum of all (non-total) cost metrics or the total value ingested.
     #[serde(rename = "costDetails")]
     pub cost_details: std::collections::HashMap<String, f64>,
@@ -106,7 +106,7 @@ impl Observation {
         status_message: Option<String>,
         parent_observation_id: Option<String>,
         prompt_id: Option<String>,
-        usage_details: std::collections::HashMap<String, i32>,
+        usage_details: std::collections::HashMap<String, i64>,
         cost_details: std::collections::HashMap<String, f64>,
         environment: String,
     ) -> Observation {
@@ -124,7 +124,7 @@ impl Observation {
             version,
             metadata: None,
             output,
-            usage: Box::new(usage),
+            usage,
             level,
             status_message,
             parent_observation_id,

@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// Model : Model definition used for transforming usage into USD cost and/or tokenization.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns or observation attributes  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Model {
     #[serde(rename = "id")]
     pub id: String,

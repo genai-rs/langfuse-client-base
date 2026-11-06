@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateSpanEvent {
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
@@ -28,7 +28,7 @@ pub struct CreateSpanEvent {
     )]
     pub metadata: Option<Option<serde_json::Value>>,
     #[serde(rename = "body")]
-    pub body: Box<models::CreateSpanBody>,
+    pub body: models::CreateSpanBody,
 }
 
 impl CreateSpanEvent {
@@ -37,7 +37,7 @@ impl CreateSpanEvent {
             id,
             timestamp,
             metadata: None,
-            body: Box::new(body),
+            body,
         }
     }
 }

@@ -407,8 +407,8 @@ pub async fn unstable_dashboards_get(
 #[bon::builder]
 pub async fn unstable_dashboards_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::UnstableDashboardList, Error<UnstableDashboardsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

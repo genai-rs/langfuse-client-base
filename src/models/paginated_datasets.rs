@@ -11,19 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PaginatedDatasets {
     #[serde(rename = "data")]
     pub data: Vec<models::Dataset>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl PaginatedDatasets {
     pub fn new(data: Vec<models::Dataset>, meta: models::UtilsMetaResponse) -> PaginatedDatasets {
-        PaginatedDatasets {
-            data,
-            meta: Box::new(meta),
-        }
+        PaginatedDatasets { data, meta }
     }
 }

@@ -51,8 +51,8 @@ Name | Type | Description  | Required | Notes
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**page** | Option<**i32**> | Page number, starts at 1. |  |
-**limit** | Option<**i32**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
+**page** | Option<**i64**> | Page number, starts at 1. |  |
+**limit** | Option<**i64**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
 **name** | Option<**String**> |  |  |
 **user_id** | Option<**String**> |  |  |
 **r#type** | Option<**String**> |  |  |

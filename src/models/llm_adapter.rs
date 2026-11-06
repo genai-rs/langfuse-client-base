@@ -41,8 +41,46 @@ impl std::fmt::Display for LlmAdapter {
     }
 }
 
-impl Default for LlmAdapter {
-    fn default() -> LlmAdapter {
-        Self::Anthropic
+impl ::std::str::FromStr for LlmAdapter {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "anthropic" => Ok(Self::Anthropic),
+            "openai" => Ok(Self::Openai),
+            "azure" => Ok(Self::Azure),
+            "bedrock" => Ok(Self::Bedrock),
+            "google-vertex-ai" => Ok(Self::GoogleVertexAi),
+            "google-ai-studio" => Ok(Self::GoogleAiStudio),
+            _ => Err(crate::models::ParseEnumError::new("LlmAdapter", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for LlmAdapter {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for LlmAdapter {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for LlmAdapter {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

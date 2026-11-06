@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SchemaResource {
     #[serde(rename = "id")]
     pub id: String,
@@ -22,7 +22,7 @@ pub struct SchemaResource {
     #[serde(rename = "attributes")]
     pub attributes: Vec<serde_json::Value>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::ResourceMeta>,
+    pub meta: models::ResourceMeta,
 }
 
 impl SchemaResource {
@@ -38,7 +38,7 @@ impl SchemaResource {
             name,
             description,
             attributes,
-            meta: Box::new(meta),
+            meta,
         }
     }
 }

@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableDashboardWidgetList {
     #[serde(rename = "data")]
     pub data: Vec<models::UnstableDashboardWidget>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl UnstableDashboardWidgetList {
@@ -24,9 +24,6 @@ impl UnstableDashboardWidgetList {
         data: Vec<models::UnstableDashboardWidget>,
         meta: models::UtilsMetaResponse,
     ) -> UnstableDashboardWidgetList {
-        UnstableDashboardWidgetList {
-            data,
-            meta: Box::new(meta),
-        }
+        UnstableDashboardWidgetList { data, meta }
     }
 }

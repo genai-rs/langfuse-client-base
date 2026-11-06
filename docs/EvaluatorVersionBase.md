@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | Stable identifier of this evaluator version. | 
-**version** | **i32** | Monotonically increasing evaluator version number. | 
+**version** | **i64** | Monotonically increasing evaluator version number. | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when this evaluator version was created. | 
 **created_by** | [**models::Creator**](Creator.md) |  | 
 

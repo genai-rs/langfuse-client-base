@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct OtelResourceSpan {
     #[serde(rename = "resource", skip_serializing_if = "Option::is_none")]
-    pub resource: Option<Box<models::OtelResource>>,
+    pub resource: Option<models::OtelResource>,
     /// Array of scope spans
     #[serde(
         rename = "scopeSpans",

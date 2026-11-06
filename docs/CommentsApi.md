@@ -52,8 +52,8 @@ Get all comments
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**page** | Option<**i32**> | Page number, starts at 1. |  |
-**limit** | Option<**i32**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit |  |
+**page** | Option<**i64**> | Page number, starts at 1. |  |
+**limit** | Option<**i64**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit |  |
 **object_type** | Option<**String**> | Filter comments by object type (trace, observation, session, prompt). |  |
 **object_id** | Option<**String**> | Filter comments by object id. If objectType is not provided, an error will be thrown. |  |
 **author_user_id** | Option<**String**> | Filter comments by author user id. |  |

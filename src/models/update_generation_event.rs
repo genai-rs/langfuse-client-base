@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UpdateGenerationEvent {
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
@@ -28,7 +28,7 @@ pub struct UpdateGenerationEvent {
     )]
     pub metadata: Option<Option<serde_json::Value>>,
     #[serde(rename = "body")]
-    pub body: Box<models::UpdateGenerationBody>,
+    pub body: models::UpdateGenerationBody,
 }
 
 impl UpdateGenerationEvent {
@@ -41,7 +41,7 @@ impl UpdateGenerationEvent {
             id,
             timestamp,
             metadata: None,
-            body: Box::new(body),
+            body,
         }
     }
 }

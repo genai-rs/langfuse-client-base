@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ResourceType {
     #[serde(
         rename = "schemas",
@@ -33,7 +33,7 @@ pub struct ResourceType {
     #[serde(rename = "schemaExtensions")]
     pub schema_extensions: Vec<models::SchemaExtension>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::ResourceMeta>,
+    pub meta: models::ResourceMeta,
 }
 
 impl ResourceType {
@@ -54,7 +54,7 @@ impl ResourceType {
             description,
             schema,
             schema_extensions,
-            meta: Box::new(meta),
+            meta,
         }
     }
 }

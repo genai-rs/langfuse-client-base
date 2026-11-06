@@ -11,20 +11,17 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluatorsPage {
     /// Evaluators for this page.
     #[serde(rename = "data")]
     pub data: Vec<models::Evaluator>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::CursorMeta>,
+    pub meta: models::CursorMeta,
 }
 
 impl EvaluatorsPage {
     pub fn new(data: Vec<models::Evaluator>, meta: models::CursorMeta) -> EvaluatorsPage {
-        EvaluatorsPage {
-            data,
-            meta: Box::new(meta),
-        }
+        EvaluatorsPage { data, meta }
     }
 }

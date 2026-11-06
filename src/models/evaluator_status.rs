@@ -19,6 +19,10 @@ pub enum EvaluatorStatus {
     Active,
     #[serde(rename = "paused")]
     Paused,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for EvaluatorStatus {
@@ -26,12 +30,47 @@ impl std::fmt::Display for EvaluatorStatus {
         match self {
             Self::Active => write!(f, "active"),
             Self::Paused => write!(f, "paused"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for EvaluatorStatus {
-    fn default() -> EvaluatorStatus {
-        Self::Active
+impl ::std::str::FromStr for EvaluatorStatus {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "active" => Ok(Self::Active),
+            "paused" => Ok(Self::Paused),
+            _ => Err(crate::models::ParseEnumError::new("EvaluatorStatus", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluatorStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluatorStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluatorStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

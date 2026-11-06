@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DatasetItemMediaReference {
     #[serde(rename = "field")]
     pub field: models::DatasetItemMediaReferenceField,
@@ -22,7 +22,7 @@ pub struct DatasetItemMediaReference {
     #[serde(rename = "jsonPath")]
     pub json_path: String,
     #[serde(rename = "media")]
-    pub media: Box<models::DatasetItemMediaReferenceMedia>,
+    pub media: models::DatasetItemMediaReferenceMedia,
 }
 
 impl DatasetItemMediaReference {
@@ -36,7 +36,7 @@ impl DatasetItemMediaReference {
             field,
             reference_string,
             json_path,
-            media: Box::new(media),
+            media,
         }
     }
 }

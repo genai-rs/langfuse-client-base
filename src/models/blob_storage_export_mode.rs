@@ -20,6 +20,10 @@ pub enum BlobStorageExportMode {
     FromToday,
     #[serde(rename = "FROM_CUSTOM_DATE")]
     FromCustomDate,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for BlobStorageExportMode {
@@ -28,12 +32,51 @@ impl std::fmt::Display for BlobStorageExportMode {
             Self::FullHistory => write!(f, "FULL_HISTORY"),
             Self::FromToday => write!(f, "FROM_TODAY"),
             Self::FromCustomDate => write!(f, "FROM_CUSTOM_DATE"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for BlobStorageExportMode {
-    fn default() -> BlobStorageExportMode {
-        Self::FullHistory
+impl ::std::str::FromStr for BlobStorageExportMode {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "FULL_HISTORY" => Ok(Self::FullHistory),
+            "FROM_TODAY" => Ok(Self::FromToday),
+            "FROM_CUSTOM_DATE" => Ok(Self::FromCustomDate),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageExportMode",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageExportMode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageExportMode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageExportMode {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

@@ -21,6 +21,10 @@ pub enum EvaluatorChatMessageRole {
     User,
     #[serde(rename = "assistant")]
     Assistant,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for EvaluatorChatMessageRole {
@@ -29,12 +33,51 @@ impl std::fmt::Display for EvaluatorChatMessageRole {
             Self::System => write!(f, "system"),
             Self::User => write!(f, "user"),
             Self::Assistant => write!(f, "assistant"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for EvaluatorChatMessageRole {
-    fn default() -> EvaluatorChatMessageRole {
-        Self::System
+impl ::std::str::FromStr for EvaluatorChatMessageRole {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "system" => Ok(Self::System),
+            "user" => Ok(Self::User),
+            "assistant" => Ok(Self::Assistant),
+            _ => Err(crate::models::ParseEnumError::new(
+                "EvaluatorChatMessageRole",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluatorChatMessageRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluatorChatMessageRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluatorChatMessageRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

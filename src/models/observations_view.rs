@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ObservationsView {
     /// The unique identifier of the observation
     #[serde(rename = "id")]
@@ -61,7 +61,7 @@ pub struct ObservationsView {
     #[serde(rename = "output", deserialize_with = "Option::deserialize")]
     pub output: Option<serde_json::Value>,
     #[serde(rename = "usage")]
-    pub usage: Box<models::Usage>,
+    pub usage: models::Usage,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
@@ -78,7 +78,7 @@ pub struct ObservationsView {
     pub prompt_id: Option<String>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
     #[serde(rename = "usageDetails")]
-    pub usage_details: std::collections::HashMap<String, i32>,
+    pub usage_details: std::collections::HashMap<String, i64>,
     /// The cost details of the observation. Key is the name of the cost metric, value is the cost in USD. The total key is the sum of all (non-total) cost metrics or the total value ingested.
     #[serde(rename = "costDetails")]
     pub cost_details: std::collections::HashMap<String, f64>,
@@ -90,7 +90,7 @@ pub struct ObservationsView {
     pub prompt_name: Option<String>,
     /// The version of the prompt associated with the observation
     #[serde(rename = "promptVersion", deserialize_with = "Option::deserialize")]
-    pub prompt_version: Option<i32>,
+    pub prompt_version: Option<i64>,
     /// The unique identifier of the model
     #[serde(rename = "modelId", deserialize_with = "Option::deserialize")]
     pub model_id: Option<String>,
@@ -148,11 +148,11 @@ impl ObservationsView {
         status_message: Option<String>,
         parent_observation_id: Option<String>,
         prompt_id: Option<String>,
-        usage_details: std::collections::HashMap<String, i32>,
+        usage_details: std::collections::HashMap<String, i64>,
         cost_details: std::collections::HashMap<String, f64>,
         environment: String,
         prompt_name: Option<String>,
-        prompt_version: Option<i32>,
+        prompt_version: Option<i64>,
         model_id: Option<String>,
         input_price: Option<f64>,
         output_price: Option<f64>,
@@ -177,7 +177,7 @@ impl ObservationsView {
             version,
             metadata: None,
             output,
-            usage: Box::new(usage),
+            usage,
             level,
             status_message,
             parent_observation_id,

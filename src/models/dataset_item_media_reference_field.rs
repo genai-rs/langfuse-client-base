@@ -20,6 +20,10 @@ pub enum DatasetItemMediaReferenceField {
     ExpectedOutput,
     #[serde(rename = "metadata")]
     Metadata,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for DatasetItemMediaReferenceField {
@@ -28,12 +32,51 @@ impl std::fmt::Display for DatasetItemMediaReferenceField {
             Self::Input => write!(f, "input"),
             Self::ExpectedOutput => write!(f, "expectedOutput"),
             Self::Metadata => write!(f, "metadata"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for DatasetItemMediaReferenceField {
-    fn default() -> DatasetItemMediaReferenceField {
-        Self::Input
+impl ::std::str::FromStr for DatasetItemMediaReferenceField {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "input" => Ok(Self::Input),
+            "expectedOutput" => Ok(Self::ExpectedOutput),
+            "metadata" => Ok(Self::Metadata),
+            _ => Err(crate::models::ParseEnumError::new(
+                "DatasetItemMediaReferenceField",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for DatasetItemMediaReferenceField {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for DatasetItemMediaReferenceField {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for DatasetItemMediaReferenceField {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

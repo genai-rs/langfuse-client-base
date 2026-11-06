@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluatorModelConfig : Explicit model configuration for an evaluator.  If the complete `modelConfig` is `null`, Langfuse uses the project's default evaluation model. If provided, the model must be available to the project when the evaluator or evaluation rule is enabled.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluatorModelConfig {
     /// Provider identifier, for example `openai` or `anthropic`.  To discover valid values for the current project, call `GET /api/public/llm-connections` and use one of the returned `provider` values.
     #[serde(rename = "provider")]

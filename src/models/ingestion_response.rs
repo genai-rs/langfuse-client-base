@@ -11,14 +11,14 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct IngestionResponse {
     #[serde(rename = "successes")]
     pub successes: Vec<models::IngestionSuccess>,
     #[serde(rename = "errors")]
     pub errors: Vec<models::IngestionError>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
-    pub _deprecation: Option<Box<models::Deprecation>>,
+    pub _deprecation: Option<models::Deprecation>,
 }
 
 impl IngestionResponse {

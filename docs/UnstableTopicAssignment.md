@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **timestamp** | **chrono::DateTime<chrono::FixedOffset>** | Trace start time. | 
 **facet_id** | **String** |  | 
 **facet_name** | **String** |  | 
-**facet_version** | **i32** |  | 
+**facet_version** | **i64** |  | 
 **rule_id** | Option<**String**> | The rule whose map assigned the trace. Null when the project has no rule. | [optional]
 **status** | [**models::UnstableTopicAssignmentStatus**](UnstableTopicAssignmentStatus.md) |  | 
 **topic** | Option<[**models::UnstableTopicAssignmentTopic**](UnstableTopicAssignmentTopic.md)> |  | [optional]

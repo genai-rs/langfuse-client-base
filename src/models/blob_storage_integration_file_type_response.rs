@@ -23,6 +23,10 @@ pub enum BlobStorageIntegrationFileTypeResponse {
     Jsonl,
     #[serde(rename = "PARQUET")]
     Parquet,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for BlobStorageIntegrationFileTypeResponse {
@@ -32,12 +36,52 @@ impl std::fmt::Display for BlobStorageIntegrationFileTypeResponse {
             Self::Csv => write!(f, "CSV"),
             Self::Jsonl => write!(f, "JSONL"),
             Self::Parquet => write!(f, "PARQUET"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for BlobStorageIntegrationFileTypeResponse {
-    fn default() -> BlobStorageIntegrationFileTypeResponse {
-        Self::Json
+impl ::std::str::FromStr for BlobStorageIntegrationFileTypeResponse {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "JSON" => Ok(Self::Json),
+            "CSV" => Ok(Self::Csv),
+            "JSONL" => Ok(Self::Jsonl),
+            "PARQUET" => Ok(Self::Parquet),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageIntegrationFileTypeResponse",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageIntegrationFileTypeResponse {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageIntegrationFileTypeResponse {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageIntegrationFileTypeResponse {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

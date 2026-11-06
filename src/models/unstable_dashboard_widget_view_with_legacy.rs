@@ -25,6 +25,10 @@ pub enum UnstableDashboardWidgetViewWithLegacy {
     ScoresCategorical,
     #[serde(rename = "traces")]
     Traces,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableDashboardWidgetViewWithLegacy {
@@ -35,12 +39,53 @@ impl std::fmt::Display for UnstableDashboardWidgetViewWithLegacy {
             Self::ScoresBoolean => write!(f, "scores-boolean"),
             Self::ScoresCategorical => write!(f, "scores-categorical"),
             Self::Traces => write!(f, "traces"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableDashboardWidgetViewWithLegacy {
-    fn default() -> UnstableDashboardWidgetViewWithLegacy {
-        Self::Observations
+impl ::std::str::FromStr for UnstableDashboardWidgetViewWithLegacy {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "observations" => Ok(Self::Observations),
+            "scores-numeric" => Ok(Self::ScoresNumeric),
+            "scores-boolean" => Ok(Self::ScoresBoolean),
+            "scores-categorical" => Ok(Self::ScoresCategorical),
+            "traces" => Ok(Self::Traces),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableDashboardWidgetViewWithLegacy",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableDashboardWidgetViewWithLegacy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableDashboardWidgetViewWithLegacy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableDashboardWidgetViewWithLegacy {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

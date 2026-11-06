@@ -12,17 +12,30 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UpdateEvaluatorRequest : Metadata-only update or complete flattened definition replacement. At least one field must be provided.
-/// Metadata-only update or complete flattened definition replacement. At least one field must be provided.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateEvaluatorRequest {
-    UpdateEvaluatorMetadataRequest(Box<models::UpdateEvaluatorMetadataRequest>),
-    UpdateLlmAsJudgeEvaluatorRequest(Box<models::UpdateLlmAsJudgeEvaluatorRequest>),
-    UpdateCodeEvaluatorRequest(Box<models::UpdateCodeEvaluatorRequest>),
+    UpdateLlmAsJudgeEvaluatorRequest(models::UpdateLlmAsJudgeEvaluatorRequest),
+    UpdateCodeEvaluatorRequest(models::UpdateCodeEvaluatorRequest),
+    UpdateEvaluatorMetadataRequest(models::UpdateEvaluatorMetadataRequest),
 }
 
-impl Default for UpdateEvaluatorRequest {
-    fn default() -> Self {
-        Self::UpdateEvaluatorMetadataRequest(Default::default())
+impl std::fmt::Display for UpdateEvaluatorRequest {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::UpdateLlmAsJudgeEvaluatorRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::UpdateCodeEvaluatorRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::UpdateEvaluatorMetadataRequest(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

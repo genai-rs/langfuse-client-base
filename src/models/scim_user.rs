@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScimUser {
     #[serde(rename = "schemas")]
     pub schemas: Vec<String>,
@@ -20,11 +20,11 @@ pub struct ScimUser {
     #[serde(rename = "userName")]
     pub user_name: String,
     #[serde(rename = "name")]
-    pub name: Box<models::ScimName>,
+    pub name: models::ScimName,
     #[serde(rename = "emails")]
     pub emails: Vec<models::ScimEmail>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UserMeta>,
+    pub meta: models::UserMeta,
 }
 
 impl ScimUser {
@@ -40,9 +40,9 @@ impl ScimUser {
             schemas,
             id,
             user_name,
-            name: Box::new(name),
+            name,
             emails,
-            meta: Box::new(meta),
+            meta,
         }
     }
 }

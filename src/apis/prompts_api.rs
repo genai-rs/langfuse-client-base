@@ -118,7 +118,7 @@ pub async fn prompts_delete(
     configuration: &configuration::Configuration,
     prompt_name: &str,
     label: Option<&str>,
-    version: Option<i32>,
+    version: Option<i64>,
 ) -> Result<(), Error<PromptsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_prompt_name = prompt_name;
@@ -170,7 +170,7 @@ pub async fn prompts_delete(
 pub async fn prompts_get(
     configuration: &configuration::Configuration,
     prompt_name: &str,
-    version: Option<i32>,
+    version: Option<i64>,
     label: Option<&str>,
     resolve: Option<bool>,
 ) -> Result<models::Prompt, Error<PromptsGetError>> {
@@ -239,8 +239,8 @@ pub async fn prompts_list(
     name: Option<&str>,
     label: Option<&str>,
     tag: Option<&str>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     filter: Option<&str>,

@@ -116,8 +116,8 @@ pub async fn score_configs_create(
 #[bon::builder]
 pub async fn score_configs_get(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::ScoreConfigs, Error<ScoreConfigsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

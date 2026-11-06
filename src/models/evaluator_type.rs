@@ -30,8 +30,42 @@ impl std::fmt::Display for EvaluatorType {
     }
 }
 
-impl Default for EvaluatorType {
-    fn default() -> EvaluatorType {
-        Self::LlmAsJudge
+impl ::std::str::FromStr for EvaluatorType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "llm_as_judge" => Ok(Self::LlmAsJudge),
+            "code" => Ok(Self::Code),
+            _ => Err(crate::models::ParseEnumError::new("EvaluatorType", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluatorType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluatorType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluatorType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

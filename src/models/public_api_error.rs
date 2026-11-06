@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PublicApiError : Standard error response for the stable evaluators and evaluation-rules API.  Use the HTTP status for the broad failure class and `code` for programmatic handling. `details` is included when field-level validation or retry information is available.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PublicApiError {
     /// Human-readable description of the failure.
     #[serde(rename = "message")]
@@ -20,7 +20,7 @@ pub struct PublicApiError {
     #[serde(rename = "code")]
     pub code: models::PublicApiErrorCode,
     #[serde(rename = "details", skip_serializing_if = "Option::is_none")]
-    pub details: Option<Box<models::PublicApiErrorDetails>>,
+    pub details: Option<models::PublicApiErrorDetails>,
 }
 
 impl PublicApiError {

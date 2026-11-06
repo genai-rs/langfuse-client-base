@@ -11,33 +11,30 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableWidgetPlacement {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "widgetId")]
     pub widget_id: String,
     #[serde(rename = "x")]
-    pub x: i32,
+    pub x: i64,
     #[serde(rename = "y")]
-    pub y: i32,
+    pub y: i64,
     #[serde(rename = "width")]
-    pub width: i32,
+    pub width: i64,
     #[serde(rename = "height")]
-    pub height: i32,
-    #[serde(rename = "type")]
-    pub r#type: Type,
+    pub height: i64,
 }
 
 impl UnstableWidgetPlacement {
     pub fn new(
         id: String,
         widget_id: String,
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        r#type: Type,
+        x: i64,
+        y: i64,
+        width: i64,
+        height: i64,
     ) -> UnstableWidgetPlacement {
         UnstableWidgetPlacement {
             id,
@@ -46,19 +43,6 @@ impl UnstableWidgetPlacement {
             y,
             width,
             height,
-            r#type,
         }
-    }
-}
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Type {
-    #[serde(rename = "widget")]
-    Widget,
-}
-
-impl Default for Type {
-    fn default() -> Type {
-        Self::Widget
     }
 }

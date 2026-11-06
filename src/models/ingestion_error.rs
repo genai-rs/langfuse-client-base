@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct IngestionError {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "status")]
-    pub status: i32,
+    pub status: i64,
     #[serde(
         rename = "message",
         default,
@@ -34,7 +34,7 @@ pub struct IngestionError {
 }
 
 impl IngestionError {
-    pub fn new(id: String, status: i32) -> IngestionError {
+    pub fn new(id: String, status: i64) -> IngestionError {
         IngestionError {
             id,
             status,

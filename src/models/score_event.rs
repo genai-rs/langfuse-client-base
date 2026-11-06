@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScoreEvent {
     /// UUID v4 that identifies the event
     #[serde(rename = "id")]
@@ -28,7 +28,7 @@ pub struct ScoreEvent {
     )]
     pub metadata: Option<Option<serde_json::Value>>,
     #[serde(rename = "body")]
-    pub body: Box<models::ScoreBody>,
+    pub body: models::ScoreBody,
 }
 
 impl ScoreEvent {
@@ -37,7 +37,7 @@ impl ScoreEvent {
             id,
             timestamp,
             metadata: None,
-            body: Box::new(body),
+            body,
         }
     }
 }

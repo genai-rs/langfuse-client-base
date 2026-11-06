@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
 **r#type** | [**models::PromptType**](PromptType.md) |  | 
-**versions** | **Vec<i32>** |  | 
+**versions** | **Vec<i64>** |  | 
 **labels** | **Vec<String>** |  | 
 **tags** | **Vec<String>** |  | 
 **last_updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 

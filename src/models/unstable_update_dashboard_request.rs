@@ -28,7 +28,7 @@ pub struct UnstableUpdateDashboardRequest {
     )]
     pub description: Option<Option<String>>,
     #[serde(rename = "definition", skip_serializing_if = "Option::is_none")]
-    pub definition: Option<Box<models::UnstableDashboardDefinition>>,
+    pub definition: Option<models::UnstableDashboardDefinition>,
     #[serde(
         rename = "filters",
         default,

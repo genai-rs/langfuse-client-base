@@ -4,15 +4,15 @@
 
 | Name | Description |
 |---- | -----|
-| CreateEventEvent1 |  |
-| CreateGenerationEvent1 |  |
-| CreateObservationEvent1 |  |
-| CreateSpanEvent1 |  |
-| ScoreEvent1 |  |
-| TraceEvent1 |  |
-| UpdateGenerationEvent1 |  |
-| UpdateObservationEvent1 |  |
-| UpdateSpanEvent1 |  |
+| IngestionEventCreateEventEvent |  |
+| IngestionEventCreateGenerationEvent |  |
+| IngestionEventCreateObservationEvent |  |
+| IngestionEventCreateSpanEvent |  |
+| IngestionEventScoreEvent |  |
+| IngestionEventTraceEvent |  |
+| IngestionEventUpdateGenerationEvent |  |
+| IngestionEventUpdateObservationEvent |  |
+| IngestionEventUpdateSpanEvent |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

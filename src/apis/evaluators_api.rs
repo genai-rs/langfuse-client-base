@@ -261,7 +261,7 @@ pub async fn evaluators_get(
 #[bon::builder]
 pub async fn evaluators_list(
     configuration: &configuration::Configuration,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
 ) -> Result<models::EvaluatorsPage, Error<EvaluatorsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -318,7 +318,7 @@ pub async fn evaluators_list(
 pub async fn evaluators_list_versions(
     configuration: &configuration::Configuration,
     evaluator_id: &str,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
 ) -> Result<models::EvaluatorVersionsPage, Error<EvaluatorsListVersionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions

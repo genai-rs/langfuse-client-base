@@ -26,8 +26,44 @@ impl std::fmt::Display for CreateChatPromptType {
     }
 }
 
-impl Default for CreateChatPromptType {
-    fn default() -> CreateChatPromptType {
-        Self::Chat
+impl ::std::str::FromStr for CreateChatPromptType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "chat" => Ok(Self::Chat),
+            _ => Err(crate::models::ParseEnumError::new(
+                "CreateChatPromptType",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for CreateChatPromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for CreateChatPromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for CreateChatPromptType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

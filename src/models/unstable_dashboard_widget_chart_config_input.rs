@@ -22,7 +22,7 @@ pub struct UnstableDashboardWidgetChartConfigInput {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub row_limit: Option<Option<i32>>,
+    pub row_limit: Option<Option<i64>>,
     #[serde(
         rename = "show_value_labels",
         default,
@@ -36,9 +36,9 @@ pub struct UnstableDashboardWidgetChartConfigInput {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub bins: Option<Option<i32>>,
+    pub bins: Option<Option<i64>>,
     #[serde(rename = "defaultSort", skip_serializing_if = "Option::is_none")]
-    pub default_sort: Option<Box<models::UnstableDashboardWidgetDefaultSort>>,
+    pub default_sort: Option<models::UnstableDashboardWidgetDefaultSort>,
 }
 
 impl UnstableDashboardWidgetChartConfigInput {

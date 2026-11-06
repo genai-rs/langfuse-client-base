@@ -11,13 +11,13 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluatorVersionsPage {
     /// Evaluator versions for this page in newest-first order.
     #[serde(rename = "data")]
     pub data: Vec<models::EvaluatorVersion>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::CursorMeta>,
+    pub meta: models::CursorMeta,
 }
 
 impl EvaluatorVersionsPage {
@@ -25,9 +25,6 @@ impl EvaluatorVersionsPage {
         data: Vec<models::EvaluatorVersion>,
         meta: models::CursorMeta,
     ) -> EvaluatorVersionsPage {
-        EvaluatorVersionsPage {
-            data,
-            meta: Box::new(meta),
-        }
+        EvaluatorVersionsPage { data, meta }
     }
 }

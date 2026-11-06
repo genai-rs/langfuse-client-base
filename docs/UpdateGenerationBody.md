@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **prompt_name** | Option<**String**> |  | [optional]
 **usage_details** | Option<[**models::UsageDetails**](UsageDetails.md)> |  | [optional]
 **cost_details** | Option<**std::collections::HashMap<String, f64>**> |  | [optional]
-**prompt_version** | Option<**i32**> |  | [optional]
+**prompt_version** | Option<**i64**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

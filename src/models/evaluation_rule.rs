@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluationRule : Live evaluation rule for incoming observations.  A rule determines which evaluators should be used, which observations should trigger scoring, how often scoring should run, and which observation fields should populate prompt variables.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluationRule {
     /// Stable evaluation-rule identifier.
     #[serde(rename = "id")]
@@ -21,7 +21,7 @@ pub struct EvaluationRule {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "createdBy")]
-    pub created_by: Box<models::Creator>,
+    pub created_by: models::Creator,
     /// Whether live execution is enabled for this rule.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -58,7 +58,7 @@ impl EvaluationRule {
         EvaluationRule {
             id,
             name,
-            created_by: Box::new(created_by),
+            created_by,
             enabled,
             sampling,
             filter,

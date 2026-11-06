@@ -18,6 +18,10 @@ pub enum UnstableTopicAssignmentStatus {
     Assigned,
     #[serde(rename = "outlier")]
     Outlier,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for UnstableTopicAssignmentStatus {
@@ -25,12 +29,50 @@ impl std::fmt::Display for UnstableTopicAssignmentStatus {
         match self {
             Self::Assigned => write!(f, "assigned"),
             Self::Outlier => write!(f, "outlier"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for UnstableTopicAssignmentStatus {
-    fn default() -> UnstableTopicAssignmentStatus {
-        Self::Assigned
+impl ::std::str::FromStr for UnstableTopicAssignmentStatus {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "assigned" => Ok(Self::Assigned),
+            "outlier" => Ok(Self::Outlier),
+            _ => Err(crate::models::ParseEnumError::new(
+                "UnstableTopicAssignmentStatus",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for UnstableTopicAssignmentStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for UnstableTopicAssignmentStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for UnstableTopicAssignmentStatus {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

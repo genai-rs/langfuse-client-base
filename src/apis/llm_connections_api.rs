@@ -198,8 +198,8 @@ pub async fn llm_connections_delete_organization(
 #[bon::builder]
 pub async fn llm_connections_list(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -254,8 +254,8 @@ pub async fn llm_connections_list(
 #[bon::builder]
 pub async fn llm_connections_list_organization(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListOrganizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

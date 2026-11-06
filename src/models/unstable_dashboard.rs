@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableDashboard {
     #[serde(rename = "id")]
     pub id: String,
@@ -24,7 +24,7 @@ pub struct UnstableDashboard {
     #[serde(rename = "description")]
     pub description: String,
     #[serde(rename = "definition")]
-    pub definition: Box<models::UnstableDashboardDefinition>,
+    pub definition: models::UnstableDashboardDefinition,
     /// Dashboard-level filters applied to all widgets on the dashboard.
     #[serde(rename = "filters")]
     pub filters: Vec<models::UnstableDashboardWidgetFilter>,
@@ -46,7 +46,7 @@ impl UnstableDashboard {
             updated_at,
             name,
             description,
-            definition: Box::new(definition),
+            definition,
             filters,
         }
     }

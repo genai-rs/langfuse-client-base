@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SkillMeta {
     #[serde(rename = "name")]
     pub name: String,
@@ -20,14 +20,14 @@ pub struct SkillMeta {
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
     #[serde(rename = "latestVersion")]
-    pub latest_version: i32,
+    pub latest_version: i64,
     #[serde(rename = "latestVersionCreatedAt")]
     pub latest_version_created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "latestVersionLastUpdatedAt")]
     pub latest_version_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
     /// Version assigned the production label, or null when no version is assigned.
     #[serde(rename = "productionVersion", deserialize_with = "Option::deserialize")]
-    pub production_version: Option<i32>,
+    pub production_version: Option<i64>,
 }
 
 impl SkillMeta {
@@ -35,10 +35,10 @@ impl SkillMeta {
         name: String,
         description: String,
         tags: Vec<String>,
-        latest_version: i32,
+        latest_version: i64,
         latest_version_created_at: chrono::DateTime<chrono::FixedOffset>,
         latest_version_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
-        production_version: Option<i32>,
+        production_version: Option<i64>,
     ) -> SkillMeta {
         SkillMeta {
             name,

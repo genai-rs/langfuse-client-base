@@ -11,19 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetScoresV3Response {
     #[serde(rename = "data")]
     pub data: Vec<models::ScoreV3>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::GetScoresV3Meta>,
+    pub meta: models::GetScoresV3Meta,
 }
 
 impl GetScoresV3Response {
     pub fn new(data: Vec<models::ScoreV3>, meta: models::GetScoresV3Meta) -> GetScoresV3Response {
-        GetScoresV3Response {
-            data,
-            meta: Box::new(meta),
-        }
+        GetScoresV3Response { data, meta }
     }
 }

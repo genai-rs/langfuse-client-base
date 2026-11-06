@@ -11,12 +11,12 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ExperimentsResponse {
     #[serde(rename = "data")]
     pub data: Vec<models::Experiment>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::ExperimentsResponseMeta>,
+    pub meta: models::ExperimentsResponseMeta,
 }
 
 impl ExperimentsResponse {
@@ -24,9 +24,6 @@ impl ExperimentsResponse {
         data: Vec<models::Experiment>,
         meta: models::ExperimentsResponseMeta,
     ) -> ExperimentsResponse {
-        ExperimentsResponse {
-            data,
-            meta: Box::new(meta),
-        }
+        ExperimentsResponse { data, meta }
     }
 }

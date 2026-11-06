@@ -53,7 +53,7 @@ pub struct OtelSpan {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub kind: Option<Option<i32>>,
+    pub kind: Option<Option<i64>>,
     /// Start time in nanoseconds since Unix epoch
     #[serde(
         rename = "startTimeUnixNano",

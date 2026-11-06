@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**status** | **i32** |  | 
+**status** | **i64** |  | 
 **message** | Option<**String**> |  | [optional]
 **error** | Option<**serde_json::Value**> |  | [optional]
 

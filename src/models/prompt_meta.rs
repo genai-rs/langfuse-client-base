@@ -11,14 +11,14 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptMeta {
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "type")]
     pub r#type: models::PromptType,
     #[serde(rename = "versions")]
-    pub versions: Vec<i32>,
+    pub versions: Vec<i64>,
     #[serde(rename = "labels")]
     pub labels: Vec<String>,
     #[serde(rename = "tags")]
@@ -34,7 +34,7 @@ impl PromptMeta {
     pub fn new(
         name: String,
         r#type: models::PromptType,
-        versions: Vec<i32>,
+        versions: Vec<i64>,
         labels: Vec<String>,
         tags: Vec<String>,
         last_updated_at: chrono::DateTime<chrono::FixedOffset>,

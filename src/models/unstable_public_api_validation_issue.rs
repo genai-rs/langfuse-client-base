@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UnstablePublicApiValidationIssue : A validation issue returned for malformed request bodies or query parameters.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicApiValidationIssue {
     #[serde(rename = "code")]
     pub code: String,

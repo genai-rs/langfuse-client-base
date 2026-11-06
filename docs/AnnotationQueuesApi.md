@@ -246,8 +246,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **status** | Option<[**AnnotationQueueStatus**](AnnotationQueueStatus.md)> | Filter by status |  |
-**page** | Option<**i32**> | page number, starts at 1 |  |
-**limit** | Option<**i32**> | limit of items per page |  |
+**page** | Option<**i64**> | page number, starts at 1 |  |
+**limit** | Option<**i64**> | limit of items per page |  |
 
 ### Return type
 
@@ -277,8 +277,8 @@ Get all annotation queues
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**page** | Option<**i32**> | page number, starts at 1 |  |
-**limit** | Option<**i32**> | limit of items per page |  |
+**page** | Option<**i64**> | page number, starts at 1 |  |
+**limit** | Option<**i64**> | limit of items per page |  |
 
 ### Return type
 

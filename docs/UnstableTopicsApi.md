@@ -123,8 +123,8 @@ Name | Type | Description  | Required | Notes
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window (trace start time, exclusive). Defaults to now. |  |
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"facetName\",\"operator\":\"any of\",\"value\":[\"Issues\"]}]`. |  |
 **order_by** | Option<[**UnstableTopicsOrderBy**](UnstableTopicsOrderBy.md)> | Defaults to `traceCount.desc`. |  |
-**page** | Option<**i32**> | 1-based page number. Defaults to `1`. |  |
-**limit** | Option<**i32**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
+**page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
+**limit** | Option<**i64**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
 
 ### Return type
 
@@ -158,7 +158,7 @@ Name | Type | Description  | Required | Notes
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window (trace start time, exclusive). Defaults to now. |  |
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"topicName\",\"operator\":\"any of\",\"value\":[\"Refunds\"]}]`. |  |
 **order_by** | Option<[**UnstableTopicResultsOrderBy**](UnstableTopicResultsOrderBy.md)> | Defaults to `timestamp.desc`. |  |
-**limit** | Option<**i32**> | Maximum number of rows per page. Defaults to `50`, at most `100`. |  |
+**limit** | Option<**i64**> | Maximum number of rows per page. Defaults to `50`, at most `100`. |  |
 **cursor** | Option<**String**> | The `meta.cursor` of the previous page. |  |
 
 ### Return type
@@ -190,8 +190,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  List t
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"string\",\"column\":\"name\",\"operator\":\"contains\",\"value\":\"issue\"}]`. |  |
-**page** | Option<**i32**> | 1-based page number. Defaults to `1`. |  |
-**limit** | Option<**i32**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
+**page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
+**limit** | Option<**i64**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
 
 ### Return type
 
@@ -222,8 +222,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  List t
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"string\",\"column\":\"name\",\"operator\":\"contains\",\"value\":\"support\"}]`. |  |
-**page** | Option<**i32**> | 1-based page number. Defaults to `1`. |  |
-**limit** | Option<**i32**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
+**page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
+**limit** | Option<**i64**> | Maximum number of items per page. Defaults to `50`, at most `100`. |  |
 
 ### Return type
 
@@ -258,7 +258,7 @@ Name | Type | Description  | Required | Notes
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"traceId\",\"operator\":\"any of\",\"value\":[\"<trace id>\"]}]`. |  |
 **truncate_summaries** | Option<**bool**> | Whether to truncate summaries to 500 characters. Defaults to `false`. |  |
 **order_by** | Option<[**UnstableTopicResultsOrderBy**](UnstableTopicResultsOrderBy.md)> | Defaults to `timestamp.desc`. |  |
-**limit** | Option<**i32**> | Maximum number of rows per page. Defaults to `50`, at most `100`. |  |
+**limit** | Option<**i64**> | Maximum number of rows per page. Defaults to `50`, at most `100`. |  |
 **cursor** | Option<**String**> | The `meta.cursor` of the previous page. |  |
 
 ### Return type

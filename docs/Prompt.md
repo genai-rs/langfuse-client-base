@@ -4,8 +4,8 @@
 
 | Name | Description |
 |---- | -----|
-| ChatPrompt1 |  |
-| TextPrompt1 |  |
+| PromptChatPrompt |  |
+| PromptTextPrompt |  |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

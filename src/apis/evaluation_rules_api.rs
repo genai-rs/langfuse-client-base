@@ -246,7 +246,7 @@ pub async fn evaluation_rules_get(
 #[bon::builder]
 pub async fn evaluation_rules_list(
     configuration: &configuration::Configuration,
-    limit: Option<i32>,
+    limit: Option<i64>,
     cursor: Option<&str>,
 ) -> Result<models::EvaluationRulesPage, Error<EvaluationRulesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions

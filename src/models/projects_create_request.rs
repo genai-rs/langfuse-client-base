@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ProjectsCreateRequest {
     #[serde(rename = "name")]
     pub name: String,
@@ -25,11 +25,11 @@ pub struct ProjectsCreateRequest {
     pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// Number of days to retain data. Must be 0 or at least 3 days. Requires data-retention entitlement for non-zero values. Optional.
     #[serde(rename = "retention")]
-    pub retention: i32,
+    pub retention: i64,
 }
 
 impl ProjectsCreateRequest {
-    pub fn new(name: String, retention: i32) -> ProjectsCreateRequest {
+    pub fn new(name: String, retention: i64) -> ProjectsCreateRequest {
         ProjectsCreateRequest {
             name,
             metadata: None,

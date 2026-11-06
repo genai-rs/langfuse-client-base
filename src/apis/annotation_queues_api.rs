@@ -536,8 +536,8 @@ pub async fn annotation_queues_list_queue_items(
     configuration: &configuration::Configuration,
     queue_id: &str,
     status: Option<models::AnnotationQueueStatus>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedAnnotationQueueItems, Error<AnnotationQueuesListQueueItemsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -602,8 +602,8 @@ pub async fn annotation_queues_list_queue_items(
 #[bon::builder]
 pub async fn annotation_queues_list_queues(
     configuration: &configuration::Configuration,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedAnnotationQueues, Error<AnnotationQueuesListQueuesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;

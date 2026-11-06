@@ -22,6 +22,10 @@ pub enum ObservationLevel {
     Warning,
     #[serde(rename = "ERROR")]
     Error,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for ObservationLevel {
@@ -31,12 +35,52 @@ impl std::fmt::Display for ObservationLevel {
             Self::Default => write!(f, "DEFAULT"),
             Self::Warning => write!(f, "WARNING"),
             Self::Error => write!(f, "ERROR"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for ObservationLevel {
-    fn default() -> ObservationLevel {
-        Self::Debug
+impl ::std::str::FromStr for ObservationLevel {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "DEBUG" => Ok(Self::Debug),
+            "DEFAULT" => Ok(Self::Default),
+            "WARNING" => Ok(Self::Warning),
+            "ERROR" => Ok(Self::Error),
+            _ => Err(crate::models::ParseEnumError::new(
+                "ObservationLevel",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ObservationLevel {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ObservationLevel {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ObservationLevel {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableDashboardWidget {
     #[serde(rename = "id")]
     pub id: String,
@@ -34,7 +34,7 @@ pub struct UnstableDashboardWidget {
     #[serde(rename = "chartType")]
     pub chart_type: models::UnstableDashboardWidgetChartType,
     #[serde(rename = "chartConfig")]
-    pub chart_config: Box<models::UnstableDashboardWidgetChartConfig>,
+    pub chart_config: models::UnstableDashboardWidgetChartConfig,
 }
 
 impl UnstableDashboardWidget {
@@ -62,7 +62,7 @@ impl UnstableDashboardWidget {
             metrics,
             filters,
             chart_type,
-            chart_config: Box::new(chart_config),
+            chart_config,
         }
     }
 }

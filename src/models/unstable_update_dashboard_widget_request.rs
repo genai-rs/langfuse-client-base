@@ -53,7 +53,7 @@ pub struct UnstableUpdateDashboardWidgetRequest {
     #[serde(rename = "chartType", skip_serializing_if = "Option::is_none")]
     pub chart_type: Option<models::UnstableDashboardWidgetChartType>,
     #[serde(rename = "chartConfig", skip_serializing_if = "Option::is_none")]
-    pub chart_config: Option<Box<models::UnstableDashboardWidgetChartConfigInput>>,
+    pub chart_config: Option<models::UnstableDashboardWidgetChartConfigInput>,
 }
 
 impl UnstableUpdateDashboardWidgetRequest {

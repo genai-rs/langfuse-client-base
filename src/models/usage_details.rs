@@ -14,13 +14,26 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsageDetails {
-    Object(std::collections::HashMap<String, i32>),
-    OpenAiCompletionUsageSchema(Box<models::OpenAiCompletionUsageSchema>),
-    OpenAiResponseUsageSchema(Box<models::OpenAiResponseUsageSchema>),
+    OpenAiCompletionUsageSchema(models::OpenAiCompletionUsageSchema),
+    OpenAiResponseUsageSchema(models::OpenAiResponseUsageSchema),
+    Object(std::collections::HashMap<String, i64>),
 }
 
-impl Default for UsageDetails {
-    fn default() -> Self {
-        Self::Object(Default::default())
+impl std::fmt::Display for UsageDetails {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::OpenAiCompletionUsageSchema(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::OpenAiResponseUsageSchema(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Object(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

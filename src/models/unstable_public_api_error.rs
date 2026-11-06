@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// UnstablePublicApiError : Standard error envelope for unstable public API endpoints.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstablePublicApiError {
     /// Human-readable description of the failure.
     #[serde(rename = "message")]
@@ -20,7 +20,7 @@ pub struct UnstablePublicApiError {
     #[serde(rename = "code")]
     pub code: models::UnstablePublicApiErrorCode,
     #[serde(rename = "details", skip_serializing_if = "Option::is_none")]
-    pub details: Option<Box<models::UnstablePublicApiErrorDetails>>,
+    pub details: Option<models::UnstablePublicApiErrorDetails>,
 }
 
 impl UnstablePublicApiError {

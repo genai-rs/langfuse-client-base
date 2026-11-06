@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **description** | **String** |  | 
 **frontmatter** | Option<**serde_json::Value**> |  | 
-**version** | **i32** |  | 
+**version** | **i64** |  | 
 **tags** | **Vec<String>** |  | 
 **labels** | **Vec<String>** |  | 
 **commit_message** | Option<**String**> |  | 

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DatasetRunWithItems {
     /// Unique identifier of the dataset run
     #[serde(rename = "id")]
@@ -40,7 +40,7 @@ pub struct DatasetRunWithItems {
     #[serde(rename = "datasetRunItems")]
     pub dataset_run_items: Vec<models::DatasetRunItem>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
-    pub _deprecation: Option<Box<models::Deprecation>>,
+    pub _deprecation: Option<models::Deprecation>,
 }
 
 impl DatasetRunWithItems {

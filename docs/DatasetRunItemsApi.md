@@ -53,8 +53,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **dataset_id** | **String** |  | [required] |
 **run_name** | **String** |  | [required] |
-**page** | Option<**i32**> | page number, starts at 1 |  |
-**limit** | Option<**i32**> | limit of items per page |  |
+**page** | Option<**i64**> | page number, starts at 1 |  |
+**limit** | Option<**i64**> | limit of items per page |  |
 
 ### Return type
 

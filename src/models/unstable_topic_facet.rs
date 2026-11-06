@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicFacet {
     #[serde(rename = "id")]
     pub id: String,
@@ -29,12 +29,12 @@ pub struct UnstableTopicFacet {
     pub rule_ids: Vec<String>,
     /// Latest facet version.
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
     /// Prompt of the latest facet version.
     #[serde(rename = "prompt")]
     pub prompt: String,
     #[serde(rename = "publishedRun", skip_serializing_if = "Option::is_none")]
-    pub published_run: Option<Box<models::UnstableTopicFacetPublishedRun>>,
+    pub published_run: Option<models::UnstableTopicFacetPublishedRun>,
 }
 
 impl UnstableTopicFacet {
@@ -45,7 +45,7 @@ impl UnstableTopicFacet {
         is_built_in: bool,
         active: bool,
         rule_ids: Vec<String>,
-        version: i32,
+        version: i64,
         prompt: String,
     ) -> UnstableTopicFacet {
         UnstableTopicFacet {

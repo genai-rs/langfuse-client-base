@@ -20,7 +20,7 @@ pub struct UnstableUpdateDashboardPlacementRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub x: Option<Option<i32>>,
+    pub x: Option<Option<i64>>,
     /// Grid row.
     #[serde(
         rename = "y",
@@ -28,7 +28,7 @@ pub struct UnstableUpdateDashboardPlacementRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub y: Option<Option<i32>>,
+    pub y: Option<Option<i64>>,
     /// Width in grid columns.
     #[serde(
         rename = "width",
@@ -36,7 +36,7 @@ pub struct UnstableUpdateDashboardPlacementRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub width: Option<Option<i32>>,
+    pub width: Option<Option<i64>>,
     /// Height in grid rows.
     #[serde(
         rename = "height",
@@ -44,7 +44,7 @@ pub struct UnstableUpdateDashboardPlacementRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub height: Option<Option<i32>>,
+    pub height: Option<Option<i64>>,
 }
 
 impl UnstableUpdateDashboardPlacementRequest {

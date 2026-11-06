@@ -11,10 +11,10 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicFacetCounts {
     #[serde(rename = "facet")]
-    pub facet: Box<models::UnstableTopicFacetRef>,
+    pub facet: models::UnstableTopicFacetRef,
     #[serde(
         rename = "ruleId",
         default,
@@ -30,7 +30,7 @@ pub struct UnstableTopicFacetCounts {
     )]
     pub published_run_id: Option<Option<String>>,
     #[serde(rename = "counts")]
-    pub counts: Box<models::UnstableTopicStatusCounts>,
+    pub counts: models::UnstableTopicStatusCounts,
 }
 
 impl UnstableTopicFacetCounts {
@@ -39,10 +39,10 @@ impl UnstableTopicFacetCounts {
         counts: models::UnstableTopicStatusCounts,
     ) -> UnstableTopicFacetCounts {
         UnstableTopicFacetCounts {
-            facet: Box::new(facet),
+            facet,
             rule_id: None,
             published_run_id: None,
-            counts: Box::new(counts),
+            counts,
         }
     }
 }

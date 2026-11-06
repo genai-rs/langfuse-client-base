@@ -198,8 +198,8 @@ List users in the organization (requires organization-scoped API key)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter** | Option<**String**> | Filter expression (e.g. userName eq \"value\") |  |
-**start_index** | Option<**i32**> | 1-based index of the first result to return (default 1) |  |
-**count** | Option<**i32**> | Maximum number of results to return (default 100) |  |
+**start_index** | Option<**i64**> | 1-based index of the first result to return (default 1) |  |
+**count** | Option<**i64**> | Maximum number of results to return (default 100) |  |
 
 ### Return type
 

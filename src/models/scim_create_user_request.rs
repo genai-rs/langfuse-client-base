@@ -11,13 +11,13 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct ScimCreateUserRequest {
     /// User's email address (required)
     #[serde(rename = "userName")]
     pub user_name: String,
     #[serde(rename = "name")]
-    pub name: Box<models::ScimName>,
+    pub name: models::ScimName,
     /// User's email addresses
     #[serde(
         rename = "emails",
@@ -48,7 +48,7 @@ impl ScimCreateUserRequest {
     pub fn new(user_name: String, name: models::ScimName) -> ScimCreateUserRequest {
         ScimCreateUserRequest {
             user_name,
-            name: Box::new(name),
+            name,
             emails: None,
             active: None,
             password: None,

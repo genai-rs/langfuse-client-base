@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PromptVariableMappingInput : Connects one prompt variable to data from an observation or experiment.  Manual mappings are used for `llm_as_judge` evaluators. `code` evaluators use a fixed runtime mapping managed by Langfuse.  How to build a valid mapping list: 1. Create the evaluator or fetch it with `GET /evaluators/{id}`. 2. Read the evaluator `variables` array. 3. Add exactly one mapping object for each variable in that array. 4. Use the variable name exactly as returned, without braces such as `{{` or `}}`. 5. Choose the source field that should populate the variable.  `jsonPath` is optional. Use it only when the selected source is a JSON object and you want to extract one nested field before inserting it into the evaluator prompt.  Invalid, missing, or duplicate mappings return a validation error. Malformed JSONPath expressions are also rejected.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptVariableMappingInput {
     /// Prompt variable name without braces.  Example: for the prompt `Judge {{input}} against {{output}}`, use `input` and `output`.
     #[serde(rename = "variable")]

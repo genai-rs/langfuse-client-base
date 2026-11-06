@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct GetScoresResponseDataNumeric {
     #[serde(rename = "id")]
     pub id: String,
@@ -84,7 +84,7 @@ pub struct GetScoresResponseDataNumeric {
     #[serde(rename = "value")]
     pub value: f64,
     #[serde(rename = "trace", skip_serializing_if = "Option::is_none")]
-    pub trace: Option<Box<models::GetScoresResponseTraceData>>,
+    pub trace: Option<models::GetScoresResponseTraceData>,
 }
 
 impl GetScoresResponseDataNumeric {

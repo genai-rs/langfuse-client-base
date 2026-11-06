@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// CreateScoreBatchResponse : Batch accepted (HTTP 202).
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CreateScoreBatchResponse {
     #[serde(rename = "message")]
     pub message: String,

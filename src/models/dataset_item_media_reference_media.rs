@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DatasetItemMediaReferenceMedia {
     /// The unique langfuse identifier of the media record
     #[serde(rename = "mediaId")]
@@ -21,7 +21,7 @@ pub struct DatasetItemMediaReferenceMedia {
     pub content_type: String,
     /// The size of the media record in bytes
     #[serde(rename = "contentLength")]
-    pub content_length: i32,
+    pub content_length: i64,
     /// The signed download URL of the media record
     #[serde(rename = "url")]
     pub url: String,
@@ -34,7 +34,7 @@ impl DatasetItemMediaReferenceMedia {
     pub fn new(
         media_id: String,
         content_type: String,
-        content_length: i32,
+        content_length: i64,
         url: String,
         url_expiry: String,
     ) -> DatasetItemMediaReferenceMedia {

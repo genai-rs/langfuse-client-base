@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// DeletedEvaluationRule : Confirmation returned after successful evaluation-rule deletion.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct DeletedEvaluationRule {
     /// Identifier of the deleted evaluation rule.
     #[serde(rename = "id")]

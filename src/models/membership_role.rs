@@ -22,6 +22,10 @@ pub enum MembershipRole {
     Member,
     #[serde(rename = "VIEWER")]
     Viewer,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for MembershipRole {
@@ -31,12 +35,49 @@ impl std::fmt::Display for MembershipRole {
             Self::Admin => write!(f, "ADMIN"),
             Self::Member => write!(f, "MEMBER"),
             Self::Viewer => write!(f, "VIEWER"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for MembershipRole {
-    fn default() -> MembershipRole {
-        Self::Owner
+impl ::std::str::FromStr for MembershipRole {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "OWNER" => Ok(Self::Owner),
+            "ADMIN" => Ok(Self::Admin),
+            "MEMBER" => Ok(Self::Member),
+            "VIEWER" => Ok(Self::Viewer),
+            _ => Err(crate::models::ParseEnumError::new("MembershipRole", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for MembershipRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for MembershipRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for MembershipRole {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

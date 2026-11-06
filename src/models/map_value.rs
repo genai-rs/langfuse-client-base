@@ -15,14 +15,53 @@ use serde::{Deserialize, Serialize};
 #[serde(untagged)]
 pub enum MapValue {
     String(String),
-    Integer(i32),
+    Integer(i64),
     FloatNumber(f32),
     Boolean(bool),
     Array(Vec<String>),
 }
 
-impl Default for MapValue {
-    fn default() -> Self {
-        Self::String(Default::default())
+impl MapValue {
+    pub fn new_text(text: String) -> Self {
+        Self::String(text)
+    }
+    pub fn new_array(items: Vec<String>) -> Self {
+        Self::Array(items)
+    }
+}
+
+impl From<String> for MapValue {
+    fn from(s: String) -> Self {
+        Self::String(s)
+    }
+}
+
+impl From<&str> for MapValue {
+    fn from(s: &str) -> Self {
+        Self::String(s.to_string())
+    }
+}
+
+impl std::fmt::Display for MapValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::String(value) => write!(f, "{}", value),
+            Self::Integer(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::FloatNumber(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Boolean(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Array(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

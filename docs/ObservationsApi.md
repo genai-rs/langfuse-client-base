@@ -22,7 +22,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available groups: core, basic, time, io, metadata, model, usage, prompt, metrics, trace_context. If not specified, `core` and `basic` field groups are returned. Example: \"basic,usage,model\" |  |
 **expand_metadata** | Option<**String**> | Comma-separated list of metadata keys to return non-truncated. By default, metadata values over 200 characters are truncated. Use this parameter to retrieve full values for specific keys. Example: \"key1,key2\" |  |
-**limit** | Option<**i32**> | Maximum number of items to return per page. A page may contain fewer items, including zero items, while meta.cursor is present. Maximum 1000, default 50. |  |
+**limit** | Option<**i64**> | Maximum number of items to return per page. A page may contain fewer items, including zero items, while meta.cursor is present. Maximum 1000, default 50. |  |
 **cursor** | Option<**String**> | Base64-encoded cursor for pagination. Use the cursor from the previous response to get the next page. |  |
 **parse_io_as_json** | Option<**bool**> | **Deprecated.** Setting this to `true` will return a 400 error. Input/output fields are always returned as raw strings. Remove this parameter or set it to `false`. |  |
 **name** | Option<**String**> |  |  |

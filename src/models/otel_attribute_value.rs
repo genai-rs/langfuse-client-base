@@ -29,7 +29,7 @@ pub struct OtelAttributeValue {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub int_value: Option<Option<i32>>,
+    pub int_value: Option<Option<i64>>,
     /// Double value
     #[serde(
         rename = "doubleValue",

@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PromptVariableMapping : Connects one prompt variable to source data.
-/// Connects one prompt variable to source data.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PromptVariableMapping {
-    PromptVariableMappingRead(Box<models::PromptVariableMappingRead>),
-    LegacyPromptVariableMapping(Box<models::LegacyPromptVariableMapping>),
+    LegacyPromptVariableMapping(models::LegacyPromptVariableMapping),
+    PromptVariableMappingRead(models::PromptVariableMappingRead),
 }
 
-impl Default for PromptVariableMapping {
-    fn default() -> Self {
-        Self::PromptVariableMappingRead(Default::default())
+impl std::fmt::Display for PromptVariableMapping {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::LegacyPromptVariableMapping(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PromptVariableMappingRead(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

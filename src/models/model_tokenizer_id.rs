@@ -30,8 +30,45 @@ impl std::fmt::Display for ModelTokenizerId {
     }
 }
 
-impl Default for ModelTokenizerId {
-    fn default() -> ModelTokenizerId {
-        Self::Openai
+impl ::std::str::FromStr for ModelTokenizerId {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "openai" => Ok(Self::Openai),
+            "claude" => Ok(Self::Claude),
+            _ => Err(crate::models::ParseEnumError::new(
+                "ModelTokenizerId",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ModelTokenizerId {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ModelTokenizerId {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ModelTokenizerId {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

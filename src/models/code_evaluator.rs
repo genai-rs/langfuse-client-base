@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct CodeEvaluator {
     /// Stable identifier of this evaluator across all versions.
     #[serde(rename = "id")]
@@ -23,7 +23,7 @@ pub struct CodeEvaluator {
     #[serde(rename = "description", deserialize_with = "Option::deserialize")]
     pub description: Option<String>,
     #[serde(rename = "createdBy")]
-    pub created_by: Box<models::Creator>,
+    pub created_by: models::Creator,
     #[serde(rename = "status")]
     pub status: models::EvaluatorStatus,
     /// Timestamp when the evaluator was paused, otherwise `null`.
@@ -49,12 +49,12 @@ pub struct CodeEvaluator {
     pub version_id: String,
     /// Monotonically increasing latest evaluator version number.
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
     /// Timestamp when the latest evaluator version was created.
     #[serde(rename = "versionCreatedAt")]
     pub version_created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "versionCreatedBy")]
-    pub version_created_by: Box<models::Creator>,
+    pub version_created_by: models::Creator,
     /// Evaluator type.
     #[serde(rename = "type")]
     pub r#type: String,
@@ -79,7 +79,7 @@ impl CodeEvaluator {
         created_at: chrono::DateTime<chrono::FixedOffset>,
         updated_at: chrono::DateTime<chrono::FixedOffset>,
         version_id: String,
-        version: i32,
+        version: i64,
         version_created_at: chrono::DateTime<chrono::FixedOffset>,
         version_created_by: models::Creator,
         r#type: String,
@@ -90,7 +90,7 @@ impl CodeEvaluator {
             id,
             name,
             description,
-            created_by: Box::new(created_by),
+            created_by,
             status,
             paused_at,
             paused_reason,
@@ -101,7 +101,7 @@ impl CodeEvaluator {
             version_id,
             version,
             version_created_at,
-            version_created_by: Box::new(version_created_by),
+            version_created_by,
             r#type,
             source_code,
             source_code_language,

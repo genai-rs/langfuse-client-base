@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluatorChatMessage : One chat message in an evaluator prompt.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct EvaluatorChatMessage {
     #[serde(rename = "role")]
     pub role: models::EvaluatorChatMessageRole,

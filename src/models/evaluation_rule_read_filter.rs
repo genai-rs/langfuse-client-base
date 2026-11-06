@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluationRuleReadFilter : Filter returned verbatim by evaluation-rule read endpoints.  Filters with a stored `key` use the keyed shape. All other filters use the base shape. Response filters are intentionally not broken down by their internal `type` value.
-/// Filter returned verbatim by evaluation-rule read endpoints.  Filters with a stored `key` use the keyed shape. All other filters use the base shape. Response filters are intentionally not broken down by their internal `type` value.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluationRuleReadFilter {
-    EvaluationRuleReadFilterWithKey(Box<models::EvaluationRuleReadFilterWithKey>),
-    EvaluationRuleReadFilterBase(Box<models::EvaluationRuleReadFilterBase>),
+    EvaluationRuleReadFilterWithKey(models::EvaluationRuleReadFilterWithKey),
+    EvaluationRuleReadFilterBase(models::EvaluationRuleReadFilterBase),
 }
 
-impl Default for EvaluationRuleReadFilter {
-    fn default() -> Self {
-        Self::EvaluationRuleReadFilterWithKey(Default::default())
+impl std::fmt::Display for EvaluationRuleReadFilter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::EvaluationRuleReadFilterWithKey(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::EvaluationRuleReadFilterBase(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

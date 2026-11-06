@@ -22,11 +22,11 @@ Name | Type | Description | Notes
 **status_message** | Option<**String**> | The status message of the observation | 
 **parent_observation_id** | Option<**String**> | The parent observation ID | 
 **prompt_id** | Option<**String**> | The prompt ID associated with the observation | 
-**usage_details** | **std::collections::HashMap<String, i32>** | The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested. | 
+**usage_details** | **std::collections::HashMap<String, i64>** | The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested. | 
 **cost_details** | **std::collections::HashMap<String, f64>** | The cost details of the observation. Key is the name of the cost metric, value is the cost in USD. The total key is the sum of all (non-total) cost metrics or the total value ingested. | 
 **environment** | **String** | The environment from which this observation originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'. | 
 **prompt_name** | Option<**String**> | The name of the prompt associated with the observation | 
-**prompt_version** | Option<**i32**> | The version of the prompt associated with the observation | 
+**prompt_version** | Option<**i64**> | The version of the prompt associated with the observation | 
 **model_id** | Option<**String**> | The unique identifier of the model | 
 **input_price** | Option<**f64**> | The price of the input in USD | 
 **output_price** | Option<**f64**> | The price of the output in USD. | 

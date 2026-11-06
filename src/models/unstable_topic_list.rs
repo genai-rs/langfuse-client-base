@@ -11,16 +11,16 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicList {
     #[serde(rename = "window")]
-    pub window: Box<models::UnstableTopicWindow>,
+    pub window: models::UnstableTopicWindow,
     #[serde(rename = "data")]
     pub data: Vec<models::UnstableTopic>,
     #[serde(rename = "facets")]
     pub facets: Vec<models::UnstableTopicFacetCounts>,
     #[serde(rename = "meta")]
-    pub meta: Box<models::UtilsMetaResponse>,
+    pub meta: models::UtilsMetaResponse,
 }
 
 impl UnstableTopicList {
@@ -31,10 +31,10 @@ impl UnstableTopicList {
         meta: models::UtilsMetaResponse,
     ) -> UnstableTopicList {
         UnstableTopicList {
-            window: Box::new(window),
+            window,
             data,
             facets,
-            meta: Box::new(meta),
+            meta,
         }
     }
 }

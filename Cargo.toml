@@ -41,6 +41,12 @@ default = ["rustls"]
 rustls = ["reqwest/rustls"]
 native-tls = ["reqwest/native-tls"]
 
+[lints.rust]
+# timvw-rust 0.14.0 writes the tag-dispatch helpers `Attempt` and `first_of`
+# into src/models/union_dispatch.rs whether or not a union uses them; no
+# Langfuse union does. Revisit once the generator marks them unused-allowed.
+dead_code = "allow"
+
 [lints.clippy]
 # Allow all clippy warnings for generated code
 all = "allow"

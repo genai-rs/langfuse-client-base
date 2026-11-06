@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// SkillVersionFileCreateInput : Provide exactly one of content or sha256Hash for each path.
-/// Provide exactly one of content or sha256Hash for each path.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SkillVersionFileCreateInput {
-    SkillVersionFileInput(Box<models::SkillVersionFileInput>),
-    SkillVersionFileReference(Box<models::SkillVersionFileReference>),
+    SkillVersionFileInput(models::SkillVersionFileInput),
+    SkillVersionFileReference(models::SkillVersionFileReference),
 }
 
-impl Default for SkillVersionFileCreateInput {
-    fn default() -> Self {
-        Self::SkillVersionFileInput(Default::default())
+impl std::fmt::Display for SkillVersionFileCreateInput {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::SkillVersionFileInput(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::SkillVersionFileReference(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

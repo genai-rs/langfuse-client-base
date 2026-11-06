@@ -62,21 +62,21 @@ pub struct UnstablePublicApiErrorDetails {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub retry_after_seconds: Option<Option<i32>>,
+    pub retry_after_seconds: Option<Option<i64>>,
     #[serde(
         rename = "limit",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub limit: Option<Option<i32>>,
+    pub limit: Option<Option<i64>>,
     #[serde(
         rename = "remaining",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub remaining: Option<Option<i32>>,
+    pub remaining: Option<Option<i64>>,
     #[serde(
         rename = "resetAt",
         default,

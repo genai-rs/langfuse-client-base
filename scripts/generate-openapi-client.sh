@@ -15,14 +15,14 @@ COMPATIBILITY_FILE="$SCRIPT_DIR/legacy_v3_compatibility.json"
 # Environment variables
 UPDATE_SPEC="${UPDATE_SPEC:-false}"
 # Keep in sync with openapitools.json. You can override via env.
-OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.25.0}"
+OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # Custom generator (timvw-rust extends the stock rust generator; see
 # https://github.com/timvw/openapi-generator-timvw-rust). Every Rust-specific
 # fix lives in the generator: this script only prepares the spec and formats
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
-# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.2.0-og7.25.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.2.0}"
+# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.14.0-og7.27.0.
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.14.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
@@ -94,7 +94,22 @@ python3 "$SCRIPT_DIR/generation_manifest.py" \
 # .openapi-generator-ignore, which the generator honours.
 echo "🏗️ Generating Rust client..."
 
-# Run the generator (Docker paths)
+# Remove the previous output first, so a model or API that is no longer
+# generated (renamed, or dropped from the spec) does not linger as an orphan
+# file. Everything under src/apis, src/models and docs/ is generated.
+for generated_dir in "$BASE_CLIENT_DIR/src/apis" "$BASE_CLIENT_DIR/src/models"; do
+    if [ -d "$generated_dir" ]; then
+        find "$generated_dir" -name "*.rs" -delete
+    fi
+done
+rm -rf "$BASE_CLIENT_DIR/docs"
+
+# Run the generator (Docker paths). The Milestone 3 options of timvw-rust:
+# boxOnlyCycles (Box only where a type contains itself), defaultOnlyWhereValid,
+# enumFromStr and noStructDisplay, qualifiedInlineNames (stable type names),
+# modelUnions and unionDispatch (unions from the model, decoded by their tag),
+# integersAsI64 (i64 unless format: int32) and openEnums (a catch-all for values
+# a response can hold that the spec does not list).
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
     -g "$GENERATOR_NAME" \
@@ -105,7 +120,16 @@ $GENERATOR_CMD generate \
     --additional-properties=supportAsync=true \
     --additional-properties=supportMiddleware=true \
     --additional-properties=preferUnsignedInt=false \
-    --additional-properties=useSingleRequestParameter=false
+    --additional-properties=useSingleRequestParameter=false \
+    --additional-properties=boxOnlyCycles=true \
+    --additional-properties=defaultOnlyWhereValid=true \
+    --additional-properties=enumFromStr=true \
+    --additional-properties=noStructDisplay=true \
+    --additional-properties=qualifiedInlineNames=true \
+    --additional-properties=modelUnions=true \
+    --additional-properties=unionDispatch=true \
+    --additional-properties=integersAsI64=true \
+    --additional-properties=openEnums=true
 
 # Drop OpenAPI Generator's transient metadata while keeping the provenance
 # manifest available for CI artifact upload and local review.

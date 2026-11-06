@@ -12,30 +12,74 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// ScoreSubjectV3 : A reference to the entity this score is attached to. Discriminated by \"kind\" — one of trace, observation, session, or experiment.
-/// A reference to the entity this score is attached to. Discriminated by \"kind\" — one of trace, observation, session, or experiment.
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ScoreSubjectV3 {
-    ScoreSubjectTraceV31(Box<models::ScoreSubjectTraceV31>),
-    ScoreSubjectObservationV31(Box<models::ScoreSubjectObservationV31>),
-    ScoreSubjectSessionV31(Box<models::ScoreSubjectSessionV31>),
-    ScoreSubjectExperimentV31(Box<models::ScoreSubjectExperimentV31>),
+    ScoreSubjectTraceV3(models::ScoreSubjectV3ScoreSubjectTraceV3),
+    ScoreSubjectObservationV3(models::ScoreSubjectV3ScoreSubjectObservationV3),
+    ScoreSubjectSessionV3(models::ScoreSubjectV3ScoreSubjectSessionV3),
+    ScoreSubjectExperimentV3(models::ScoreSubjectV3ScoreSubjectExperimentV3),
+    /// A `kind` this client does not know, holding the value as it came, which is what it serializes to.
+    Unknown(serde_json::Value),
 }
 
-impl Default for ScoreSubjectV3 {
-    fn default() -> Self {
-        Self::ScoreSubjectTraceV31(Default::default())
+impl<'de> Deserialize<'de> for ScoreSubjectV3 {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        Self::dispatch(value).map_err(serde::de::Error::custom)
     }
 }
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Kind {
-    #[serde(rename = "experiment")]
-    Experiment,
+
+impl ScoreSubjectV3 {
+    /// Decodes the variant that `kind` selects, so an error is that variant's.
+    #[inline]
+    fn dispatch(value: serde_json::Value) -> Result<Self, String> {
+        use models::union_dispatch::{self as dispatch, Tag};
+        const UNION: &str = "ScoreSubjectV3";
+        const TAG: &str = "kind";
+        match dispatch::tag(&value, UNION, TAG)? {
+            Tag::Value("trace") => {
+                dispatch::decode(value, UNION, "ScoreSubjectTraceV3").map(Self::ScoreSubjectTraceV3)
+            }
+            Tag::Value("observation") => {
+                dispatch::decode(value, UNION, "ScoreSubjectObservationV3")
+                    .map(Self::ScoreSubjectObservationV3)
+            }
+            Tag::Value("session") => dispatch::decode(value, UNION, "ScoreSubjectSessionV3")
+                .map(Self::ScoreSubjectSessionV3),
+            Tag::Value("experiment") => dispatch::decode(value, UNION, "ScoreSubjectExperimentV3")
+                .map(Self::ScoreSubjectExperimentV3),
+            Tag::Value(_) => Ok(Self::Unknown(value)),
+            Tag::Missing => Err(dispatch::missing_tag(UNION, TAG)),
+            Tag::NotObject => Err(dispatch::not_an_object(&value, UNION, TAG)),
+        }
+    }
 }
 
-impl Default for Kind {
-    fn default() -> Kind {
-        Self::Experiment
+impl std::fmt::Display for ScoreSubjectV3 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::ScoreSubjectTraceV3(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::ScoreSubjectObservationV3(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::ScoreSubjectSessionV3(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::ScoreSubjectExperimentV3(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::Unknown(value) => write!(f, "{}", value),
+        }
     }
 }

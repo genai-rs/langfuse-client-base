@@ -11,19 +11,19 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct LlmAsJudgeEvaluatorVersion {
     /// Stable identifier of this evaluator version.
     #[serde(rename = "id")]
     pub id: String,
     /// Monotonically increasing evaluator version number.
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
     /// Timestamp when this evaluator version was created.
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::FixedOffset>,
     #[serde(rename = "createdBy")]
-    pub created_by: Box<models::Creator>,
+    pub created_by: models::Creator,
     /// Evaluator type.
     #[serde(rename = "type")]
     pub r#type: String,
@@ -37,15 +37,15 @@ pub struct LlmAsJudgeEvaluatorVersion {
     #[serde(rename = "variableMapping", deserialize_with = "Option::deserialize")]
     pub variable_mapping: Option<Vec<models::PromptVariableMappingRead>>,
     #[serde(rename = "modelConfig")]
-    pub model_config: Box<models::EvaluatorModelConfig>,
+    pub model_config: models::EvaluatorModelConfig,
     #[serde(rename = "outputDefinition")]
-    pub output_definition: Box<models::PublicEvaluatorOutputDefinition>,
+    pub output_definition: models::PublicEvaluatorOutputDefinition,
 }
 
 impl LlmAsJudgeEvaluatorVersion {
     pub fn new(
         id: String,
-        version: i32,
+        version: i64,
         created_at: chrono::DateTime<chrono::FixedOffset>,
         created_by: models::Creator,
         r#type: String,
@@ -59,13 +59,13 @@ impl LlmAsJudgeEvaluatorVersion {
             id,
             version,
             created_at,
-            created_by: Box::new(created_by),
+            created_by,
             r#type,
             prompt,
             variables,
             variable_mapping,
-            model_config: Box::new(model_config),
-            output_definition: Box::new(output_definition),
+            model_config,
+            output_definition,
         }
     }
 }

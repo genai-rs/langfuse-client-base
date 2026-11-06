@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTierConditionInput : Condition input for matching a pricing tier.
-/// Condition input for matching a pricing tier.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PricingTierConditionInput {
-    PricingTierUsageConditionInput(Box<models::PricingTierUsageConditionInput>),
-    PricingTierAttributeCondition(Box<models::PricingTierAttributeCondition>),
+    PricingTierUsageConditionInput(models::PricingTierUsageConditionInput),
+    PricingTierAttributeCondition(models::PricingTierAttributeCondition),
 }
 
-impl Default for PricingTierConditionInput {
-    fn default() -> Self {
-        Self::PricingTierUsageConditionInput(Default::default())
+impl std::fmt::Display for PricingTierConditionInput {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::PricingTierUsageConditionInput(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PricingTierAttributeCondition(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

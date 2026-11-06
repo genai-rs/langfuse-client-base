@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableCreateDashboardWidgetRequest {
     #[serde(rename = "name")]
     pub name: String,
@@ -34,7 +34,7 @@ pub struct UnstableCreateDashboardWidgetRequest {
     #[serde(rename = "chartType")]
     pub chart_type: models::UnstableDashboardWidgetChartType,
     #[serde(rename = "chartConfig", skip_serializing_if = "Option::is_none")]
-    pub chart_config: Option<Box<models::UnstableDashboardWidgetChartConfigInput>>,
+    pub chart_config: Option<models::UnstableDashboardWidgetChartConfigInput>,
 }
 
 impl UnstableCreateDashboardWidgetRequest {

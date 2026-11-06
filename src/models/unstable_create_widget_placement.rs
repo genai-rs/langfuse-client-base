@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableCreateWidgetPlacement {
     /// Server-generated when omitted.
     #[serde(
@@ -30,7 +30,7 @@ pub struct UnstableCreateWidgetPlacement {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub x: Option<Option<i32>>,
+    pub x: Option<Option<i64>>,
     /// Grid row. Defaults to the first row below all existing tiles.
     #[serde(
         rename = "y",
@@ -38,7 +38,7 @@ pub struct UnstableCreateWidgetPlacement {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub y: Option<Option<i32>>,
+    pub y: Option<Option<i64>>,
     /// Width in grid columns. Defaults to `6`.
     #[serde(
         rename = "width",
@@ -46,7 +46,7 @@ pub struct UnstableCreateWidgetPlacement {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub width: Option<Option<i32>>,
+    pub width: Option<Option<i64>>,
     /// Height in grid rows. Defaults to `6`.
     #[serde(
         rename = "height",
@@ -54,13 +54,11 @@ pub struct UnstableCreateWidgetPlacement {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub height: Option<Option<i32>>,
-    #[serde(rename = "type")]
-    pub r#type: Type,
+    pub height: Option<Option<i64>>,
 }
 
 impl UnstableCreateWidgetPlacement {
-    pub fn new(widget_id: String, r#type: Type) -> UnstableCreateWidgetPlacement {
+    pub fn new(widget_id: String) -> UnstableCreateWidgetPlacement {
         UnstableCreateWidgetPlacement {
             id: None,
             widget_id,
@@ -68,19 +66,6 @@ impl UnstableCreateWidgetPlacement {
             y: None,
             width: None,
             height: None,
-            r#type,
         }
-    }
-}
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Type {
-    #[serde(rename = "widget")]
-    Widget,
-}
-
-impl Default for Type {
-    fn default() -> Type {
-        Self::Widget
     }
 }

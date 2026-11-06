@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct SkillVersion {
     #[serde(rename = "id")]
     pub id: String,
@@ -30,7 +30,7 @@ pub struct SkillVersion {
     #[serde(rename = "frontmatter", deserialize_with = "Option::deserialize")]
     pub frontmatter: Option<serde_json::Value>,
     #[serde(rename = "version")]
-    pub version: i32,
+    pub version: i64,
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
     #[serde(rename = "labels")]
@@ -51,7 +51,7 @@ impl SkillVersion {
         name: String,
         description: String,
         frontmatter: Option<serde_json::Value>,
-        version: i32,
+        version: i64,
         tags: Vec<String>,
         labels: Vec<String>,
         commit_message: Option<String>,

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **string_value** | Option<**String**> | String value | [optional]
-**int_value** | Option<**i32**> | Integer value | [optional]
+**int_value** | Option<**i64**> | Integer value | [optional]
 **double_value** | Option<**f64**> | Double value | [optional]
 **bool_value** | Option<**bool**> | Boolean value | [optional]
 

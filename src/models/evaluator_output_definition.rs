@@ -12,17 +12,32 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluatorOutputDefinition : Flat structured output definition used when creating or updating an evaluator.  - `dataType` is required. - `scoreReasoningInstructions` and `scoreValueInstructions` are optional instructions. - `minValue` and `maxValue` apply only to `NUMERIC` outputs. If both are set, `minValue` must not exceed `maxValue`. - `categories` and `shouldAllowMultipleMatches` apply only to `CATEGORICAL` outputs. - Do not send `version`; that is an internal storage detail.
-/// Flat structured output definition used when creating or updating an evaluator.  - `dataType` is required. - `scoreReasoningInstructions` and `scoreValueInstructions` are optional instructions. - `minValue` and `maxValue` apply only to `NUMERIC` outputs. If both are set, `minValue` must not exceed `maxValue`. - `categories` and `shouldAllowMultipleMatches` apply only to `CATEGORICAL` outputs. - Do not send `version`; that is an internal storage detail.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluatorOutputDefinition {
-    PublicEvaluatorNumericScore1(Box<models::PublicEvaluatorNumericScore1>),
-    PublicEvaluatorBooleanScore1(Box<models::PublicEvaluatorBooleanScore1>),
-    PublicEvaluatorCategoricalScore1(Box<models::PublicEvaluatorCategoricalScore1>),
+    PublicEvaluatorNumericScore(models::EvaluatorOutputDefinitionPublicEvaluatorNumericScore),
+    PublicEvaluatorBooleanScore(models::EvaluatorOutputDefinitionPublicEvaluatorBooleanScore),
+    PublicEvaluatorCategoricalScore(
+        models::EvaluatorOutputDefinitionPublicEvaluatorCategoricalScore,
+    ),
 }
 
-impl Default for EvaluatorOutputDefinition {
-    fn default() -> Self {
-        Self::PublicEvaluatorNumericScore1(Default::default())
+impl std::fmt::Display for EvaluatorOutputDefinition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::PublicEvaluatorNumericScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PublicEvaluatorBooleanScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::PublicEvaluatorCategoricalScore(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

@@ -153,7 +153,7 @@ pub async fn skills_create_version(
 pub async fn skills_delete_version(
     configuration: &configuration::Configuration,
     skill_name: &str,
-    skill_version: i32,
+    skill_version: i64,
 ) -> Result<models::DeleteSkillVersionResponse, Error<SkillsDeleteVersionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -210,7 +210,7 @@ pub async fn skills_delete_version(
 pub async fn skills_get(
     configuration: &configuration::Configuration,
     skill_name: &str,
-    version: Option<i32>,
+    version: Option<i64>,
     label: Option<&str>,
     include_content: Option<bool>,
 ) -> Result<models::SkillVersion, Error<SkillsGetError>> {
@@ -331,8 +331,8 @@ pub async fn skills_list(
     name: Option<&str>,
     search: Option<&str>,
     tag: Option<&str>,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
     from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
 ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>> {
@@ -410,7 +410,7 @@ pub async fn skills_list(
 pub async fn skills_set_labels(
     configuration: &configuration::Configuration,
     skill_name: &str,
-    skill_version: i32,
+    skill_version: i64,
     update_skill_labels_request: models::UpdateSkillLabelsRequest,
 ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>> {
     // add a prefix to parameters to efficiently prevent name collisions

@@ -53,8 +53,50 @@ impl std::fmt::Display for ObservationType {
     }
 }
 
-impl Default for ObservationType {
-    fn default() -> ObservationType {
-        Self::Span
+impl ::std::str::FromStr for ObservationType {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "SPAN" => Ok(Self::Span),
+            "GENERATION" => Ok(Self::Generation),
+            "EVENT" => Ok(Self::Event),
+            "AGENT" => Ok(Self::Agent),
+            "TOOL" => Ok(Self::Tool),
+            "CHAIN" => Ok(Self::Chain),
+            "RETRIEVER" => Ok(Self::Retriever),
+            "EVALUATOR" => Ok(Self::Evaluator),
+            "EMBEDDING" => Ok(Self::Embedding),
+            "GUARDRAIL" => Ok(Self::Guardrail),
+            _ => Err(crate::models::ParseEnumError::new("ObservationType", value)),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for ObservationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for ObservationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for ObservationType {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

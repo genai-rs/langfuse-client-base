@@ -12,54 +12,128 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// EvaluationRuleFilter : One filter condition used to decide whether a live-ingested observation should be evaluated.  All filters must be satisfied for the rule to run. Experiment scope is expressed with filters rather than a separate target field: - `isExperimentItemRootSpan = true` limits execution to experiment item roots. - `datasetId` limits execution to experiments for the selected datasets. Use dataset IDs from `GET /api/public/v2/datasets`.  Pick the filter `type` first, as it determines the required fields and value shape. Use `key` only for object filters such as `metadata`.  Operator quick reference by filter `type`: - `string`: `\"=\"`, `contains`, `does not contain`, `starts with`, `ends with` - `number`: `\"=\"`, `\">\"`, `\"<\"`, `\">=\"`, `\"<=\"` - `datetime`: `\"=\"`, `\">\"`, `\"<\"`, `\">=\"`, `\"<=\"` - `stringOptions`: `any of`, `none of` - `arrayOptions`: `any of`, `none of`, `all of` - `stringObject`: `\"=\"`, `contains`, `does not contain`, `starts with`, `ends with`, `is set`, `is not set` (use `is set` / `is not set` for key presence; an empty value for `contains`, `starts with`, or `ends with` is treated as `is set`) - `boolean`: `\"=\"`, `\"<>\"` - `null`: `is null`, `is not null`  Supported columns. Each column accepts exactly one filter `type`; sending a column with a different `type` is rejected with `400`. - `type`: `stringOptions`, values `SPAN`, `EVENT`, `GENERATION`, `AGENT`, `TOOL`, `CHAIN`, `RETRIEVER`, `EVALUATOR`, `EMBEDDING`, `GUARDRAIL` - `name`: `stringOptions` - `environment`: `stringOptions` - `level`: `stringOptions`, values `DEBUG`, `DEFAULT`, `WARNING`, `ERROR` - `version`: `string` - `traceName`: `stringOptions` - `userId`: `string` - `sessionId`: `string` - `tags`: `arrayOptions` - `metadata`: `stringObject`, requires `key` - `isRootObservation`: `boolean`; true when the observation has no parent or is explicitly marked as an application root - `parentObservationId`: `null` - `experimentId`: `stringOptions` - `isExperimentItemRootSpan`: `boolean` - `calledToolNames`: `arrayOptions` - `toolCalls`: `number`, the number of tool calls on the observation - `datasetId`: `stringOptions`. Use dataset `id` values from `GET /api/public/v2/datasets`, not dataset names.
-/// One filter condition used to decide whether a live-ingested observation should be evaluated.  All filters must be satisfied for the rule to run. Experiment scope is expressed with filters rather than a separate target field: - `isExperimentItemRootSpan = true` limits execution to experiment item roots. - `datasetId` limits execution to experiments for the selected datasets. Use dataset IDs from `GET /api/public/v2/datasets`.  Pick the filter `type` first, as it determines the required fields and value shape. Use `key` only for object filters such as `metadata`.  Operator quick reference by filter `type`: - `string`: `\"=\"`, `contains`, `does not contain`, `starts with`, `ends with` - `number`: `\"=\"`, `\">\"`, `\"<\"`, `\">=\"`, `\"<=\"` - `datetime`: `\"=\"`, `\">\"`, `\"<\"`, `\">=\"`, `\"<=\"` - `stringOptions`: `any of`, `none of` - `arrayOptions`: `any of`, `none of`, `all of` - `stringObject`: `\"=\"`, `contains`, `does not contain`, `starts with`, `ends with`, `is set`, `is not set` (use `is set` / `is not set` for key presence; an empty value for `contains`, `starts with`, or `ends with` is treated as `is set`) - `boolean`: `\"=\"`, `\"<>\"` - `null`: `is null`, `is not null`  Supported columns. Each column accepts exactly one filter `type`; sending a column with a different `type` is rejected with `400`. - `type`: `stringOptions`, values `SPAN`, `EVENT`, `GENERATION`, `AGENT`, `TOOL`, `CHAIN`, `RETRIEVER`, `EVALUATOR`, `EMBEDDING`, `GUARDRAIL` - `name`: `stringOptions` - `environment`: `stringOptions` - `level`: `stringOptions`, values `DEBUG`, `DEFAULT`, `WARNING`, `ERROR` - `version`: `string` - `traceName`: `stringOptions` - `userId`: `string` - `sessionId`: `string` - `tags`: `arrayOptions` - `metadata`: `stringObject`, requires `key` - `isRootObservation`: `boolean`; true when the observation has no parent or is explicitly marked as an application root - `parentObservationId`: `null` - `experimentId`: `stringOptions` - `isExperimentItemRootSpan`: `boolean` - `calledToolNames`: `arrayOptions` - `toolCalls`: `number`, the number of tool calls on the observation - `datasetId`: `stringOptions`. Use dataset `id` values from `GET /api/public/v2/datasets`, not dataset names.
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+
+#[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum EvaluationRuleFilter {
-    DateTimeEvaluationRuleFilter1(Box<models::DateTimeEvaluationRuleFilter1>),
-    StringEvaluationRuleFilter1(Box<models::StringEvaluationRuleFilter1>),
-    NumberEvaluationRuleFilter1(Box<models::NumberEvaluationRuleFilter1>),
-    StringOptionsEvaluationRuleFilter1(Box<models::StringOptionsEvaluationRuleFilter1>),
-    CategoryOptionsEvaluationRuleFilter1(Box<models::CategoryOptionsEvaluationRuleFilter1>),
-    ArrayOptionsEvaluationRuleFilter1(Box<models::ArrayOptionsEvaluationRuleFilter1>),
-    StringObjectEvaluationRuleFilter1(Box<models::StringObjectEvaluationRuleFilter1>),
-    NumberObjectEvaluationRuleFilter1(Box<models::NumberObjectEvaluationRuleFilter1>),
-    BooleanEvaluationRuleFilter1(Box<models::BooleanEvaluationRuleFilter1>),
-    NullEvaluationRuleFilter1(Box<models::NullEvaluationRuleFilter1>),
+    DateTimeEvaluationRuleFilter(models::EvaluationRuleFilterDateTimeEvaluationRuleFilter),
+    StringEvaluationRuleFilter(models::EvaluationRuleFilterStringEvaluationRuleFilter),
+    NumberEvaluationRuleFilter(models::EvaluationRuleFilterNumberEvaluationRuleFilter),
+    StringOptionsEvaluationRuleFilter(
+        models::EvaluationRuleFilterStringOptionsEvaluationRuleFilter,
+    ),
+    CategoryOptionsEvaluationRuleFilter(
+        models::EvaluationRuleFilterCategoryOptionsEvaluationRuleFilter,
+    ),
+    ArrayOptionsEvaluationRuleFilter(models::EvaluationRuleFilterArrayOptionsEvaluationRuleFilter),
+    StringObjectEvaluationRuleFilter(models::EvaluationRuleFilterStringObjectEvaluationRuleFilter),
+    NumberObjectEvaluationRuleFilter(models::EvaluationRuleFilterNumberObjectEvaluationRuleFilter),
+    BooleanEvaluationRuleFilter(models::EvaluationRuleFilterBooleanEvaluationRuleFilter),
+    NullEvaluationRuleFilter(models::EvaluationRuleFilterNullEvaluationRuleFilter),
 }
 
-impl Default for EvaluationRuleFilter {
-    fn default() -> Self {
-        Self::DateTimeEvaluationRuleFilter1(Default::default())
+impl<'de> Deserialize<'de> for EvaluationRuleFilter {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        Self::dispatch(value).map_err(serde::de::Error::custom)
     }
 }
-///
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Type {
-    #[serde(rename = "datetime")]
-    Datetime,
-    #[serde(rename = "string")]
-    String,
-    #[serde(rename = "number")]
-    Number,
-    #[serde(rename = "stringOptions")]
-    StringOptions,
-    #[serde(rename = "categoryOptions")]
-    CategoryOptions,
-    #[serde(rename = "arrayOptions")]
-    ArrayOptions,
-    #[serde(rename = "stringObject")]
-    StringObject,
-    #[serde(rename = "numberObject")]
-    NumberObject,
-    #[serde(rename = "boolean")]
-    Boolean,
-    #[serde(rename = "null")]
-    Null,
+
+impl EvaluationRuleFilter {
+    /// Decodes the variant that `type` selects, so an error is that variant's.
+    #[inline]
+    fn dispatch(value: serde_json::Value) -> Result<Self, String> {
+        use models::union_dispatch::{self as dispatch, Tag};
+        const UNION: &str = "EvaluationRuleFilter";
+        const TAG: &str = "type";
+        match dispatch::tag(&value, UNION, TAG)? {
+            Tag::Value("datetime") => {
+                dispatch::decode(value, UNION, "DateTimeEvaluationRuleFilter")
+                    .map(Self::DateTimeEvaluationRuleFilter)
+            }
+            Tag::Value("string") => dispatch::decode(value, UNION, "StringEvaluationRuleFilter")
+                .map(Self::StringEvaluationRuleFilter),
+            Tag::Value("number") => dispatch::decode(value, UNION, "NumberEvaluationRuleFilter")
+                .map(Self::NumberEvaluationRuleFilter),
+            Tag::Value("stringOptions") => {
+                dispatch::decode(value, UNION, "StringOptionsEvaluationRuleFilter")
+                    .map(Self::StringOptionsEvaluationRuleFilter)
+            }
+            Tag::Value("categoryOptions") => {
+                dispatch::decode(value, UNION, "CategoryOptionsEvaluationRuleFilter")
+                    .map(Self::CategoryOptionsEvaluationRuleFilter)
+            }
+            Tag::Value("arrayOptions") => {
+                dispatch::decode(value, UNION, "ArrayOptionsEvaluationRuleFilter")
+                    .map(Self::ArrayOptionsEvaluationRuleFilter)
+            }
+            Tag::Value("stringObject") => {
+                dispatch::decode(value, UNION, "StringObjectEvaluationRuleFilter")
+                    .map(Self::StringObjectEvaluationRuleFilter)
+            }
+            Tag::Value("numberObject") => {
+                dispatch::decode(value, UNION, "NumberObjectEvaluationRuleFilter")
+                    .map(Self::NumberObjectEvaluationRuleFilter)
+            }
+            Tag::Value("boolean") => dispatch::decode(value, UNION, "BooleanEvaluationRuleFilter")
+                .map(Self::BooleanEvaluationRuleFilter),
+            Tag::Value("null") => dispatch::decode(value, UNION, "NullEvaluationRuleFilter")
+                .map(Self::NullEvaluationRuleFilter),
+            Tag::Value(other) => Err(dispatch::unknown_tag(UNION, TAG, other)),
+            Tag::Missing => Err(dispatch::missing_tag(UNION, TAG)),
+            Tag::NotObject => Err(dispatch::not_an_object(&value, UNION, TAG)),
+        }
+    }
 }
 
-impl Default for Type {
-    fn default() -> Type {
-        Self::Datetime
+impl std::fmt::Display for EvaluationRuleFilter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::DateTimeEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::StringEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::NumberEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::StringOptionsEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CategoryOptionsEvaluationRuleFilter(value) => {
+                match serde_json::to_string(value) {
+                    Ok(s) => write!(f, "{}", s),
+                    Err(_) => Err(std::fmt::Error),
+                }
+            }
+            Self::ArrayOptionsEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::StringObjectEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::NumberObjectEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::BooleanEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::NullEvaluationRuleFilter(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

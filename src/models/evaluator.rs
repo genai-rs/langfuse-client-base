@@ -12,16 +12,25 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// Evaluator : One evaluator that can be used for scoring.  An evaluator describes **how** to score data. Associated evaluation rules describe **which** live objects should be evaluated.
-/// One evaluator that can be used for scoring.  An evaluator describes **how** to score data. Associated evaluation rules describe **which** live objects should be evaluated.
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Evaluator {
-    LlmAsJudgeEvaluator1(Box<models::LlmAsJudgeEvaluator1>),
-    CodeEvaluator1(Box<models::CodeEvaluator1>),
+    LlmAsJudgeEvaluator(models::EvaluatorLlmAsJudgeEvaluator),
+    CodeEvaluator(models::EvaluatorCodeEvaluator),
 }
 
-impl Default for Evaluator {
-    fn default() -> Self {
-        Self::LlmAsJudgeEvaluator1(Default::default())
+impl std::fmt::Display for Evaluator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::LlmAsJudgeEvaluator(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+            Self::CodeEvaluator(value) => match serde_json::to_string(value) {
+                Ok(s) => write!(f, "{}", s),
+                Err(_) => Err(std::fmt::Error),
+            },
+        }
     }
 }

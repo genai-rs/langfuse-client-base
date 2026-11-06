@@ -41,6 +41,10 @@ pub enum BlobStorageExportFieldGroup {
     ScoreMetadata,
     #[serde(rename = "score_provenance")]
     ScoreProvenance,
+
+    /// A value this client does not know. It is not kept: this serializes as `"unknown"`, which the API does not list.
+    #[serde(rename = "unknown", other)]
+    Unknown,
 }
 
 impl std::fmt::Display for BlobStorageExportFieldGroup {
@@ -59,12 +63,61 @@ impl std::fmt::Display for BlobStorageExportFieldGroup {
             Self::TraceContext => write!(f, "trace_context"),
             Self::ScoreMetadata => write!(f, "score_metadata"),
             Self::ScoreProvenance => write!(f, "score_provenance"),
+            Self::Unknown => write!(f, "unknown"),
         }
     }
 }
 
-impl Default for BlobStorageExportFieldGroup {
-    fn default() -> BlobStorageExportFieldGroup {
-        Self::Core
+impl ::std::str::FromStr for BlobStorageExportFieldGroup {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "core" => Ok(Self::Core),
+            "basic" => Ok(Self::Basic),
+            "time" => Ok(Self::Time),
+            "io" => Ok(Self::Io),
+            "metadata" => Ok(Self::Metadata),
+            "model" => Ok(Self::Model),
+            "usage" => Ok(Self::Usage),
+            "prompt" => Ok(Self::Prompt),
+            "metrics" => Ok(Self::Metrics),
+            "tools" => Ok(Self::Tools),
+            "trace_context" => Ok(Self::TraceContext),
+            "score_metadata" => Ok(Self::ScoreMetadata),
+            "score_provenance" => Ok(Self::ScoreProvenance),
+            _ => Err(crate::models::ParseEnumError::new(
+                "BlobStorageExportFieldGroup",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for BlobStorageExportFieldGroup {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for BlobStorageExportFieldGroup {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for BlobStorageExportFieldGroup {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

@@ -29,8 +29,45 @@ impl std::fmt::Display for EvaluationRuleBooleanFilterOperator {
     }
 }
 
-impl Default for EvaluationRuleBooleanFilterOperator {
-    fn default() -> EvaluationRuleBooleanFilterOperator {
-        Self::Equal
+impl ::std::str::FromStr for EvaluationRuleBooleanFilterOperator {
+    type Err = crate::models::ParseEnumError;
+
+    fn from_str(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        match value {
+            "=" => Ok(Self::Equal),
+            "<>" => Ok(Self::LessThanGreaterThan),
+            _ => Err(crate::models::ParseEnumError::new(
+                "EvaluationRuleBooleanFilterOperator",
+                value,
+            )),
+        }
+    }
+}
+
+impl ::std::convert::TryFrom<&str> for EvaluationRuleBooleanFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(value: &str) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<&::std::string::String> for EvaluationRuleBooleanFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: &::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
+    }
+}
+
+impl ::std::convert::TryFrom<::std::string::String> for EvaluationRuleBooleanFilterOperator {
+    type Error = crate::models::ParseEnumError;
+
+    fn try_from(
+        value: ::std::string::String,
+    ) -> ::std::result::Result<Self, crate::models::ParseEnumError> {
+        value.parse()
     }
 }

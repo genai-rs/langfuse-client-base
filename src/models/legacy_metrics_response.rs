@@ -11,13 +11,13 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct LegacyMetricsResponse {
     /// The metrics data. Each item in the list contains the metric values and dimensions requested in the query. Format varies based on the query parameters. Histograms will return an array with [lower, upper, height] tuples.
     #[serde(rename = "data")]
     pub data: Vec<std::collections::HashMap<String, serde_json::Value>>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
-    pub _deprecation: Option<Box<models::Deprecation>>,
+    pub _deprecation: Option<models::Deprecation>,
 }
 
 impl LegacyMetricsResponse {

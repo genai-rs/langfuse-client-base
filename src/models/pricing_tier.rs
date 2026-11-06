@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// PricingTier : Pricing tier definition with conditional pricing based on usage thresholds or observation attributes.  Pricing tiers enable accurate cost tracking for LLM providers that charge different rates based on usage patterns or request attributes. For example, some providers charge higher rates when context size exceeds certain thresholds or when an accelerated service tier is selected.  How tier matching works: 1. Tiers are evaluated in ascending priority order (priority 1 before priority 2, etc.) 2. The first tier where ALL conditions match is selected 3. If no conditional tiers match, the default tier is used as a fallback 4. The default tier has priority 0 and no conditions  Why priorities matter: - Lower priority numbers are evaluated first, allowing you to define specific cases before general ones - Example: Priority 1 for \"high usage\" (>200K tokens), Priority 2 for \"medium usage\" (>100K tokens), Priority 0 for default - Without proper ordering, a less specific condition might match before a more specific one  Every model must have exactly one default tier to ensure cost calculation always succeeds.
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PricingTier {
     /// Unique identifier for the pricing tier
     #[serde(rename = "id")]
@@ -25,7 +25,7 @@ pub struct PricingTier {
     pub is_default: bool,
     /// Priority for tier matching evaluation. Lower numbers = higher priority (evaluated first).  The default tier must always have priority 0. Conditional tiers should have priority 1, 2, 3, etc.  Example ordering: - Priority 0: Default tier (no conditions, always matches as fallback) - Priority 1: High usage tier (e.g., >200K tokens) - Priority 2: Medium usage tier (e.g., >100K tokens)  This ensures more specific conditions are checked before general ones.
     #[serde(rename = "priority")]
-    pub priority: i32,
+    pub priority: i64,
     /// Array of conditions that must ALL be met for this tier to match (AND logic).  The default tier must have an empty conditions array. Conditional tiers should have one or more conditions that define when this tier's pricing applies.  Multiple conditions enable complex matching scenarios (e.g., \"high input tokens AND low output tokens\").
     #[serde(rename = "conditions")]
     pub conditions: Vec<models::PricingTierCondition>,
@@ -40,7 +40,7 @@ impl PricingTier {
         id: String,
         name: String,
         is_default: bool,
-        priority: i32,
+        priority: i64,
         conditions: Vec<models::PricingTierCondition>,
         prices: std::collections::HashMap<String, f64>,
     ) -> PricingTier {

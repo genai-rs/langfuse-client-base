@@ -96,8 +96,8 @@ pub async fn dataset_run_items_list(
     configuration: &configuration::Configuration,
     dataset_id: &str,
     run_name: &str,
-    page: Option<i32>,
-    limit: Option<i32>,
+    page: Option<i64>,
+    limit: Option<i64>,
 ) -> Result<models::PaginatedDatasetRunItems, Error<DatasetRunItemsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_dataset_id = dataset_id;

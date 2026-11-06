@@ -158,9 +158,7 @@ async fn scores_create_posts_json_and_parses_response() {
 
     let response = scores_api::scores_create()
         .configuration(&config(&server))
-        .create_scores_request(models::CreateScoresRequest::CreateScoreRequest(Box::new(
-            request,
-        )))
+        .create_scores_request(models::CreateScoresRequest::CreateScoreRequest(request))
         .call()
         .await
         .expect("200 response should deserialise");
@@ -186,9 +184,7 @@ async fn scores_create_400_yields_response_error_with_entity() {
     );
     let err = scores_api::scores_create()
         .configuration(&config(&server))
-        .create_scores_request(models::CreateScoresRequest::CreateScoreRequest(Box::new(
-            request,
-        )))
+        .create_scores_request(models::CreateScoresRequest::CreateScoreRequest(request))
         .call()
         .await
         .expect_err("400 must be an error");
