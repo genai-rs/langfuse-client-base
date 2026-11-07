@@ -10,7 +10,11 @@ Name | Type | Description | Notes
 **bucket_name** | **String** |  | 
 **endpoint** | Option<**String**> |  | 
 **region** | **String** |  | 
+**auth_type** | [**models::BlobStorageIntegrationAuthType**](BlobStorageIntegrationAuthType.md) |  | 
 **access_key_id** | Option<**String**> |  | 
+**role_arn** | Option<**String**> | IAM role Langfuse assumes. May be set while `authType` is `ACCESS_KEYS` if the integration used `ROLE_ARN` before. | 
+**external_id** | Option<**String**> | External ID Langfuse passes when assuming `roleArn`. Require it in the role's trust policy with an `sts:ExternalId` condition. Null until the integration first uses `ROLE_ARN`. | 
+**cross_account_role_arn** | Option<**String**> | Langfuse role that must be trusted by `roleArn`. Null when the deployment does not support IAM role auth or the organization is not on an Enterprise plan. | 
 **prefix** | **String** |  | 
 **export_frequency** | [**models::BlobStorageExportFrequency**](BlobStorageExportFrequency.md) |  | 
 **enabled** | **bool** |  | 

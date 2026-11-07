@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **input_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per input unit | 
 **output_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per output unit | 
 **total_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set. | 
-**tokenizer_id** | Option<**String**> | Optional. Tokenizer to be applied to observations which match to this model. See docs for more details. | 
-**tokenizer_config** | Option<**serde_json::Value**> | Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details. | 
+**tokenizer_id** | Option<**String**> | Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage. | 
+**tokenizer_config** | Option<**serde_json::Value**> | Legacy tokenizer configuration retained for API compatibility. Ingestion no longer uses it to infer observation usage. | 
 **is_langfuse_managed** | **bool** |  | 
 **created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the model was created | 
 **prices** | [**std::collections::HashMap<String, models::ModelPrice>**](ModelPrice.md) | Deprecated. Use 'pricingTiers' instead for models with usage-based pricing variations.  This field shows prices by usage type from the default pricing tier. Maintained for backward compatibility. If the model uses tiered pricing, this field will be populated from the default tier's prices. | 
