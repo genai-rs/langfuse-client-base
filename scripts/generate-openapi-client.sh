@@ -22,7 +22,7 @@ OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
 # the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.16.0-og7.27.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.16.0}"
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.17.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
