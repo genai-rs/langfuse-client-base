@@ -38,6 +38,8 @@ pub mod blob_storage_export_mode;
 pub use self::blob_storage_export_mode::BlobStorageExportMode;
 pub mod blob_storage_export_source;
 pub use self::blob_storage_export_source::BlobStorageExportSource;
+pub mod blob_storage_integration_auth_type;
+pub use self::blob_storage_integration_auth_type::BlobStorageIntegrationAuthType;
 pub mod blob_storage_integration_deletion_response;
 pub use self::blob_storage_integration_deletion_response::BlobStorageIntegrationDeletionResponse;
 pub mod blob_storage_integration_file_type;

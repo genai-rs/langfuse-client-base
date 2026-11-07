@@ -10,8 +10,8 @@
 
 use serde::{Deserialize, Serialize};
 
-/// ModelTokenizerId : Tokenizer supported by Langfuse for model usage inference.
-/// Tokenizer supported by Langfuse for model usage inference.
+/// ModelTokenizerId : Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage.
+/// Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum ModelTokenizerId {
     #[serde(rename = "openai")]

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// Model : Model definition used for transforming usage into USD cost and/or tokenization.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns or observation attributes  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
+/// Model : Model definition used for calculating USD cost from usage submitted with observations.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns or observation attributes  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct Model {
     #[serde(rename = "id")]
@@ -36,10 +36,10 @@ pub struct Model {
     /// Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set.
     #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
     pub total_price: Option<f64>,
-    /// Optional. Tokenizer to be applied to observations which match to this model. See docs for more details.
+    /// Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage.
     #[serde(rename = "tokenizerId", deserialize_with = "Option::deserialize")]
     pub tokenizer_id: Option<String>,
-    /// Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details.
+    /// Legacy tokenizer configuration retained for API compatibility. Ingestion no longer uses it to infer observation usage.
     #[serde(rename = "tokenizerConfig", deserialize_with = "Option::deserialize")]
     pub tokenizer_config: Option<serde_json::Value>,
     #[serde(rename = "isLangfuseManaged")]
@@ -56,7 +56,7 @@ pub struct Model {
 }
 
 impl Model {
-    /// Model definition used for transforming usage into USD cost and/or tokenization.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns or observation attributes  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
+    /// Model definition used for calculating USD cost from usage submitted with observations.  Models can have either simple flat pricing or tiered pricing: - Flat pricing: Single price per usage type (legacy, but still supported) - Tiered pricing: Multiple pricing tiers with conditional matching based on usage patterns or observation attributes  The pricing tiers approach is recommended for models with usage-based pricing variations. When using tiered pricing, the flat price fields (inputPrice, outputPrice, prices) are populated from the default tier for backward compatibility.
     pub fn new(
         id: String,
         model_name: String,

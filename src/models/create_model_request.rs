@@ -63,7 +63,7 @@ pub struct CreateModelRequest {
     pub pricing_tiers: Option<Option<Vec<models::PricingTierInput>>>,
     #[serde(rename = "tokenizerId", skip_serializing_if = "Option::is_none")]
     pub tokenizer_id: Option<models::ModelTokenizerId>,
-    /// Optional. Configuration for the selected tokenizer. Needs to be JSON. See docs for more details.
+    /// Legacy tokenizer configuration retained for API compatibility. Ingestion no longer uses it to infer observation usage.
     #[serde(
         rename = "tokenizerConfig",
         default,

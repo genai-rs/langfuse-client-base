@@ -25,8 +25,22 @@ pub struct BlobStorageIntegrationResponse {
     pub endpoint: Option<String>,
     #[serde(rename = "region")]
     pub region: String,
+    #[serde(rename = "authType")]
+    pub auth_type: models::BlobStorageIntegrationAuthType,
     #[serde(rename = "accessKeyId", deserialize_with = "Option::deserialize")]
     pub access_key_id: Option<String>,
+    /// IAM role Langfuse assumes. May be set while `authType` is `ACCESS_KEYS` if the integration used `ROLE_ARN` before.
+    #[serde(rename = "roleArn", deserialize_with = "Option::deserialize")]
+    pub role_arn: Option<String>,
+    /// External ID Langfuse passes when assuming `roleArn`. Require it in the role's trust policy with an `sts:ExternalId` condition. Null until the integration first uses `ROLE_ARN`.
+    #[serde(rename = "externalId", deserialize_with = "Option::deserialize")]
+    pub external_id: Option<String>,
+    /// Langfuse role that must be trusted by `roleArn`. Null when the deployment does not support IAM role auth or the organization is not on an Enterprise plan.
+    #[serde(
+        rename = "crossAccountRoleArn",
+        deserialize_with = "Option::deserialize"
+    )]
+    pub cross_account_role_arn: Option<String>,
     #[serde(rename = "prefix")]
     pub prefix: String,
     #[serde(rename = "exportFrequency")]
@@ -70,7 +84,11 @@ impl BlobStorageIntegrationResponse {
         bucket_name: String,
         endpoint: Option<String>,
         region: String,
+        auth_type: models::BlobStorageIntegrationAuthType,
         access_key_id: Option<String>,
+        role_arn: Option<String>,
+        external_id: Option<String>,
+        cross_account_role_arn: Option<String>,
         prefix: String,
         export_frequency: models::BlobStorageExportFrequency,
         enabled: bool,
@@ -95,7 +113,11 @@ impl BlobStorageIntegrationResponse {
             bucket_name,
             endpoint,
             region,
+            auth_type,
             access_key_id,
+            role_arn,
+            external_id,
+            cross_account_role_arn,
             prefix,
             export_frequency,
             enabled,
