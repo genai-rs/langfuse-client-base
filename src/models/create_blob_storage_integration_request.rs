@@ -32,7 +32,17 @@ pub struct CreateBlobStorageIntegrationRequest {
     /// Storage region used by S3-compatible clients (AWS, GCS, Cloudflare R2, MinIO, Azure location IDs such as eastus, OCI). Leading and trailing whitespace is removed. The remaining value must be 1-63 letters, numbers, or hyphens, and cannot start or end with a hyphen. Examples: us-east-1, europe-west1, eastus, auto. Not used by GOOGLE_CLOUD_STORAGE; pass auto.
     #[serde(rename = "region")]
     pub region: String,
-    /// Access key ID for authentication. Not used for GOOGLE_CLOUD_STORAGE.
+    #[serde(rename = "authType", skip_serializing_if = "Option::is_none")]
+    pub auth_type: Option<models::BlobStorageIntegrationAuthType>,
+    /// ARN of the IAM role in your AWS account that Langfuse assumes when `authType` is `ROLE_ARN`, e.g. `arn:aws:iam::123456789012:role/langfuse-export`. When omitted on update, the stored role ARN is kept.
+    #[serde(
+        rename = "roleArn",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub role_arn: Option<Option<String>>,
+    /// Access key ID for authentication. Not used for GOOGLE_CLOUD_STORAGE or when `authType` is `ROLE_ARN`.
     #[serde(
         rename = "accessKeyId",
         default,
@@ -114,6 +124,8 @@ impl CreateBlobStorageIntegrationRequest {
             bucket_name,
             endpoint: None,
             region,
+            auth_type: None,
+            role_arn: None,
             access_key_id: None,
             secret_access_key: None,
             prefix: None,
