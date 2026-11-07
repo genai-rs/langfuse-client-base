@@ -21,8 +21,8 @@ OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # fix lives in the generator: this script only prepares the spec and formats
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
-# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.14.0-og7.27.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.14.0}"
+# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.16.0-og7.27.0.
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.16.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
@@ -110,6 +110,10 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # modelUnions and unionDispatch (unions from the model, decoded by their tag),
 # integersAsI64 (i64 unless format: int32) and openEnums (a catch-all for values
 # a response can hold that the spec does not list).
+# typedEventStreams and contentTypeMethods (timvw-rust 0.16.0) stay off: the
+# Langfuse spec has no text/event-stream responses and every operation uses
+# application/json only, so they have nothing to apply to (and
+# typedEventStreams would still add an unused `apis::sse` module).
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
     -g "$GENERATOR_NAME" \
