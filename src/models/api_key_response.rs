@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 /*
  * server
  *
@@ -40,6 +41,7 @@ pub struct ApiKeyResponse {
     )]
     pub name: Option<Option<String>>,
     /// Deprecated alias for name. Contains the same value as name.
+    #[deprecated]
     #[serde(
         rename = "note",
         default,

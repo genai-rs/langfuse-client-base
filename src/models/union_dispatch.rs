@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 //! Decoding of tagged unions: read the JSON value, look at the tag, decode only what it selects. A union
 //! calls these from the `dispatch` function next to its `Deserialize`.
 //!
