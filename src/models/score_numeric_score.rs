@@ -125,7 +125,6 @@ impl ScoreNumericScore {
         }
     }
 }
-///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
     #[serde(rename = "NUMERIC")]

@@ -102,7 +102,6 @@ impl ScoreV1TextScoreV1 {
         }
     }
 }
-///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
     #[serde(rename = "TEXT")]

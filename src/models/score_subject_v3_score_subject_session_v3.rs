@@ -24,7 +24,6 @@ impl ScoreSubjectV3ScoreSubjectSessionV3 {
         ScoreSubjectV3ScoreSubjectSessionV3 { id, kind }
     }
 }
-///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Kind {
     #[serde(rename = "session")]
