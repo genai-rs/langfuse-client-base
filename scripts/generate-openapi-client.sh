@@ -21,8 +21,8 @@ OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # fix lives in the generator: this script only prepares the spec and formats
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
-# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.18.0-og7.27.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.18.0}"
+# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.19.0-og7.27.0.
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.19.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
@@ -104,7 +104,11 @@ for generated_dir in "$BASE_CLIENT_DIR/src/apis" "$BASE_CLIENT_DIR/src/models"; 
 done
 rm -rf "$BASE_CLIENT_DIR/docs"
 
-# Run the generator (Docker paths). The Milestone 3 options of timvw-rust:
+# Run the generator (Docker paths). Since timvw-rust 0.19.0 the stock options
+# library=reqwest, supportAsync=true, supportMiddleware=true,
+# preferUnsignedInt=false and useSingleRequestParameter=false are fixed by the
+# generator and rejected when set, so they are not passed here.
+# The Milestone 3 options of timvw-rust:
 # boxOnlyCycles (Box only where a type contains itself), defaultOnlyWhereValid,
 # enumFromStr and noStructDisplay, qualifiedInlineNames (stable type names),
 # modelUnions and unionDispatch (unions from the model, decoded by their tag),
@@ -127,11 +131,6 @@ $GENERATOR_CMD generate \
     -o "/local" \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
-    --additional-properties=library=reqwest \
-    --additional-properties=supportAsync=true \
-    --additional-properties=supportMiddleware=true \
-    --additional-properties=preferUnsignedInt=false \
-    --additional-properties=useSingleRequestParameter=false \
     --additional-properties=boxOnlyCycles=true \
     --additional-properties=defaultOnlyWhereValid=true \
     --additional-properties=enumFromStr=true \
