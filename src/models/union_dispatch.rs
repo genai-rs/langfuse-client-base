@@ -42,39 +42,6 @@ pub(crate) fn decode<T: DeserializeOwned>(
     serde_json::from_value(value).map_err(|e| format!("{union}::{variant}: {e}"))
 }
 
-/// A variant to try: its name, and how to decode it.
-pub(crate) type Attempt<U> = (&'static str, fn(Value) -> Result<U, serde_json::Error>);
-
-/// Tries the variants selected in order, and keeps the error of each when none decodes.
-pub(crate) fn first_of<U>(
-    mut value: Value,
-    union: &str,
-    tag: &str,
-    attempts: &[Attempt<U>],
-) -> Result<U, String> {
-    let found = match value.get(tag) {
-        Some(Value::String(found)) => format!("`{tag}` {found:?}"),
-        _ if value.is_object() => format!("no `{tag}`"),
-        _ => kind(&value).to_owned(),
-    };
-    let mut errors = Vec::with_capacity(attempts.len());
-    for (index, (variant, decode)) in attempts.iter().enumerate() {
-        let input = if index + 1 == attempts.len() {
-            std::mem::take(&mut value)
-        } else {
-            value.clone()
-        };
-        match decode(input) {
-            Ok(decoded) => return Ok(decoded),
-            Err(e) => errors.push(format!("{variant}: {e}")),
-        }
-    }
-    Err(format!(
-        "{union}: no variant decodes {found}: {}",
-        errors.join("; ")
-    ))
-}
-
 /// The error of a tag no variant has.
 #[allow(dead_code)]
 pub(crate) fn unknown_tag(union: &str, tag: &str, value: &str) -> String {

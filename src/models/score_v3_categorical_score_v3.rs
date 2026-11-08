@@ -112,7 +112,6 @@ impl ScoreV3CategoricalScoreV3 {
         }
     }
 }
-///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
     #[serde(rename = "CATEGORICAL")]

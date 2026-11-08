@@ -36,7 +36,6 @@ impl ScoreSubjectV3ScoreSubjectObservationV3 {
         }
     }
 }
-///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Kind {
     #[serde(rename = "observation")]
