@@ -1,7 +1,7 @@
 # langfuse-client-base 0.16.2 → 0.17.0: the timvw-rust Milestone 3 rendering
 
 This release generates with `timvw-rust` 0.14.0 (was 0.2.0) on openapi-generator 7.27.0 (was 7.25.0), and turns on the
-Milestone 3 options of the [generator design](https://claude.ai/artifact/ABar8Up91gjVMDHgHL1GE3) that
+Milestone 3 options of the [generator](https://github.com/timvw/openapi-generator-timvw-rust#readme) that
 openai-client-base adopted in 0.18.0 to 0.22.0: `boxOnlyCycles`, `defaultOnlyWhereValid`, `enumFromStr`,
 `noStructDisplay`, `qualifiedInlineNames`, `modelUnions`, `unionDispatch`, `integersAsI64` and `openEnums`. The Langfuse
 spec and its v3 compatibility layer are unchanged. The machine-readable census is `api-diff-0.16.2-to-0.17.0.json` in
