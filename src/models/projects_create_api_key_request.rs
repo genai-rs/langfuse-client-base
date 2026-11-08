@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 /*
  * server
  *
@@ -21,6 +22,7 @@ pub struct ProjectsCreateApiKeyRequest {
     )]
     pub name: Option<Option<String>>,
     /// Deprecated alias for name. Cannot be provided together with name, even if either value is an empty string.
+    #[deprecated]
     #[serde(
         rename = "note",
         default,

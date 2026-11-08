@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 pub mod annotation_queue;
 pub use self::annotation_queue::AnnotationQueue;
 pub mod annotation_queue_assignment_request;

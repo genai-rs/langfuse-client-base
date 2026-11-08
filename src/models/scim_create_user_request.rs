@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 /*
  * server
  *
@@ -35,6 +36,7 @@ pub struct ScimCreateUserRequest {
     )]
     pub active: Option<Option<bool>>,
     /// Ignored. Accepted only for compatibility with identity providers that always send a password on user creation (Okta sends a placeholder value even when password sync is disabled). No credential is created for the user; provisioned users authenticate via SSO or set a password themselves through the password reset flow.
+    #[deprecated]
     #[serde(
         rename = "password",
         default,

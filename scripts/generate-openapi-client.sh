@@ -114,10 +114,13 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # Langfuse spec has no text/event-stream responses and every operation uses
 # application/json only, so they have nothing to apply to (and
 # typedEventStreams would still add an unused `apis::sse` module).
-# The options of timvw-rust 0.18.0 (typedEnumParameters, nullableUnionFields,
-# schemaDefaultDocs, deprecatedAttributes, pruneAllHelpers) stay off: each
-# changes the public API or what a -D warnings consumer sees. See the
-# generator's README, "Renderings from the generator comparison".
+# The options of timvw-rust 0.18.0 (see the generator's README, "Renderings
+# from the generator comparison"): schemaDefaultDocs notes defaults in the
+# documentation; nullableUnionFields lets a nullable union field send null;
+# typedEnumParameters gives inline enum parameters an enum type (the current
+# spec has none); deprecatedAttributes marks deprecated properties and schemas
+# #[deprecated]. langfuse-ergonomic uses none of the deprecated items.
+# pruneAllHelpers stays off: there is nothing for it to prune here.
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
     -g "$GENERATOR_NAME" \
@@ -137,7 +140,11 @@ $GENERATOR_CMD generate \
     --additional-properties=modelUnions=true \
     --additional-properties=unionDispatch=true \
     --additional-properties=integersAsI64=true \
-    --additional-properties=openEnums=true
+    --additional-properties=openEnums=true \
+    --additional-properties=schemaDefaultDocs=true \
+    --additional-properties=nullableUnionFields=true \
+    --additional-properties=typedEnumParameters=true \
+    --additional-properties=deprecatedAttributes=true
 
 # Drop OpenAPI Generator's transient metadata while keeping the provenance
 # manifest available for CI artifact upload and local review.
