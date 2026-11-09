@@ -77,7 +77,7 @@ let config = Configuration {
 let request = models::IngestionBatchRequest::new(Vec::new());
 let response = ingestion_api::ingestion_batch()
     .configuration(&config)
-    .ingestion_batch_request(request)
+    .ingestion_batch_request(&request)
     .call()
     .await?;
 # Ok(())
