@@ -66,7 +66,7 @@ pub enum PromptsListError {
 #[bon::builder]
 pub async fn prompts_create(
     configuration: &configuration::Configuration,
-    create_prompt_request: models::CreatePromptRequest,
+    create_prompt_request: &models::CreatePromptRequest,
 ) -> Result<models::Prompt, Error<PromptsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_prompt_request = create_prompt_request;
@@ -82,7 +82,7 @@ pub async fn prompts_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_prompt_request);
+    req_builder = req_builder.json(p_body_create_prompt_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -99,17 +99,41 @@ pub async fn prompts_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<PromptsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<PromptsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(PromptsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -156,13 +180,37 @@ pub async fn prompts_delete(
     if !status.is_client_error() && !status.is_server_error() {
         Ok(())
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<PromptsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<PromptsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(PromptsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -219,17 +267,41 @@ pub async fn prompts_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<PromptsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<PromptsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(PromptsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -275,10 +347,10 @@ pub async fn prompts_list(
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_updated_at {
-        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_updated_at {
-        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -305,16 +377,40 @@ pub async fn prompts_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PromptMetaListResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PromptMetaListResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PromptMetaListResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PromptMetaListResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<PromptsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<PromptsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(PromptsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

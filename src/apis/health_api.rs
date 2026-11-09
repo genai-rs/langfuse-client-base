@@ -54,16 +54,41 @@ pub async fn health_health(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::HealthResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::HealthResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::HealthResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::HealthResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<HealthHealthError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<HealthHealthError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::Status405),
+            503 => Some(HealthHealthError::Status503()),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(HealthHealthError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

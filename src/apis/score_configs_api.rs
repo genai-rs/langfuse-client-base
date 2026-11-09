@@ -66,7 +66,7 @@ pub enum ScoreConfigsUpdateError {
 #[bon::builder]
 pub async fn score_configs_create(
     configuration: &configuration::Configuration,
-    create_score_config_request: models::CreateScoreConfigRequest,
+    create_score_config_request: &models::CreateScoreConfigRequest,
 ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_score_config_request = create_score_config_request;
@@ -82,7 +82,7 @@ pub async fn score_configs_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_score_config_request);
+    req_builder = req_builder.json(p_body_create_score_config_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -99,17 +99,41 @@ pub async fn score_configs_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoreConfigsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoreConfigsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -155,17 +179,41 @@ pub async fn score_configs_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfigs`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfigs`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfigs`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfigs`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoreConfigsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoreConfigsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -207,17 +255,41 @@ pub async fn score_configs_get_by_id(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoreConfigsGetByIdError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoreConfigsGetByIdError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsGetByIdError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -226,7 +298,7 @@ pub async fn score_configs_get_by_id(
 pub async fn score_configs_update(
     configuration: &configuration::Configuration,
     config_id: &str,
-    update_score_config_request: models::UpdateScoreConfigRequest,
+    update_score_config_request: &models::UpdateScoreConfigRequest,
 ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_config_id = config_id;
@@ -247,7 +319,7 @@ pub async fn score_configs_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_score_config_request);
+    req_builder = req_builder.json(p_body_update_score_config_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -264,16 +336,40 @@ pub async fn score_configs_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScoreConfig`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScoreConfig`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoreConfigsUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoreConfigsUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoreConfigsUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

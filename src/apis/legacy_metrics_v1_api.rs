@@ -62,16 +62,40 @@ pub async fn legacy_metrics_v1_metrics(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LegacyMetricsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LegacyMetricsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LegacyMetricsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LegacyMetricsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LegacyMetricsV1MetricsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LegacyMetricsV1MetricsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LegacyMetricsV1MetricsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

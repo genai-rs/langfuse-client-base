@@ -89,7 +89,7 @@ pub enum UnstableDashboardWidgetsUpdateError {
 #[bon::builder]
 pub async fn unstable_dashboard_widgets_create(
     configuration: &configuration::Configuration,
-    unstable_create_dashboard_widget_request: models::UnstableCreateDashboardWidgetRequest,
+    unstable_create_dashboard_widget_request: &models::UnstableCreateDashboardWidgetRequest,
 ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_unstable_create_dashboard_widget_request = unstable_create_dashboard_widget_request;
@@ -108,7 +108,7 @@ pub async fn unstable_dashboard_widgets_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_unstable_create_dashboard_widget_request);
+    req_builder = req_builder.json(p_body_unstable_create_dashboard_widget_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -125,18 +125,47 @@ pub async fn unstable_dashboard_widgets_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableDashboardWidgetsCreateError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableDashboardWidgetsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -181,18 +210,50 @@ pub async fn unstable_dashboard_widgets_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDeleteDashboardWidgetResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableDashboardWidgetsDeleteError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableDashboardWidgetsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status405),
+            409 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status409),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -234,17 +295,47 @@ pub async fn unstable_dashboard_widgets_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableDashboardWidgetsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableDashboardWidgetsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -293,17 +384,47 @@ pub async fn unstable_dashboard_widgets_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidgetList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidgetList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidgetList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidgetList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableDashboardWidgetsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableDashboardWidgetsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -312,7 +433,7 @@ pub async fn unstable_dashboard_widgets_list(
 pub async fn unstable_dashboard_widgets_update(
     configuration: &configuration::Configuration,
     widget_id: &str,
-    unstable_update_dashboard_widget_request: models::UnstableUpdateDashboardWidgetRequest,
+    unstable_update_dashboard_widget_request: &models::UnstableUpdateDashboardWidgetRequest,
 ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_widget_id = widget_id;
@@ -333,7 +454,7 @@ pub async fn unstable_dashboard_widgets_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_unstable_update_dashboard_widget_request);
+    req_builder = req_builder.json(p_body_unstable_update_dashboard_widget_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -350,17 +471,46 @@ pub async fn unstable_dashboard_widgets_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableDashboardWidget`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableDashboardWidget`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableDashboardWidgetsUpdateError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableDashboardWidgetsUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableDashboardWidgetsUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

@@ -26,3 +26,12 @@ impl UnstableTopicFacetRef {
         UnstableTopicFacetRef { id, name, version }
     }
 }
+
+impl crate::models::validation::Validate for UnstableTopicFacetRef {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

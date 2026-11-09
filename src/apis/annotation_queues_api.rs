@@ -138,7 +138,7 @@ pub enum AnnotationQueuesUpdateQueueItemError {
 #[bon::builder]
 pub async fn annotation_queues_create_queue(
     configuration: &configuration::Configuration,
-    create_annotation_queue_request: models::CreateAnnotationQueueRequest,
+    create_annotation_queue_request: &models::CreateAnnotationQueueRequest,
 ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_annotation_queue_request = create_annotation_queue_request;
@@ -154,7 +154,7 @@ pub async fn annotation_queues_create_queue(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_annotation_queue_request);
+    req_builder = req_builder.json(p_body_create_annotation_queue_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -171,17 +171,41 @@ pub async fn annotation_queues_create_queue(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueue`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueue`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueue`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueue`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesCreateQueueError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesCreateQueueError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -190,7 +214,7 @@ pub async fn annotation_queues_create_queue(
 pub async fn annotation_queues_create_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
-    annotation_queue_assignment_request: models::AnnotationQueueAssignmentRequest,
+    annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest,
 ) -> Result<
     models::CreateAnnotationQueueAssignmentResponse,
     Error<AnnotationQueuesCreateQueueAssignmentError>,
@@ -214,7 +238,7 @@ pub async fn annotation_queues_create_queue_assignment(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_annotation_queue_assignment_request);
+    req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -231,18 +255,41 @@ pub async fn annotation_queues_create_queue_assignment(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateAnnotationQueueAssignmentResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateAnnotationQueueAssignmentResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateAnnotationQueueAssignmentResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateAnnotationQueueAssignmentResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesCreateQueueAssignmentError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesCreateQueueAssignmentError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueAssignmentError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -251,7 +298,7 @@ pub async fn annotation_queues_create_queue_assignment(
 pub async fn annotation_queues_create_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
-    create_annotation_queue_item_request: models::CreateAnnotationQueueItemRequest,
+    create_annotation_queue_item_request: &models::CreateAnnotationQueueItemRequest,
 ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -272,7 +319,7 @@ pub async fn annotation_queues_create_queue_item(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_annotation_queue_item_request);
+    req_builder = req_builder.json(p_body_create_annotation_queue_item_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -289,18 +336,41 @@ pub async fn annotation_queues_create_queue_item(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesCreateQueueItemError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesCreateQueueItemError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesCreateQueueItemError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -309,7 +379,7 @@ pub async fn annotation_queues_create_queue_item(
 pub async fn annotation_queues_delete_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
-    annotation_queue_assignment_request: models::AnnotationQueueAssignmentRequest,
+    annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest,
 ) -> Result<
     models::DeleteAnnotationQueueAssignmentResponse,
     Error<AnnotationQueuesDeleteQueueAssignmentError>,
@@ -333,7 +403,7 @@ pub async fn annotation_queues_delete_queue_assignment(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_annotation_queue_assignment_request);
+    req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -350,18 +420,41 @@ pub async fn annotation_queues_delete_queue_assignment(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteAnnotationQueueAssignmentResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteAnnotationQueueAssignmentResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteAnnotationQueueAssignmentResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteAnnotationQueueAssignmentResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesDeleteQueueAssignmentError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesDeleteQueueAssignmentError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueAssignmentError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -409,18 +502,41 @@ pub async fn annotation_queues_delete_queue_item(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteAnnotationQueueItemResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteAnnotationQueueItemResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteAnnotationQueueItemResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteAnnotationQueueItemResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesDeleteQueueItemError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesDeleteQueueItemError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesDeleteQueueItemError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -462,17 +578,41 @@ pub async fn annotation_queues_get_queue(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueue`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueue`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueue`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueue`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesGetQueueError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesGetQueueError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -517,17 +657,41 @@ pub async fn annotation_queues_get_queue_item(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesGetQueueItemError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesGetQueueItemError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesGetQueueItemError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -584,18 +748,41 @@ pub async fn annotation_queues_list_queue_items(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedAnnotationQueueItems`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedAnnotationQueueItems`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedAnnotationQueueItems`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedAnnotationQueueItems`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesListQueueItemsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesListQueueItemsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueueItemsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -641,17 +828,41 @@ pub async fn annotation_queues_list_queues(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedAnnotationQueues`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedAnnotationQueues`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedAnnotationQueues`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedAnnotationQueues`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesListQueuesError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesListQueuesError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesListQueuesError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -661,7 +872,7 @@ pub async fn annotation_queues_update_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
     item_id: &str,
-    update_annotation_queue_item_request: models::UpdateAnnotationQueueItemRequest,
+    update_annotation_queue_item_request: &models::UpdateAnnotationQueueItemRequest,
 ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -684,7 +895,7 @@ pub async fn annotation_queues_update_queue_item(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_annotation_queue_item_request);
+    req_builder = req_builder.json(p_body_update_annotation_queue_item_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -701,17 +912,40 @@ pub async fn annotation_queues_update_queue_item(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AnnotationQueueItem`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AnnotationQueueItem`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<AnnotationQueuesUpdateQueueItemError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<AnnotationQueuesUpdateQueueItemError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(AnnotationQueuesUpdateQueueItemError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

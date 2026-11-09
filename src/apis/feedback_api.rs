@@ -31,7 +31,7 @@ pub enum FeedbackSubmitError {
 #[bon::builder]
 pub async fn feedback_submit(
     configuration: &configuration::Configuration,
-    submit_feedback_request: models::SubmitFeedbackRequest,
+    submit_feedback_request: &models::SubmitFeedbackRequest,
 ) -> Result<models::SubmitFeedbackResponse, Error<FeedbackSubmitError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_submit_feedback_request = submit_feedback_request;
@@ -47,7 +47,7 @@ pub async fn feedback_submit(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_submit_feedback_request);
+    req_builder = req_builder.json(p_body_submit_feedback_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -64,16 +64,41 @@ pub async fn feedback_submit(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SubmitFeedbackResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SubmitFeedbackResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SubmitFeedbackResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SubmitFeedbackResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<FeedbackSubmitError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<FeedbackSubmitError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::Status405),
+            409 => Some(FeedbackSubmitError::Status409()),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(FeedbackSubmitError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

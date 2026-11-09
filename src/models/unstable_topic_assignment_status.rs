@@ -33,6 +33,15 @@ impl std::fmt::Display for UnstableTopicAssignmentStatus {
     }
 }
 
+impl crate::models::validation::Validate for UnstableTopicAssignmentStatus {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for UnstableTopicAssignmentStatus {
     type Err = crate::models::ParseEnumError;
 

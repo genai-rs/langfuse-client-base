@@ -66,7 +66,7 @@ pub enum DatasetItemsListError {
 #[bon::builder]
 pub async fn dataset_items_create(
     configuration: &configuration::Configuration,
-    create_dataset_item_request: models::CreateDatasetItemRequest,
+    create_dataset_item_request: &models::CreateDatasetItemRequest,
 ) -> Result<models::DatasetItem, Error<DatasetItemsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_dataset_item_request = create_dataset_item_request;
@@ -82,7 +82,7 @@ pub async fn dataset_items_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_dataset_item_request);
+    req_builder = req_builder.json(p_body_create_dataset_item_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -99,17 +99,41 @@ pub async fn dataset_items_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DatasetItem`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DatasetItem`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DatasetItem`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DatasetItem`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<DatasetItemsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<DatasetItemsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -153,17 +177,41 @@ pub async fn dataset_items_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteDatasetItemResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteDatasetItemResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteDatasetItemResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteDatasetItemResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<DatasetItemsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<DatasetItemsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -205,17 +253,41 @@ pub async fn dataset_items_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DatasetItem`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DatasetItem`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DatasetItem`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DatasetItem`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<DatasetItemsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<DatasetItemsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -251,7 +323,7 @@ pub async fn dataset_items_list(
         req_builder = req_builder.query(&[("sourceObservationId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_version {
-        req_builder = req_builder.query(&[("version", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("version", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_page {
         req_builder = req_builder.query(&[("page", &param_value.to_string())]);
@@ -281,16 +353,40 @@ pub async fn dataset_items_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedDatasetItems`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedDatasetItems`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedDatasetItems`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedDatasetItems`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<DatasetItemsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<DatasetItemsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(DatasetItemsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

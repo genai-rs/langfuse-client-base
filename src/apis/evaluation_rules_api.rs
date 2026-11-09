@@ -90,7 +90,7 @@ pub enum EvaluationRulesUpdateError {
 #[bon::builder]
 pub async fn evaluation_rules_create(
     configuration: &configuration::Configuration,
-    create_evaluation_rule_request: models::CreateEvaluationRuleRequest,
+    create_evaluation_rule_request: &models::CreateEvaluationRuleRequest,
 ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_evaluation_rule_request = create_evaluation_rule_request;
@@ -106,7 +106,7 @@ pub async fn evaluation_rules_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_evaluation_rule_request);
+    req_builder = req_builder.json(p_body_create_evaluation_rule_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -123,17 +123,50 @@ pub async fn evaluation_rules_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluationRulesCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluationRulesCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status405),
+            409 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status409),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -177,17 +210,47 @@ pub async fn evaluation_rules_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeletedEvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeletedEvaluationRule`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeletedEvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeletedEvaluationRule`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluationRulesDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluationRulesDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -229,17 +292,47 @@ pub async fn evaluation_rules_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluationRulesGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluationRulesGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -285,17 +378,47 @@ pub async fn evaluation_rules_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRulesPage`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRulesPage`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRulesPage`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRulesPage`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluationRulesListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluationRulesListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -304,7 +427,7 @@ pub async fn evaluation_rules_list(
 pub async fn evaluation_rules_update(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
-    update_evaluation_rule_request: models::UpdateEvaluationRuleRequest,
+    update_evaluation_rule_request: &models::UpdateEvaluationRuleRequest,
 ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
@@ -325,7 +448,7 @@ pub async fn evaluation_rules_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_evaluation_rule_request);
+    req_builder = req_builder.json(p_body_update_evaluation_rule_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -342,16 +465,49 @@ pub async fn evaluation_rules_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluationRule`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluationRule`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluationRulesUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluationRulesUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status405),
+            409 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status409),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluationRulesUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

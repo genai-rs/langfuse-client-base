@@ -80,9 +80,9 @@ pub async fn experiments_list(
     if let Some(ref param_value) = p_query_cursor {
         req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
     }
-    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_string())]);
+    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_rfc3339())]);
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_id {
         req_builder = req_builder.query(&[("id", &param_value.to_string())]);
@@ -118,17 +118,41 @@ pub async fn experiments_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExperimentsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExperimentsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExperimentsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExperimentsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ExperimentsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ExperimentsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -176,9 +200,9 @@ pub async fn experiments_list_items(
     if let Some(ref param_value) = p_query_cursor {
         req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
     }
-    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_string())]);
+    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_rfc3339())]);
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_experiment_id {
         req_builder = req_builder.query(&[("experimentId", &param_value.to_string())]);
@@ -217,16 +241,40 @@ pub async fn experiments_list_items(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExperimentItemsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExperimentItemsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExperimentItemsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExperimentItemsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ExperimentsListItemsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ExperimentsListItemsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ExperimentsListItemsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

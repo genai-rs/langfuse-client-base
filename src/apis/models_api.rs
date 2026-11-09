@@ -78,7 +78,7 @@ pub enum ModelsUpsertError {
 #[bon::builder]
 pub async fn models_create(
     configuration: &configuration::Configuration,
-    create_model_request: models::CreateModelRequest,
+    create_model_request: &models::CreateModelRequest,
 ) -> Result<models::Model, Error<ModelsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_model_request = create_model_request;
@@ -94,7 +94,7 @@ pub async fn models_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_model_request);
+    req_builder = req_builder.json(p_body_create_model_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -111,17 +111,41 @@ pub async fn models_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ModelsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ModelsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ModelsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -158,13 +182,37 @@ pub async fn models_delete(
     if !status.is_client_error() && !status.is_server_error() {
         Ok(())
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ModelsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ModelsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ModelsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -206,17 +254,41 @@ pub async fn models_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ModelsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ModelsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ModelsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -262,17 +334,41 @@ pub async fn models_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedModels`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedModels`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedModels`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedModels`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ModelsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ModelsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ModelsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -281,7 +377,7 @@ pub async fn models_list(
 pub async fn models_upsert(
     configuration: &configuration::Configuration,
     id: &str,
-    create_model_request: models::CreateModelRequest,
+    create_model_request: &models::CreateModelRequest,
 ) -> Result<models::Model, Error<ModelsUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_id = id;
@@ -300,7 +396,7 @@ pub async fn models_upsert(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_model_request);
+    req_builder = req_builder.json(p_body_create_model_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -317,16 +413,40 @@ pub async fn models_upsert(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Model`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Model`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ModelsUpsertError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ModelsUpsertError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ModelsUpsertError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

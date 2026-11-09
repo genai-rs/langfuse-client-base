@@ -36,6 +36,15 @@ impl std::fmt::Display for BlobStorageExportMode {
     }
 }
 
+impl crate::models::validation::Validate for BlobStorageExportMode {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for BlobStorageExportMode {
     type Err = crate::models::ParseEnumError;
 

@@ -25,3 +25,12 @@ impl MembershipRequest {
         MembershipRequest { user_id, role }
     }
 }
+
+impl crate::models::validation::Validate for MembershipRequest {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

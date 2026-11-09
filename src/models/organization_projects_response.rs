@@ -23,3 +23,12 @@ impl OrganizationProjectsResponse {
         OrganizationProjectsResponse { projects }
     }
 }
+
+impl crate::models::validation::Validate for OrganizationProjectsResponse {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

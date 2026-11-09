@@ -102,7 +102,7 @@ pub enum ScimListUsersError {
 #[bon::builder]
 pub async fn scim_create_user(
     configuration: &configuration::Configuration,
-    scim_create_user_request: models::ScimCreateUserRequest,
+    scim_create_user_request: &models::ScimCreateUserRequest,
 ) -> Result<models::ScimUser, Error<ScimCreateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_scim_create_user_request = scim_create_user_request;
@@ -118,7 +118,7 @@ pub async fn scim_create_user(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_scim_create_user_request);
+    req_builder = req_builder.json(p_body_scim_create_user_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -135,17 +135,41 @@ pub async fn scim_create_user(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUser`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUser`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUser`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUser`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimCreateUserError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimCreateUserError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimCreateUserError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -189,17 +213,41 @@ pub async fn scim_delete_user(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `serde_json::Value`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `serde_json::Value`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `serde_json::Value`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `serde_json::Value`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimDeleteUserError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimDeleteUserError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimDeleteUserError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -233,17 +281,41 @@ pub async fn scim_get_resource_types(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ResourceTypesResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ResourceTypesResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ResourceTypesResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ResourceTypesResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimGetResourceTypesError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimGetResourceTypesError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetResourceTypesError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -277,17 +349,41 @@ pub async fn scim_get_schemas(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SchemasResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SchemasResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SchemasResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SchemasResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimGetSchemasError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimGetSchemasError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetSchemasError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -324,17 +420,41 @@ pub async fn scim_get_service_provider_config(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ServiceProviderConfig`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ServiceProviderConfig`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ServiceProviderConfig`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ServiceProviderConfig`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimGetServiceProviderConfigError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimGetServiceProviderConfigError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetServiceProviderConfigError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -376,17 +496,41 @@ pub async fn scim_get_user(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUser`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUser`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUser`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUser`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimGetUserError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimGetUserError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimGetUserError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -437,16 +581,40 @@ pub async fn scim_list_users(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUsersListResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUsersListResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ScimUsersListResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ScimUsersListResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScimListUsersError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScimListUsersError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScimListUsersError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

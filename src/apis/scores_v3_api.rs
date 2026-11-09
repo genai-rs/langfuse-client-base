@@ -131,10 +131,10 @@ pub async fn scores_v3_get_many_v3(
         req_builder = req_builder.query(&[("experimentId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -158,16 +158,40 @@ pub async fn scores_v3_get_many_v3(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresV3Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresV3Response`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresV3Response`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresV3Response`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoresV3GetManyV3Error> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoresV3GetManyV3Error> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoresV3GetManyV3Error::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

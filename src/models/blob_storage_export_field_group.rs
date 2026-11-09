@@ -68,6 +68,15 @@ impl std::fmt::Display for BlobStorageExportFieldGroup {
     }
 }
 
+impl crate::models::validation::Validate for BlobStorageExportFieldGroup {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for BlobStorageExportFieldGroup {
     type Err = crate::models::ParseEnumError;
 

@@ -22,3 +22,12 @@ impl DeleteSkillVersionResponse {
         DeleteSkillVersionResponse { deleted }
     }
 }
+
+impl crate::models::validation::Validate for DeleteSkillVersionResponse {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

@@ -44,6 +44,15 @@ impl std::fmt::Display for UnstableDashboardWidgetViewWithLegacy {
     }
 }
 
+impl crate::models::validation::Validate for UnstableDashboardWidgetViewWithLegacy {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for UnstableDashboardWidgetViewWithLegacy {
     type Err = crate::models::ParseEnumError;
 

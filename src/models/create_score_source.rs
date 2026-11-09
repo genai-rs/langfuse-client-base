@@ -30,6 +30,15 @@ impl std::fmt::Display for CreateScoreSource {
     }
 }
 
+impl crate::models::validation::Validate for CreateScoreSource {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for CreateScoreSource {
     type Err = crate::models::ParseEnumError;
 

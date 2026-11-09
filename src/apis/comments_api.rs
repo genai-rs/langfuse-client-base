@@ -54,7 +54,7 @@ pub enum CommentsGetByIdError {
 #[bon::builder]
 pub async fn comments_create(
     configuration: &configuration::Configuration,
-    create_comment_request: models::CreateCommentRequest,
+    create_comment_request: &models::CreateCommentRequest,
 ) -> Result<models::CreateCommentResponse, Error<CommentsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_comment_request = create_comment_request;
@@ -70,7 +70,7 @@ pub async fn comments_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_comment_request);
+    req_builder = req_builder.json(p_body_create_comment_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -87,17 +87,41 @@ pub async fn comments_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateCommentResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateCommentResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateCommentResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateCommentResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<CommentsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<CommentsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(CommentsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -158,17 +182,41 @@ pub async fn comments_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetCommentsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetCommentsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetCommentsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetCommentsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<CommentsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<CommentsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -210,16 +258,40 @@ pub async fn comments_get_by_id(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Comment`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Comment`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Comment`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Comment`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<CommentsGetByIdError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<CommentsGetByIdError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(CommentsGetByIdError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

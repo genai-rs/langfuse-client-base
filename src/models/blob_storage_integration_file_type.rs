@@ -36,6 +36,15 @@ impl std::fmt::Display for BlobStorageIntegrationFileType {
     }
 }
 
+impl crate::models::validation::Validate for BlobStorageIntegrationFileType {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for BlobStorageIntegrationFileType {
     type Err = crate::models::ParseEnumError;
 

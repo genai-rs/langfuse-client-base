@@ -94,3 +94,12 @@ impl BaseScoreV1 {
         }
     }
 }
+
+impl crate::models::validation::Validate for BaseScoreV1 {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
