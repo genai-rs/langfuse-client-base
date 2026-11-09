@@ -108,22 +108,19 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # library=reqwest, supportAsync=true, supportMiddleware=true,
 # preferUnsignedInt=false and useSingleRequestParameter=false are fixed by the
 # generator and rejected when set, so they are not passed here.
-# The Milestone 3 options of timvw-rust:
-# boxOnlyCycles (Box only where a type contains itself), defaultOnlyWhereValid,
-# enumFromStr and noStructDisplay, qualifiedInlineNames (stable type names),
-# modelUnions and unionDispatch (unions from the model, decoded by their tag),
-# integersAsI64 (i64 unless format: int32) and openEnums (a catch-all for values
-# a response can hold that the spec does not list).
+# Since timvw-rust 0.21.0 the baseline renderings (boxOnlyCycles,
+# defaultOnlyWhereValid, enumFromStr, noStructDisplay, integersAsI64,
+# qualifiedInlineNames, modelUnions, unionDispatch, openEnums, schemaDefaultDocs,
+# nullableUnionFields, and the boxed response error) are always applied and no
+# longer options: setting one fails generation, so they are not passed here.
 # typedEventStreams and contentTypeMethods (timvw-rust 0.16.0) stay off: the
 # Langfuse spec has no text/event-stream responses and every operation uses
 # application/json only, so they have nothing to apply to (and
 # typedEventStreams would still add an unused `apis::sse` module).
 # The options of timvw-rust 0.18.0 (see the generator's README, "Renderings
-# from the generator comparison"): schemaDefaultDocs notes defaults in the
-# documentation; nullableUnionFields lets a nullable union field send null;
-# typedEnumParameters gives inline enum parameters an enum type (the current
-# spec has none); deprecatedAttributes marks deprecated properties and schemas
-# #[deprecated]. langfuse-ergonomic uses none of the deprecated items.
+# from the generator comparison"): typedEnumParameters gives inline enum
+# parameters an enum type (the current spec has none); deprecatedAttributes
+# marks deprecated properties and schemas #[deprecated]. langfuse-ergonomic uses none of the deprecated items.
 # pruneAllHelpers stays off: there is nothing for it to prune here.
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
@@ -131,17 +128,6 @@ $GENERATOR_CMD generate \
     -o "/local" \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
-    --additional-properties=boxOnlyCycles=true \
-    --additional-properties=defaultOnlyWhereValid=true \
-    --additional-properties=enumFromStr=true \
-    --additional-properties=noStructDisplay=true \
-    --additional-properties=qualifiedInlineNames=true \
-    --additional-properties=modelUnions=true \
-    --additional-properties=unionDispatch=true \
-    --additional-properties=integersAsI64=true \
-    --additional-properties=openEnums=true \
-    --additional-properties=schemaDefaultDocs=true \
-    --additional-properties=nullableUnionFields=true \
     --additional-properties=typedEnumParameters=true \
     --additional-properties=deprecatedAttributes=true
 
