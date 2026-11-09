@@ -147,10 +147,10 @@ pub async fn unstable_topics_get(
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -174,17 +174,47 @@ pub async fn unstable_topics_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicWithStatus`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicWithStatus`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicWithStatus`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicWithStatus`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -226,17 +256,47 @@ pub async fn unstable_topics_get_facet(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicFacet`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicFacet`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicFacet`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicFacet`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsGetFacetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsGetFacetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetFacetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -278,17 +338,47 @@ pub async fn unstable_topics_get_rule(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicRule`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicRule`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicRule`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicRule`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsGetRuleError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsGetRuleError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsGetRuleError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -315,10 +405,10 @@ pub async fn unstable_topics_list(
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -354,17 +444,47 @@ pub async fn unstable_topics_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -394,10 +514,10 @@ pub async fn unstable_topics_list_assignments(
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -433,18 +553,47 @@ pub async fn unstable_topics_list_assignments(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicAssignmentList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicAssignmentList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicAssignmentList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicAssignmentList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsListAssignmentsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsListAssignmentsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListAssignmentsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -498,17 +647,47 @@ pub async fn unstable_topics_list_facets(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicFacetList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicFacetList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicFacetList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicFacetList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsListFacetsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsListFacetsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListFacetsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -562,17 +741,47 @@ pub async fn unstable_topics_list_rules(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicRuleList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicRuleList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicRuleList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicRuleList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsListRulesError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsListRulesError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListRulesError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -604,10 +813,10 @@ pub async fn unstable_topics_list_summaries(
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -646,16 +855,46 @@ pub async fn unstable_topics_list_summaries(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicSummaryList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicSummaryList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnstableTopicSummaryList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnstableTopicSummaryList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<UnstableTopicsListSummariesError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<UnstableTopicsListSummariesError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(UnstableTopicsListSummariesError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

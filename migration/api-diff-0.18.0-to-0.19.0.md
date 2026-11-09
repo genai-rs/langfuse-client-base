@@ -2,7 +2,8 @@
 
 This release generates with `timvw-rust` 0.21.0. The Langfuse spec (`openapi.yml`) and openapi-generator (7.27.0) are
 unchanged. The machine-readable census is `api-diff-0.18.0-to-0.19.0.json` in this folder (`compare_public_api.py`
-against 0.18.0).
+against 0.18.0). The generator's own guide, [migrating from 0.20 to 0.21](https://github.com/timvw/openapi-generator-timvw-rust/blob/main/docs/guides/migration.md), shows every change with
+the code before and after.
 
 `timvw-rust` 0.21.0 makes the renderings this crate already switched on (`boxOnlyCycles`, `defaultOnlyWhereValid`,
 `enumFromStr`, `noStructDisplay`, `integersAsI64`, `qualifiedInlineNames`, `modelUnions`, `unionDispatch`, `openEnums`,
@@ -36,8 +37,9 @@ error enums do not change.
 **Path values encode a space as `%20`** instead of `+`.
 
 **Every model implements `models::validation::Validate`.** `validate()` checks the spec's `minLength`, `maxLength`,
-`minimum`, `maximum`, `minItems`, `maxItems`, ... recursively and returns the first
-`models::validation::ValidationError` (path, rule, value). Nothing calls it for you.
+`minimum`, `maximum`, `minItems`, `maxItems`, ... recursively and returns every violation as
+`models::validation::ValidationErrors`, a non-empty list of `ValidationError` (path, rule, value) with `len()`, `iter()`,
+`into_vec()` and a `Display` of one line per error. Nothing calls it for you.
 
 ## Migrating
 

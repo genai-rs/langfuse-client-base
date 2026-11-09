@@ -54,7 +54,7 @@ pub enum ScoresGetManyError {
 #[bon::builder]
 pub async fn scores_create(
     configuration: &configuration::Configuration,
-    create_scores_request: models::CreateScoresRequest,
+    create_scores_request: &models::CreateScoresRequest,
 ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_scores_request = create_scores_request;
@@ -70,7 +70,7 @@ pub async fn scores_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_scores_request);
+    req_builder = req_builder.json(p_body_create_scores_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -87,17 +87,41 @@ pub async fn scores_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateScoresResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateScoresResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateScoresResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateScoresResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoresCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoresCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoresCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -140,17 +164,41 @@ pub async fn scores_get_by_id(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Score`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Score`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Score`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Score`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoresGetByIdError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoresGetByIdError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetByIdError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -220,29 +268,16 @@ pub async fn scores_get_many(
         req_builder = req_builder.query(&[("name", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_environment {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("environment".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "environment",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("environment", item)]);
+        }
     }
     if let Some(ref param_value) = p_query_source {
         req_builder = req_builder.query(&[("source", &param_value.to_string())]);
@@ -278,23 +313,10 @@ pub async fn scores_get_many(
         req_builder = req_builder.query(&[("dataType", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_trace_tags {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("traceTags".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "traceTags",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("traceTags", item)]);
+        }
     }
     if let Some(ref param_value) = p_query_fields {
         req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
@@ -324,16 +346,40 @@ pub async fn scores_get_many(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetScoresResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetScoresResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ScoresGetManyError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ScoresGetManyError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ScoresGetManyError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

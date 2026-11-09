@@ -31,3 +31,12 @@ impl ScoreSubjectObservationV3 {
         ScoreSubjectObservationV3 { id, trace_id: None }
     }
 }
+
+impl crate::models::validation::Validate for ScoreSubjectObservationV3 {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

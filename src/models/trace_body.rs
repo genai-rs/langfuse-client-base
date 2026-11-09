@@ -126,3 +126,12 @@ impl TraceBody {
         }
     }
 }
+
+impl crate::models::validation::Validate for TraceBody {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

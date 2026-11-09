@@ -32,7 +32,7 @@ pub async fn prompt_version_update(
     configuration: &configuration::Configuration,
     name: &str,
     version: i64,
-    prompt_version_update_request: models::PromptVersionUpdateRequest,
+    prompt_version_update_request: &models::PromptVersionUpdateRequest,
 ) -> Result<models::Prompt, Error<PromptVersionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_name = name;
@@ -55,7 +55,7 @@ pub async fn prompt_version_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_prompt_version_update_request);
+    req_builder = req_builder.json(p_body_prompt_version_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -72,16 +72,40 @@ pub async fn prompt_version_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Prompt`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Prompt`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<PromptVersionUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<PromptVersionUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(PromptVersionUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

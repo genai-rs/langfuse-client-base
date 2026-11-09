@@ -39,6 +39,15 @@ impl std::fmt::Display for CommentObjectType {
     }
 }
 
+impl crate::models::validation::Validate for CommentObjectType {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for CommentObjectType {
     type Err = crate::models::ParseEnumError;
 

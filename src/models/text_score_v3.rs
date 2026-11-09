@@ -109,3 +109,12 @@ impl TextScoreV3 {
         }
     }
 }
+
+impl crate::models::validation::Validate for TextScoreV3 {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

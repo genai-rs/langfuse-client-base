@@ -28,3 +28,12 @@ impl EvaluatorModelConfig {
         EvaluatorModelConfig { provider, model }
     }
 }
+
+impl crate::models::validation::Validate for EvaluatorModelConfig {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

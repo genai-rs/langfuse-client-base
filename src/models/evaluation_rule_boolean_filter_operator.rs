@@ -28,6 +28,15 @@ impl std::fmt::Display for EvaluationRuleBooleanFilterOperator {
     }
 }
 
+impl crate::models::validation::Validate for EvaluationRuleBooleanFilterOperator {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for EvaluationRuleBooleanFilterOperator {
     type Err = crate::models::ParseEnumError;
 

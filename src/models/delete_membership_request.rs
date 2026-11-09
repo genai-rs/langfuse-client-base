@@ -22,3 +22,12 @@ impl DeleteMembershipRequest {
         DeleteMembershipRequest { user_id }
     }
 }
+
+impl crate::models::validation::Validate for DeleteMembershipRequest {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

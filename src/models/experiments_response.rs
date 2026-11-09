@@ -28,3 +28,12 @@ impl ExperimentsResponse {
         ExperimentsResponse { data, meta }
     }
 }
+
+impl crate::models::validation::Validate for ExperimentsResponse {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

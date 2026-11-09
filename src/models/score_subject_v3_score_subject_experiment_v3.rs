@@ -25,6 +25,16 @@ impl ScoreSubjectV3ScoreSubjectExperimentV3 {
         ScoreSubjectV3ScoreSubjectExperimentV3 { id, kind }
     }
 }
+
+impl crate::models::validation::Validate for ScoreSubjectV3ScoreSubjectExperimentV3 {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Kind {
     #[serde(rename = "experiment")]

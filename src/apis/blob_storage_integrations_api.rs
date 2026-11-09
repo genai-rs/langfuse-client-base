@@ -105,18 +105,42 @@ pub async fn blob_storage_integrations_delete_blob_storage_integration(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationDeletionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationDeletionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationDeletionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationDeletionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<BlobStorageIntegrationsDeleteBlobStorageIntegrationError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsDeleteBlobStorageIntegrationError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -161,18 +185,42 @@ pub async fn blob_storage_integrations_get_blob_storage_integration_status(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationStatusResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationStatusResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationStatusResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationStatusResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<BlobStorageIntegrationsGetBlobStorageIntegrationStatusError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationStatusError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -212,18 +260,42 @@ pub async fn blob_storage_integrations_get_blob_storage_integrations(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<BlobStorageIntegrationsGetBlobStorageIntegrationsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsGetBlobStorageIntegrationsError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -231,7 +303,7 @@ pub async fn blob_storage_integrations_get_blob_storage_integrations(
 #[bon::builder]
 pub async fn blob_storage_integrations_upsert_blob_storage_integration(
     configuration: &configuration::Configuration,
-    create_blob_storage_integration_request: models::CreateBlobStorageIntegrationRequest,
+    create_blob_storage_integration_request: &models::CreateBlobStorageIntegrationRequest,
 ) -> Result<
     models::BlobStorageIntegrationResponse,
     Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>,
@@ -251,7 +323,7 @@ pub async fn blob_storage_integrations_upsert_blob_storage_integration(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_blob_storage_integration_request);
+    req_builder = req_builder.json(p_body_create_blob_storage_integration_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -268,17 +340,41 @@ pub async fn blob_storage_integrations_upsert_blob_storage_integration(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlobStorageIntegrationResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlobStorageIntegrationResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<BlobStorageIntegrationsUpsertBlobStorageIntegrationError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(BlobStorageIntegrationsUpsertBlobStorageIntegrationError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

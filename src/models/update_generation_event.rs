@@ -46,3 +46,12 @@ impl UpdateGenerationEvent {
         }
     }
 }
+
+impl crate::models::validation::Validate for UpdateGenerationEvent {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

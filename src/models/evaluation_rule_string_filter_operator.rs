@@ -37,6 +37,15 @@ impl std::fmt::Display for EvaluationRuleStringFilterOperator {
     }
 }
 
+impl crate::models::validation::Validate for EvaluationRuleStringFilterOperator {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for EvaluationRuleStringFilterOperator {
     type Err = crate::models::ParseEnumError;
 

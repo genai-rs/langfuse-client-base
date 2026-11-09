@@ -77,17 +77,41 @@ pub async fn sessions_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SessionWithTraces`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SessionWithTraces`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SessionWithTraces`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SessionWithTraces`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SessionsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SessionsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SessionsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -119,29 +143,16 @@ pub async fn sessions_list(
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_environment {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("environment".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "environment",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("environment", item)]);
+        }
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -165,16 +176,40 @@ pub async fn sessions_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedSessions`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedSessions`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedSessions`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedSessions`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SessionsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SessionsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SessionsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

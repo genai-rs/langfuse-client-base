@@ -27,3 +27,12 @@ impl FilterConfig {
         }
     }
 }
+
+impl crate::models::validation::Validate for FilterConfig {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

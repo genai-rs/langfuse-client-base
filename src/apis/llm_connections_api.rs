@@ -126,17 +126,41 @@ pub async fn llm_connections_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -180,18 +204,41 @@ pub async fn llm_connections_delete_organization(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteLlmConnectionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsDeleteOrganizationError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsDeleteOrganizationError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsDeleteOrganizationError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -237,17 +284,41 @@ pub async fn llm_connections_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedLlmConnections`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedLlmConnections`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedLlmConnections`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedLlmConnections`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -296,18 +367,41 @@ pub async fn llm_connections_list_organization(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedLlmConnections`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedLlmConnections`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PaginatedLlmConnections`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PaginatedLlmConnections`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsListOrganizationError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsListOrganizationError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsListOrganizationError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -315,7 +409,7 @@ pub async fn llm_connections_list_organization(
 #[bon::builder]
 pub async fn llm_connections_upsert(
     configuration: &configuration::Configuration,
-    upsert_llm_connection_request: models::UpsertLlmConnectionRequest,
+    upsert_llm_connection_request: &models::UpsertLlmConnectionRequest,
 ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_upsert_llm_connection_request = upsert_llm_connection_request;
@@ -329,7 +423,7 @@ pub async fn llm_connections_upsert(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_upsert_llm_connection_request);
+    req_builder = req_builder.json(p_body_upsert_llm_connection_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -346,17 +440,41 @@ pub async fn llm_connections_upsert(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LlmConnection`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LlmConnection`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LlmConnection`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LlmConnection`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsUpsertError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsUpsertError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -364,7 +482,7 @@ pub async fn llm_connections_upsert(
 #[bon::builder]
 pub async fn llm_connections_upsert_organization(
     configuration: &configuration::Configuration,
-    upsert_llm_connection_request: models::UpsertLlmConnectionRequest,
+    upsert_llm_connection_request: &models::UpsertLlmConnectionRequest,
 ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_upsert_llm_connection_request = upsert_llm_connection_request;
@@ -381,7 +499,7 @@ pub async fn llm_connections_upsert_organization(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_upsert_llm_connection_request);
+    req_builder = req_builder.json(p_body_upsert_llm_connection_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -398,17 +516,40 @@ pub async fn llm_connections_upsert_organization(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LlmConnection`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LlmConnection`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LlmConnection`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LlmConnection`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LlmConnectionsUpsertOrganizationError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LlmConnectionsUpsertOrganizationError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LlmConnectionsUpsertOrganizationError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

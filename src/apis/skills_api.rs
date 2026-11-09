@@ -102,7 +102,7 @@ pub enum SkillsUpdateError {
 #[bon::builder]
 pub async fn skills_create_version(
     configuration: &configuration::Configuration,
-    create_skill_version_request: models::CreateSkillVersionRequest,
+    create_skill_version_request: &models::CreateSkillVersionRequest,
 ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_skill_version_request = create_skill_version_request;
@@ -118,7 +118,7 @@ pub async fn skills_create_version(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_skill_version_request);
+    req_builder = req_builder.json(p_body_create_skill_version_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -135,17 +135,41 @@ pub async fn skills_create_version(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsCreateVersionError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsCreateVersionError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsCreateVersionError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -192,17 +216,41 @@ pub async fn skills_delete_version(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteSkillVersionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteSkillVersionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteSkillVersionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteSkillVersionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsDeleteVersionError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsDeleteVersionError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsDeleteVersionError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -259,17 +307,41 @@ pub async fn skills_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -311,17 +383,41 @@ pub async fn skills_get_file_contents(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillFileContentsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillFileContentsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillFileContentsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillFileContentsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsGetFileContentsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsGetFileContentsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsGetFileContentsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -365,10 +461,10 @@ pub async fn skills_list(
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_updated_at {
-        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_updated_at {
-        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_rfc3339())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -392,17 +488,41 @@ pub async fn skills_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillMetaListResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillMetaListResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillMetaListResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillMetaListResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -412,7 +532,7 @@ pub async fn skills_set_labels(
     configuration: &configuration::Configuration,
     skill_name: &str,
     skill_version: i64,
-    update_skill_labels_request: models::UpdateSkillLabelsRequest,
+    update_skill_labels_request: &models::UpdateSkillLabelsRequest,
 ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -435,7 +555,7 @@ pub async fn skills_set_labels(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_skill_labels_request);
+    req_builder = req_builder.json(p_body_update_skill_labels_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -452,17 +572,41 @@ pub async fn skills_set_labels(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsSetLabelsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsSetLabelsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsSetLabelsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -471,7 +615,7 @@ pub async fn skills_set_labels(
 pub async fn skills_update(
     configuration: &configuration::Configuration,
     skill_name: &str,
-    update_skill_request: models::UpdateSkillRequest,
+    update_skill_request: &models::UpdateSkillRequest,
 ) -> Result<models::SkillVersion, Error<SkillsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -492,7 +636,7 @@ pub async fn skills_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_skill_request);
+    req_builder = req_builder.json(p_body_update_skill_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -509,16 +653,40 @@ pub async fn skills_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SkillVersion`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SkillVersion`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<SkillsUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<SkillsUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(SkillsUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

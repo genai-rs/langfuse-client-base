@@ -61,6 +61,18 @@ impl CreateEvaluatorRequestCreateLlmAsJudgeEvaluatorRequest {
         }
     }
 }
+
+impl crate::models::validation::Validate
+    for CreateEvaluatorRequestCreateLlmAsJudgeEvaluatorRequest
+{
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Type {
     #[serde(rename = "llm_as_judge")]

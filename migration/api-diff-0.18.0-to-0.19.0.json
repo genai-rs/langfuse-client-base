@@ -1,0 +1,1157 @@
+{
+  "source_heads": {
+    "reference": "langfuse-client-base 0.18.0",
+    "candidate": "chore/timvw-rust-0.21.0 (timvw-rust 0.21.0, unchanged openapi.yml)"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 501,
+  "current_source_rs_files": 502,
+  "source_files_added": [
+    "models/validation.rs"
+  ],
+  "source_files_removed": [],
+  "source_files_modified": [
+    "apis/annotation_queues_api.rs",
+    "apis/blob_storage_integrations_api.rs",
+    "apis/comments_api.rs",
+    "apis/configuration.rs",
+    "apis/dataset_items_api.rs",
+    "apis/dataset_run_items_api.rs",
+    "apis/datasets_api.rs",
+    "apis/evaluation_rules_api.rs",
+    "apis/evaluators_api.rs",
+    "apis/experiments_api.rs",
+    "apis/feedback_api.rs",
+    "apis/health_api.rs",
+    "apis/ingestion_api.rs",
+    "apis/legacy_metrics_v1_api.rs",
+    "apis/legacy_observations_v1_api.rs",
+    "apis/legacy_score_v1_api.rs",
+    "apis/llm_connections_api.rs",
+    "apis/media_api.rs",
+    "apis/metrics_api.rs",
+    "apis/mod.rs",
+    "apis/models_api.rs",
+    "apis/observations_api.rs",
+    "apis/opentelemetry_api.rs",
+    "apis/organizations_api.rs",
+    "apis/projects_api.rs",
+    "apis/prompt_version_api.rs",
+    "apis/prompts_api.rs",
+    "apis/scim_api.rs",
+    "apis/score_configs_api.rs",
+    "apis/scores_api.rs",
+    "apis/scores_v3_api.rs",
+    "apis/sessions_api.rs",
+    "apis/skills_api.rs",
+    "apis/trace_api.rs",
+    "apis/unstable_dashboard_widgets_api.rs",
+    "apis/unstable_dashboards_api.rs",
+    "apis/unstable_topics_api.rs",
+    "models/annotation_queue.rs",
+    "models/annotation_queue_assignment_request.rs",
+    "models/annotation_queue_item.rs",
+    "models/annotation_queue_object_type.rs",
+    "models/annotation_queue_status.rs",
+    "models/api_key_deletion_response.rs",
+    "models/api_key_list.rs",
+    "models/api_key_response.rs",
+    "models/api_key_summary.rs",
+    "models/array_options_evaluation_rule_filter.rs",
+    "models/authentication_scheme.rs",
+    "models/base_event.rs",
+    "models/base_prompt.rs",
+    "models/base_score.rs",
+    "models/base_score_v1.rs",
+    "models/base_score_v3.rs",
+    "models/blob_storage_export_field_group.rs",
+    "models/blob_storage_export_frequency.rs",
+    "models/blob_storage_export_mode.rs",
+    "models/blob_storage_export_source.rs",
+    "models/blob_storage_integration_auth_type.rs",
+    "models/blob_storage_integration_deletion_response.rs",
+    "models/blob_storage_integration_file_type.rs",
+    "models/blob_storage_integration_file_type_response.rs",
+    "models/blob_storage_integration_response.rs",
+    "models/blob_storage_integration_status_response.rs",
+    "models/blob_storage_integration_type.rs",
+    "models/blob_storage_integrations_response.rs",
+    "models/blob_storage_sync_status.rs",
+    "models/boolean_evaluation_rule_filter.rs",
+    "models/boolean_score.rs",
+    "models/boolean_score_v1.rs",
+    "models/boolean_score_v3.rs",
+    "models/bulk_config.rs",
+    "models/categorical_score.rs",
+    "models/categorical_score_v1.rs",
+    "models/categorical_score_v3.rs",
+    "models/category_options_evaluation_rule_filter.rs",
+    "models/chat_message.rs",
+    "models/chat_message_type.rs",
+    "models/chat_message_with_placeholders.rs",
+    "models/chat_prompt.rs",
+    "models/code_evaluator.rs",
+    "models/code_evaluator_source_code_language.rs",
+    "models/code_evaluator_version.rs",
+    "models/comment.rs",
+    "models/comment_object_type.rs",
+    "models/config_category.rs",
+    "models/correction_score.rs",
+    "models/correction_score_v3.rs",
+    "models/create_annotation_queue_assignment_response.rs",
+    "models/create_annotation_queue_item_request.rs",
+    "models/create_annotation_queue_request.rs",
+    "models/create_blob_storage_integration_request.rs",
+    "models/create_chat_prompt_request.rs",
+    "models/create_chat_prompt_type.rs",
+    "models/create_code_evaluator_request.rs",
+    "models/create_comment_request.rs",
+    "models/create_comment_response.rs",
+    "models/create_dataset_item_request.rs",
+    "models/create_dataset_request.rs",
+    "models/create_dataset_run_item_request.rs",
+    "models/create_evaluation_rule_request.rs",
+    "models/create_evaluator_request.rs",
+    "models/create_evaluator_request_create_code_evaluator_request.rs",
+    "models/create_evaluator_request_create_llm_as_judge_evaluator_request.rs",
+    "models/create_event_body.rs",
+    "models/create_event_event.rs",
+    "models/create_generation_body.rs",
+    "models/create_generation_event.rs",
+    "models/create_llm_as_judge_evaluator_request.rs",
+    "models/create_model_request.rs",
+    "models/create_observation_event.rs",
+    "models/create_prompt_request.rs",
+    "models/create_score_batch_error.rs",
+    "models/create_score_batch_response.rs",
+    "models/create_score_batch_results.rs",
+    "models/create_score_config_request.rs",
+    "models/create_score_request.rs",
+    "models/create_score_response.rs",
+    "models/create_score_source.rs",
+    "models/create_score_value.rs",
+    "models/create_scores_request.rs",
+    "models/create_scores_response.rs",
+    "models/create_skill_version_request.rs",
+    "models/create_span_body.rs",
+    "models/create_span_event.rs",
+    "models/create_text_prompt_request.rs",
+    "models/create_text_prompt_type.rs",
+    "models/creator.rs",
+    "models/cursor_meta.rs",
+    "models/dataset.rs",
+    "models/dataset_item.rs",
+    "models/dataset_item_media_reference.rs",
+    "models/dataset_item_media_reference_field.rs",
+    "models/dataset_item_media_reference_media.rs",
+    "models/dataset_run.rs",
+    "models/dataset_run_item.rs",
+    "models/dataset_run_with_items.rs",
+    "models/dataset_status.rs",
+    "models/date_time_evaluation_rule_filter.rs",
+    "models/delete_annotation_queue_assignment_response.rs",
+    "models/delete_annotation_queue_item_response.rs",
+    "models/delete_dataset_item_response.rs",
+    "models/delete_dataset_run_response.rs",
+    "models/delete_llm_connection_response.rs",
+    "models/delete_membership_request.rs",
+    "models/delete_skill_version_response.rs",
+    "models/delete_trace_response.rs",
+    "models/deleted_evaluation_rule.rs",
+    "models/deleted_evaluator.rs",
+    "models/deprecation.rs",
+    "models/evaluation_rule.rs",
+    "models/evaluation_rule_array_options_filter_operator.rs",
+    "models/evaluation_rule_assignment.rs",
+    "models/evaluation_rule_boolean_filter_operator.rs",
+    "models/evaluation_rule_evaluator_assignment_input.rs",
+    "models/evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_array_options_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_boolean_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_category_options_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_date_time_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_null_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_number_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_number_object_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_string_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_string_object_evaluation_rule_filter.rs",
+    "models/evaluation_rule_filter_string_options_evaluation_rule_filter.rs",
+    "models/evaluation_rule_null_filter_operator.rs",
+    "models/evaluation_rule_number_filter_operator.rs",
+    "models/evaluation_rule_options_filter_operator.rs",
+    "models/evaluation_rule_read_filter.rs",
+    "models/evaluation_rule_read_filter_base.rs",
+    "models/evaluation_rule_read_filter_with_key.rs",
+    "models/evaluation_rule_string_filter_operator.rs",
+    "models/evaluation_rule_string_object_filter_operator.rs",
+    "models/evaluation_rules_page.rs",
+    "models/evaluator.rs",
+    "models/evaluator_assignment.rs",
+    "models/evaluator_base.rs",
+    "models/evaluator_chat_message.rs",
+    "models/evaluator_chat_message_role.rs",
+    "models/evaluator_chat_prompt_input.rs",
+    "models/evaluator_code_evaluator.rs",
+    "models/evaluator_llm_as_judge_evaluator.rs",
+    "models/evaluator_model_config.rs",
+    "models/evaluator_output_definition.rs",
+    "models/evaluator_output_definition_base.rs",
+    "models/evaluator_output_definition_public_evaluator_boolean_score.rs",
+    "models/evaluator_output_definition_public_evaluator_categorical_score.rs",
+    "models/evaluator_output_definition_public_evaluator_numeric_score.rs",
+    "models/evaluator_output_score_type.rs",
+    "models/evaluator_status.rs",
+    "models/evaluator_type.rs",
+    "models/evaluator_version.rs",
+    "models/evaluator_version_base.rs",
+    "models/evaluator_version_code_evaluator_version.rs",
+    "models/evaluator_version_llm_as_judge_evaluator_version.rs",
+    "models/evaluator_versions_page.rs",
+    "models/evaluators_page.rs",
+    "models/experiment.rs",
+    "models/experiment_item.rs",
+    "models/experiment_items_response.rs",
+    "models/experiments_response.rs",
+    "models/experiments_response_meta.rs",
+    "models/feedback_target_type.rs",
+    "models/filter_config.rs",
+    "models/get_comments_response.rs",
+    "models/get_media_response.rs",
+    "models/get_media_upload_url_request.rs",
+    "models/get_media_upload_url_response.rs",
+    "models/get_scores_response.rs",
+    "models/get_scores_response_data.rs",
+    "models/get_scores_response_data_boolean.rs",
+    "models/get_scores_response_data_categorical.rs",
+    "models/get_scores_response_data_correction.rs",
+    "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+    "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+    "models/get_scores_response_data_get_scores_response_data_correction.rs",
+    "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+    "models/get_scores_response_data_get_scores_response_data_text.rs",
+    "models/get_scores_response_data_numeric.rs",
+    "models/get_scores_response_data_text.rs",
+    "models/get_scores_response_trace_data.rs",
+    "models/get_scores_v3_meta.rs",
+    "models/get_scores_v3_response.rs",
+    "models/health_response.rs",
+    "models/ingestion_batch_request.rs",
+    "models/ingestion_error.rs",
+    "models/ingestion_event.rs",
+    "models/ingestion_event_create_event_event.rs",
+    "models/ingestion_event_create_generation_event.rs",
+    "models/ingestion_event_create_observation_event.rs",
+    "models/ingestion_event_create_span_event.rs",
+    "models/ingestion_event_score_event.rs",
+    "models/ingestion_event_trace_event.rs",
+    "models/ingestion_event_update_generation_event.rs",
+    "models/ingestion_event_update_observation_event.rs",
+    "models/ingestion_event_update_span_event.rs",
+    "models/ingestion_response.rs",
+    "models/ingestion_success.rs",
+    "models/ingestion_usage.rs",
+    "models/legacy_evaluation_object.rs",
+    "models/legacy_metrics_response.rs",
+    "models/legacy_observations.rs",
+    "models/legacy_observations_views.rs",
+    "models/legacy_prompt_variable_mapping.rs",
+    "models/llm_adapter.rs",
+    "models/llm_as_judge_evaluator.rs",
+    "models/llm_as_judge_evaluator_version.rs",
+    "models/llm_connection.rs",
+    "models/map_value.rs",
+    "models/media_content_type.rs",
+    "models/membership_deletion_response.rs",
+    "models/membership_request.rs",
+    "models/membership_response.rs",
+    "models/membership_role.rs",
+    "models/memberships_response.rs",
+    "models/metrics_v2_response.rs",
+    "models/mod.rs",
+    "models/model.rs",
+    "models/model_price.rs",
+    "models/model_tokenizer_id.rs",
+    "models/model_usage_unit.rs",
+    "models/null_evaluation_rule_filter.rs",
+    "models/number_evaluation_rule_filter.rs",
+    "models/number_object_evaluation_rule_filter.rs",
+    "models/numeric_score.rs",
+    "models/numeric_score_v1.rs",
+    "models/numeric_score_v3.rs",
+    "models/observation.rs",
+    "models/observation_body.rs",
+    "models/observation_level.rs",
+    "models/observation_type.rs",
+    "models/observation_v2.rs",
+    "models/observations_v2_meta.rs",
+    "models/observations_v2_response.rs",
+    "models/observations_view.rs",
+    "models/observations_view_single.rs",
+    "models/open_ai_completion_usage_schema.rs",
+    "models/open_ai_response_usage_schema.rs",
+    "models/open_ai_usage.rs",
+    "models/opentelemetry_export_traces_request.rs",
+    "models/optional_observation_body.rs",
+    "models/organization.rs",
+    "models/organization_api_key.rs",
+    "models/organization_api_keys_response.rs",
+    "models/organization_project.rs",
+    "models/organization_projects_response.rs",
+    "models/otel_attribute.rs",
+    "models/otel_attribute_value.rs",
+    "models/otel_resource.rs",
+    "models/otel_resource_span.rs",
+    "models/otel_scope.rs",
+    "models/otel_scope_span.rs",
+    "models/otel_span.rs",
+    "models/paginated_annotation_queue_items.rs",
+    "models/paginated_annotation_queues.rs",
+    "models/paginated_dataset_items.rs",
+    "models/paginated_dataset_run_items.rs",
+    "models/paginated_dataset_runs.rs",
+    "models/paginated_datasets.rs",
+    "models/paginated_llm_connections.rs",
+    "models/paginated_models.rs",
+    "models/paginated_sessions.rs",
+    "models/patch_media_body.rs",
+    "models/placeholder_message.rs",
+    "models/placeholder_message_type.rs",
+    "models/pricing_tier.rs",
+    "models/pricing_tier_attribute_condition.rs",
+    "models/pricing_tier_attribute_source.rs",
+    "models/pricing_tier_condition.rs",
+    "models/pricing_tier_condition_input.rs",
+    "models/pricing_tier_input.rs",
+    "models/pricing_tier_operator.rs",
+    "models/pricing_tier_usage_condition.rs",
+    "models/pricing_tier_usage_condition_input.rs",
+    "models/project.rs",
+    "models/project_deletion_response.rs",
+    "models/projects.rs",
+    "models/projects_create_api_key_request.rs",
+    "models/projects_create_request.rs",
+    "models/projects_update_request.rs",
+    "models/prompt.rs",
+    "models/prompt_chat_prompt.rs",
+    "models/prompt_meta.rs",
+    "models/prompt_meta_list_response.rs",
+    "models/prompt_text_prompt.rs",
+    "models/prompt_type.rs",
+    "models/prompt_variable_mapping.rs",
+    "models/prompt_variable_mapping_input.rs",
+    "models/prompt_variable_mapping_read.rs",
+    "models/prompt_variable_mapping_source.rs",
+    "models/prompt_version_update_request.rs",
+    "models/public_api_error.rs",
+    "models/public_api_error_code.rs",
+    "models/public_api_error_details.rs",
+    "models/public_api_validation_issue.rs",
+    "models/public_evaluator_boolean_score.rs",
+    "models/public_evaluator_categorical_score.rs",
+    "models/public_evaluator_numeric_score.rs",
+    "models/public_evaluator_output_definition.rs",
+    "models/public_evaluator_output_definition_public_evaluator_boolean_score.rs",
+    "models/public_evaluator_output_definition_public_evaluator_categorical_score.rs",
+    "models/public_evaluator_output_definition_public_evaluator_numeric_score.rs",
+    "models/resource_meta.rs",
+    "models/resource_type.rs",
+    "models/resource_types_response.rs",
+    "models/schema_extension.rs",
+    "models/schema_resource.rs",
+    "models/schemas_response.rs",
+    "models/scim_create_user_request.rs",
+    "models/scim_email.rs",
+    "models/scim_feature_support.rs",
+    "models/scim_name.rs",
+    "models/scim_user.rs",
+    "models/scim_users_list_response.rs",
+    "models/score.rs",
+    "models/score_body.rs",
+    "models/score_boolean_score.rs",
+    "models/score_categorical_score.rs",
+    "models/score_config.rs",
+    "models/score_config_data_type.rs",
+    "models/score_configs.rs",
+    "models/score_correction_score.rs",
+    "models/score_data_type.rs",
+    "models/score_event.rs",
+    "models/score_numeric_score.rs",
+    "models/score_source.rs",
+    "models/score_subject_experiment_v3.rs",
+    "models/score_subject_observation_v3.rs",
+    "models/score_subject_session_v3.rs",
+    "models/score_subject_trace_v3.rs",
+    "models/score_subject_v3.rs",
+    "models/score_subject_v3_score_subject_experiment_v3.rs",
+    "models/score_subject_v3_score_subject_observation_v3.rs",
+    "models/score_subject_v3_score_subject_session_v3.rs",
+    "models/score_subject_v3_score_subject_trace_v3.rs",
+    "models/score_text_score.rs",
+    "models/score_v1.rs",
+    "models/score_v1_boolean_score_v1.rs",
+    "models/score_v1_categorical_score_v1.rs",
+    "models/score_v1_numeric_score_v1.rs",
+    "models/score_v1_text_score_v1.rs",
+    "models/score_v3.rs",
+    "models/score_v3_boolean_score_v3.rs",
+    "models/score_v3_categorical_score_v3.rs",
+    "models/score_v3_correction_score_v3.rs",
+    "models/score_v3_numeric_score_v3.rs",
+    "models/score_v3_text_score_v3.rs",
+    "models/service_provider_config.rs",
+    "models/session.rs",
+    "models/session_with_traces.rs",
+    "models/skill_file.rs",
+    "models/skill_file_content.rs",
+    "models/skill_file_contents_response.rs",
+    "models/skill_list_pagination.rs",
+    "models/skill_meta.rs",
+    "models/skill_meta_list_response.rs",
+    "models/skill_version.rs",
+    "models/skill_version_file_create_input.rs",
+    "models/skill_version_file_input.rs",
+    "models/skill_version_file_reference.rs",
+    "models/sort.rs",
+    "models/string_evaluation_rule_filter.rs",
+    "models/string_object_evaluation_rule_filter.rs",
+    "models/string_options_evaluation_rule_filter.rs",
+    "models/submit_feedback_request.rs",
+    "models/submit_feedback_response.rs",
+    "models/text_prompt.rs",
+    "models/text_score.rs",
+    "models/text_score_v1.rs",
+    "models/text_score_v3.rs",
+    "models/trace.rs",
+    "models/trace_body.rs",
+    "models/trace_delete_multiple_request.rs",
+    "models/trace_event.rs",
+    "models/trace_with_details.rs",
+    "models/trace_with_full_details.rs",
+    "models/traces.rs",
+    "models/union_dispatch.rs",
+    "models/unstable_create_dashboard_placement_request.rs",
+    "models/unstable_create_dashboard_placement_request_unstable_create_preset_placement.rs",
+    "models/unstable_create_dashboard_placement_request_unstable_create_widget_placement.rs",
+    "models/unstable_create_dashboard_request.rs",
+    "models/unstable_create_dashboard_widget_request.rs",
+    "models/unstable_create_preset_placement.rs",
+    "models/unstable_create_widget_placement.rs",
+    "models/unstable_dashboard.rs",
+    "models/unstable_dashboard_definition.rs",
+    "models/unstable_dashboard_list.rs",
+    "models/unstable_dashboard_placement.rs",
+    "models/unstable_dashboard_placement_unstable_preset_placement.rs",
+    "models/unstable_dashboard_placement_unstable_widget_placement.rs",
+    "models/unstable_dashboard_widget.rs",
+    "models/unstable_dashboard_widget_chart_config.rs",
+    "models/unstable_dashboard_widget_chart_config_input.rs",
+    "models/unstable_dashboard_widget_chart_type.rs",
+    "models/unstable_dashboard_widget_default_sort.rs",
+    "models/unstable_dashboard_widget_dimension.rs",
+    "models/unstable_dashboard_widget_filter.rs",
+    "models/unstable_dashboard_widget_list.rs",
+    "models/unstable_dashboard_widget_metric.rs",
+    "models/unstable_dashboard_widget_metric_aggregation.rs",
+    "models/unstable_dashboard_widget_sort_order.rs",
+    "models/unstable_dashboard_widget_view.rs",
+    "models/unstable_dashboard_widget_view_with_legacy.rs",
+    "models/unstable_delete_dashboard_placement_response.rs",
+    "models/unstable_delete_dashboard_response.rs",
+    "models/unstable_delete_dashboard_widget_response.rs",
+    "models/unstable_preset_placement.rs",
+    "models/unstable_public_api_error.rs",
+    "models/unstable_public_api_error_code.rs",
+    "models/unstable_public_api_error_details.rs",
+    "models/unstable_public_api_validation_issue.rs",
+    "models/unstable_topic.rs",
+    "models/unstable_topic_assignment.rs",
+    "models/unstable_topic_assignment_list.rs",
+    "models/unstable_topic_assignment_status.rs",
+    "models/unstable_topic_assignment_topic.rs",
+    "models/unstable_topic_facet.rs",
+    "models/unstable_topic_facet_counts.rs",
+    "models/unstable_topic_facet_list.rs",
+    "models/unstable_topic_facet_published_run.rs",
+    "models/unstable_topic_facet_ref.rs",
+    "models/unstable_topic_list.rs",
+    "models/unstable_topic_result_list_meta.rs",
+    "models/unstable_topic_results_order_by.rs",
+    "models/unstable_topic_rule.rs",
+    "models/unstable_topic_rule_list.rs",
+    "models/unstable_topic_status_counts.rs",
+    "models/unstable_topic_summary.rs",
+    "models/unstable_topic_summary_list.rs",
+    "models/unstable_topic_summary_state.rs",
+    "models/unstable_topic_window.rs",
+    "models/unstable_topic_with_status.rs",
+    "models/unstable_topics_order_by.rs",
+    "models/unstable_update_dashboard_placement_request.rs",
+    "models/unstable_update_dashboard_request.rs",
+    "models/unstable_update_dashboard_widget_request.rs",
+    "models/unstable_widget_placement.rs",
+    "models/update_annotation_queue_item_request.rs",
+    "models/update_code_evaluator_request.rs",
+    "models/update_evaluation_rule_request.rs",
+    "models/update_evaluator_metadata_request.rs",
+    "models/update_evaluator_request.rs",
+    "models/update_event_body.rs",
+    "models/update_generation_body.rs",
+    "models/update_generation_event.rs",
+    "models/update_llm_as_judge_evaluator_request.rs",
+    "models/update_observation_event.rs",
+    "models/update_score_config_request.rs",
+    "models/update_skill_labels_request.rs",
+    "models/update_skill_request.rs",
+    "models/update_span_body.rs",
+    "models/update_span_event.rs",
+    "models/upsert_llm_connection_request.rs",
+    "models/usage.rs",
+    "models/usage_details.rs",
+    "models/user_meta.rs",
+    "models/utils_cursor_meta_response.rs",
+    "models/utils_meta_response.rs"
+  ],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue",
+      "signature": "pub async fn annotation_queues_create_queue( configuration: &configuration::Configuration, create_annotation_queue_request: &models::CreateAnnotationQueueRequest, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_assignment",
+      "signature": "pub async fn annotation_queues_create_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, ) -> Result< models::CreateAnnotationQueueAssignmentResponse, Error<AnnotationQueuesCreateQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_item",
+      "signature": "pub async fn annotation_queues_create_queue_item( configuration: &configuration::Configuration, queue_id: &str, create_annotation_queue_item_request: &models::CreateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_assignment",
+      "signature": "pub async fn annotation_queues_delete_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, ) -> Result< models::DeleteAnnotationQueueAssignmentResponse, Error<AnnotationQueuesDeleteQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_update_queue_item",
+      "signature": "pub async fn annotation_queues_update_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, update_annotation_queue_item_request: &models::UpdateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>>"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_upsert_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_upsert_blob_storage_integration( configuration: &configuration::Configuration, create_blob_storage_integration_request: &models::CreateBlobStorageIntegrationRequest, ) -> Result< models::BlobStorageIntegrationResponse, Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_create",
+      "signature": "pub async fn comments_create( configuration: &configuration::Configuration, create_comment_request: &models::CreateCommentRequest, ) -> Result<models::CreateCommentResponse, Error<CommentsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_create",
+      "signature": "pub async fn dataset_items_create( configuration: &configuration::Configuration, create_dataset_item_request: &models::CreateDatasetItemRequest, ) -> Result<models::DatasetItem, Error<DatasetItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_create",
+      "signature": "pub async fn dataset_run_items_create( configuration: &configuration::Configuration, create_dataset_run_item_request: &models::CreateDatasetRunItemRequest, ) -> Result<models::DatasetRunItem, Error<DatasetRunItemsCreateError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_create",
+      "signature": "pub async fn datasets_create( configuration: &configuration::Configuration, create_dataset_request: &models::CreateDatasetRequest, ) -> Result<models::Dataset, Error<DatasetsCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_create",
+      "signature": "pub async fn evaluation_rules_create( configuration: &configuration::Configuration, create_evaluation_rule_request: &models::CreateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_update",
+      "signature": "pub async fn evaluation_rules_update( configuration: &configuration::Configuration, evaluation_rule_id: &str, update_evaluation_rule_request: &models::UpdateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_create",
+      "signature": "pub async fn evaluators_create( configuration: &configuration::Configuration, create_evaluator_request: &models::CreateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_update",
+      "signature": "pub async fn evaluators_update( configuration: &configuration::Configuration, evaluator_id: &str, update_evaluator_request: &models::UpdateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>>"
+    },
+    {
+      "file": "apis/feedback_api.rs",
+      "name": "feedback_submit",
+      "signature": "pub async fn feedback_submit( configuration: &configuration::Configuration, submit_feedback_request: &models::SubmitFeedbackRequest, ) -> Result<models::SubmitFeedbackResponse, Error<FeedbackSubmitError>>"
+    },
+    {
+      "file": "apis/ingestion_api.rs",
+      "name": "ingestion_batch",
+      "signature": "pub async fn ingestion_batch( configuration: &configuration::Configuration, ingestion_batch_request: &models::IngestionBatchRequest, ) -> Result<models::IngestionResponse, Error<IngestionBatchError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert",
+      "signature": "pub async fn llm_connections_upsert( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert_organization",
+      "signature": "pub async fn llm_connections_upsert_organization( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get_upload_url",
+      "signature": "pub async fn media_get_upload_url( configuration: &configuration::Configuration, get_media_upload_url_request: &models::GetMediaUploadUrlRequest, ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_patch",
+      "signature": "pub async fn media_patch( configuration: &configuration::Configuration, media_id: &str, patch_media_body: &models::PatchMediaBody, ) -> Result<(), Error<MediaPatchError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_create",
+      "signature": "pub async fn models_create( configuration: &configuration::Configuration, create_model_request: &models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsCreateError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_upsert",
+      "signature": "pub async fn models_upsert( configuration: &configuration::Configuration, id: &str, create_model_request: &models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsUpsertError>>"
+    },
+    {
+      "file": "apis/opentelemetry_api.rs",
+      "name": "opentelemetry_export_traces",
+      "signature": "pub async fn opentelemetry_export_traces( configuration: &configuration::Configuration, opentelemetry_export_traces_request: &models::OpentelemetryExportTracesRequest, ) -> Result<serde_json::Value, Error<OpentelemetryExportTracesError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_organization_membership",
+      "signature": "pub async fn organizations_delete_organization_membership( configuration: &configuration::Configuration, delete_membership_request: &models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_project_membership",
+      "signature": "pub async fn organizations_delete_project_membership( configuration: &configuration::Configuration, project_id: &str, delete_membership_request: &models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_organization_membership",
+      "signature": "pub async fn organizations_update_organization_membership( configuration: &configuration::Configuration, membership_request: &models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_project_membership",
+      "signature": "pub async fn organizations_update_project_membership( configuration: &configuration::Configuration, project_id: &str, membership_request: &models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create",
+      "signature": "pub async fn projects_create( configuration: &configuration::Configuration, projects_create_request: &models::ProjectsCreateRequest, ) -> Result<models::Project, Error<ProjectsCreateError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create_api_key",
+      "signature": "pub async fn projects_create_api_key( configuration: &configuration::Configuration, project_id: &str, projects_create_api_key_request: &models::ProjectsCreateApiKeyRequest, ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_update",
+      "signature": "pub async fn projects_update( configuration: &configuration::Configuration, project_id: &str, projects_update_request: &models::ProjectsUpdateRequest, ) -> Result<models::Project, Error<ProjectsUpdateError>>"
+    },
+    {
+      "file": "apis/prompt_version_api.rs",
+      "name": "prompt_version_update",
+      "signature": "pub async fn prompt_version_update( configuration: &configuration::Configuration, name: &str, version: i64, prompt_version_update_request: &models::PromptVersionUpdateRequest, ) -> Result<models::Prompt, Error<PromptVersionUpdateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_create",
+      "signature": "pub async fn prompts_create( configuration: &configuration::Configuration, create_prompt_request: &models::CreatePromptRequest, ) -> Result<models::Prompt, Error<PromptsCreateError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_create_user",
+      "signature": "pub async fn scim_create_user( configuration: &configuration::Configuration, scim_create_user_request: &models::ScimCreateUserRequest, ) -> Result<models::ScimUser, Error<ScimCreateUserError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_create",
+      "signature": "pub async fn score_configs_create( configuration: &configuration::Configuration, create_score_config_request: &models::CreateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_update",
+      "signature": "pub async fn score_configs_update( configuration: &configuration::Configuration, config_id: &str, update_score_config_request: &models::UpdateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_create",
+      "signature": "pub async fn scores_create( configuration: &configuration::Configuration, create_scores_request: &models::CreateScoresRequest, ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_create_version",
+      "signature": "pub async fn skills_create_version( configuration: &configuration::Configuration, create_skill_version_request: &models::CreateSkillVersionRequest, ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_set_labels",
+      "signature": "pub async fn skills_set_labels( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, update_skill_labels_request: &models::UpdateSkillLabelsRequest, ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_update",
+      "signature": "pub async fn skills_update( configuration: &configuration::Configuration, skill_name: &str, update_skill_request: &models::UpdateSkillRequest, ) -> Result<models::SkillVersion, Error<SkillsUpdateError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete_multiple",
+      "signature": "pub async fn trace_delete_multiple( configuration: &configuration::Configuration, trace_delete_multiple_request: &models::TraceDeleteMultipleRequest, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_create",
+      "signature": "pub async fn unstable_dashboard_widgets_create( configuration: &configuration::Configuration, unstable_create_dashboard_widget_request: &models::UnstableCreateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_update",
+      "signature": "pub async fn unstable_dashboard_widgets_update( configuration: &configuration::Configuration, widget_id: &str, unstable_update_dashboard_widget_request: &models::UnstableUpdateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_add_placement",
+      "signature": "pub async fn unstable_dashboards_add_placement( configuration: &configuration::Configuration, dashboard_id: &str, unstable_create_dashboard_placement_request: &models::UnstableCreateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsAddPlacementError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_create",
+      "signature": "pub async fn unstable_dashboards_create( configuration: &configuration::Configuration, unstable_create_dashboard_request: &models::UnstableCreateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update",
+      "signature": "pub async fn unstable_dashboards_update( configuration: &configuration::Configuration, dashboard_id: &str, unstable_update_dashboard_request: &models::UnstableUpdateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update_placement",
+      "signature": "pub async fn unstable_dashboards_update_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, unstable_update_dashboard_placement_request: &models::UnstableUpdateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsUpdatePlacementError>>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "field",
+      "signature": "pub fn field(&'a self, name: &'a str) -> Path<'a>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "index",
+      "signature": "pub fn index(&'a self, index: usize) -> Path<'a>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "into_vec",
+      "signature": "pub fn into_vec(self) -> Vec<ValidationError>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "is_empty",
+      "signature": "pub fn is_empty(&self) -> bool"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "items",
+      "signature": "pub fn items( count: usize, min: Option<u64>, max: Option<u64>, path: &Path<'_>, errors: &mut Vec<ValidationError>, )"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "iter",
+      "signature": "pub fn iter(&self) -> std::slice::Iter<'_, ValidationError>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "key",
+      "signature": "pub fn key(&'a self, key: &'a str) -> Path<'a>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "len",
+      "signature": "pub fn len(&self) -> usize"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "length",
+      "signature": "pub fn length( value: &str, min: Option<u64>, max: Option<u64>, path: &Path<'_>, errors: &mut Vec<ValidationError>, )"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "new",
+      "signature": "pub fn new(rule: Rule, actual: impl Into<String>) -> Self"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "properties",
+      "signature": "pub fn properties( count: usize, min: Option<u64>, max: Option<u64>, path: &Path<'_>, errors: &mut Vec<ValidationError>, )"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "root",
+      "signature": "pub fn root() -> Path<'static>"
+    },
+    {
+      "file": "models/validation.rs",
+      "name": "sort_by_key",
+      "signature": "pub fn sort_by_key(errors: &mut [ValidationError], start: usize, path: &Path<'_>)"
+    }
+  ],
+  "public_functions_removed_or_signature_changed": [
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue",
+      "signature": "pub async fn annotation_queues_create_queue( configuration: &configuration::Configuration, create_annotation_queue_request: models::CreateAnnotationQueueRequest, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_assignment",
+      "signature": "pub async fn annotation_queues_create_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: models::AnnotationQueueAssignmentRequest, ) -> Result< models::CreateAnnotationQueueAssignmentResponse, Error<AnnotationQueuesCreateQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_item",
+      "signature": "pub async fn annotation_queues_create_queue_item( configuration: &configuration::Configuration, queue_id: &str, create_annotation_queue_item_request: models::CreateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_assignment",
+      "signature": "pub async fn annotation_queues_delete_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: models::AnnotationQueueAssignmentRequest, ) -> Result< models::DeleteAnnotationQueueAssignmentResponse, Error<AnnotationQueuesDeleteQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_update_queue_item",
+      "signature": "pub async fn annotation_queues_update_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, update_annotation_queue_item_request: models::UpdateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>>"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_upsert_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_upsert_blob_storage_integration( configuration: &configuration::Configuration, create_blob_storage_integration_request: models::CreateBlobStorageIntegrationRequest, ) -> Result< models::BlobStorageIntegrationResponse, Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_create",
+      "signature": "pub async fn comments_create( configuration: &configuration::Configuration, create_comment_request: models::CreateCommentRequest, ) -> Result<models::CreateCommentResponse, Error<CommentsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_create",
+      "signature": "pub async fn dataset_items_create( configuration: &configuration::Configuration, create_dataset_item_request: models::CreateDatasetItemRequest, ) -> Result<models::DatasetItem, Error<DatasetItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_create",
+      "signature": "pub async fn dataset_run_items_create( configuration: &configuration::Configuration, create_dataset_run_item_request: models::CreateDatasetRunItemRequest, ) -> Result<models::DatasetRunItem, Error<DatasetRunItemsCreateError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_create",
+      "signature": "pub async fn datasets_create( configuration: &configuration::Configuration, create_dataset_request: models::CreateDatasetRequest, ) -> Result<models::Dataset, Error<DatasetsCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_create",
+      "signature": "pub async fn evaluation_rules_create( configuration: &configuration::Configuration, create_evaluation_rule_request: models::CreateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_update",
+      "signature": "pub async fn evaluation_rules_update( configuration: &configuration::Configuration, evaluation_rule_id: &str, update_evaluation_rule_request: models::UpdateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_create",
+      "signature": "pub async fn evaluators_create( configuration: &configuration::Configuration, create_evaluator_request: models::CreateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_update",
+      "signature": "pub async fn evaluators_update( configuration: &configuration::Configuration, evaluator_id: &str, update_evaluator_request: models::UpdateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>>"
+    },
+    {
+      "file": "apis/feedback_api.rs",
+      "name": "feedback_submit",
+      "signature": "pub async fn feedback_submit( configuration: &configuration::Configuration, submit_feedback_request: models::SubmitFeedbackRequest, ) -> Result<models::SubmitFeedbackResponse, Error<FeedbackSubmitError>>"
+    },
+    {
+      "file": "apis/ingestion_api.rs",
+      "name": "ingestion_batch",
+      "signature": "pub async fn ingestion_batch( configuration: &configuration::Configuration, ingestion_batch_request: models::IngestionBatchRequest, ) -> Result<models::IngestionResponse, Error<IngestionBatchError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert",
+      "signature": "pub async fn llm_connections_upsert( configuration: &configuration::Configuration, upsert_llm_connection_request: models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert_organization",
+      "signature": "pub async fn llm_connections_upsert_organization( configuration: &configuration::Configuration, upsert_llm_connection_request: models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get_upload_url",
+      "signature": "pub async fn media_get_upload_url( configuration: &configuration::Configuration, get_media_upload_url_request: models::GetMediaUploadUrlRequest, ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_patch",
+      "signature": "pub async fn media_patch( configuration: &configuration::Configuration, media_id: &str, patch_media_body: models::PatchMediaBody, ) -> Result<(), Error<MediaPatchError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_create",
+      "signature": "pub async fn models_create( configuration: &configuration::Configuration, create_model_request: models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsCreateError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_upsert",
+      "signature": "pub async fn models_upsert( configuration: &configuration::Configuration, id: &str, create_model_request: models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsUpsertError>>"
+    },
+    {
+      "file": "apis/opentelemetry_api.rs",
+      "name": "opentelemetry_export_traces",
+      "signature": "pub async fn opentelemetry_export_traces( configuration: &configuration::Configuration, opentelemetry_export_traces_request: models::OpentelemetryExportTracesRequest, ) -> Result<serde_json::Value, Error<OpentelemetryExportTracesError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_organization_membership",
+      "signature": "pub async fn organizations_delete_organization_membership( configuration: &configuration::Configuration, delete_membership_request: models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_project_membership",
+      "signature": "pub async fn organizations_delete_project_membership( configuration: &configuration::Configuration, project_id: &str, delete_membership_request: models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_organization_membership",
+      "signature": "pub async fn organizations_update_organization_membership( configuration: &configuration::Configuration, membership_request: models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_project_membership",
+      "signature": "pub async fn organizations_update_project_membership( configuration: &configuration::Configuration, project_id: &str, membership_request: models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create",
+      "signature": "pub async fn projects_create( configuration: &configuration::Configuration, projects_create_request: models::ProjectsCreateRequest, ) -> Result<models::Project, Error<ProjectsCreateError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create_api_key",
+      "signature": "pub async fn projects_create_api_key( configuration: &configuration::Configuration, project_id: &str, projects_create_api_key_request: models::ProjectsCreateApiKeyRequest, ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_update",
+      "signature": "pub async fn projects_update( configuration: &configuration::Configuration, project_id: &str, projects_update_request: models::ProjectsUpdateRequest, ) -> Result<models::Project, Error<ProjectsUpdateError>>"
+    },
+    {
+      "file": "apis/prompt_version_api.rs",
+      "name": "prompt_version_update",
+      "signature": "pub async fn prompt_version_update( configuration: &configuration::Configuration, name: &str, version: i64, prompt_version_update_request: models::PromptVersionUpdateRequest, ) -> Result<models::Prompt, Error<PromptVersionUpdateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_create",
+      "signature": "pub async fn prompts_create( configuration: &configuration::Configuration, create_prompt_request: models::CreatePromptRequest, ) -> Result<models::Prompt, Error<PromptsCreateError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_create_user",
+      "signature": "pub async fn scim_create_user( configuration: &configuration::Configuration, scim_create_user_request: models::ScimCreateUserRequest, ) -> Result<models::ScimUser, Error<ScimCreateUserError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_create",
+      "signature": "pub async fn score_configs_create( configuration: &configuration::Configuration, create_score_config_request: models::CreateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_update",
+      "signature": "pub async fn score_configs_update( configuration: &configuration::Configuration, config_id: &str, update_score_config_request: models::UpdateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_create",
+      "signature": "pub async fn scores_create( configuration: &configuration::Configuration, create_scores_request: models::CreateScoresRequest, ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_create_version",
+      "signature": "pub async fn skills_create_version( configuration: &configuration::Configuration, create_skill_version_request: models::CreateSkillVersionRequest, ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_set_labels",
+      "signature": "pub async fn skills_set_labels( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, update_skill_labels_request: models::UpdateSkillLabelsRequest, ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_update",
+      "signature": "pub async fn skills_update( configuration: &configuration::Configuration, skill_name: &str, update_skill_request: models::UpdateSkillRequest, ) -> Result<models::SkillVersion, Error<SkillsUpdateError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete_multiple",
+      "signature": "pub async fn trace_delete_multiple( configuration: &configuration::Configuration, trace_delete_multiple_request: models::TraceDeleteMultipleRequest, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_create",
+      "signature": "pub async fn unstable_dashboard_widgets_create( configuration: &configuration::Configuration, unstable_create_dashboard_widget_request: models::UnstableCreateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_update",
+      "signature": "pub async fn unstable_dashboard_widgets_update( configuration: &configuration::Configuration, widget_id: &str, unstable_update_dashboard_widget_request: models::UnstableUpdateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_add_placement",
+      "signature": "pub async fn unstable_dashboards_add_placement( configuration: &configuration::Configuration, dashboard_id: &str, unstable_create_dashboard_placement_request: models::UnstableCreateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsAddPlacementError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_create",
+      "signature": "pub async fn unstable_dashboards_create( configuration: &configuration::Configuration, unstable_create_dashboard_request: models::UnstableCreateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update",
+      "signature": "pub async fn unstable_dashboards_update( configuration: &configuration::Configuration, dashboard_id: &str, unstable_update_dashboard_request: models::UnstableUpdateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update_placement",
+      "signature": "pub async fn unstable_dashboards_update_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, unstable_update_dashboard_placement_request: models::UnstableUpdateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsUpdatePlacementError>>"
+    }
+  ],
+  "public_model_field_changes": [
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "actual",
+      "registry": null,
+      "current": "String"
+    },
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "path",
+      "registry": null,
+      "current": "String"
+    },
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "rule",
+      "registry": null,
+      "current": "Rule"
+    }
+  ],
+  "public_enum_variant_changes": [
+    {
+      "file": "models/validation.rs",
+      "enum": "Rule",
+      "added": [
+        "ExclusiveMaximum",
+        "ExclusiveMinimum",
+        "MaxItems",
+        "MaxLength",
+        "MaxProperties",
+        "Maximum",
+        "MinItems",
+        "MinLength",
+        "MinProperties",
+        "Minimum",
+        "MultipleOf",
+        "Pattern",
+        "UniqueItems"
+      ],
+      "removed": []
+    }
+  ],
+  "public_derive_changes": [
+    {
+      "file": "models/validation.rs",
+      "type": "Path",
+      "registry": null,
+      "current": [
+        "Clone",
+        "Copy",
+        "Debug"
+      ]
+    },
+    {
+      "file": "models/validation.rs",
+      "type": "ValidationError",
+      "registry": null,
+      "current": [
+        "Clone",
+        "Debug",
+        "PartialEq"
+      ]
+    },
+    {
+      "file": "models/validation.rs",
+      "type": "ValidationErrors",
+      "registry": null,
+      "current": [
+        "Clone",
+        "Debug",
+        "PartialEq"
+      ]
+    }
+  ],
+  "serde_field_attribute_changes": [
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "actual",
+      "registry": null,
+      "current": ""
+    },
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "path",
+      "registry": null,
+      "current": ""
+    },
+    {
+      "file": "models/validation.rs",
+      "model": "ValidationError",
+      "field": "rule",
+      "registry": null,
+      "current": ""
+    }
+  ],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 59,
+    "public_functions_removed_or_signature_changed": 46,
+    "public_model_field_changes": 3,
+    "public_enum_types_with_variant_changes": 1,
+    "public_enum_variants_added": 13,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 3,
+    "serde_field_attribute_changes": 3
+  }
+}

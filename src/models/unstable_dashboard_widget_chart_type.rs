@@ -54,6 +54,15 @@ impl std::fmt::Display for UnstableDashboardWidgetChartType {
     }
 }
 
+impl crate::models::validation::Validate for UnstableDashboardWidgetChartType {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for UnstableDashboardWidgetChartType {
     type Err = crate::models::ParseEnumError;
 

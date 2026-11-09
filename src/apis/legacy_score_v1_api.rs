@@ -59,12 +59,36 @@ pub async fn legacy_score_v1_delete(
     if !status.is_client_error() && !status.is_server_error() {
         Ok(())
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LegacyScoreV1DeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LegacyScoreV1DeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LegacyScoreV1DeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

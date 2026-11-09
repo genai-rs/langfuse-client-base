@@ -28,3 +28,12 @@ impl PaginatedDatasetItems {
         PaginatedDatasetItems { data, meta }
     }
 }
+
+impl crate::models::validation::Validate for PaginatedDatasetItems {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

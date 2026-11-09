@@ -70,3 +70,12 @@ impl LlmAsJudgeEvaluatorVersion {
         }
     }
 }
+
+impl crate::models::validation::Validate for LlmAsJudgeEvaluatorVersion {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

@@ -114,7 +114,7 @@ pub enum OrganizationsUpdateProjectMembershipError {
 #[bon::builder]
 pub async fn organizations_delete_organization_membership(
     configuration: &configuration::Configuration,
-    delete_membership_request: models::DeleteMembershipRequest,
+    delete_membership_request: &models::DeleteMembershipRequest,
 ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>
 {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -134,7 +134,7 @@ pub async fn organizations_delete_organization_membership(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_delete_membership_request);
+    req_builder = req_builder.json(p_body_delete_membership_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -151,18 +151,42 @@ pub async fn organizations_delete_organization_membership(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipDeletionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipDeletionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipDeletionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipDeletionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<OrganizationsDeleteOrganizationMembershipError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsDeleteOrganizationMembershipError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -171,7 +195,7 @@ pub async fn organizations_delete_organization_membership(
 pub async fn organizations_delete_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,
-    delete_membership_request: models::DeleteMembershipRequest,
+    delete_membership_request: &models::DeleteMembershipRequest,
 ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -192,7 +216,7 @@ pub async fn organizations_delete_project_membership(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_delete_membership_request);
+    req_builder = req_builder.json(p_body_delete_membership_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -209,18 +233,41 @@ pub async fn organizations_delete_project_membership(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipDeletionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipDeletionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipDeletionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipDeletionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsDeleteProjectMembershipError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsDeleteProjectMembershipError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsDeleteProjectMembershipError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -257,18 +304,41 @@ pub async fn organizations_get_organization_api_keys(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrganizationApiKeysResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrganizationApiKeysResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrganizationApiKeysResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrganizationApiKeysResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsGetOrganizationApiKeysError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsGetOrganizationApiKeysError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationApiKeysError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -305,18 +375,41 @@ pub async fn organizations_get_organization_memberships(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsGetOrganizationMembershipsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsGetOrganizationMembershipsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationMembershipsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -354,18 +447,41 @@ pub async fn organizations_get_organization_projects(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrganizationProjectsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrganizationProjectsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrganizationProjectsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrganizationProjectsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsGetOrganizationProjectsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsGetOrganizationProjectsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetOrganizationProjectsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -407,18 +523,41 @@ pub async fn organizations_get_project_memberships(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipsResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipsResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipsResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipsResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsGetProjectMembershipsError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsGetProjectMembershipsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsGetProjectMembershipsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -426,7 +565,7 @@ pub async fn organizations_get_project_memberships(
 #[bon::builder]
 pub async fn organizations_update_organization_membership(
     configuration: &configuration::Configuration,
-    membership_request: models::MembershipRequest,
+    membership_request: &models::MembershipRequest,
 ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_membership_request = membership_request;
@@ -443,7 +582,7 @@ pub async fn organizations_update_organization_membership(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_membership_request);
+    req_builder = req_builder.json(p_body_membership_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -460,18 +599,42 @@ pub async fn organizations_update_organization_membership(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
         let entity: Option<OrganizationsUpdateOrganizationMembershipError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+            match status.as_u16() {
+                400 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::Status400),
+                401 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::Status401),
+                403 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::Status403),
+                404 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::Status404),
+                405 => serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::Status405),
+                _ => None,
+            }
+            .or_else(|| {
+                serde_json::from_str(&content)
+                    .ok()
+                    .map(OrganizationsUpdateOrganizationMembershipError::UnknownValue)
+            });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -480,7 +643,7 @@ pub async fn organizations_update_organization_membership(
 pub async fn organizations_update_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,
-    membership_request: models::MembershipRequest,
+    membership_request: &models::MembershipRequest,
 ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -499,7 +662,7 @@ pub async fn organizations_update_project_membership(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_membership_request);
+    req_builder = req_builder.json(p_body_membership_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -516,17 +679,40 @@ pub async fn organizations_update_project_membership(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MembershipResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MembershipResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<OrganizationsUpdateProjectMembershipError> =
-            serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<OrganizationsUpdateProjectMembershipError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(OrganizationsUpdateProjectMembershipError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

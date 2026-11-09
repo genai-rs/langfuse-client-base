@@ -105,7 +105,7 @@ pub enum EvaluatorsUpdateError {
 #[bon::builder]
 pub async fn evaluators_create(
     configuration: &configuration::Configuration,
-    create_evaluator_request: models::CreateEvaluatorRequest,
+    create_evaluator_request: &models::CreateEvaluatorRequest,
 ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_evaluator_request = create_evaluator_request;
@@ -121,7 +121,7 @@ pub async fn evaluators_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_create_evaluator_request);
+    req_builder = req_builder.json(p_body_create_evaluator_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -138,17 +138,50 @@ pub async fn evaluators_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status405),
+            412 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status412),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -192,17 +225,47 @@ pub async fn evaluators_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeletedEvaluator`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeletedEvaluator`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeletedEvaluator`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeletedEvaluator`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -244,17 +307,47 @@ pub async fn evaluators_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -300,17 +393,47 @@ pub async fn evaluators_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluatorsPage`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluatorsPage`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluatorsPage`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluatorsPage`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -362,17 +485,47 @@ pub async fn evaluators_list_versions(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluatorVersionsPage`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluatorVersionsPage`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluatorVersionsPage`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluatorVersionsPage`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsListVersionsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsListVersionsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status405),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsListVersionsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -381,7 +534,7 @@ pub async fn evaluators_list_versions(
 pub async fn evaluators_update(
     configuration: &configuration::Configuration,
     evaluator_id: &str,
-    update_evaluator_request: models::UpdateEvaluatorRequest,
+    update_evaluator_request: &models::UpdateEvaluatorRequest,
 ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluator_id = evaluator_id;
@@ -402,7 +555,7 @@ pub async fn evaluators_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_update_evaluator_request);
+    req_builder = req_builder.json(p_body_update_evaluator_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -419,16 +572,52 @@ pub async fn evaluators_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Evaluator`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Evaluator`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<EvaluatorsUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<EvaluatorsUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status405),
+            409 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status409),
+            412 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status412),
+            429 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status429),
+            500 => serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::Status500),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(EvaluatorsUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

@@ -25,3 +25,12 @@ impl HealthResponse {
         HealthResponse { version, status }
     }
 }
+
+impl crate::models::validation::Validate for HealthResponse {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}

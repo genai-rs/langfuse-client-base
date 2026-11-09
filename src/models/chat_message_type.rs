@@ -30,6 +30,15 @@ impl std::fmt::Display for ChatMessageType {
     }
 }
 
+impl crate::models::validation::Validate for ChatMessageType {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for ChatMessageType {
     type Err = crate::models::ParseEnumError;
 

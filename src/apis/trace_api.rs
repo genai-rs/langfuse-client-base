@@ -102,17 +102,41 @@ pub async fn trace_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteTraceResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteTraceResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteTraceResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteTraceResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<TraceDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<TraceDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -120,7 +144,7 @@ pub async fn trace_delete(
 #[bon::builder]
 pub async fn trace_delete_multiple(
     configuration: &configuration::Configuration,
-    trace_delete_multiple_request: models::TraceDeleteMultipleRequest,
+    trace_delete_multiple_request: &models::TraceDeleteMultipleRequest,
 ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_trace_delete_multiple_request = trace_delete_multiple_request;
@@ -136,7 +160,7 @@ pub async fn trace_delete_multiple(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_trace_delete_multiple_request);
+    req_builder = req_builder.json(p_body_trace_delete_multiple_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -153,17 +177,41 @@ pub async fn trace_delete_multiple(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteTraceResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteTraceResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteTraceResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteTraceResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<TraceDeleteMultipleError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<TraceDeleteMultipleError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(TraceDeleteMultipleError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -211,17 +259,41 @@ pub async fn trace_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TraceWithFullDetails`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TraceWithFullDetails`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TraceWithFullDetails`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TraceWithFullDetails`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<TraceGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<TraceGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(TraceGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -280,32 +352,19 @@ pub async fn trace_list(
         req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_order_by {
         req_builder = req_builder.query(&[("orderBy", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_tags {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("tags".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "tags",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("tags", item)]);
+        }
     }
     if let Some(ref param_value) = p_query_version {
         req_builder = req_builder.query(&[("version", &param_value.to_string())]);
@@ -314,23 +373,10 @@ pub async fn trace_list(
         req_builder = req_builder.query(&[("release", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_environment {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("environment".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "environment",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("environment", item)]);
+        }
     }
     if let Some(ref param_value) = p_query_fields {
         req_builder = req_builder.query(&[("fields", &param_value.to_string())]);
@@ -360,16 +406,40 @@ pub async fn trace_list(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Traces`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Traces`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Traces`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Traces`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<TraceListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<TraceListError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(TraceListError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

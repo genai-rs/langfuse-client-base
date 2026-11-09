@@ -88,17 +88,41 @@ pub async fn media_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetMediaResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetMediaResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetMediaResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetMediaResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<MediaGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<MediaGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -106,7 +130,7 @@ pub async fn media_get(
 #[bon::builder]
 pub async fn media_get_upload_url(
     configuration: &configuration::Configuration,
-    get_media_upload_url_request: models::GetMediaUploadUrlRequest,
+    get_media_upload_url_request: &models::GetMediaUploadUrlRequest,
 ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_get_media_upload_url_request = get_media_upload_url_request;
@@ -122,7 +146,7 @@ pub async fn media_get_upload_url(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_get_media_upload_url_request);
+    req_builder = req_builder.json(p_body_get_media_upload_url_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -139,17 +163,41 @@ pub async fn media_get_upload_url(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetMediaUploadUrlResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetMediaUploadUrlResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetMediaUploadUrlResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetMediaUploadUrlResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<MediaGetUploadUrlError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<MediaGetUploadUrlError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(MediaGetUploadUrlError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -158,7 +206,7 @@ pub async fn media_get_upload_url(
 pub async fn media_patch(
     configuration: &configuration::Configuration,
     media_id: &str,
-    patch_media_body: models::PatchMediaBody,
+    patch_media_body: &models::PatchMediaBody,
 ) -> Result<(), Error<MediaPatchError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_media_id = media_id;
@@ -179,7 +227,7 @@ pub async fn media_patch(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_patch_media_body);
+    req_builder = req_builder.json(p_body_patch_media_body);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -189,12 +237,36 @@ pub async fn media_patch(
     if !status.is_client_error() && !status.is_server_error() {
         Ok(())
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<MediaPatchError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<MediaPatchError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(MediaPatchError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

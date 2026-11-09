@@ -61,16 +61,40 @@ pub async fn metrics_metrics(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MetricsV2Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MetricsV2Response`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MetricsV2Response`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MetricsV2Response`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<MetricsMetricsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<MetricsMetricsError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(MetricsMetricsError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

@@ -39,6 +39,15 @@ impl std::fmt::Display for ScoreConfigDataType {
     }
 }
 
+impl crate::models::validation::Validate for ScoreConfigDataType {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for ScoreConfigDataType {
     type Err = crate::models::ParseEnumError;
 

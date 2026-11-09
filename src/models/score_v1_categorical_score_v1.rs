@@ -108,6 +108,16 @@ impl ScoreV1CategoricalScoreV1 {
         }
     }
 }
+
+impl crate::models::validation::Validate for ScoreV1CategoricalScoreV1 {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum DataType {
     #[serde(rename = "CATEGORICAL")]

@@ -59,6 +59,15 @@ impl std::fmt::Display for UnstablePublicApiErrorCode {
     }
 }
 
+impl crate::models::validation::Validate for UnstablePublicApiErrorCode {
+    fn validate_into(
+        &self,
+        _path: &crate::models::validation::Path<'_>,
+        _errors: &mut Vec<crate::models::validation::ValidationError>,
+    ) {
+    }
+}
+
 impl ::std::str::FromStr for UnstablePublicApiErrorCode {
     type Err = crate::models::ParseEnumError;
 

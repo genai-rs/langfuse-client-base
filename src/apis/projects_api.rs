@@ -102,7 +102,7 @@ pub enum ProjectsUpdateError {
 #[bon::builder]
 pub async fn projects_create(
     configuration: &configuration::Configuration,
-    projects_create_request: models::ProjectsCreateRequest,
+    projects_create_request: &models::ProjectsCreateRequest,
 ) -> Result<models::Project, Error<ProjectsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_projects_create_request = projects_create_request;
@@ -118,7 +118,7 @@ pub async fn projects_create(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_projects_create_request);
+    req_builder = req_builder.json(p_body_projects_create_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -135,17 +135,41 @@ pub async fn projects_create(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Project`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Project`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Project`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Project`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsCreateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsCreateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -154,7 +178,7 @@ pub async fn projects_create(
 pub async fn projects_create_api_key(
     configuration: &configuration::Configuration,
     project_id: &str,
-    projects_create_api_key_request: models::ProjectsCreateApiKeyRequest,
+    projects_create_api_key_request: &models::ProjectsCreateApiKeyRequest,
 ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -175,7 +199,7 @@ pub async fn projects_create_api_key(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_projects_create_api_key_request);
+    req_builder = req_builder.json(p_body_projects_create_api_key_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -192,17 +216,41 @@ pub async fn projects_create_api_key(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsCreateApiKeyError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsCreateApiKeyError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsCreateApiKeyError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -246,17 +294,41 @@ pub async fn projects_delete(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProjectDeletionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProjectDeletionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProjectDeletionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProjectDeletionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsDeleteError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsDeleteError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -303,17 +375,41 @@ pub async fn projects_delete_api_key(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyDeletionResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyDeletionResponse`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyDeletionResponse`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyDeletionResponse`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsDeleteApiKeyError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsDeleteApiKeyError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsDeleteApiKeyError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -347,17 +443,41 @@ pub async fn projects_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Projects`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Projects`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Projects`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Projects`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsGetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsGetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -399,17 +519,41 @@ pub async fn projects_get_api_keys(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyList`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyList`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ApiKeyList`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ApiKeyList`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsGetApiKeysError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsGetApiKeysError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsGetApiKeysError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -418,7 +562,7 @@ pub async fn projects_get_api_keys(
 pub async fn projects_update(
     configuration: &configuration::Configuration,
     project_id: &str,
-    projects_update_request: models::ProjectsUpdateRequest,
+    projects_update_request: &models::ProjectsUpdateRequest,
 ) -> Result<models::Project, Error<ProjectsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -437,7 +581,7 @@ pub async fn projects_update(
     if let Some(ref auth_conf) = configuration.basic_auth {
         req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
     };
-    req_builder = req_builder.json(&p_body_projects_update_request);
+    req_builder = req_builder.json(p_body_projects_update_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -454,16 +598,40 @@ pub async fn projects_update(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Project`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Project`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::Project`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::Project`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<ProjectsUpdateError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<ProjectsUpdateError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(ProjectsUpdateError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }

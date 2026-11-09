@@ -77,17 +77,41 @@ pub async fn legacy_observations_v1_get(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsViewSingle`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsViewSingle`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ObservationsViewSingle`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ObservationsViewSingle`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LegacyObservationsV1GetError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LegacyObservationsV1GetError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
 
@@ -153,29 +177,16 @@ pub async fn legacy_observations_v1_get_many(
         req_builder = req_builder.query(&[("parentObservationId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_environment {
-        req_builder = match "multi" {
-            "multi" => req_builder.query(
-                &param_value
-                    .into_iter()
-                    .map(|p| ("environment".to_owned(), p.to_string()))
-                    .collect::<Vec<(std::string::String, std::string::String)>>(),
-            ),
-            _ => req_builder.query(&[(
-                "environment",
-                &param_value
-                    .into_iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]),
-        };
+        let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();
+        for item in items {
+            req_builder = req_builder.query(&[("environment", item)]);
+        }
     }
     if let Some(ref param_value) = p_query_from_start_time {
-        req_builder = req_builder.query(&[("fromStartTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("fromStartTime", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
     }
     if let Some(ref param_value) = p_query_version {
         req_builder = req_builder.query(&[("version", &param_value.to_string())]);
@@ -205,16 +216,40 @@ pub async fn legacy_observations_v1_get_many(
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LegacyObservationsViews`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LegacyObservationsViews`")))),
+            ContentType::Text => Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::LegacyObservationsViews`"))),
+            ContentType::Unsupported(unknown_type) => Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::LegacyObservationsViews`")))),
         }
     } else {
+        let headers = resp.headers().clone();
         let content = resp.text().await?;
-        let entity: Option<LegacyObservationsV1GetManyError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent {
+        let entity: Option<LegacyObservationsV1GetManyError> = match status.as_u16() {
+            400 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::Status400),
+            401 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::Status401),
+            403 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::Status403),
+            404 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::Status404),
+            405 => serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::Status405),
+            _ => None,
+        }
+        .or_else(|| {
+            serde_json::from_str(&content)
+                .ok()
+                .map(LegacyObservationsV1GetManyError::UnknownValue)
+        });
+        Err(Error::ResponseError(Box::new(ResponseContent {
             status,
             content,
             entity,
-        }))
+            headers,
+        })))
     }
 }
