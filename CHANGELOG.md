@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.18.0...v0.19.0) - 2026-11-10
+
+### Added
+
+- [**breaking**] generate with timvw-rust 0.21.0
+- schemaDefaultDocs, nullableUnionFields, typedEnumParameters, deprecatedAttributes
+
+### Other
+
+- regenerate with timvw-rust 0.21.0
+- *(deps)* Update Rust crate tokio to 1.54.1
+- timvw-rust no longer extends the stock rust generator
+- timvw-rust 0.20.0
+- timvw-rust 0.19.0 (fixed stock options are no longer configurable)
+- link the generator's README instead of a design doc artifact
+- generate with timvw-rust 0.18.0
+
 ## [0.18.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.17.0...v0.18.0) - 2026-11-07
 
 ### Added
