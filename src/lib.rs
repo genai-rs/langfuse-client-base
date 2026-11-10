@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![allow(unused_imports)]
 #![allow(clippy::too_many_arguments)]
+#![allow(clippy::type_complexity)]
 
 extern crate reqwest;
 extern crate serde;

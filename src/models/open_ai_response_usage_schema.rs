@@ -26,14 +26,14 @@ pub struct OpenAiResponseUsageSchema {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub input_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
+    pub input_tokens_details: Option<Option<std::collections::HashMap<String, Option<i64>>>>,
     #[serde(
         rename = "output_tokens_details",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub output_tokens_details: Option<Option<std::collections::HashMap<String, i64>>>,
+    pub output_tokens_details: Option<Option<std::collections::HashMap<String, Option<i64>>>>,
 }
 
 impl OpenAiResponseUsageSchema {
