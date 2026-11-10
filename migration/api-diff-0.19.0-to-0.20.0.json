@@ -1,0 +1,65 @@
+{
+  "source_heads": {
+    "reference": "langfuse-client-base 0.19.0",
+    "candidate": "chore/timvw-rust-0.22.0 (timvw-rust 0.22.0, unchanged openapi.yml)"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 502,
+  "current_source_rs_files": 502,
+  "source_files_added": [],
+  "source_files_removed": [],
+  "source_files_modified": [
+    "lib.rs",
+    "models/open_ai_completion_usage_schema.rs",
+    "models/open_ai_response_usage_schema.rs"
+  ],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [],
+  "public_functions_removed_or_signature_changed": [],
+  "public_model_field_changes": [
+    {
+      "file": "models/open_ai_completion_usage_schema.rs",
+      "model": "OpenAiCompletionUsageSchema",
+      "field": "completion_tokens_details",
+      "registry": "Option<Option<std::collections::HashMap<String, i64>>>",
+      "current": "Option<Option<std::collections::HashMap<String, Option<i64>>>>"
+    },
+    {
+      "file": "models/open_ai_completion_usage_schema.rs",
+      "model": "OpenAiCompletionUsageSchema",
+      "field": "prompt_tokens_details",
+      "registry": "Option<Option<std::collections::HashMap<String, i64>>>",
+      "current": "Option<Option<std::collections::HashMap<String, Option<i64>>>>"
+    },
+    {
+      "file": "models/open_ai_response_usage_schema.rs",
+      "model": "OpenAiResponseUsageSchema",
+      "field": "input_tokens_details",
+      "registry": "Option<Option<std::collections::HashMap<String, i64>>>",
+      "current": "Option<Option<std::collections::HashMap<String, Option<i64>>>>"
+    },
+    {
+      "file": "models/open_ai_response_usage_schema.rs",
+      "model": "OpenAiResponseUsageSchema",
+      "field": "output_tokens_details",
+      "registry": "Option<Option<std::collections::HashMap<String, i64>>>",
+      "current": "Option<Option<std::collections::HashMap<String, Option<i64>>>>"
+    }
+  ],
+  "public_enum_variant_changes": [],
+  "public_derive_changes": [],
+  "serde_field_attribute_changes": [],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 0,
+    "public_functions_removed_or_signature_changed": 0,
+    "public_model_field_changes": 4,
+    "public_enum_types_with_variant_changes": 0,
+    "public_enum_variants_added": 0,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 0,
+    "serde_field_attribute_changes": 0
+  }
+}
