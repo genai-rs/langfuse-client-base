@@ -59,7 +59,7 @@ Name | Type | Description  | Required | Notes
 **trace_id** | Option<**String**> |  |  |
 **level** | Option<[**ObservationLevel**](ObservationLevel.md)> | Optional filter for observations with a specific level (e.g. \"DEBUG\", \"DEFAULT\", \"WARNING\", \"ERROR\"). |  |
 **parent_observation_id** | Option<**String**> |  |  |
-**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for observations where the environment is one of the provided values. |  |
+**environment** | Option<**Vec<String>**> | Optional filter for observations where the environment is one of the provided values. |  |
 **from_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only observations with a start_time on or after this datetime (ISO 8601). |  |
 **to_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only observations with a start_time before this datetime (ISO 8601). |  |
 **version** | Option<**String**> | Optional filter to only include observations with a certain version. |  |
@@ -67,7 +67,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::LegacyObservationsViews**](legacyObservationsViews.md)
+[**models::LegacyObservationsViews**](LegacyObservationsViews.md)
 
 ### Authorization
 

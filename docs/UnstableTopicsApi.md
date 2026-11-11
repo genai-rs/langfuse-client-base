@@ -33,7 +33,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicWithStatus**](unstableTopicWithStatus.md)
+[**models::UnstableTopicWithStatus**](UnstableTopicWithStatus.md)
 
 ### Authorization
 
@@ -63,7 +63,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicFacet**](unstableTopicFacet.md)
+[**models::UnstableTopicFacet**](UnstableTopicFacet.md)
 
 ### Authorization
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicRule**](unstableTopicRule.md)
+[**models::UnstableTopicRule**](UnstableTopicRule.md)
 
 ### Authorization
 
@@ -128,7 +128,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicList**](unstableTopicList.md)
+[**models::UnstableTopicList**](UnstableTopicList.md)
 
 ### Authorization
 
@@ -163,7 +163,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicAssignmentList**](unstableTopicAssignmentList.md)
+[**models::UnstableTopicAssignmentList**](UnstableTopicAssignmentList.md)
 
 ### Authorization
 
@@ -195,7 +195,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicFacetList**](unstableTopicFacetList.md)
+[**models::UnstableTopicFacetList**](UnstableTopicFacetList.md)
 
 ### Authorization
 
@@ -227,7 +227,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicRuleList**](unstableTopicRuleList.md)
+[**models::UnstableTopicRuleList**](UnstableTopicRuleList.md)
 
 ### Authorization
 
@@ -263,7 +263,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableTopicSummaryList**](unstableTopicSummaryList.md)
+[**models::UnstableTopicSummaryList**](UnstableTopicSummaryList.md)
 
 ### Authorization
 

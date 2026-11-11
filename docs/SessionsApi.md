@@ -55,7 +55,7 @@ Name | Type | Description  | Required | Notes
 **limit** | Option<**i64**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
 **from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created on or after a certain datetime (ISO 8601) |  |
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created before a certain datetime (ISO 8601) |  |
-**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for sessions where the environment is one of the provided values. |  |
+**environment** | Option<**Vec<String>**> | Optional filter for sessions where the environment is one of the provided values. |  |
 
 ### Return type
 

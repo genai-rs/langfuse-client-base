@@ -88,7 +88,7 @@ Name | Type | Description  | Required | Notes
 **name** | Option<**String**> | Retrieve only scores with this name. |  |
 **from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include scores created on or after a certain datetime (ISO 8601) |  |
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include scores created before a certain datetime (ISO 8601) |  |
-**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for scores where the environment is one of the provided values. |  |
+**environment** | Option<**Vec<String>**> | Optional filter for scores where the environment is one of the provided values. |  |
 **source** | Option<[**ScoreSource**](ScoreSource.md)> | Retrieve only scores from a specific source. |  |
 **operator** | Option<**String**> | Retrieve only scores with <operator> value. |  |
 **value** | Option<**f64**> | Retrieve only scores with <operator> value. |  |
@@ -100,7 +100,7 @@ Name | Type | Description  | Required | Notes
 **observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter scores by. |  |
 **queue_id** | Option<**String**> | Retrieve only scores with a specific annotation queueId. |  |
 **data_type** | Option<[**ScoreDataType**](ScoreDataType.md)> | Retrieve only scores with a specific dataType. |  |
-**trace_tags** | Option<[**Vec<String>**](String.md)> | Only scores linked to traces that include all of these tags will be returned. |  |
+**trace_tags** | Option<**Vec<String>**> | Only scores linked to traces that include all of these tags will be returned. |  |
 **fields** | Option<**String**> | Comma-separated list of field groups to include in the response. Available field groups: 'score' (core score fields), 'trace' (trace properties: userId, tags, environment, sessionId). If not specified, both 'score' and 'trace' are returned by default. Example: 'score' to exclude trace data, 'score,trace' to include both. Note: When filtering by trace properties (using userId or traceTags parameters), the 'trace' field group must be included, otherwise a 400 error will be returned. |  |
 **filter** | Option<**String**> | A JSON stringified array of filter objects. Each object requires type, column, operator, and value. Supports filtering by score metadata using the stringObject type. Example: [{\"type\":\"stringObject\",\"column\":\"metadata\",\"key\":\"user_id\",\"operator\":\"=\",\"value\":\"abc123\"}]. Supported types: stringObject (metadata key-value filtering), string, number, datetime, stringOptions, arrayOptions. Supported operators for stringObject: =, contains, does not contain, starts with, ends with, is set, is not set. Use is set / is not set to filter on metadata key presence. An empty value for contains, starts with, or ends with is treated as is set (key presence). |  |
 

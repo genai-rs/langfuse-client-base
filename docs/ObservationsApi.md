@@ -33,7 +33,7 @@ Name | Type | Description  | Required | Notes
 **level** | Option<[**ObservationLevel**](ObservationLevel.md)> | Optional filter for observations with a specific level (e.g. \"DEBUG\", \"DEFAULT\", \"WARNING\", \"ERROR\"). |  |
 **parent_observation_id** | Option<**String**> | Filter by the physical parent observation ID. An empty value matches only observations without a physical parent. Use `isRootObservation` to include observations marked as app roots by the SDK, which may retain a non-null `parentObservationId`. |  |
 **is_root_observation** | Option<**bool**> | Filter by whether an observation is a logical root. Root observations include observations without a physical parent and observations marked as app roots by the SDK. An app-root observation may have `isRootObservation=true` and a non-null `parentObservationId`. |  |
-**environment** | Option<[**Vec<String>**](String.md)> | Optional filter for observations where the environment is one of the provided values. |  |
+**environment** | Option<**Vec<String>**> | Optional filter for observations where the environment is one of the provided values. |  |
 **from_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only observations with a start_time on or after this datetime (ISO 8601). |  |
 **to_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only observations with a start_time before this datetime (ISO 8601). |  |
 **version** | Option<**String**> | Optional filter to only include observations with a certain version. |  |
