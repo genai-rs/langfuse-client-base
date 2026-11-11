@@ -24,7 +24,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::LegacyMetricsResponse**](legacyMetricsResponse.md)
+[**models::LegacyMetricsResponse**](LegacyMetricsResponse.md)
 
 ### Authorization
 

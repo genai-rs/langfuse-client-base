@@ -28,7 +28,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardWidget**](unstableDashboardWidget.md)
+[**models::UnstableDashboardWidget**](UnstableDashboardWidget.md)
 
 ### Authorization
 
@@ -58,7 +58,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDeleteDashboardWidgetResponse**](unstableDeleteDashboardWidgetResponse.md)
+[**models::UnstableDeleteDashboardWidgetResponse**](UnstableDeleteDashboardWidgetResponse.md)
 
 ### Authorization
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardWidget**](unstableDashboardWidget.md)
+[**models::UnstableDashboardWidget**](UnstableDashboardWidget.md)
 
 ### Authorization
 
@@ -119,7 +119,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardWidgetList**](unstableDashboardWidgetList.md)
+[**models::UnstableDashboardWidgetList**](UnstableDashboardWidgetList.md)
 
 ### Authorization
 
@@ -150,7 +150,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardWidget**](unstableDashboardWidget.md)
+[**models::UnstableDashboardWidget**](UnstableDashboardWidget.md)
 
 ### Authorization
 

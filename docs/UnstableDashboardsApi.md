@@ -32,7 +32,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardPlacement**](unstableDashboardPlacement.md)
+[**models::UnstableDashboardPlacement**](UnstableDashboardPlacement.md)
 
 ### Authorization
 
@@ -62,7 +62,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboard**](unstableDashboard.md)
+[**models::UnstableDashboard**](UnstableDashboard.md)
 
 ### Authorization
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDeleteDashboardResponse**](unstableDeleteDashboardResponse.md)
+[**models::UnstableDeleteDashboardResponse**](UnstableDeleteDashboardResponse.md)
 
 ### Authorization
 
@@ -123,7 +123,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDeleteDashboardPlacementResponse**](unstableDeleteDashboardPlacementResponse.md)
+[**models::UnstableDeleteDashboardPlacementResponse**](UnstableDeleteDashboardPlacementResponse.md)
 
 ### Authorization
 
@@ -153,7 +153,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboard**](unstableDashboard.md)
+[**models::UnstableDashboard**](UnstableDashboard.md)
 
 ### Authorization
 
@@ -184,7 +184,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardList**](unstableDashboardList.md)
+[**models::UnstableDashboardList**](UnstableDashboardList.md)
 
 ### Authorization
 
@@ -215,7 +215,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboard**](unstableDashboard.md)
+[**models::UnstableDashboard**](UnstableDashboard.md)
 
 ### Authorization
 
@@ -247,7 +247,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::UnstableDashboardPlacement**](unstableDashboardPlacement.md)
+[**models::UnstableDashboardPlacement**](UnstableDashboardPlacement.md)
 
 ### Authorization
 
