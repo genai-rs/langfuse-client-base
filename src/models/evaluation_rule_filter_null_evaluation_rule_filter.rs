@@ -19,9 +19,14 @@ pub struct EvaluationRuleFilterNullEvaluationRuleFilter {
     pub column: String,
     #[serde(rename = "operator")]
     pub operator: models::EvaluationRuleNullFilterOperator,
-    /// Required empty-string placeholder used by the runtime filter contract.
-    #[serde(rename = "value")]
-    pub value: String,
+    /// Optional. Defaults to an empty string.
+    #[serde(
+        rename = "value",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub value: Option<Option<String>>,
     #[serde(rename = "type")]
     pub r#type: Type,
 }
@@ -30,13 +35,12 @@ impl EvaluationRuleFilterNullEvaluationRuleFilter {
     pub fn new(
         column: String,
         operator: models::EvaluationRuleNullFilterOperator,
-        value: String,
         r#type: Type,
     ) -> EvaluationRuleFilterNullEvaluationRuleFilter {
         EvaluationRuleFilterNullEvaluationRuleFilter {
             column,
             operator,
-            value,
+            value: None,
             r#type,
         }
     }
