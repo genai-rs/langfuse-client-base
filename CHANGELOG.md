@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.20.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.20.0...v0.20.1) - 2026-11-12
+
+### Fixed
+
+- restore timvw-rust generator default to 0.24.0
+
+### Other
+
+- stop gating generation on downstream consumers
+
 ## [0.20.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.19.0...v0.20.0) - 2026-11-10
 
 ### Added
