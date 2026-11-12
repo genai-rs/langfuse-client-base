@@ -32,7 +32,6 @@ fn main() {
     println!("Configuration created successfully!");
     println!("Base URL: {}", config.base_path);
 
-    // Note: For actual API usage, see the langfuse-ergonomic crate
-    // which provides a more user-friendly interface.
-    // This crate provides low-level, auto-generated bindings.
+    // This crate provides low-level, auto-generated bindings; call the
+    // functions in `langfuse_client_base::apis` with this configuration.
 }

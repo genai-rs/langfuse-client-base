@@ -7,7 +7,6 @@ This file captures the background and workflow expectations for anyone (human te
 This is the **langfuse-client-base** repository - an auto-generated OpenAPI client for Langfuse.
 
 - **Generated Code**: All code in `src/` is auto-generated. Do not edit directly.
-- **Ergonomic Wrapper**: For the high-level API, see [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic)
 
 ## Recent Migration (2025-08-29)
 

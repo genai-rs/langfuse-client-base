@@ -120,7 +120,7 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # The options of timvw-rust 0.18.0 (see the generator's README, "Renderings
 # from the generator comparison"): typedEnumParameters gives inline enum
 # parameters an enum type (the current spec has none); deprecatedAttributes
-# marks deprecated properties and schemas #[deprecated]. langfuse-ergonomic uses none of the deprecated items.
+# marks deprecated properties and schemas #[deprecated].
 # pruneAllHelpers stays off: there is nothing for it to prune here.
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
