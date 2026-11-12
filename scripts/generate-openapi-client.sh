@@ -21,8 +21,8 @@ OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # fix lives in the generator: this script only prepares the spec and formats
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
-# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.24.0-og7.27.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.24.0}"
+# the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.23.0-og7.27.0.
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.23.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
@@ -120,7 +120,7 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # The options of timvw-rust 0.18.0 (see the generator's README, "Renderings
 # from the generator comparison"): typedEnumParameters gives inline enum
 # parameters an enum type (the current spec has none); deprecatedAttributes
-# marks deprecated properties and schemas #[deprecated]. langfuse-ergonomic uses none of the deprecated items.
+# marks deprecated properties and schemas #[deprecated].
 # pruneAllHelpers stays off: there is nothing for it to prune here.
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
