@@ -25,3 +25,6 @@ Thumbs.db
 # Test coverage
 tarpaulin-report.html
 cobertura.xml
+
+# Python
+__pycache__/
