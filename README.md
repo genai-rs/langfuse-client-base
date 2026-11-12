@@ -8,8 +8,20 @@
 
 Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based on the official OpenAPI specification.
 
-This is a low-level, auto-generated client: it gives raw access to every endpoint in the
-OpenAPI specification and leaves retries, batching and configuration to the caller.
+> **Important:** most users should use [langfuse-ergonomic](https://github.com/genai-rs/langfuse-ergonomic) instead.
+> 
+> This is a low-level, auto-generated client intended as a building block for higher-level abstractions.
+> The ergonomic wrapper provides:
+> - Simplified APIs with builder patterns
+> - Automatic batching and retries
+> - Environment-based configuration
+> - Improved error handling
+> - Built-in OpenTelemetry integration
+>
+> **Only use this crate directly if you need:**
+> - Raw access to all OpenAPI endpoints
+> - Custom retry/batching logic
+> - Minimal dependencies
 
 ## Features
 
@@ -27,7 +39,7 @@ langfuse-client-base = "*" # See https://crates.io/crates/langfuse-client-base f
 
 ## Usage
 
-This crate provides low-level API bindings generated from the OpenAPI specification.
+This crate provides low-level API bindings. Most users should use the ergonomic wrapper instead.
 
 ### Basic Configuration
 
@@ -178,4 +190,4 @@ Licensed under either of:
 
 ## Contributing
 
-This is auto-generated code. To make changes, please update the generation process (see [CONTRIBUTING.md](CONTRIBUTING.md)) rather than editing `src/` directly.
+This is auto-generated code. To make changes, please update the generation process or contribute to the [main repository](https://github.com/genai-rs/langfuse-ergonomic).

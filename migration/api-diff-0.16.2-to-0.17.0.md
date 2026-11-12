@@ -86,3 +86,5 @@ let event = IngestionEvent::TraceEvent(IngestionEventTraceEvent {
 - Widen integers passed to operations and models with `i64::from(..)`.
 - Replace `..Default::default()` on structs with required fields by `new(..)` or the builder.
 - Add an `Unknown` arm (or a wildcard) to exhaustive matches on response enums and tagged unions.
+
+langfuse-ergonomic adopts this release with these changes and keeps its own builder signatures.
