@@ -90,6 +90,7 @@ pub enum UnstableDashboardWidgetsUpdateError {
 pub async fn unstable_dashboard_widgets_create(
     configuration: &configuration::Configuration,
     unstable_create_dashboard_widget_request: &models::UnstableCreateDashboardWidgetRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_unstable_create_dashboard_widget_request = unstable_create_dashboard_widget_request;
@@ -107,10 +108,20 @@ pub async fn unstable_dashboard_widgets_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_unstable_create_dashboard_widget_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -175,6 +186,7 @@ pub async fn unstable_dashboard_widgets_create(
 pub async fn unstable_dashboard_widgets_delete(
     configuration: &configuration::Configuration,
     widget_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableDeleteDashboardWidgetResponse, Error<UnstableDashboardWidgetsDeleteError>>
 {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -194,9 +206,19 @@ pub async fn unstable_dashboard_widgets_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -264,6 +286,7 @@ pub async fn unstable_dashboard_widgets_delete(
 pub async fn unstable_dashboard_widgets_get(
     configuration: &configuration::Configuration,
     widget_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_widget_id = widget_id;
@@ -282,9 +305,19 @@ pub async fn unstable_dashboard_widgets_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -350,6 +383,7 @@ pub async fn unstable_dashboard_widgets_list(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableDashboardWidgetList, Error<UnstableDashboardWidgetsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -374,9 +408,19 @@ pub async fn unstable_dashboard_widgets_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -442,6 +486,7 @@ pub async fn unstable_dashboard_widgets_update(
     configuration: &configuration::Configuration,
     widget_id: &str,
     unstable_update_dashboard_widget_request: &models::UnstableUpdateDashboardWidgetRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_widget_id = widget_id;
@@ -461,10 +506,20 @@ pub async fn unstable_dashboard_widgets_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_unstable_update_dashboard_widget_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

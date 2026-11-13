@@ -91,6 +91,7 @@ pub enum EvaluationRulesUpdateError {
 pub async fn evaluation_rules_create(
     configuration: &configuration::Configuration,
     create_evaluation_rule_request: &models::CreateEvaluationRuleRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_evaluation_rule_request = create_evaluation_rule_request;
@@ -105,10 +106,20 @@ pub async fn evaluation_rules_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_evaluation_rule_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -176,6 +187,7 @@ pub async fn evaluation_rules_create(
 pub async fn evaluation_rules_delete(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeletedEvaluationRule, Error<EvaluationRulesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
@@ -194,9 +206,19 @@ pub async fn evaluation_rules_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -261,6 +283,7 @@ pub async fn evaluation_rules_delete(
 pub async fn evaluation_rules_get(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluationRule, Error<EvaluationRulesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
@@ -279,9 +302,19 @@ pub async fn evaluation_rules_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -347,6 +380,7 @@ pub async fn evaluation_rules_list(
     configuration: &configuration::Configuration,
     limit: Option<i64>,
     cursor: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluationRulesPage, Error<EvaluationRulesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_limit = limit;
@@ -368,9 +402,19 @@ pub async fn evaluation_rules_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -436,6 +480,7 @@ pub async fn evaluation_rules_update(
     configuration: &configuration::Configuration,
     evaluation_rule_id: &str,
     update_evaluation_rule_request: &models::UpdateEvaluationRuleRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluation_rule_id = evaluation_rule_id;
@@ -455,10 +500,20 @@ pub async fn evaluation_rules_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_evaluation_rule_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

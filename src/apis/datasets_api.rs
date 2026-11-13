@@ -91,6 +91,7 @@ pub enum DatasetsListError {
 pub async fn datasets_create(
     configuration: &configuration::Configuration,
     create_dataset_request: &models::CreateDatasetRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Dataset, Error<DatasetsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_dataset_request = create_dataset_request;
@@ -105,10 +106,20 @@ pub async fn datasets_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_dataset_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -169,6 +180,7 @@ pub async fn datasets_delete_run(
     configuration: &configuration::Configuration,
     dataset_name: &str,
     run_name: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteDatasetRunResponse, Error<DatasetsDeleteRunError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_dataset_name = dataset_name;
@@ -189,9 +201,19 @@ pub async fn datasets_delete_run(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -250,6 +272,7 @@ pub async fn datasets_delete_run(
 pub async fn datasets_get(
     configuration: &configuration::Configuration,
     dataset_name: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Dataset, Error<DatasetsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_dataset_name = dataset_name;
@@ -268,9 +291,19 @@ pub async fn datasets_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -331,6 +364,7 @@ pub async fn datasets_get_run(
     configuration: &configuration::Configuration,
     dataset_name: &str,
     run_name: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DatasetRunWithItems, Error<DatasetsGetRunError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_dataset_name = dataset_name;
@@ -351,9 +385,19 @@ pub async fn datasets_get_run(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -415,6 +459,7 @@ pub async fn datasets_get_runs(
     dataset_name: &str,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedDatasetRuns, Error<DatasetsGetRunsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_dataset_name = dataset_name;
@@ -441,9 +486,19 @@ pub async fn datasets_get_runs(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -503,6 +558,7 @@ pub async fn datasets_list(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedDatasets, Error<DatasetsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -524,9 +580,19 @@ pub async fn datasets_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

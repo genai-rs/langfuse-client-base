@@ -139,6 +139,7 @@ pub enum AnnotationQueuesUpdateQueueItemError {
 pub async fn annotation_queues_create_queue(
     configuration: &configuration::Configuration,
     create_annotation_queue_request: &models::CreateAnnotationQueueRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_annotation_queue_request = create_annotation_queue_request;
@@ -153,10 +154,20 @@ pub async fn annotation_queues_create_queue(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_annotation_queue_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -216,6 +227,7 @@ pub async fn annotation_queues_create_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
     annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::CreateAnnotationQueueAssignmentResponse,
     Error<AnnotationQueuesCreateQueueAssignmentError>,
@@ -238,10 +250,20 @@ pub async fn annotation_queues_create_queue_assignment(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -301,6 +323,7 @@ pub async fn annotation_queues_create_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
     create_annotation_queue_item_request: &models::CreateAnnotationQueueItemRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -320,10 +343,20 @@ pub async fn annotation_queues_create_queue_item(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_annotation_queue_item_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -383,6 +416,7 @@ pub async fn annotation_queues_delete_queue_assignment(
     configuration: &configuration::Configuration,
     queue_id: &str,
     annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::DeleteAnnotationQueueAssignmentResponse,
     Error<AnnotationQueuesDeleteQueueAssignmentError>,
@@ -405,10 +439,20 @@ pub async fn annotation_queues_delete_queue_assignment(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -468,6 +512,7 @@ pub async fn annotation_queues_delete_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
     item_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteAnnotationQueueItemResponse, Error<AnnotationQueuesDeleteQueueItemError>>
 {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -489,9 +534,19 @@ pub async fn annotation_queues_delete_queue_item(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -550,6 +605,7 @@ pub async fn annotation_queues_delete_queue_item(
 pub async fn annotation_queues_get_queue(
     configuration: &configuration::Configuration,
     queue_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesGetQueueError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -568,9 +624,19 @@ pub async fn annotation_queues_get_queue(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -630,6 +696,7 @@ pub async fn annotation_queues_get_queue_item(
     configuration: &configuration::Configuration,
     queue_id: &str,
     item_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesGetQueueItemError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -650,9 +717,19 @@ pub async fn annotation_queues_get_queue_item(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -714,6 +791,7 @@ pub async fn annotation_queues_list_queue_items(
     status: Option<models::AnnotationQueueStatus>,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedAnnotationQueueItems, Error<AnnotationQueuesListQueueItemsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -744,9 +822,19 @@ pub async fn annotation_queues_list_queue_items(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -806,6 +894,7 @@ pub async fn annotation_queues_list_queues(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedAnnotationQueues, Error<AnnotationQueuesListQueuesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -827,9 +916,19 @@ pub async fn annotation_queues_list_queues(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -890,6 +989,7 @@ pub async fn annotation_queues_update_queue_item(
     queue_id: &str,
     item_id: &str,
     update_annotation_queue_item_request: &models::UpdateAnnotationQueueItemRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_queue_id = queue_id;
@@ -911,10 +1011,20 @@ pub async fn annotation_queues_update_queue_item(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_annotation_queue_item_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

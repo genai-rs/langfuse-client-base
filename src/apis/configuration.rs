@@ -10,6 +10,9 @@
  */
 
 pub use timvw_rust_runtime::Client;
+/// The credentials are `SecretString`s: `Some("sk-...".into())` or `Some(SecretString::from(token))` sets one, and
+/// `ExposeSecret::expose_secret` reads it.
+pub use timvw_rust_runtime::{ExposeSecret, SecretString};
 
 #[derive(Clone)]
 pub struct Configuration {
@@ -19,17 +22,18 @@ pub struct Configuration {
     /// `Client::from_service`.
     pub client: timvw_rust_runtime::Client,
     pub basic_auth: Option<BasicAuth>,
-    pub oauth_access_token: Option<String>,
-    pub bearer_access_token: Option<String>,
+    pub oauth_access_token: Option<SecretString>,
+    pub bearer_access_token: Option<SecretString>,
     pub api_key: Option<ApiKey>,
 }
 
-pub type BasicAuth = (String, Option<String>);
+/// The username and the password.
+pub type BasicAuth = (String, Option<SecretString>);
 
 #[derive(Clone)]
 pub struct ApiKey {
     pub prefix: Option<String>,
-    pub key: String,
+    pub key: SecretString,
 }
 
 impl std::fmt::Debug for ApiKey {

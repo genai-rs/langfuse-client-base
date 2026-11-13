@@ -2,6 +2,9 @@
 use std::error;
 use std::fmt;
 
+/// Extra headers and query parameters for one call: `.options(&options)` on an operation's builder.
+pub use timvw_rust_runtime::RequestOptions;
+
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
     pub status: timvw_rust_runtime::StatusCode,

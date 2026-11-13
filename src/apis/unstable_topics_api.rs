@@ -133,6 +133,7 @@ pub async fn unstable_topics_get(
     topic_id: &str,
     from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_topic_id = topic_id;
@@ -159,9 +160,19 @@ pub async fn unstable_topics_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -226,6 +237,7 @@ pub async fn unstable_topics_get(
 pub async fn unstable_topics_get_facet(
     configuration: &configuration::Configuration,
     facet_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicFacet, Error<UnstableTopicsGetFacetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_facet_id = facet_id;
@@ -244,9 +256,19 @@ pub async fn unstable_topics_get_facet(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -311,6 +333,7 @@ pub async fn unstable_topics_get_facet(
 pub async fn unstable_topics_get_rule(
     configuration: &configuration::Configuration,
     rule_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicRule, Error<UnstableTopicsGetRuleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_rule_id = rule_id;
@@ -329,9 +352,19 @@ pub async fn unstable_topics_get_rule(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -401,6 +434,7 @@ pub async fn unstable_topics_list(
     order_by: Option<models::UnstableTopicsOrderBy>,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_from_timestamp = from_timestamp;
@@ -438,9 +472,19 @@ pub async fn unstable_topics_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -510,6 +554,7 @@ pub async fn unstable_topics_list_assignments(
     order_by: Option<models::UnstableTopicResultsOrderBy>,
     limit: Option<i64>,
     cursor: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_from_timestamp = from_timestamp;
@@ -550,9 +595,19 @@ pub async fn unstable_topics_list_assignments(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -619,6 +674,7 @@ pub async fn unstable_topics_list_facets(
     filter: Option<&str>,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicFacetList, Error<UnstableTopicsListFacetsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;
@@ -647,9 +703,19 @@ pub async fn unstable_topics_list_facets(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -716,6 +782,7 @@ pub async fn unstable_topics_list_rules(
     filter: Option<&str>,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicRuleList, Error<UnstableTopicsListRulesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;
@@ -744,9 +811,19 @@ pub async fn unstable_topics_list_rules(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -817,6 +894,7 @@ pub async fn unstable_topics_list_summaries(
     order_by: Option<models::UnstableTopicResultsOrderBy>,
     limit: Option<i64>,
     cursor: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_from_timestamp = from_timestamp;
@@ -861,9 +939,19 @@ pub async fn unstable_topics_list_summaries(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

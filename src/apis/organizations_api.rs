@@ -115,6 +115,7 @@ pub enum OrganizationsUpdateProjectMembershipError {
 pub async fn organizations_delete_organization_membership(
     configuration: &configuration::Configuration,
     delete_membership_request: &models::DeleteMembershipRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>
 {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -133,10 +134,20 @@ pub async fn organizations_delete_organization_membership(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_delete_membership_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -197,6 +208,7 @@ pub async fn organizations_delete_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,
     delete_membership_request: &models::DeleteMembershipRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -216,10 +228,20 @@ pub async fn organizations_delete_project_membership(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_delete_membership_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -277,6 +299,7 @@ pub async fn organizations_delete_project_membership(
 #[bon::builder]
 pub async fn organizations_get_organization_api_keys(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::OrganizationApiKeysResponse, Error<OrganizationsGetOrganizationApiKeysError>> {
     let uri_str = format!(
         "{}/api/public/organizations/apiKeys",
@@ -291,9 +314,19 @@ pub async fn organizations_get_organization_api_keys(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -351,6 +384,7 @@ pub async fn organizations_get_organization_api_keys(
 #[bon::builder]
 pub async fn organizations_get_organization_memberships(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipsResponse, Error<OrganizationsGetOrganizationMembershipsError>> {
     let uri_str = format!(
         "{}/api/public/organizations/memberships",
@@ -365,9 +399,19 @@ pub async fn organizations_get_organization_memberships(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -425,6 +469,7 @@ pub async fn organizations_get_organization_memberships(
 #[bon::builder]
 pub async fn organizations_get_organization_projects(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::OrganizationProjectsResponse, Error<OrganizationsGetOrganizationProjectsError>>
 {
     let uri_str = format!(
@@ -440,9 +485,19 @@ pub async fn organizations_get_organization_projects(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -501,6 +556,7 @@ pub async fn organizations_get_organization_projects(
 pub async fn organizations_get_project_memberships(
     configuration: &configuration::Configuration,
     project_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipsResponse, Error<OrganizationsGetProjectMembershipsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -519,9 +575,19 @@ pub async fn organizations_get_project_memberships(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -580,6 +646,7 @@ pub async fn organizations_get_project_memberships(
 pub async fn organizations_update_organization_membership(
     configuration: &configuration::Configuration,
     membership_request: &models::MembershipRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_membership_request = membership_request;
@@ -597,10 +664,20 @@ pub async fn organizations_update_organization_membership(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_membership_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -661,6 +738,7 @@ pub async fn organizations_update_project_membership(
     configuration: &configuration::Configuration,
     project_id: &str,
     membership_request: &models::MembershipRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -680,10 +758,20 @@ pub async fn organizations_update_project_membership(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_membership_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
