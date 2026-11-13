@@ -14,17 +14,21 @@ Method | HTTP request | Description
 
 ## evaluation_rules_create
 
-> models::EvaluationRule evaluation_rules_create(create_evaluation_rule_request)
+> models::EvaluationRule evaluation_rules_create(create_evaluation_rule_request, options)
 
 
 Create an evaluation rule using stable evaluator identifiers.  An evaluation rule defines **which** incoming observations should be evaluated and how prompt variables should be populated.  Key behavior: - rule names are not identifiers and do not need to be unique - rules always use the latest version of each associated evaluator - an enabled rule requires at least one evaluator assignment - omit `sampling` to evaluate every matching observation - omit `filter` to match every incoming observation - `datasetId` is the public filter name for selecting experiment datasets
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_evaluation_rule_request** | [**CreateEvaluationRuleRequest**](CreateEvaluationRuleRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+evaluation_rules_create().configuration(&configuration).create_evaluation_rule_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -44,17 +48,21 @@ Name | Type | Description  | Required | Notes
 
 ## evaluation_rules_delete
 
-> models::DeletedEvaluationRule evaluation_rules_delete(evaluation_rule_id)
+> models::DeletedEvaluationRule evaluation_rules_delete(evaluation_rule_id, options)
 
 
 Delete an evaluation rule.  This removes the live-ingestion rule only. It does not delete associated evaluators or scores already produced by them.  Legacy trace and dataset rules can also be deleted. Their evaluators and previously produced scores are preserved.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **evaluation_rule_id** | **String** | Stable evaluation-rule identifier returned by the evaluation-rule endpoints. | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+evaluation_rules_delete().configuration(&configuration).evaluation_rule_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -74,17 +82,21 @@ Name | Type | Description  | Required | Notes
 
 ## evaluation_rules_get
 
-> models::EvaluationRule evaluation_rules_get(evaluation_rule_id)
+> models::EvaluationRule evaluation_rules_get(evaluation_rule_id, options)
 
 
 Get one evaluation rule, including a legacy trace or dataset rule, by its stable identifier.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **evaluation_rule_id** | **String** | Stable evaluation-rule identifier returned by the evaluation-rule endpoints. | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+evaluation_rules_get().configuration(&configuration).evaluation_rule_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -104,18 +116,22 @@ Name | Type | Description  | Required | Notes
 
 ## evaluation_rules_list
 
-> models::EvaluationRulesPage evaluation_rules_list(limit, cursor)
+> models::EvaluationRulesPage evaluation_rules_list(limit, cursor, options)
 
 
 List evaluation rules in newest-first creation order.  This includes legacy trace and dataset rules so they can be inspected and migrated. Treat the cursor as opaque and return it unchanged.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **limit** | Option<**i64**> | Maximum number of items to return. Defaults to `50` and cannot exceed `100`. |  |
 **cursor** | Option<**String**> | Opaque cursor returned by the previous page. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+evaluation_rules_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -135,18 +151,22 @@ Name | Type | Description  | Required | Notes
 
 ## evaluation_rules_update
 
-> models::EvaluationRule evaluation_rules_update(evaluation_rule_id, update_evaluation_rule_request)
+> models::EvaluationRule evaluation_rules_update(evaluation_rule_id, update_evaluation_rule_request, options)
 
 
 Update an evaluation rule by its stable identifier.  Provide only the fields to change. Providing `evaluatorAssignments` replaces the complete assignment list. Replacing the list with an empty array disables the rule. Setting `enabled=true` is rejected when the resulting assignment list is empty, including when both fields are sent in the same request.  Legacy trace and dataset rules follow the existing lifecycle restrictions: they can be deactivated with `enabled=false`, but their name, filters, sampling, and evaluator assignments cannot be changed.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **evaluation_rule_id** | **String** | Stable evaluation-rule identifier returned by the evaluation-rule endpoints. | [required] |
 **update_evaluation_rule_request** | [**UpdateEvaluationRuleRequest**](UpdateEvaluationRuleRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+evaluation_rules_update().configuration(&configuration).evaluation_rule_id(..).update_evaluation_rule_request(..).options(&options).call().await
+```
 
 ### Return type
 

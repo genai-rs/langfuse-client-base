@@ -11,17 +11,21 @@ Method | HTTP request | Description
 
 ## dataset_run_items_create
 
-> models::DatasetRunItem dataset_run_items_create(create_dataset_run_item_request)
+> models::DatasetRunItem dataset_run_items_create(create_dataset_run_item_request, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, create experiment data via the SDK experiment runner or the OpenTelemetry endpoint at POST /api/public/otel/v1/traces. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Create a dataset run item
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_dataset_run_item_request** | [**CreateDatasetRunItemRequest**](CreateDatasetRunItemRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_run_items_create().configuration(&configuration).create_dataset_run_item_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -41,13 +45,12 @@ Name | Type | Description  | Required | Notes
 
 ## dataset_run_items_list
 
-> models::PaginatedDatasetRunItems dataset_run_items_list(dataset_id, run_name, page, limit)
+> models::PaginatedDatasetRunItems dataset_run_items_list(dataset_id, run_name, page, limit, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, dataset run items are replaced by experiment items; use `GET /api/public/experiment-items?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  List dataset run items
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -55,6 +58,11 @@ Name | Type | Description  | Required | Notes
 **run_name** | **String** |  | [required] |
 **page** | Option<**i64**> | page number, starts at 1 |  |
 **limit** | Option<**i64**> | limit of items per page |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_run_items_list().configuration(&configuration).dataset_id(..).run_name(..).options(&options).call().await
+```
 
 ### Return type
 

@@ -11,17 +11,21 @@ Method | HTTP request | Description
 
 ## sessions_get
 
-> models::SessionWithTraces sessions_get(session_id)
+> models::SessionWithTraces sessions_get(session_id, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a session.  Please note that `traces` on this endpoint are not paginated. For large sessions or new data extraction workflows, use the v2 observations endpoint with a URL-encoded `sessionId` filter and a bounded time range: `GET /api/public/v2/observations?filter=<sessionId filter>&fromStartTime=<from>&toStartTime=<to>`.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **session_id** | **String** | The unique id of a session | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+sessions_get().configuration(&configuration).session_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -41,13 +45,12 @@ Name | Type | Description  | Required | Notes
 
 ## sessions_list
 
-> models::PaginatedSessions sessions_list(page, limit, from_timestamp, to_timestamp, environment)
+> models::PaginatedSessions sessions_list(page, limit, from_timestamp, to_timestamp, environment, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. In Langfuse v4, read session data via `GET /api/public/v2/observations?filter=<urlencoded sessionId filter>&fromStartTime=<from>&toStartTime=<to>`. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get sessions.  This legacy endpoint is not recommended for new data extraction workflows. Use the v2 observations endpoint with a bounded time range and group rows by `sessionId` instead: `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>`.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -56,6 +59,11 @@ Name | Type | Description  | Required | Notes
 **from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created on or after a certain datetime (ISO 8601) |  |
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created before a certain datetime (ISO 8601) |  |
 **environment** | Option<**Vec<String>**> | Optional filter for sessions where the environment is one of the provided values. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+sessions_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

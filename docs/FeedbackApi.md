@@ -10,17 +10,21 @@ Method | HTTP request | Description
 
 ## feedback_submit
 
-> models::SubmitFeedbackResponse feedback_submit(submit_feedback_request)
+> models::SubmitFeedbackResponse feedback_submit(submit_feedback_request, options)
 
 
 Submit explicit user-approved feedback about Langfuse skills, MCP tools, CLI, docs, or public API. Do not include secrets, credentials, customer data, trace payloads, or unrelated use-case details.  Not available in the HIPAA cloud region.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **submit_feedback_request** | [**SubmitFeedbackRequest**](SubmitFeedbackRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+feedback_submit().configuration(&configuration).submit_feedback_request(..).options(&options).call().await
+```
 
 ### Return type
 

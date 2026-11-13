@@ -14,17 +14,21 @@ Method | HTTP request | Description
 
 ## models_create
 
-> models::Model models_create(create_model_request)
+> models::Model models_create(create_model_request, options)
 
 
 Create a model
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_model_request** | [**CreateModelRequest**](CreateModelRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+models_create().configuration(&configuration).create_model_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -44,17 +48,21 @@ Name | Type | Description  | Required | Notes
 
 ## models_delete
 
-> models_delete(id)
+> models_delete(id, options)
 
 
 Delete a model. Cannot delete models managed by Langfuse. You can create your own definition with the same modelName to override the definition though.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+models_delete().configuration(&configuration).id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -74,17 +82,21 @@ Name | Type | Description  | Required | Notes
 
 ## models_get
 
-> models::Model models_get(id)
+> models::Model models_get(id, options)
 
 
 Get a model
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+models_get().configuration(&configuration).id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -104,18 +116,22 @@ Name | Type | Description  | Required | Notes
 
 ## models_list
 
-> models::PaginatedModels models_list(page, limit)
+> models::PaginatedModels models_list(page, limit, options)
 
 
 Get all models
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**i64**> | page number, starts at 1 |  |
 **limit** | Option<**i64**> | limit of items per page |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+models_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -135,18 +151,22 @@ Name | Type | Description  | Required | Notes
 
 ## models_upsert
 
-> models::Model models_upsert(id, create_model_request)
+> models::Model models_upsert(id, create_model_request, options)
 
 
 Create or replace a project-owned model using its id. Built-in models cannot be modified.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
 **create_model_request** | [**CreateModelRequest**](CreateModelRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+models_upsert().configuration(&configuration).id(..).create_model_request(..).options(&options).call().await
+```
 
 ### Return type
 

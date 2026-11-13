@@ -10,13 +10,12 @@ Method | HTTP request | Description
 
 ## scores_v3_get_many_v3
 
-> models::GetScoresV3Response scores_v3_get_many_v3(limit, cursor, fields, id, name, source, data_type, environment, config_id, queue_id, author_user_id, value, value_min, value_max, trace_id, session_id, observation_id, experiment_id, from_timestamp, to_timestamp)
+> models::GetScoresV3Response scores_v3_get_many_v3(limit, cursor, fields, id, name, source, data_type, environment, config_id, queue_id, author_user_id, value, value_min, value_max, trace_id, session_id, observation_id, experiment_id, from_timestamp, to_timestamp, options)
 
 
 Get a list of scores with a polymorphic `value` field (v3).  The `value` field type depends on `dataType`: - `NUMERIC` → number - `BOOLEAN` → boolean - `CATEGORICAL`, `TEXT`, `CORRECTION` → string  The response always includes the core fields: id, projectId, name, value, dataType, source, timestamp, environment, createdAt, updatedAt.  Additional field groups can be requested via the `fields` parameter: - `details` — adds comment, configId, metadata - `subject` — adds the subject object describing the entity the score   is attached to: kind (trace, observation, session, or experiment),   id, and traceId for observation-level scores - `annotation` — adds authorUserId, queueId  Unknown group names return HTTP 400.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -40,6 +39,11 @@ Name | Type | Description  | Required | Notes
 **experiment_id** | Option<**String**> | Comma-separated list of dataset run IDs (experiment IDs) to filter by. Mutually exclusive with traceId, sessionId, observationId. |  |
 **from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Inclusive lower bound on the score timestamp. |  |
 **to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Exclusive upper bound on the score timestamp. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scores_v3_get_many_v3().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

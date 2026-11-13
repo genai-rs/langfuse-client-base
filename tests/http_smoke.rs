@@ -201,3 +201,36 @@ async fn scores_create_400_yields_response_error_with_entity() {
         other => panic!("expected ResponseError, got {other:?}"),
     }
 }
+
+#[tokio::test]
+async fn per_call_base_url_replaces_the_configured_base_path() {
+    // RequestOptions::base_url (timvw-rust-runtime 0.4) sends one call to another host; the operation's path is kept
+    // and the configured headers still apply.
+    let configured = MockServer::start().await;
+    let other = MockServer::start().await;
+    Mock::given(method("GET"))
+        .and(path("/eu/api/public/health"))
+        .and(header("user-agent", USER_AGENT))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_json(json!({"version": "3.0.0", "status": "OK"})),
+        )
+        .expect(1)
+        .mount(&other)
+        .await;
+    Mock::given(method("GET"))
+        .respond_with(ResponseTemplate::new(500))
+        .expect(0)
+        .mount(&configured)
+        .await;
+
+    let options = langfuse_client_base::apis::RequestOptions::new()
+        .base_url(&format!("{}/eu", other.uri()))
+        .unwrap();
+    let health = langfuse_client_base::apis::health_api::health_health()
+        .configuration(&config(&configured))
+        .options(&options)
+        .call()
+        .await
+        .expect("the call goes to the per-call base URL");
+    assert_eq!(health.status, "OK");
+}

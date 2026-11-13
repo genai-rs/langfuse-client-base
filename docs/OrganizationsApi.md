@@ -17,17 +17,21 @@ Method | HTTP request | Description
 
 ## organizations_delete_organization_membership
 
-> models::MembershipDeletionResponse organizations_delete_organization_membership(delete_membership_request)
+> models::MembershipDeletionResponse organizations_delete_organization_membership(delete_membership_request, options)
 
 
 Delete a membership from the organization associated with the API key (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **delete_membership_request** | [**DeleteMembershipRequest**](DeleteMembershipRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_delete_organization_membership().configuration(&configuration).delete_membership_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -47,18 +51,22 @@ Name | Type | Description  | Required | Notes
 
 ## organizations_delete_project_membership
 
-> models::MembershipDeletionResponse organizations_delete_project_membership(project_id, delete_membership_request)
+> models::MembershipDeletionResponse organizations_delete_project_membership(project_id, delete_membership_request, options)
 
 
 Delete a membership from a specific project (requires organization-scoped API key). The user must be a member of the organization.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
 **delete_membership_request** | [**DeleteMembershipRequest**](DeleteMembershipRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_delete_project_membership().configuration(&configuration).project_id(..).delete_membership_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -78,14 +86,20 @@ Name | Type | Description  | Required | Notes
 
 ## organizations_get_organization_api_keys
 
-> models::OrganizationApiKeysResponse organizations_get_organization_api_keys()
+> models::OrganizationApiKeysResponse organizations_get_organization_api_keys(options)
 
 
 Get all API keys for the organization associated with the API key (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_get_organization_api_keys().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -105,14 +119,20 @@ This endpoint does not need any parameter.
 
 ## organizations_get_organization_memberships
 
-> models::MembershipsResponse organizations_get_organization_memberships()
+> models::MembershipsResponse organizations_get_organization_memberships(options)
 
 
 Get all memberships for the organization associated with the API key (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_get_organization_memberships().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -132,14 +152,20 @@ This endpoint does not need any parameter.
 
 ## organizations_get_organization_projects
 
-> models::OrganizationProjectsResponse organizations_get_organization_projects()
+> models::OrganizationProjectsResponse organizations_get_organization_projects(options)
 
 
 Get all projects for the organization associated with the API key (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_get_organization_projects().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -159,17 +185,21 @@ This endpoint does not need any parameter.
 
 ## organizations_get_project_memberships
 
-> models::MembershipsResponse organizations_get_project_memberships(project_id)
+> models::MembershipsResponse organizations_get_project_memberships(project_id, options)
 
 
 Get all memberships for a specific project (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_get_project_memberships().configuration(&configuration).project_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -189,17 +219,21 @@ Name | Type | Description  | Required | Notes
 
 ## organizations_update_organization_membership
 
-> models::MembershipResponse organizations_update_organization_membership(membership_request)
+> models::MembershipResponse organizations_update_organization_membership(membership_request, options)
 
 
 Create or update a membership for the organization associated with the API key (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **membership_request** | [**MembershipRequest**](MembershipRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_update_organization_membership().configuration(&configuration).membership_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -219,18 +253,22 @@ Name | Type | Description  | Required | Notes
 
 ## organizations_update_project_membership
 
-> models::MembershipResponse organizations_update_project_membership(project_id, membership_request)
+> models::MembershipResponse organizations_update_project_membership(project_id, membership_request, options)
 
 
 Create or update a membership for a specific project (requires organization-scoped API key). The user must already be a member of the organization.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
 **membership_request** | [**MembershipRequest**](MembershipRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+organizations_update_project_membership().configuration(&configuration).project_id(..).membership_request(..).options(&options).call().await
+```
 
 ### Return type
 

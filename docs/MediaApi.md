@@ -12,17 +12,21 @@ Method | HTTP request | Description
 
 ## media_get
 
-> models::GetMediaResponse media_get(media_id)
+> models::GetMediaResponse media_get(media_id, options)
 
 
 Get a media record
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **media_id** | **String** | The unique langfuse identifier of a media record | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+media_get().configuration(&configuration).media_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -42,17 +46,21 @@ Name | Type | Description  | Required | Notes
 
 ## media_get_upload_url
 
-> models::GetMediaUploadUrlResponse media_get_upload_url(get_media_upload_url_request)
+> models::GetMediaUploadUrlResponse media_get_upload_url(get_media_upload_url_request, options)
 
 
 Get a presigned upload URL for a media record
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **get_media_upload_url_request** | [**GetMediaUploadUrlRequest**](GetMediaUploadUrlRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+media_get_upload_url().configuration(&configuration).get_media_upload_url_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -72,18 +80,22 @@ Name | Type | Description  | Required | Notes
 
 ## media_patch
 
-> media_patch(media_id, patch_media_body)
+> media_patch(media_id, patch_media_body, options)
 
 
 Patch a media record
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **media_id** | **String** | The unique langfuse identifier of a media record | [required] |
 **patch_media_body** | [**PatchMediaBody**](PatchMediaBody.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+media_patch().configuration(&configuration).media_id(..).patch_media_body(..).options(&options).call().await
+```
 
 ### Return type
 
