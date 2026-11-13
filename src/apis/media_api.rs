@@ -55,6 +55,7 @@ pub enum MediaPatchError {
 pub async fn media_get(
     configuration: &configuration::Configuration,
     media_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::GetMediaResponse, Error<MediaGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_media_id = media_id;
@@ -73,9 +74,19 @@ pub async fn media_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -134,6 +145,7 @@ pub async fn media_get(
 pub async fn media_get_upload_url(
     configuration: &configuration::Configuration,
     get_media_upload_url_request: &models::GetMediaUploadUrlRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_get_media_upload_url_request = get_media_upload_url_request;
@@ -148,10 +160,20 @@ pub async fn media_get_upload_url(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_get_media_upload_url_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -211,6 +233,7 @@ pub async fn media_patch(
     configuration: &configuration::Configuration,
     media_id: &str,
     patch_media_body: &models::PatchMediaBody,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<(), Error<MediaPatchError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_media_id = media_id;
@@ -230,10 +253,20 @@ pub async fn media_patch(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_patch_media_body);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

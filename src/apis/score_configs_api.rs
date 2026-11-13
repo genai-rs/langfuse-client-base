@@ -67,6 +67,7 @@ pub enum ScoreConfigsUpdateError {
 pub async fn score_configs_create(
     configuration: &configuration::Configuration,
     create_score_config_request: &models::CreateScoreConfigRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_score_config_request = create_score_config_request;
@@ -81,10 +82,20 @@ pub async fn score_configs_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_score_config_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -144,6 +155,7 @@ pub async fn score_configs_get(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScoreConfigs, Error<ScoreConfigsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -165,9 +177,19 @@ pub async fn score_configs_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -226,6 +248,7 @@ pub async fn score_configs_get(
 pub async fn score_configs_get_by_id(
     configuration: &configuration::Configuration,
     config_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScoreConfig, Error<ScoreConfigsGetByIdError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_config_id = config_id;
@@ -244,9 +267,19 @@ pub async fn score_configs_get_by_id(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -306,6 +339,7 @@ pub async fn score_configs_update(
     configuration: &configuration::Configuration,
     config_id: &str,
     update_score_config_request: &models::UpdateScoreConfigRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_config_id = config_id;
@@ -325,10 +359,20 @@ pub async fn score_configs_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_score_config_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

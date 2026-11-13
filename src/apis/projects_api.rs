@@ -103,6 +103,7 @@ pub enum ProjectsUpdateError {
 pub async fn projects_create(
     configuration: &configuration::Configuration,
     projects_create_request: &models::ProjectsCreateRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Project, Error<ProjectsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_projects_create_request = projects_create_request;
@@ -117,10 +118,20 @@ pub async fn projects_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_projects_create_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -180,6 +191,7 @@ pub async fn projects_create_api_key(
     configuration: &configuration::Configuration,
     project_id: &str,
     projects_create_api_key_request: &models::ProjectsCreateApiKeyRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -199,10 +211,20 @@ pub async fn projects_create_api_key(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_projects_create_api_key_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -261,6 +283,7 @@ pub async fn projects_create_api_key(
 pub async fn projects_delete(
     configuration: &configuration::Configuration,
     project_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ProjectDeletionResponse, Error<ProjectsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -279,9 +302,19 @@ pub async fn projects_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -341,6 +374,7 @@ pub async fn projects_delete_api_key(
     configuration: &configuration::Configuration,
     project_id: &str,
     api_key_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ApiKeyDeletionResponse, Error<ProjectsDeleteApiKeyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -361,9 +395,19 @@ pub async fn projects_delete_api_key(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -421,6 +465,7 @@ pub async fn projects_delete_api_key(
 #[bon::builder]
 pub async fn projects_get(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Projects, Error<ProjectsGetError>> {
     let uri_str = format!("{}/api/public/projects", configuration.base_path);
     let mut req_builder = configuration
@@ -432,9 +477,19 @@ pub async fn projects_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -493,6 +548,7 @@ pub async fn projects_get(
 pub async fn projects_get_api_keys(
     configuration: &configuration::Configuration,
     project_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ApiKeyList, Error<ProjectsGetApiKeysError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -511,9 +567,19 @@ pub async fn projects_get_api_keys(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -573,6 +639,7 @@ pub async fn projects_update(
     configuration: &configuration::Configuration,
     project_id: &str,
     projects_update_request: &models::ProjectsUpdateRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Project, Error<ProjectsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_project_id = project_id;
@@ -592,10 +659,20 @@ pub async fn projects_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_projects_update_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

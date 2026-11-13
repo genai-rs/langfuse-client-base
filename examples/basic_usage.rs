@@ -23,7 +23,8 @@ fn main() {
                 .expect("Please set LANGFUSE_PUBLIC_KEY environment variable"),
             Some(
                 env::var("LANGFUSE_SECRET_KEY")
-                    .expect("Please set LANGFUSE_SECRET_KEY environment variable"),
+                    .expect("Please set LANGFUSE_SECRET_KEY environment variable")
+                    .into(),
             ),
         )),
         ..Default::default()

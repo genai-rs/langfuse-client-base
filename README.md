@@ -48,7 +48,7 @@ use langfuse_client_base::apis::configuration::Configuration;
 
 let config = Configuration {
     base_path: "https://cloud.langfuse.com".to_string(),
-    basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".to_string()))),
+    basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".into()))),
     ..Default::default()
 };
 
@@ -94,7 +94,7 @@ let config = Configuration {
     base_path: env::var("LANGFUSE_HOST").unwrap_or_else(|_| "https://cloud.langfuse.com".to_string()),
     basic_auth: Some((
         env::var("LANGFUSE_PUBLIC_KEY").expect("LANGFUSE_PUBLIC_KEY not set"),
-        Some(env::var("LANGFUSE_SECRET_KEY").expect("LANGFUSE_SECRET_KEY not set"))
+        Some(env::var("LANGFUSE_SECRET_KEY").expect("LANGFUSE_SECRET_KEY not set").into())
     )),
     ..Default::default()
 };
@@ -109,7 +109,7 @@ use langfuse_client_base::apis::configuration::Configuration;
 
 let config = Configuration {
     base_path: "https://your-domain.com/langfuse".to_string(),  // Custom base path
-    basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".to_string()))),
+    basic_auth: Some(("your-public-key".to_string(), Some("your-secret-key".into()))),
     ..Default::default()
 };
 ```
@@ -133,7 +133,10 @@ configuration.client = configuration
 ```
 
 The [runtime's guide](https://docs.rs/timvw-rust-runtime) covers retries, timeouts, logging, middleware, rate limits
-and tests without a network. Upgrading from 0.20: see
+and tests without a network. Upgrading from 0.21: credentials are `SecretString`s (`Some(secret_key.into())`) and every operation takes
+optional `.options(&RequestOptions)`; see
+[`migration/api-diff-0.21.0-to-0.22.0.md`](https://github.com/genai-rs/langfuse-client-base/blob/main/migration/api-diff-0.21.0-to-0.22.0.md).
+Upgrading from 0.20: see
 [`migration/api-diff-0.20.0-to-0.21.0.md`](https://github.com/genai-rs/langfuse-client-base/blob/main/migration/api-diff-0.20.0-to-0.21.0.md).
 
 ## Platform Notes

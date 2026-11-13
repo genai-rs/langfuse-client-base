@@ -67,6 +67,7 @@ pub enum TraceListError {
 pub async fn trace_delete(
     configuration: &configuration::Configuration,
     trace_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_trace_id = trace_id;
@@ -85,9 +86,19 @@ pub async fn trace_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -146,6 +157,7 @@ pub async fn trace_delete(
 pub async fn trace_delete_multiple(
     configuration: &configuration::Configuration,
     trace_delete_multiple_request: &models::TraceDeleteMultipleRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_trace_delete_multiple_request = trace_delete_multiple_request;
@@ -160,10 +172,20 @@ pub async fn trace_delete_multiple(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_trace_delete_multiple_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -224,6 +246,7 @@ pub async fn trace_get(
     configuration: &configuration::Configuration,
     trace_id: &str,
     fields: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::TraceWithFullDetails, Error<TraceGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_trace_id = trace_id;
@@ -246,9 +269,19 @@ pub async fn trace_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -321,6 +354,7 @@ pub async fn trace_list(
     environment: Option<Vec<String>>,
     fields: Option<&str>,
     filter: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Traces, Error<TraceListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -396,9 +430,19 @@ pub async fn trace_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

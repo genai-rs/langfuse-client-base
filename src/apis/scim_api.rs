@@ -103,6 +103,7 @@ pub enum ScimListUsersError {
 pub async fn scim_create_user(
     configuration: &configuration::Configuration,
     scim_create_user_request: &models::ScimCreateUserRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScimUser, Error<ScimCreateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_scim_create_user_request = scim_create_user_request;
@@ -117,10 +118,20 @@ pub async fn scim_create_user(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_scim_create_user_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -179,6 +190,7 @@ pub async fn scim_create_user(
 pub async fn scim_delete_user(
     configuration: &configuration::Configuration,
     user_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<serde_json::Value, Error<ScimDeleteUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_user_id = user_id;
@@ -197,9 +209,19 @@ pub async fn scim_delete_user(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -257,6 +279,7 @@ pub async fn scim_delete_user(
 #[bon::builder]
 pub async fn scim_get_resource_types(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ResourceTypesResponse, Error<ScimGetResourceTypesError>> {
     let uri_str = format!("{}/api/public/scim/ResourceTypes", configuration.base_path);
     let mut req_builder = configuration
@@ -268,9 +291,19 @@ pub async fn scim_get_resource_types(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -328,6 +361,7 @@ pub async fn scim_get_resource_types(
 #[bon::builder]
 pub async fn scim_get_schemas(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SchemasResponse, Error<ScimGetSchemasError>> {
     let uri_str = format!("{}/api/public/scim/Schemas", configuration.base_path);
     let mut req_builder = configuration
@@ -339,9 +373,19 @@ pub async fn scim_get_schemas(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -399,6 +443,7 @@ pub async fn scim_get_schemas(
 #[bon::builder]
 pub async fn scim_get_service_provider_config(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ServiceProviderConfig, Error<ScimGetServiceProviderConfigError>> {
     let uri_str = format!(
         "{}/api/public/scim/ServiceProviderConfig",
@@ -413,9 +458,19 @@ pub async fn scim_get_service_provider_config(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -474,6 +529,7 @@ pub async fn scim_get_service_provider_config(
 pub async fn scim_get_user(
     configuration: &configuration::Configuration,
     user_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScimUser, Error<ScimGetUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_user_id = user_id;
@@ -492,9 +548,19 @@ pub async fn scim_get_user(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -555,6 +621,7 @@ pub async fn scim_list_users(
     filter: Option<&str>,
     start_index: Option<i64>,
     count: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::ScimUsersListResponse, Error<ScimListUsersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_filter = filter;
@@ -580,9 +647,19 @@ pub async fn scim_list_users(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

@@ -16,7 +16,7 @@ fn config(server: &MockServer) -> Configuration {
     Configuration {
         base_path: server.uri(),
         user_agent: Some(USER_AGENT.to_owned()),
-        basic_auth: Some(("pk-lf-test".to_owned(), Some("sk-lf-test".to_owned()))),
+        basic_auth: Some(("pk-lf-test".to_owned(), Some("sk-lf-test".into()))),
         ..Configuration::default()
     }
 }

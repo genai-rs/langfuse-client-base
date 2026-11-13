@@ -1,0 +1,1444 @@
+{
+  "source_heads": {
+    "reference": "git:v0.21.0",
+    "candidate": "working-tree"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 502,
+  "current_source_rs_files": 502,
+  "source_files_added": [],
+  "source_files_removed": [],
+  "source_files_modified": [
+    "apis/annotation_queues_api.rs",
+    "apis/blob_storage_integrations_api.rs",
+    "apis/comments_api.rs",
+    "apis/configuration.rs",
+    "apis/dataset_items_api.rs",
+    "apis/dataset_run_items_api.rs",
+    "apis/datasets_api.rs",
+    "apis/evaluation_rules_api.rs",
+    "apis/evaluators_api.rs",
+    "apis/experiments_api.rs",
+    "apis/feedback_api.rs",
+    "apis/health_api.rs",
+    "apis/ingestion_api.rs",
+    "apis/legacy_metrics_v1_api.rs",
+    "apis/legacy_observations_v1_api.rs",
+    "apis/legacy_score_v1_api.rs",
+    "apis/llm_connections_api.rs",
+    "apis/media_api.rs",
+    "apis/metrics_api.rs",
+    "apis/mod.rs",
+    "apis/models_api.rs",
+    "apis/observations_api.rs",
+    "apis/opentelemetry_api.rs",
+    "apis/organizations_api.rs",
+    "apis/projects_api.rs",
+    "apis/prompt_version_api.rs",
+    "apis/prompts_api.rs",
+    "apis/scim_api.rs",
+    "apis/score_configs_api.rs",
+    "apis/scores_api.rs",
+    "apis/scores_v3_api.rs",
+    "apis/sessions_api.rs",
+    "apis/skills_api.rs",
+    "apis/trace_api.rs",
+    "apis/unstable_dashboard_widgets_api.rs",
+    "apis/unstable_dashboards_api.rs",
+    "apis/unstable_topics_api.rs"
+  ],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue",
+      "signature": "pub async fn annotation_queues_create_queue( configuration: &configuration::Configuration, create_annotation_queue_request: &models::CreateAnnotationQueueRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_assignment",
+      "signature": "pub async fn annotation_queues_create_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::CreateAnnotationQueueAssignmentResponse, Error<AnnotationQueuesCreateQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_item",
+      "signature": "pub async fn annotation_queues_create_queue_item( configuration: &configuration::Configuration, queue_id: &str, create_annotation_queue_item_request: &models::CreateAnnotationQueueItemRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_assignment",
+      "signature": "pub async fn annotation_queues_delete_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::DeleteAnnotationQueueAssignmentResponse, Error<AnnotationQueuesDeleteQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_item",
+      "signature": "pub async fn annotation_queues_delete_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteAnnotationQueueItemResponse, Error<AnnotationQueuesDeleteQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_get_queue",
+      "signature": "pub async fn annotation_queues_get_queue( configuration: &configuration::Configuration, queue_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesGetQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_get_queue_item",
+      "signature": "pub async fn annotation_queues_get_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesGetQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_list_queue_items",
+      "signature": "pub async fn annotation_queues_list_queue_items( configuration: &configuration::Configuration, queue_id: &str, status: Option<models::AnnotationQueueStatus>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedAnnotationQueueItems, Error<AnnotationQueuesListQueueItemsError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_list_queues",
+      "signature": "pub async fn annotation_queues_list_queues( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedAnnotationQueues, Error<AnnotationQueuesListQueuesError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_update_queue_item",
+      "signature": "pub async fn annotation_queues_update_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, update_annotation_queue_item_request: &models::UpdateAnnotationQueueItemRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>>"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_delete_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_delete_blob_storage_integration( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::BlobStorageIntegrationDeletionResponse, Error<BlobStorageIntegrationsDeleteBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_get_blob_storage_integration_status",
+      "signature": "pub async fn blob_storage_integrations_get_blob_storage_integration_status( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::BlobStorageIntegrationStatusResponse, Error<BlobStorageIntegrationsGetBlobStorageIntegrationStatusError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_get_blob_storage_integrations",
+      "signature": "pub async fn blob_storage_integrations_get_blob_storage_integrations( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::BlobStorageIntegrationsResponse, Error<BlobStorageIntegrationsGetBlobStorageIntegrationsError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_upsert_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_upsert_blob_storage_integration( configuration: &configuration::Configuration, create_blob_storage_integration_request: &models::CreateBlobStorageIntegrationRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::BlobStorageIntegrationResponse, Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_create",
+      "signature": "pub async fn comments_create( configuration: &configuration::Configuration, create_comment_request: &models::CreateCommentRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::CreateCommentResponse, Error<CommentsCreateError>>"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_get",
+      "signature": "pub async fn comments_get( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, object_type: Option<&str>, object_id: Option<&str>, author_user_id: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetCommentsResponse, Error<CommentsGetError>>"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_get_by_id",
+      "signature": "pub async fn comments_get_by_id( configuration: &configuration::Configuration, comment_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Comment, Error<CommentsGetByIdError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_create",
+      "signature": "pub async fn dataset_items_create( configuration: &configuration::Configuration, create_dataset_item_request: &models::CreateDatasetItemRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DatasetItem, Error<DatasetItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_delete",
+      "signature": "pub async fn dataset_items_delete( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteDatasetItemResponse, Error<DatasetItemsDeleteError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_get",
+      "signature": "pub async fn dataset_items_get( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DatasetItem, Error<DatasetItemsGetError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_list",
+      "signature": "pub async fn dataset_items_list( configuration: &configuration::Configuration, dataset_name: Option<&str>, source_trace_id: Option<&str>, source_observation_id: Option<&str>, version: Option<chrono::DateTime<chrono::FixedOffset>>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_create",
+      "signature": "pub async fn dataset_run_items_create( configuration: &configuration::Configuration, create_dataset_run_item_request: &models::CreateDatasetRunItemRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DatasetRunItem, Error<DatasetRunItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_list",
+      "signature": "pub async fn dataset_run_items_list( configuration: &configuration::Configuration, dataset_id: &str, run_name: &str, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasetRunItems, Error<DatasetRunItemsListError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_create",
+      "signature": "pub async fn datasets_create( configuration: &configuration::Configuration, create_dataset_request: &models::CreateDatasetRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Dataset, Error<DatasetsCreateError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_delete_run",
+      "signature": "pub async fn datasets_delete_run( configuration: &configuration::Configuration, dataset_name: &str, run_name: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteDatasetRunResponse, Error<DatasetsDeleteRunError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get",
+      "signature": "pub async fn datasets_get( configuration: &configuration::Configuration, dataset_name: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Dataset, Error<DatasetsGetError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get_run",
+      "signature": "pub async fn datasets_get_run( configuration: &configuration::Configuration, dataset_name: &str, run_name: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DatasetRunWithItems, Error<DatasetsGetRunError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get_runs",
+      "signature": "pub async fn datasets_get_runs( configuration: &configuration::Configuration, dataset_name: &str, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasetRuns, Error<DatasetsGetRunsError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_list",
+      "signature": "pub async fn datasets_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasets, Error<DatasetsListError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_create",
+      "signature": "pub async fn evaluation_rules_create( configuration: &configuration::Configuration, create_evaluation_rule_request: &models::CreateEvaluationRuleRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_delete",
+      "signature": "pub async fn evaluation_rules_delete( configuration: &configuration::Configuration, evaluation_rule_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeletedEvaluationRule, Error<EvaluationRulesDeleteError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_get",
+      "signature": "pub async fn evaluation_rules_get( configuration: &configuration::Configuration, evaluation_rule_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluationRule, Error<EvaluationRulesGetError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_list",
+      "signature": "pub async fn evaluation_rules_list( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluationRulesPage, Error<EvaluationRulesListError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_update",
+      "signature": "pub async fn evaluation_rules_update( configuration: &configuration::Configuration, evaluation_rule_id: &str, update_evaluation_rule_request: &models::UpdateEvaluationRuleRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_create",
+      "signature": "pub async fn evaluators_create( configuration: &configuration::Configuration, create_evaluator_request: &models::CreateEvaluatorRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_delete",
+      "signature": "pub async fn evaluators_delete( configuration: &configuration::Configuration, evaluator_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeletedEvaluator, Error<EvaluatorsDeleteError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_get",
+      "signature": "pub async fn evaluators_get( configuration: &configuration::Configuration, evaluator_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Evaluator, Error<EvaluatorsGetError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_list",
+      "signature": "pub async fn evaluators_list( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluatorsPage, Error<EvaluatorsListError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_list_versions",
+      "signature": "pub async fn evaluators_list_versions( configuration: &configuration::Configuration, evaluator_id: &str, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::EvaluatorVersionsPage, Error<EvaluatorsListVersionsError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_update",
+      "signature": "pub async fn evaluators_update( configuration: &configuration::Configuration, evaluator_id: &str, update_evaluator_request: &models::UpdateEvaluatorRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list",
+      "signature": "pub async fn experiments_list( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, id: Option<&str>, name: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentsResponse, Error<ExperimentsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list_items",
+      "signature": "pub async fn experiments_list_items( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, experiment_id: Option<&str>, experiment_name: Option<&str>, experiment_item_id: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentItemsResponse, Error<ExperimentsListItemsError>>"
+    },
+    {
+      "file": "apis/feedback_api.rs",
+      "name": "feedback_submit",
+      "signature": "pub async fn feedback_submit( configuration: &configuration::Configuration, submit_feedback_request: &models::SubmitFeedbackRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SubmitFeedbackResponse, Error<FeedbackSubmitError>>"
+    },
+    {
+      "file": "apis/health_api.rs",
+      "name": "health_health",
+      "signature": "pub async fn health_health( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::HealthResponse, Error<HealthHealthError>>"
+    },
+    {
+      "file": "apis/ingestion_api.rs",
+      "name": "ingestion_batch",
+      "signature": "pub async fn ingestion_batch( configuration: &configuration::Configuration, ingestion_batch_request: &models::IngestionBatchRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::IngestionResponse, Error<IngestionBatchError>>"
+    },
+    {
+      "file": "apis/legacy_metrics_v1_api.rs",
+      "name": "legacy_metrics_v1_metrics",
+      "signature": "pub async fn legacy_metrics_v1_metrics( configuration: &configuration::Configuration, query: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LegacyMetricsResponse, Error<LegacyMetricsV1MetricsError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get",
+      "signature": "pub async fn legacy_observations_v1_get( configuration: &configuration::Configuration, observation_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ObservationsViewSingle, Error<LegacyObservationsV1GetError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get_many",
+      "signature": "pub async fn legacy_observations_v1_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, name: Option<&str>, user_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>>"
+    },
+    {
+      "file": "apis/legacy_score_v1_api.rs",
+      "name": "legacy_score_v1_delete",
+      "signature": "pub async fn legacy_score_v1_delete( configuration: &configuration::Configuration, score_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<(), Error<LegacyScoreV1DeleteError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_delete",
+      "signature": "pub async fn llm_connections_delete( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_delete_organization",
+      "signature": "pub async fn llm_connections_delete_organization( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteOrganizationError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_list",
+      "signature": "pub async fn llm_connections_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_list_organization",
+      "signature": "pub async fn llm_connections_list_organization( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListOrganizationError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert",
+      "signature": "pub async fn llm_connections_upsert( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert_organization",
+      "signature": "pub async fn llm_connections_upsert_organization( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get",
+      "signature": "pub async fn media_get( configuration: &configuration::Configuration, media_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetMediaResponse, Error<MediaGetError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get_upload_url",
+      "signature": "pub async fn media_get_upload_url( configuration: &configuration::Configuration, get_media_upload_url_request: &models::GetMediaUploadUrlRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_patch",
+      "signature": "pub async fn media_patch( configuration: &configuration::Configuration, media_id: &str, patch_media_body: &models::PatchMediaBody, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<(), Error<MediaPatchError>>"
+    },
+    {
+      "file": "apis/metrics_api.rs",
+      "name": "metrics_metrics",
+      "signature": "pub async fn metrics_metrics( configuration: &configuration::Configuration, query: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MetricsV2Response, Error<MetricsMetricsError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_create",
+      "signature": "pub async fn models_create( configuration: &configuration::Configuration, create_model_request: &models::CreateModelRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Model, Error<ModelsCreateError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_delete",
+      "signature": "pub async fn models_delete( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<(), Error<ModelsDeleteError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_get",
+      "signature": "pub async fn models_get( configuration: &configuration::Configuration, id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Model, Error<ModelsGetError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_list",
+      "signature": "pub async fn models_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedModels, Error<ModelsListError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_upsert",
+      "signature": "pub async fn models_upsert( configuration: &configuration::Configuration, id: &str, create_model_request: &models::CreateModelRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Model, Error<ModelsUpsertError>>"
+    },
+    {
+      "file": "apis/observations_api.rs",
+      "name": "observations_get_many",
+      "signature": "pub async fn observations_get_many( configuration: &configuration::Configuration, fields: Option<&str>, expand_metadata: Option<&str>, limit: Option<i64>, cursor: Option<&str>, parse_io_as_json: Option<bool>, name: Option<&str>, user_id: Option<&str>, session_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, is_root_observation: Option<bool>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ObservationsV2Response, Error<ObservationsGetManyError>>"
+    },
+    {
+      "file": "apis/opentelemetry_api.rs",
+      "name": "opentelemetry_export_traces",
+      "signature": "pub async fn opentelemetry_export_traces( configuration: &configuration::Configuration, opentelemetry_export_traces_request: &models::OpentelemetryExportTracesRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<serde_json::Value, Error<OpentelemetryExportTracesError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_organization_membership",
+      "signature": "pub async fn organizations_delete_organization_membership( configuration: &configuration::Configuration, delete_membership_request: &models::DeleteMembershipRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_project_membership",
+      "signature": "pub async fn organizations_delete_project_membership( configuration: &configuration::Configuration, project_id: &str, delete_membership_request: &models::DeleteMembershipRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_api_keys",
+      "signature": "pub async fn organizations_get_organization_api_keys( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::OrganizationApiKeysResponse, Error<OrganizationsGetOrganizationApiKeysError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_memberships",
+      "signature": "pub async fn organizations_get_organization_memberships( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipsResponse, Error<OrganizationsGetOrganizationMembershipsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_projects",
+      "signature": "pub async fn organizations_get_organization_projects( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::OrganizationProjectsResponse, Error<OrganizationsGetOrganizationProjectsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_project_memberships",
+      "signature": "pub async fn organizations_get_project_memberships( configuration: &configuration::Configuration, project_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipsResponse, Error<OrganizationsGetProjectMembershipsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_organization_membership",
+      "signature": "pub async fn organizations_update_organization_membership( configuration: &configuration::Configuration, membership_request: &models::MembershipRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_project_membership",
+      "signature": "pub async fn organizations_update_project_membership( configuration: &configuration::Configuration, project_id: &str, membership_request: &models::MembershipRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create",
+      "signature": "pub async fn projects_create( configuration: &configuration::Configuration, projects_create_request: &models::ProjectsCreateRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Project, Error<ProjectsCreateError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create_api_key",
+      "signature": "pub async fn projects_create_api_key( configuration: &configuration::Configuration, project_id: &str, projects_create_api_key_request: &models::ProjectsCreateApiKeyRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_delete",
+      "signature": "pub async fn projects_delete( configuration: &configuration::Configuration, project_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ProjectDeletionResponse, Error<ProjectsDeleteError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_delete_api_key",
+      "signature": "pub async fn projects_delete_api_key( configuration: &configuration::Configuration, project_id: &str, api_key_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ApiKeyDeletionResponse, Error<ProjectsDeleteApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_get",
+      "signature": "pub async fn projects_get( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Projects, Error<ProjectsGetError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_get_api_keys",
+      "signature": "pub async fn projects_get_api_keys( configuration: &configuration::Configuration, project_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ApiKeyList, Error<ProjectsGetApiKeysError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_update",
+      "signature": "pub async fn projects_update( configuration: &configuration::Configuration, project_id: &str, projects_update_request: &models::ProjectsUpdateRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Project, Error<ProjectsUpdateError>>"
+    },
+    {
+      "file": "apis/prompt_version_api.rs",
+      "name": "prompt_version_update",
+      "signature": "pub async fn prompt_version_update( configuration: &configuration::Configuration, name: &str, version: i64, prompt_version_update_request: &models::PromptVersionUpdateRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Prompt, Error<PromptVersionUpdateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_create",
+      "signature": "pub async fn prompts_create( configuration: &configuration::Configuration, create_prompt_request: &models::CreatePromptRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Prompt, Error<PromptsCreateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_delete",
+      "signature": "pub async fn prompts_delete( configuration: &configuration::Configuration, prompt_name: &str, label: Option<&str>, version: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<(), Error<PromptsDeleteError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_get",
+      "signature": "pub async fn prompts_get( configuration: &configuration::Configuration, prompt_name: &str, version: Option<i64>, label: Option<&str>, resolve: Option<bool>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Prompt, Error<PromptsGetError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_list",
+      "signature": "pub async fn prompts_list( configuration: &configuration::Configuration, name: Option<&str>, label: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_create_user",
+      "signature": "pub async fn scim_create_user( configuration: &configuration::Configuration, scim_create_user_request: &models::ScimCreateUserRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScimUser, Error<ScimCreateUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_delete_user",
+      "signature": "pub async fn scim_delete_user( configuration: &configuration::Configuration, user_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<serde_json::Value, Error<ScimDeleteUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_resource_types",
+      "signature": "pub async fn scim_get_resource_types( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ResourceTypesResponse, Error<ScimGetResourceTypesError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_schemas",
+      "signature": "pub async fn scim_get_schemas( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SchemasResponse, Error<ScimGetSchemasError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_service_provider_config",
+      "signature": "pub async fn scim_get_service_provider_config( configuration: &configuration::Configuration, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ServiceProviderConfig, Error<ScimGetServiceProviderConfigError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_user",
+      "signature": "pub async fn scim_get_user( configuration: &configuration::Configuration, user_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScimUser, Error<ScimGetUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_list_users",
+      "signature": "pub async fn scim_list_users( configuration: &configuration::Configuration, filter: Option<&str>, start_index: Option<i64>, count: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScimUsersListResponse, Error<ScimListUsersError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_create",
+      "signature": "pub async fn score_configs_create( configuration: &configuration::Configuration, create_score_config_request: &models::CreateScoreConfigRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_get",
+      "signature": "pub async fn score_configs_get( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScoreConfigs, Error<ScoreConfigsGetError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_get_by_id",
+      "signature": "pub async fn score_configs_get_by_id( configuration: &configuration::Configuration, config_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScoreConfig, Error<ScoreConfigsGetByIdError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_update",
+      "signature": "pub async fn score_configs_update( configuration: &configuration::Configuration, config_id: &str, update_score_config_request: &models::UpdateScoreConfigRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_create",
+      "signature": "pub async fn scores_create( configuration: &configuration::Configuration, create_scores_request: &models::CreateScoresRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_by_id",
+      "signature": "pub async fn scores_get_by_id( configuration: &configuration::Configuration, score_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Score, Error<ScoresGetByIdError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_many",
+      "signature": "pub async fn scores_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, source: Option<models::ScoreSource>, operator: Option<&str>, value: Option<f64>, score_ids: Option<&str>, config_id: Option<&str>, session_id: Option<&str>, dataset_run_id: Option<&str>, trace_id: Option<&str>, observation_id: Option<&str>, queue_id: Option<&str>, data_type: Option<models::ScoreDataType>, trace_tags: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresResponse, Error<ScoresGetManyError>>"
+    },
+    {
+      "file": "apis/scores_v3_api.rs",
+      "name": "scores_v3_get_many_v3",
+      "signature": "pub async fn scores_v3_get_many_v3( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, fields: Option<&str>, id: Option<&str>, name: Option<&str>, source: Option<&str>, data_type: Option<&str>, environment: Option<&str>, config_id: Option<&str>, queue_id: Option<&str>, author_user_id: Option<&str>, value: Option<&str>, value_min: Option<f64>, value_max: Option<f64>, trace_id: Option<&str>, session_id: Option<&str>, observation_id: Option<&str>, experiment_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresV3Response, Error<ScoresV3GetManyV3Error>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_get",
+      "signature": "pub async fn sessions_get( configuration: &configuration::Configuration, session_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SessionWithTraces, Error<SessionsGetError>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_list",
+      "signature": "pub async fn sessions_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedSessions, Error<SessionsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_create_version",
+      "signature": "pub async fn skills_create_version( configuration: &configuration::Configuration, create_skill_version_request: &models::CreateSkillVersionRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_delete_version",
+      "signature": "pub async fn skills_delete_version( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteSkillVersionResponse, Error<SkillsDeleteVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_get",
+      "signature": "pub async fn skills_get( configuration: &configuration::Configuration, skill_name: &str, version: Option<i64>, label: Option<&str>, include_content: Option<bool>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillVersion, Error<SkillsGetError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_get_file_contents",
+      "signature": "pub async fn skills_get_file_contents( configuration: &configuration::Configuration, sha256_hashes: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillFileContentsResponse, Error<SkillsGetFileContentsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_list",
+      "signature": "pub async fn skills_list( configuration: &configuration::Configuration, name: Option<&str>, search: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_set_labels",
+      "signature": "pub async fn skills_set_labels( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, update_skill_labels_request: &models::UpdateSkillLabelsRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_update",
+      "signature": "pub async fn skills_update( configuration: &configuration::Configuration, skill_name: &str, update_skill_request: &models::UpdateSkillRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillVersion, Error<SkillsUpdateError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete",
+      "signature": "pub async fn trace_delete( configuration: &configuration::Configuration, trace_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete_multiple",
+      "signature": "pub async fn trace_delete_multiple( configuration: &configuration::Configuration, trace_delete_multiple_request: &models::TraceDeleteMultipleRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_get",
+      "signature": "pub async fn trace_get( configuration: &configuration::Configuration, trace_id: &str, fields: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::TraceWithFullDetails, Error<TraceGetError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_list",
+      "signature": "pub async fn trace_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, session_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, order_by: Option<&str>, tags: Option<Vec<String>>, version: Option<&str>, release: Option<&str>, environment: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Traces, Error<TraceListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_create",
+      "signature": "pub async fn unstable_dashboard_widgets_create( configuration: &configuration::Configuration, unstable_create_dashboard_widget_request: &models::UnstableCreateDashboardWidgetRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_delete",
+      "signature": "pub async fn unstable_dashboard_widgets_delete( configuration: &configuration::Configuration, widget_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDeleteDashboardWidgetResponse, Error<UnstableDashboardWidgetsDeleteError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_get",
+      "signature": "pub async fn unstable_dashboard_widgets_get( configuration: &configuration::Configuration, widget_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsGetError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_list",
+      "signature": "pub async fn unstable_dashboard_widgets_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardWidgetList, Error<UnstableDashboardWidgetsListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_update",
+      "signature": "pub async fn unstable_dashboard_widgets_update( configuration: &configuration::Configuration, widget_id: &str, unstable_update_dashboard_widget_request: &models::UnstableUpdateDashboardWidgetRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_add_placement",
+      "signature": "pub async fn unstable_dashboards_add_placement( configuration: &configuration::Configuration, dashboard_id: &str, unstable_create_dashboard_placement_request: &models::UnstableCreateDashboardPlacementRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsAddPlacementError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_create",
+      "signature": "pub async fn unstable_dashboards_create( configuration: &configuration::Configuration, unstable_create_dashboard_request: &models::UnstableCreateDashboardRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_delete",
+      "signature": "pub async fn unstable_dashboards_delete( configuration: &configuration::Configuration, dashboard_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDeleteDashboardResponse, Error<UnstableDashboardsDeleteError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_delete_placement",
+      "signature": "pub async fn unstable_dashboards_delete_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result< models::UnstableDeleteDashboardPlacementResponse, Error<UnstableDashboardsDeletePlacementError>, >"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_get",
+      "signature": "pub async fn unstable_dashboards_get( configuration: &configuration::Configuration, dashboard_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsGetError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_list",
+      "signature": "pub async fn unstable_dashboards_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardList, Error<UnstableDashboardsListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update",
+      "signature": "pub async fn unstable_dashboards_update( configuration: &configuration::Configuration, dashboard_id: &str, unstable_update_dashboard_request: &models::UnstableUpdateDashboardRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update_placement",
+      "signature": "pub async fn unstable_dashboards_update_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, unstable_update_dashboard_placement_request: &models::UnstableUpdateDashboardPlacementRequest, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsUpdatePlacementError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get",
+      "signature": "pub async fn unstable_topics_get( configuration: &configuration::Configuration, topic_id: &str, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get_facet",
+      "signature": "pub async fn unstable_topics_get_facet( configuration: &configuration::Configuration, facet_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicFacet, Error<UnstableTopicsGetFacetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get_rule",
+      "signature": "pub async fn unstable_topics_get_rule( configuration: &configuration::Configuration, rule_id: &str, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicRule, Error<UnstableTopicsGetRuleError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list",
+      "signature": "pub async fn unstable_topics_list( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicsOrderBy>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_assignments",
+      "signature": "pub async fn unstable_topics_list_assignments( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_facets",
+      "signature": "pub async fn unstable_topics_list_facets( configuration: &configuration::Configuration, filter: Option<&str>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicFacetList, Error<UnstableTopicsListFacetsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_rules",
+      "signature": "pub async fn unstable_topics_list_rules( configuration: &configuration::Configuration, filter: Option<&str>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicRuleList, Error<UnstableTopicsListRulesError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_summaries",
+      "signature": "pub async fn unstable_topics_list_summaries( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, truncate_summaries: Option<bool>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>>"
+    }
+  ],
+  "public_functions_removed_or_signature_changed": [
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue",
+      "signature": "pub async fn annotation_queues_create_queue( configuration: &configuration::Configuration, create_annotation_queue_request: &models::CreateAnnotationQueueRequest, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesCreateQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_assignment",
+      "signature": "pub async fn annotation_queues_create_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, ) -> Result< models::CreateAnnotationQueueAssignmentResponse, Error<AnnotationQueuesCreateQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_create_queue_item",
+      "signature": "pub async fn annotation_queues_create_queue_item( configuration: &configuration::Configuration, queue_id: &str, create_annotation_queue_item_request: &models::CreateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesCreateQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_assignment",
+      "signature": "pub async fn annotation_queues_delete_queue_assignment( configuration: &configuration::Configuration, queue_id: &str, annotation_queue_assignment_request: &models::AnnotationQueueAssignmentRequest, ) -> Result< models::DeleteAnnotationQueueAssignmentResponse, Error<AnnotationQueuesDeleteQueueAssignmentError>, >"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_delete_queue_item",
+      "signature": "pub async fn annotation_queues_delete_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, ) -> Result<models::DeleteAnnotationQueueItemResponse, Error<AnnotationQueuesDeleteQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_get_queue",
+      "signature": "pub async fn annotation_queues_get_queue( configuration: &configuration::Configuration, queue_id: &str, ) -> Result<models::AnnotationQueue, Error<AnnotationQueuesGetQueueError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_get_queue_item",
+      "signature": "pub async fn annotation_queues_get_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesGetQueueItemError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_list_queue_items",
+      "signature": "pub async fn annotation_queues_list_queue_items( configuration: &configuration::Configuration, queue_id: &str, status: Option<models::AnnotationQueueStatus>, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedAnnotationQueueItems, Error<AnnotationQueuesListQueueItemsError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_list_queues",
+      "signature": "pub async fn annotation_queues_list_queues( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedAnnotationQueues, Error<AnnotationQueuesListQueuesError>>"
+    },
+    {
+      "file": "apis/annotation_queues_api.rs",
+      "name": "annotation_queues_update_queue_item",
+      "signature": "pub async fn annotation_queues_update_queue_item( configuration: &configuration::Configuration, queue_id: &str, item_id: &str, update_annotation_queue_item_request: &models::UpdateAnnotationQueueItemRequest, ) -> Result<models::AnnotationQueueItem, Error<AnnotationQueuesUpdateQueueItemError>>"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_delete_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_delete_blob_storage_integration( configuration: &configuration::Configuration, id: &str, ) -> Result< models::BlobStorageIntegrationDeletionResponse, Error<BlobStorageIntegrationsDeleteBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_get_blob_storage_integration_status",
+      "signature": "pub async fn blob_storage_integrations_get_blob_storage_integration_status( configuration: &configuration::Configuration, id: &str, ) -> Result< models::BlobStorageIntegrationStatusResponse, Error<BlobStorageIntegrationsGetBlobStorageIntegrationStatusError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_get_blob_storage_integrations",
+      "signature": "pub async fn blob_storage_integrations_get_blob_storage_integrations( configuration: &configuration::Configuration, ) -> Result< models::BlobStorageIntegrationsResponse, Error<BlobStorageIntegrationsGetBlobStorageIntegrationsError>, >"
+    },
+    {
+      "file": "apis/blob_storage_integrations_api.rs",
+      "name": "blob_storage_integrations_upsert_blob_storage_integration",
+      "signature": "pub async fn blob_storage_integrations_upsert_blob_storage_integration( configuration: &configuration::Configuration, create_blob_storage_integration_request: &models::CreateBlobStorageIntegrationRequest, ) -> Result< models::BlobStorageIntegrationResponse, Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>, >"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_create",
+      "signature": "pub async fn comments_create( configuration: &configuration::Configuration, create_comment_request: &models::CreateCommentRequest, ) -> Result<models::CreateCommentResponse, Error<CommentsCreateError>>"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_get",
+      "signature": "pub async fn comments_get( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, object_type: Option<&str>, object_id: Option<&str>, author_user_id: Option<&str>, ) -> Result<models::GetCommentsResponse, Error<CommentsGetError>>"
+    },
+    {
+      "file": "apis/comments_api.rs",
+      "name": "comments_get_by_id",
+      "signature": "pub async fn comments_get_by_id( configuration: &configuration::Configuration, comment_id: &str, ) -> Result<models::Comment, Error<CommentsGetByIdError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_create",
+      "signature": "pub async fn dataset_items_create( configuration: &configuration::Configuration, create_dataset_item_request: &models::CreateDatasetItemRequest, ) -> Result<models::DatasetItem, Error<DatasetItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_delete",
+      "signature": "pub async fn dataset_items_delete( configuration: &configuration::Configuration, id: &str, ) -> Result<models::DeleteDatasetItemResponse, Error<DatasetItemsDeleteError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_get",
+      "signature": "pub async fn dataset_items_get( configuration: &configuration::Configuration, id: &str, ) -> Result<models::DatasetItem, Error<DatasetItemsGetError>>"
+    },
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_list",
+      "signature": "pub async fn dataset_items_list( configuration: &configuration::Configuration, dataset_name: Option<&str>, source_trace_id: Option<&str>, source_observation_id: Option<&str>, version: Option<chrono::DateTime<chrono::FixedOffset>>, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_create",
+      "signature": "pub async fn dataset_run_items_create( configuration: &configuration::Configuration, create_dataset_run_item_request: &models::CreateDatasetRunItemRequest, ) -> Result<models::DatasetRunItem, Error<DatasetRunItemsCreateError>>"
+    },
+    {
+      "file": "apis/dataset_run_items_api.rs",
+      "name": "dataset_run_items_list",
+      "signature": "pub async fn dataset_run_items_list( configuration: &configuration::Configuration, dataset_id: &str, run_name: &str, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedDatasetRunItems, Error<DatasetRunItemsListError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_create",
+      "signature": "pub async fn datasets_create( configuration: &configuration::Configuration, create_dataset_request: &models::CreateDatasetRequest, ) -> Result<models::Dataset, Error<DatasetsCreateError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_delete_run",
+      "signature": "pub async fn datasets_delete_run( configuration: &configuration::Configuration, dataset_name: &str, run_name: &str, ) -> Result<models::DeleteDatasetRunResponse, Error<DatasetsDeleteRunError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get",
+      "signature": "pub async fn datasets_get( configuration: &configuration::Configuration, dataset_name: &str, ) -> Result<models::Dataset, Error<DatasetsGetError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get_run",
+      "signature": "pub async fn datasets_get_run( configuration: &configuration::Configuration, dataset_name: &str, run_name: &str, ) -> Result<models::DatasetRunWithItems, Error<DatasetsGetRunError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_get_runs",
+      "signature": "pub async fn datasets_get_runs( configuration: &configuration::Configuration, dataset_name: &str, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedDatasetRuns, Error<DatasetsGetRunsError>>"
+    },
+    {
+      "file": "apis/datasets_api.rs",
+      "name": "datasets_list",
+      "signature": "pub async fn datasets_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedDatasets, Error<DatasetsListError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_create",
+      "signature": "pub async fn evaluation_rules_create( configuration: &configuration::Configuration, create_evaluation_rule_request: &models::CreateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesCreateError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_delete",
+      "signature": "pub async fn evaluation_rules_delete( configuration: &configuration::Configuration, evaluation_rule_id: &str, ) -> Result<models::DeletedEvaluationRule, Error<EvaluationRulesDeleteError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_get",
+      "signature": "pub async fn evaluation_rules_get( configuration: &configuration::Configuration, evaluation_rule_id: &str, ) -> Result<models::EvaluationRule, Error<EvaluationRulesGetError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_list",
+      "signature": "pub async fn evaluation_rules_list( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, ) -> Result<models::EvaluationRulesPage, Error<EvaluationRulesListError>>"
+    },
+    {
+      "file": "apis/evaluation_rules_api.rs",
+      "name": "evaluation_rules_update",
+      "signature": "pub async fn evaluation_rules_update( configuration: &configuration::Configuration, evaluation_rule_id: &str, update_evaluation_rule_request: &models::UpdateEvaluationRuleRequest, ) -> Result<models::EvaluationRule, Error<EvaluationRulesUpdateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_create",
+      "signature": "pub async fn evaluators_create( configuration: &configuration::Configuration, create_evaluator_request: &models::CreateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_delete",
+      "signature": "pub async fn evaluators_delete( configuration: &configuration::Configuration, evaluator_id: &str, ) -> Result<models::DeletedEvaluator, Error<EvaluatorsDeleteError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_get",
+      "signature": "pub async fn evaluators_get( configuration: &configuration::Configuration, evaluator_id: &str, ) -> Result<models::Evaluator, Error<EvaluatorsGetError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_list",
+      "signature": "pub async fn evaluators_list( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, ) -> Result<models::EvaluatorsPage, Error<EvaluatorsListError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_list_versions",
+      "signature": "pub async fn evaluators_list_versions( configuration: &configuration::Configuration, evaluator_id: &str, limit: Option<i64>, cursor: Option<&str>, ) -> Result<models::EvaluatorVersionsPage, Error<EvaluatorsListVersionsError>>"
+    },
+    {
+      "file": "apis/evaluators_api.rs",
+      "name": "evaluators_update",
+      "signature": "pub async fn evaluators_update( configuration: &configuration::Configuration, evaluator_id: &str, update_evaluator_request: &models::UpdateEvaluatorRequest, ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list",
+      "signature": "pub async fn experiments_list( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, id: Option<&str>, name: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, ) -> Result<models::ExperimentsResponse, Error<ExperimentsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list_items",
+      "signature": "pub async fn experiments_list_items( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, experiment_id: Option<&str>, experiment_name: Option<&str>, experiment_item_id: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, ) -> Result<models::ExperimentItemsResponse, Error<ExperimentsListItemsError>>"
+    },
+    {
+      "file": "apis/feedback_api.rs",
+      "name": "feedback_submit",
+      "signature": "pub async fn feedback_submit( configuration: &configuration::Configuration, submit_feedback_request: &models::SubmitFeedbackRequest, ) -> Result<models::SubmitFeedbackResponse, Error<FeedbackSubmitError>>"
+    },
+    {
+      "file": "apis/health_api.rs",
+      "name": "health_health",
+      "signature": "pub async fn health_health( configuration: &configuration::Configuration, ) -> Result<models::HealthResponse, Error<HealthHealthError>>"
+    },
+    {
+      "file": "apis/ingestion_api.rs",
+      "name": "ingestion_batch",
+      "signature": "pub async fn ingestion_batch( configuration: &configuration::Configuration, ingestion_batch_request: &models::IngestionBatchRequest, ) -> Result<models::IngestionResponse, Error<IngestionBatchError>>"
+    },
+    {
+      "file": "apis/legacy_metrics_v1_api.rs",
+      "name": "legacy_metrics_v1_metrics",
+      "signature": "pub async fn legacy_metrics_v1_metrics( configuration: &configuration::Configuration, query: &str, ) -> Result<models::LegacyMetricsResponse, Error<LegacyMetricsV1MetricsError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get",
+      "signature": "pub async fn legacy_observations_v1_get( configuration: &configuration::Configuration, observation_id: &str, ) -> Result<models::ObservationsViewSingle, Error<LegacyObservationsV1GetError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get_many",
+      "signature": "pub async fn legacy_observations_v1_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, name: Option<&str>, user_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, ) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>>"
+    },
+    {
+      "file": "apis/legacy_score_v1_api.rs",
+      "name": "legacy_score_v1_delete",
+      "signature": "pub async fn legacy_score_v1_delete( configuration: &configuration::Configuration, score_id: &str, ) -> Result<(), Error<LegacyScoreV1DeleteError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_delete",
+      "signature": "pub async fn llm_connections_delete( configuration: &configuration::Configuration, id: &str, ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_delete_organization",
+      "signature": "pub async fn llm_connections_delete_organization( configuration: &configuration::Configuration, id: &str, ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteOrganizationError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_list",
+      "signature": "pub async fn llm_connections_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_list_organization",
+      "signature": "pub async fn llm_connections_list_organization( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListOrganizationError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert",
+      "signature": "pub async fn llm_connections_upsert( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>>"
+    },
+    {
+      "file": "apis/llm_connections_api.rs",
+      "name": "llm_connections_upsert_organization",
+      "signature": "pub async fn llm_connections_upsert_organization( configuration: &configuration::Configuration, upsert_llm_connection_request: &models::UpsertLlmConnectionRequest, ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get",
+      "signature": "pub async fn media_get( configuration: &configuration::Configuration, media_id: &str, ) -> Result<models::GetMediaResponse, Error<MediaGetError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_get_upload_url",
+      "signature": "pub async fn media_get_upload_url( configuration: &configuration::Configuration, get_media_upload_url_request: &models::GetMediaUploadUrlRequest, ) -> Result<models::GetMediaUploadUrlResponse, Error<MediaGetUploadUrlError>>"
+    },
+    {
+      "file": "apis/media_api.rs",
+      "name": "media_patch",
+      "signature": "pub async fn media_patch( configuration: &configuration::Configuration, media_id: &str, patch_media_body: &models::PatchMediaBody, ) -> Result<(), Error<MediaPatchError>>"
+    },
+    {
+      "file": "apis/metrics_api.rs",
+      "name": "metrics_metrics",
+      "signature": "pub async fn metrics_metrics( configuration: &configuration::Configuration, query: &str, ) -> Result<models::MetricsV2Response, Error<MetricsMetricsError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_create",
+      "signature": "pub async fn models_create( configuration: &configuration::Configuration, create_model_request: &models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsCreateError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_delete",
+      "signature": "pub async fn models_delete( configuration: &configuration::Configuration, id: &str, ) -> Result<(), Error<ModelsDeleteError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_get",
+      "signature": "pub async fn models_get( configuration: &configuration::Configuration, id: &str, ) -> Result<models::Model, Error<ModelsGetError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_list",
+      "signature": "pub async fn models_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::PaginatedModels, Error<ModelsListError>>"
+    },
+    {
+      "file": "apis/models_api.rs",
+      "name": "models_upsert",
+      "signature": "pub async fn models_upsert( configuration: &configuration::Configuration, id: &str, create_model_request: &models::CreateModelRequest, ) -> Result<models::Model, Error<ModelsUpsertError>>"
+    },
+    {
+      "file": "apis/observations_api.rs",
+      "name": "observations_get_many",
+      "signature": "pub async fn observations_get_many( configuration: &configuration::Configuration, fields: Option<&str>, expand_metadata: Option<&str>, limit: Option<i64>, cursor: Option<&str>, parse_io_as_json: Option<bool>, name: Option<&str>, user_id: Option<&str>, session_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, is_root_observation: Option<bool>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, ) -> Result<models::ObservationsV2Response, Error<ObservationsGetManyError>>"
+    },
+    {
+      "file": "apis/opentelemetry_api.rs",
+      "name": "opentelemetry_export_traces",
+      "signature": "pub async fn opentelemetry_export_traces( configuration: &configuration::Configuration, opentelemetry_export_traces_request: &models::OpentelemetryExportTracesRequest, ) -> Result<serde_json::Value, Error<OpentelemetryExportTracesError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_organization_membership",
+      "signature": "pub async fn organizations_delete_organization_membership( configuration: &configuration::Configuration, delete_membership_request: &models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_delete_project_membership",
+      "signature": "pub async fn organizations_delete_project_membership( configuration: &configuration::Configuration, project_id: &str, delete_membership_request: &models::DeleteMembershipRequest, ) -> Result<models::MembershipDeletionResponse, Error<OrganizationsDeleteProjectMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_api_keys",
+      "signature": "pub async fn organizations_get_organization_api_keys( configuration: &configuration::Configuration, ) -> Result<models::OrganizationApiKeysResponse, Error<OrganizationsGetOrganizationApiKeysError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_memberships",
+      "signature": "pub async fn organizations_get_organization_memberships( configuration: &configuration::Configuration, ) -> Result<models::MembershipsResponse, Error<OrganizationsGetOrganizationMembershipsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_organization_projects",
+      "signature": "pub async fn organizations_get_organization_projects( configuration: &configuration::Configuration, ) -> Result<models::OrganizationProjectsResponse, Error<OrganizationsGetOrganizationProjectsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_get_project_memberships",
+      "signature": "pub async fn organizations_get_project_memberships( configuration: &configuration::Configuration, project_id: &str, ) -> Result<models::MembershipsResponse, Error<OrganizationsGetProjectMembershipsError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_organization_membership",
+      "signature": "pub async fn organizations_update_organization_membership( configuration: &configuration::Configuration, membership_request: &models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateOrganizationMembershipError>>"
+    },
+    {
+      "file": "apis/organizations_api.rs",
+      "name": "organizations_update_project_membership",
+      "signature": "pub async fn organizations_update_project_membership( configuration: &configuration::Configuration, project_id: &str, membership_request: &models::MembershipRequest, ) -> Result<models::MembershipResponse, Error<OrganizationsUpdateProjectMembershipError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create",
+      "signature": "pub async fn projects_create( configuration: &configuration::Configuration, projects_create_request: &models::ProjectsCreateRequest, ) -> Result<models::Project, Error<ProjectsCreateError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_create_api_key",
+      "signature": "pub async fn projects_create_api_key( configuration: &configuration::Configuration, project_id: &str, projects_create_api_key_request: &models::ProjectsCreateApiKeyRequest, ) -> Result<models::ApiKeyResponse, Error<ProjectsCreateApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_delete",
+      "signature": "pub async fn projects_delete( configuration: &configuration::Configuration, project_id: &str, ) -> Result<models::ProjectDeletionResponse, Error<ProjectsDeleteError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_delete_api_key",
+      "signature": "pub async fn projects_delete_api_key( configuration: &configuration::Configuration, project_id: &str, api_key_id: &str, ) -> Result<models::ApiKeyDeletionResponse, Error<ProjectsDeleteApiKeyError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_get",
+      "signature": "pub async fn projects_get( configuration: &configuration::Configuration, ) -> Result<models::Projects, Error<ProjectsGetError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_get_api_keys",
+      "signature": "pub async fn projects_get_api_keys( configuration: &configuration::Configuration, project_id: &str, ) -> Result<models::ApiKeyList, Error<ProjectsGetApiKeysError>>"
+    },
+    {
+      "file": "apis/projects_api.rs",
+      "name": "projects_update",
+      "signature": "pub async fn projects_update( configuration: &configuration::Configuration, project_id: &str, projects_update_request: &models::ProjectsUpdateRequest, ) -> Result<models::Project, Error<ProjectsUpdateError>>"
+    },
+    {
+      "file": "apis/prompt_version_api.rs",
+      "name": "prompt_version_update",
+      "signature": "pub async fn prompt_version_update( configuration: &configuration::Configuration, name: &str, version: i64, prompt_version_update_request: &models::PromptVersionUpdateRequest, ) -> Result<models::Prompt, Error<PromptVersionUpdateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_create",
+      "signature": "pub async fn prompts_create( configuration: &configuration::Configuration, create_prompt_request: &models::CreatePromptRequest, ) -> Result<models::Prompt, Error<PromptsCreateError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_delete",
+      "signature": "pub async fn prompts_delete( configuration: &configuration::Configuration, prompt_name: &str, label: Option<&str>, version: Option<i64>, ) -> Result<(), Error<PromptsDeleteError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_get",
+      "signature": "pub async fn prompts_get( configuration: &configuration::Configuration, prompt_name: &str, version: Option<i64>, label: Option<&str>, resolve: Option<bool>, ) -> Result<models::Prompt, Error<PromptsGetError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_list",
+      "signature": "pub async fn prompts_list( configuration: &configuration::Configuration, name: Option<&str>, label: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_create_user",
+      "signature": "pub async fn scim_create_user( configuration: &configuration::Configuration, scim_create_user_request: &models::ScimCreateUserRequest, ) -> Result<models::ScimUser, Error<ScimCreateUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_delete_user",
+      "signature": "pub async fn scim_delete_user( configuration: &configuration::Configuration, user_id: &str, ) -> Result<serde_json::Value, Error<ScimDeleteUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_resource_types",
+      "signature": "pub async fn scim_get_resource_types( configuration: &configuration::Configuration, ) -> Result<models::ResourceTypesResponse, Error<ScimGetResourceTypesError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_schemas",
+      "signature": "pub async fn scim_get_schemas( configuration: &configuration::Configuration, ) -> Result<models::SchemasResponse, Error<ScimGetSchemasError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_service_provider_config",
+      "signature": "pub async fn scim_get_service_provider_config( configuration: &configuration::Configuration, ) -> Result<models::ServiceProviderConfig, Error<ScimGetServiceProviderConfigError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_get_user",
+      "signature": "pub async fn scim_get_user( configuration: &configuration::Configuration, user_id: &str, ) -> Result<models::ScimUser, Error<ScimGetUserError>>"
+    },
+    {
+      "file": "apis/scim_api.rs",
+      "name": "scim_list_users",
+      "signature": "pub async fn scim_list_users( configuration: &configuration::Configuration, filter: Option<&str>, start_index: Option<i64>, count: Option<i64>, ) -> Result<models::ScimUsersListResponse, Error<ScimListUsersError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_create",
+      "signature": "pub async fn score_configs_create( configuration: &configuration::Configuration, create_score_config_request: &models::CreateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsCreateError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_get",
+      "signature": "pub async fn score_configs_get( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::ScoreConfigs, Error<ScoreConfigsGetError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_get_by_id",
+      "signature": "pub async fn score_configs_get_by_id( configuration: &configuration::Configuration, config_id: &str, ) -> Result<models::ScoreConfig, Error<ScoreConfigsGetByIdError>>"
+    },
+    {
+      "file": "apis/score_configs_api.rs",
+      "name": "score_configs_update",
+      "signature": "pub async fn score_configs_update( configuration: &configuration::Configuration, config_id: &str, update_score_config_request: &models::UpdateScoreConfigRequest, ) -> Result<models::ScoreConfig, Error<ScoreConfigsUpdateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_create",
+      "signature": "pub async fn scores_create( configuration: &configuration::Configuration, create_scores_request: &models::CreateScoresRequest, ) -> Result<models::CreateScoresResponse, Error<ScoresCreateError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_by_id",
+      "signature": "pub async fn scores_get_by_id( configuration: &configuration::Configuration, score_id: &str, ) -> Result<models::Score, Error<ScoresGetByIdError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_many",
+      "signature": "pub async fn scores_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, source: Option<models::ScoreSource>, operator: Option<&str>, value: Option<f64>, score_ids: Option<&str>, config_id: Option<&str>, session_id: Option<&str>, dataset_run_id: Option<&str>, trace_id: Option<&str>, observation_id: Option<&str>, queue_id: Option<&str>, data_type: Option<models::ScoreDataType>, trace_tags: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, ) -> Result<models::GetScoresResponse, Error<ScoresGetManyError>>"
+    },
+    {
+      "file": "apis/scores_v3_api.rs",
+      "name": "scores_v3_get_many_v3",
+      "signature": "pub async fn scores_v3_get_many_v3( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, fields: Option<&str>, id: Option<&str>, name: Option<&str>, source: Option<&str>, data_type: Option<&str>, environment: Option<&str>, config_id: Option<&str>, queue_id: Option<&str>, author_user_id: Option<&str>, value: Option<&str>, value_min: Option<f64>, value_max: Option<f64>, trace_id: Option<&str>, session_id: Option<&str>, observation_id: Option<&str>, experiment_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, ) -> Result<models::GetScoresV3Response, Error<ScoresV3GetManyV3Error>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_get",
+      "signature": "pub async fn sessions_get( configuration: &configuration::Configuration, session_id: &str, ) -> Result<models::SessionWithTraces, Error<SessionsGetError>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_list",
+      "signature": "pub async fn sessions_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, ) -> Result<models::PaginatedSessions, Error<SessionsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_create_version",
+      "signature": "pub async fn skills_create_version( configuration: &configuration::Configuration, create_skill_version_request: &models::CreateSkillVersionRequest, ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_delete_version",
+      "signature": "pub async fn skills_delete_version( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, ) -> Result<models::DeleteSkillVersionResponse, Error<SkillsDeleteVersionError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_get",
+      "signature": "pub async fn skills_get( configuration: &configuration::Configuration, skill_name: &str, version: Option<i64>, label: Option<&str>, include_content: Option<bool>, ) -> Result<models::SkillVersion, Error<SkillsGetError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_get_file_contents",
+      "signature": "pub async fn skills_get_file_contents( configuration: &configuration::Configuration, sha256_hashes: &str, ) -> Result<models::SkillFileContentsResponse, Error<SkillsGetFileContentsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_list",
+      "signature": "pub async fn skills_list( configuration: &configuration::Configuration, name: Option<&str>, search: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_set_labels",
+      "signature": "pub async fn skills_set_labels( configuration: &configuration::Configuration, skill_name: &str, skill_version: i64, update_skill_labels_request: &models::UpdateSkillLabelsRequest, ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_update",
+      "signature": "pub async fn skills_update( configuration: &configuration::Configuration, skill_name: &str, update_skill_request: &models::UpdateSkillRequest, ) -> Result<models::SkillVersion, Error<SkillsUpdateError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete",
+      "signature": "pub async fn trace_delete( configuration: &configuration::Configuration, trace_id: &str, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_delete_multiple",
+      "signature": "pub async fn trace_delete_multiple( configuration: &configuration::Configuration, trace_delete_multiple_request: &models::TraceDeleteMultipleRequest, ) -> Result<models::DeleteTraceResponse, Error<TraceDeleteMultipleError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_get",
+      "signature": "pub async fn trace_get( configuration: &configuration::Configuration, trace_id: &str, fields: Option<&str>, ) -> Result<models::TraceWithFullDetails, Error<TraceGetError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_list",
+      "signature": "pub async fn trace_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, session_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, order_by: Option<&str>, tags: Option<Vec<String>>, version: Option<&str>, release: Option<&str>, environment: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, ) -> Result<models::Traces, Error<TraceListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_create",
+      "signature": "pub async fn unstable_dashboard_widgets_create( configuration: &configuration::Configuration, unstable_create_dashboard_widget_request: &models::UnstableCreateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_delete",
+      "signature": "pub async fn unstable_dashboard_widgets_delete( configuration: &configuration::Configuration, widget_id: &str, ) -> Result<models::UnstableDeleteDashboardWidgetResponse, Error<UnstableDashboardWidgetsDeleteError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_get",
+      "signature": "pub async fn unstable_dashboard_widgets_get( configuration: &configuration::Configuration, widget_id: &str, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsGetError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_list",
+      "signature": "pub async fn unstable_dashboard_widgets_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::UnstableDashboardWidgetList, Error<UnstableDashboardWidgetsListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboard_widgets_api.rs",
+      "name": "unstable_dashboard_widgets_update",
+      "signature": "pub async fn unstable_dashboard_widgets_update( configuration: &configuration::Configuration, widget_id: &str, unstable_update_dashboard_widget_request: &models::UnstableUpdateDashboardWidgetRequest, ) -> Result<models::UnstableDashboardWidget, Error<UnstableDashboardWidgetsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_add_placement",
+      "signature": "pub async fn unstable_dashboards_add_placement( configuration: &configuration::Configuration, dashboard_id: &str, unstable_create_dashboard_placement_request: &models::UnstableCreateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsAddPlacementError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_create",
+      "signature": "pub async fn unstable_dashboards_create( configuration: &configuration::Configuration, unstable_create_dashboard_request: &models::UnstableCreateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsCreateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_delete",
+      "signature": "pub async fn unstable_dashboards_delete( configuration: &configuration::Configuration, dashboard_id: &str, ) -> Result<models::UnstableDeleteDashboardResponse, Error<UnstableDashboardsDeleteError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_delete_placement",
+      "signature": "pub async fn unstable_dashboards_delete_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, ) -> Result< models::UnstableDeleteDashboardPlacementResponse, Error<UnstableDashboardsDeletePlacementError>, >"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_get",
+      "signature": "pub async fn unstable_dashboards_get( configuration: &configuration::Configuration, dashboard_id: &str, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsGetError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_list",
+      "signature": "pub async fn unstable_dashboards_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, ) -> Result<models::UnstableDashboardList, Error<UnstableDashboardsListError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update",
+      "signature": "pub async fn unstable_dashboards_update( configuration: &configuration::Configuration, dashboard_id: &str, unstable_update_dashboard_request: &models::UnstableUpdateDashboardRequest, ) -> Result<models::UnstableDashboard, Error<UnstableDashboardsUpdateError>>"
+    },
+    {
+      "file": "apis/unstable_dashboards_api.rs",
+      "name": "unstable_dashboards_update_placement",
+      "signature": "pub async fn unstable_dashboards_update_placement( configuration: &configuration::Configuration, dashboard_id: &str, placement_id: &str, unstable_update_dashboard_placement_request: &models::UnstableUpdateDashboardPlacementRequest, ) -> Result<models::UnstableDashboardPlacement, Error<UnstableDashboardsUpdatePlacementError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get",
+      "signature": "pub async fn unstable_topics_get( configuration: &configuration::Configuration, topic_id: &str, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get_facet",
+      "signature": "pub async fn unstable_topics_get_facet( configuration: &configuration::Configuration, facet_id: &str, ) -> Result<models::UnstableTopicFacet, Error<UnstableTopicsGetFacetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get_rule",
+      "signature": "pub async fn unstable_topics_get_rule( configuration: &configuration::Configuration, rule_id: &str, ) -> Result<models::UnstableTopicRule, Error<UnstableTopicsGetRuleError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list",
+      "signature": "pub async fn unstable_topics_list( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicsOrderBy>, page: Option<i64>, limit: Option<i64>, ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_assignments",
+      "signature": "pub async fn unstable_topics_list_assignments( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_facets",
+      "signature": "pub async fn unstable_topics_list_facets( configuration: &configuration::Configuration, filter: Option<&str>, page: Option<i64>, limit: Option<i64>, ) -> Result<models::UnstableTopicFacetList, Error<UnstableTopicsListFacetsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_rules",
+      "signature": "pub async fn unstable_topics_list_rules( configuration: &configuration::Configuration, filter: Option<&str>, page: Option<i64>, limit: Option<i64>, ) -> Result<models::UnstableTopicRuleList, Error<UnstableTopicsListRulesError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_summaries",
+      "signature": "pub async fn unstable_topics_list_summaries( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, truncate_summaries: Option<bool>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>>"
+    }
+  ],
+  "public_model_field_changes": [
+    {
+      "file": "apis/configuration.rs",
+      "model": "ApiKey",
+      "field": "key",
+      "registry": "String",
+      "current": "SecretString"
+    },
+    {
+      "file": "apis/configuration.rs",
+      "model": "Configuration",
+      "field": "bearer_access_token",
+      "registry": "Option<String>",
+      "current": "Option<SecretString>"
+    },
+    {
+      "file": "apis/configuration.rs",
+      "model": "Configuration",
+      "field": "oauth_access_token",
+      "registry": "Option<String>",
+      "current": "Option<SecretString>"
+    }
+  ],
+  "public_enum_variant_changes": [],
+  "public_derive_changes": [],
+  "serde_field_attribute_changes": [],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 135,
+    "public_functions_removed_or_signature_changed": 135,
+    "public_model_field_changes": 3,
+    "public_enum_types_with_variant_changes": 0,
+    "public_enum_variants_added": 0,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 0,
+    "serde_field_attribute_changes": 0
+  }
+}

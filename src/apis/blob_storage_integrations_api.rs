@@ -67,6 +67,7 @@ pub enum BlobStorageIntegrationsUpsertBlobStorageIntegrationError {
 pub async fn blob_storage_integrations_delete_blob_storage_integration(
     configuration: &configuration::Configuration,
     id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::BlobStorageIntegrationDeletionResponse,
     Error<BlobStorageIntegrationsDeleteBlobStorageIntegrationError>,
@@ -88,9 +89,19 @@ pub async fn blob_storage_integrations_delete_blob_storage_integration(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -150,6 +161,7 @@ pub async fn blob_storage_integrations_delete_blob_storage_integration(
 pub async fn blob_storage_integrations_get_blob_storage_integration_status(
     configuration: &configuration::Configuration,
     id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::BlobStorageIntegrationStatusResponse,
     Error<BlobStorageIntegrationsGetBlobStorageIntegrationStatusError>,
@@ -171,9 +183,19 @@ pub async fn blob_storage_integrations_get_blob_storage_integration_status(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -232,6 +254,7 @@ pub async fn blob_storage_integrations_get_blob_storage_integration_status(
 #[bon::builder]
 pub async fn blob_storage_integrations_get_blob_storage_integrations(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::BlobStorageIntegrationsResponse,
     Error<BlobStorageIntegrationsGetBlobStorageIntegrationsError>,
@@ -249,9 +272,19 @@ pub async fn blob_storage_integrations_get_blob_storage_integrations(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -311,6 +344,7 @@ pub async fn blob_storage_integrations_get_blob_storage_integrations(
 pub async fn blob_storage_integrations_upsert_blob_storage_integration(
     configuration: &configuration::Configuration,
     create_blob_storage_integration_request: &models::CreateBlobStorageIntegrationRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<
     models::BlobStorageIntegrationResponse,
     Error<BlobStorageIntegrationsUpsertBlobStorageIntegrationError>,
@@ -331,10 +365,20 @@ pub async fn blob_storage_integrations_upsert_blob_storage_integration(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_blob_storage_integration_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

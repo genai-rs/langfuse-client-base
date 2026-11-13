@@ -106,6 +106,7 @@ pub enum EvaluatorsUpdateError {
 pub async fn evaluators_create(
     configuration: &configuration::Configuration,
     create_evaluator_request: &models::CreateEvaluatorRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Evaluator, Error<EvaluatorsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_evaluator_request = create_evaluator_request;
@@ -120,10 +121,20 @@ pub async fn evaluators_create(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_evaluator_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -191,6 +202,7 @@ pub async fn evaluators_create(
 pub async fn evaluators_delete(
     configuration: &configuration::Configuration,
     evaluator_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeletedEvaluator, Error<EvaluatorsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluator_id = evaluator_id;
@@ -209,9 +221,19 @@ pub async fn evaluators_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -276,6 +298,7 @@ pub async fn evaluators_delete(
 pub async fn evaluators_get(
     configuration: &configuration::Configuration,
     evaluator_id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Evaluator, Error<EvaluatorsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluator_id = evaluator_id;
@@ -294,9 +317,19 @@ pub async fn evaluators_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -362,6 +395,7 @@ pub async fn evaluators_list(
     configuration: &configuration::Configuration,
     limit: Option<i64>,
     cursor: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluatorsPage, Error<EvaluatorsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_limit = limit;
@@ -383,9 +417,19 @@ pub async fn evaluators_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -452,6 +496,7 @@ pub async fn evaluators_list_versions(
     evaluator_id: &str,
     limit: Option<i64>,
     cursor: Option<&str>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::EvaluatorVersionsPage, Error<EvaluatorsListVersionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluator_id = evaluator_id;
@@ -478,9 +523,19 @@ pub async fn evaluators_list_versions(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -546,6 +601,7 @@ pub async fn evaluators_update(
     configuration: &configuration::Configuration,
     evaluator_id: &str,
     update_evaluator_request: &models::UpdateEvaluatorRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::Evaluator, Error<EvaluatorsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_evaluator_id = evaluator_id;
@@ -565,10 +621,20 @@ pub async fn evaluators_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_evaluator_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

@@ -103,6 +103,7 @@ pub enum SkillsUpdateError {
 pub async fn skills_create_version(
     configuration: &configuration::Configuration,
     create_skill_version_request: &models::CreateSkillVersionRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillVersion, Error<SkillsCreateVersionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_create_skill_version_request = create_skill_version_request;
@@ -117,10 +118,20 @@ pub async fn skills_create_version(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_create_skill_version_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -180,6 +191,7 @@ pub async fn skills_delete_version(
     configuration: &configuration::Configuration,
     skill_name: &str,
     skill_version: i64,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteSkillVersionResponse, Error<SkillsDeleteVersionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -200,9 +212,19 @@ pub async fn skills_delete_version(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -264,6 +286,7 @@ pub async fn skills_get(
     version: Option<i64>,
     label: Option<&str>,
     include_content: Option<bool>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillVersion, Error<SkillsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -294,9 +317,19 @@ pub async fn skills_get(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -355,6 +388,7 @@ pub async fn skills_get(
 pub async fn skills_get_file_contents(
     configuration: &configuration::Configuration,
     sha256_hashes: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillFileContentsResponse, Error<SkillsGetFileContentsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_sha256_hashes = sha256_hashes;
@@ -373,9 +407,19 @@ pub async fn skills_get_file_contents(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -440,6 +484,7 @@ pub async fn skills_list(
     limit: Option<i64>,
     from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_name = name;
@@ -481,9 +526,19 @@ pub async fn skills_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -544,6 +599,7 @@ pub async fn skills_set_labels(
     skill_name: &str,
     skill_version: i64,
     update_skill_labels_request: &models::UpdateSkillLabelsRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillVersion, Error<SkillsSetLabelsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -565,10 +621,20 @@ pub async fn skills_set_labels(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_skill_labels_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -628,6 +694,7 @@ pub async fn skills_update(
     configuration: &configuration::Configuration,
     skill_name: &str,
     update_skill_request: &models::UpdateSkillRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillVersion, Error<SkillsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_skill_name = skill_name;
@@ -647,10 +714,20 @@ pub async fn skills_update(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_update_skill_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

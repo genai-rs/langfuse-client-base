@@ -31,6 +31,7 @@ pub enum HealthHealthError {
 #[bon::builder]
 pub async fn health_health(
     configuration: &configuration::Configuration,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::HealthResponse, Error<HealthHealthError>> {
     let uri_str = format!("{}/api/public/health", configuration.base_path);
     let mut req_builder = configuration
@@ -42,6 +43,10 @@ pub async fn health_health(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 

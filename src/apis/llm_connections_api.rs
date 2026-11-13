@@ -91,6 +91,7 @@ pub enum LlmConnectionsUpsertOrganizationError {
 pub async fn llm_connections_delete(
     configuration: &configuration::Configuration,
     id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_id = id;
@@ -109,9 +110,19 @@ pub async fn llm_connections_delete(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -170,6 +181,7 @@ pub async fn llm_connections_delete(
 pub async fn llm_connections_delete_organization(
     configuration: &configuration::Configuration,
     id: &str,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::DeleteLlmConnectionResponse, Error<LlmConnectionsDeleteOrganizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_path_id = id;
@@ -188,9 +200,19 @@ pub async fn llm_connections_delete_organization(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -250,6 +272,7 @@ pub async fn llm_connections_list(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -271,9 +294,19 @@ pub async fn llm_connections_list(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -333,6 +366,7 @@ pub async fn llm_connections_list_organization(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedLlmConnections, Error<LlmConnectionsListOrganizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_page = page;
@@ -357,9 +391,19 @@ pub async fn llm_connections_list_organization(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -418,6 +462,7 @@ pub async fn llm_connections_list_organization(
 pub async fn llm_connections_upsert(
     configuration: &configuration::Configuration,
     upsert_llm_connection_request: &models::UpsertLlmConnectionRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_upsert_llm_connection_request = upsert_llm_connection_request;
@@ -432,10 +477,20 @@ pub async fn llm_connections_upsert(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_upsert_llm_connection_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
@@ -494,6 +549,7 @@ pub async fn llm_connections_upsert(
 pub async fn llm_connections_upsert_organization(
     configuration: &configuration::Configuration,
     upsert_llm_connection_request: &models::UpsertLlmConnectionRequest,
+    options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::LlmConnection, Error<LlmConnectionsUpsertOrganizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_upsert_llm_connection_request = upsert_llm_connection_request;
@@ -511,10 +567,20 @@ pub async fn llm_connections_upsert_organization(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
     if let Some(ref auth_conf) = configuration.basic_auth {
-        req_builder = req_builder.basic_auth(auth_conf.0.to_owned(), auth_conf.1.to_owned());
+        req_builder = req_builder.basic_auth(
+            &auth_conf.0,
+            auth_conf
+                .1
+                .as_ref()
+                .map(timvw_rust_runtime::ExposeSecret::expose_secret),
+        );
     };
     req_builder = req_builder.json(p_body_upsert_llm_connection_request);
 
+    // last, so its headers replace the generated ones
+    if let Some(options) = options {
+        req_builder = req_builder.options(options);
+    }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
