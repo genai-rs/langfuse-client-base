@@ -27,7 +27,7 @@ serde_with = { version = "^3.24.0", default-features = false, features = ["base6
 serde_json = "^1.0.154"
 serde_repr = "^0.1.21"
 url = "^2.5.8"
-timvw-rust-runtime = { version = "^0.2.0", default-features = false }
+timvw-rust-runtime = { version = "^0.3.0", default-features = false }
 
 chrono = { version = "^0.4.45",  features = ["serde"] }
 

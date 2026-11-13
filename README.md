@@ -133,7 +133,9 @@ configuration.client = configuration
 ```
 
 The [runtime's guide](https://docs.rs/timvw-rust-runtime) covers retries, timeouts, logging, middleware, rate limits
-and tests without a network. Upgrading from 0.21: credentials are `SecretString`s (`Some(secret_key.into())`) and every operation takes
+and tests without a network. WebAssembly (`wasm32-unknown-unknown`) works with `default-features = false`. Upgrading from 0.22: runtime 0.3; see
+[`migration/api-diff-0.22.0-to-0.23.0.md`](https://github.com/genai-rs/langfuse-client-base/blob/main/migration/api-diff-0.22.0-to-0.23.0.md).
+Upgrading from 0.21: credentials are `SecretString`s (`Some(secret_key.into())`) and every operation takes
 optional `.options(&RequestOptions)`; see
 [`migration/api-diff-0.21.0-to-0.22.0.md`](https://github.com/genai-rs/langfuse-client-base/blob/main/migration/api-diff-0.21.0-to-0.22.0.md).
 Upgrading from 0.20: see

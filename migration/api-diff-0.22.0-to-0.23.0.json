@@ -1,0 +1,32 @@
+{
+  "source_heads": {
+    "reference": "git:v0.22.0",
+    "candidate": "working-tree"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 502,
+  "current_source_rs_files": 502,
+  "source_files_added": [],
+  "source_files_removed": [],
+  "source_files_modified": [],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [],
+  "public_functions_removed_or_signature_changed": [],
+  "public_model_field_changes": [],
+  "public_enum_variant_changes": [],
+  "public_derive_changes": [],
+  "serde_field_attribute_changes": [],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 0,
+    "public_functions_removed_or_signature_changed": 0,
+    "public_model_field_changes": 0,
+    "public_enum_types_with_variant_changes": 0,
+    "public_enum_variants_added": 0,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 0,
+    "serde_field_attribute_changes": 0
+  }
+}
