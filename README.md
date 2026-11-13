@@ -26,7 +26,7 @@ Auto-generated Rust client for the [Langfuse](https://langfuse.com) API, based o
 ## Features
 
 - Complete API coverage from OpenAPI specification
-- Async/await support with Tokio
+- Async/await support with Tokio; requests go through [`timvw-rust-runtime`](https://docs.rs/timvw-rust-runtime), a tower service (reqwest by default) with retries
 - Choice of TLS backend (rustls or native-tls)
 - Strong typing with serde
 
@@ -113,6 +113,28 @@ let config = Configuration {
     ..Default::default()
 };
 ```
+
+## HTTP client, retries and middleware
+
+`Configuration.client` is a [`timvw_rust_runtime::Client`](https://docs.rs/timvw-rust-runtime): a tower service.
+`Configuration::new()` sends with reqwest and retries `429`, `408`, `5xx` and failed connections (feature `retry`, on
+by default), honouring `Retry-After`. Timeouts, logging (feature `tracing`), extra headers, rate limits and your own
+middleware are tower layers:
+
+```rust,ignore
+use std::time::Duration;
+
+let mut configuration = langfuse_client_base::apis::configuration::Configuration::new();
+configuration.client = configuration
+    .client
+    .clone()
+    .layer(timvw_rust_runtime::trace::TraceLayer::new())
+    .layer(tower::timeout::TimeoutLayer::new(Duration::from_secs(30)));
+```
+
+The [runtime's guide](https://docs.rs/timvw-rust-runtime) covers retries, timeouts, logging, middleware, rate limits
+and tests without a network. Upgrading from 0.20: see
+[`migration/api-diff-0.20.0-to-0.21.0.md`](https://github.com/genai-rs/langfuse-client-base/blob/main/migration/api-diff-0.20.0-to-0.21.0.md).
 
 ## Platform Notes
 

@@ -4,17 +4,17 @@ use std::fmt;
 
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
-    pub status: reqwest::StatusCode,
+    pub status: timvw_rust_runtime::StatusCode,
     pub content: String,
     pub entity: Option<T>,
     /// The response's headers (`retry-after`, `x-request-id`, rate limits, ...).
-    pub headers: reqwest::header::HeaderMap,
+    pub headers: timvw_rust_runtime::header::HeaderMap,
 }
 
 #[derive(Debug)]
 pub enum Error<T> {
-    Reqwest(reqwest::Error),
-    ReqwestMiddleware(reqwest_middleware::Error),
+    /// Building the request, sending it through the client's service, or reading the response body failed.
+    Http(timvw_rust_runtime::Error),
     Serde(serde_json::Error),
     Io(std::io::Error),
     ResponseError(Box<ResponseContent<T>>),
@@ -23,8 +23,7 @@ pub enum Error<T> {
 impl<T> fmt::Display for Error<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let (module, e) = match self {
-            Error::Reqwest(e) => ("reqwest", e.to_string()),
-            Error::ReqwestMiddleware(e) => ("reqwest-middleware", e.to_string()),
+            Error::Http(e) => ("http", e.to_string()),
             Error::Serde(e) => ("serde", e.to_string()),
             Error::Io(e) => ("IO", e.to_string()),
             Error::ResponseError(e) => ("response", format!("status code {}", e.status)),
@@ -36,8 +35,7 @@ impl<T> fmt::Display for Error<T> {
 impl<T: fmt::Debug> error::Error for Error<T> {
     fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         Some(match self {
-            Error::Reqwest(e) => e,
-            Error::ReqwestMiddleware(e) => e,
+            Error::Http(e) => e,
             Error::Serde(e) => e,
             Error::Io(e) => e,
             Error::ResponseError(_) => return None,
@@ -45,15 +43,9 @@ impl<T: fmt::Debug> error::Error for Error<T> {
     }
 }
 
-impl<T> From<reqwest::Error> for Error<T> {
-    fn from(e: reqwest::Error) -> Self {
-        Error::Reqwest(e)
-    }
-}
-
-impl<T> From<reqwest_middleware::Error> for Error<T> {
-    fn from(e: reqwest_middleware::Error) -> Self {
-        Error::ReqwestMiddleware(e)
+impl<T> From<timvw_rust_runtime::Error> for Error<T> {
+    fn from(e: timvw_rust_runtime::Error) -> Self {
+        Error::Http(e)
     }
 }
 
