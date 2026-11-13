@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.24.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.23.0...v0.24.0) - 2026-11-13
+
+### Added
+
+- [**breaking**] generate with timvw-rust 0.29.0 (runtime 0.4)
+
 ## [0.23.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.22.0...v0.23.0) - 2026-11-13
 
 ### Added
