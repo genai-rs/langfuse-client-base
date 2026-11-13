@@ -164,9 +164,9 @@ pub async fn annotation_queues_create_queue(
     };
     req_builder = req_builder.json(p_body_create_annotation_queue_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -260,9 +260,9 @@ pub async fn annotation_queues_create_queue_assignment(
     };
     req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -353,9 +353,9 @@ pub async fn annotation_queues_create_queue_item(
     };
     req_builder = req_builder.json(p_body_create_annotation_queue_item_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -449,9 +449,9 @@ pub async fn annotation_queues_delete_queue_assignment(
     };
     req_builder = req_builder.json(p_body_annotation_queue_assignment_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -543,9 +543,9 @@ pub async fn annotation_queues_delete_queue_item(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -633,9 +633,9 @@ pub async fn annotation_queues_get_queue(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -726,9 +726,9 @@ pub async fn annotation_queues_get_queue_item(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -831,9 +831,9 @@ pub async fn annotation_queues_list_queue_items(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -925,9 +925,9 @@ pub async fn annotation_queues_list_queues(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -1021,9 +1021,9 @@ pub async fn annotation_queues_update_queue_item(
     };
     req_builder = req_builder.json(p_body_update_annotation_queue_item_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

@@ -19,17 +19,21 @@ Method | HTTP request | Description
 
 ## annotation_queues_create_queue
 
-> models::AnnotationQueue annotation_queues_create_queue(create_annotation_queue_request)
+> models::AnnotationQueue annotation_queues_create_queue(create_annotation_queue_request, options)
 
 
 Create an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_annotation_queue_request** | [**CreateAnnotationQueueRequest**](CreateAnnotationQueueRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_create_queue().configuration(&configuration).create_annotation_queue_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -49,18 +53,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_create_queue_assignment
 
-> models::CreateAnnotationQueueAssignmentResponse annotation_queues_create_queue_assignment(queue_id, annotation_queue_assignment_request)
+> models::CreateAnnotationQueueAssignmentResponse annotation_queues_create_queue_assignment(queue_id, annotation_queue_assignment_request, options)
 
 
 Create an assignment for a user to an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **annotation_queue_assignment_request** | [**AnnotationQueueAssignmentRequest**](AnnotationQueueAssignmentRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_create_queue_assignment().configuration(&configuration).queue_id(..).annotation_queue_assignment_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -80,18 +88,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_create_queue_item
 
-> models::AnnotationQueueItem annotation_queues_create_queue_item(queue_id, create_annotation_queue_item_request)
+> models::AnnotationQueueItem annotation_queues_create_queue_item(queue_id, create_annotation_queue_item_request, options)
 
 
 Add an item to an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **create_annotation_queue_item_request** | [**CreateAnnotationQueueItemRequest**](CreateAnnotationQueueItemRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_create_queue_item().configuration(&configuration).queue_id(..).create_annotation_queue_item_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -111,18 +123,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_delete_queue_assignment
 
-> models::DeleteAnnotationQueueAssignmentResponse annotation_queues_delete_queue_assignment(queue_id, annotation_queue_assignment_request)
+> models::DeleteAnnotationQueueAssignmentResponse annotation_queues_delete_queue_assignment(queue_id, annotation_queue_assignment_request, options)
 
 
 Delete an assignment for a user to an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **annotation_queue_assignment_request** | [**AnnotationQueueAssignmentRequest**](AnnotationQueueAssignmentRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_delete_queue_assignment().configuration(&configuration).queue_id(..).annotation_queue_assignment_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -142,18 +158,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_delete_queue_item
 
-> models::DeleteAnnotationQueueItemResponse annotation_queues_delete_queue_item(queue_id, item_id)
+> models::DeleteAnnotationQueueItemResponse annotation_queues_delete_queue_item(queue_id, item_id, options)
 
 
 Remove an item from an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **item_id** | **String** | The unique identifier of the annotation queue item | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_delete_queue_item().configuration(&configuration).queue_id(..).item_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -173,17 +193,21 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_get_queue
 
-> models::AnnotationQueue annotation_queues_get_queue(queue_id)
+> models::AnnotationQueue annotation_queues_get_queue(queue_id, options)
 
 
 Get an annotation queue by ID
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_get_queue().configuration(&configuration).queue_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -203,18 +227,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_get_queue_item
 
-> models::AnnotationQueueItem annotation_queues_get_queue_item(queue_id, item_id)
+> models::AnnotationQueueItem annotation_queues_get_queue_item(queue_id, item_id, options)
 
 
 Get a specific item from an annotation queue
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **item_id** | **String** | The unique identifier of the annotation queue item | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_get_queue_item().configuration(&configuration).queue_id(..).item_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -234,13 +262,12 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_list_queue_items
 
-> models::PaginatedAnnotationQueueItems annotation_queues_list_queue_items(queue_id, status, page, limit)
+> models::PaginatedAnnotationQueueItems annotation_queues_list_queue_items(queue_id, status, page, limit, options)
 
 
 Get items for a specific annotation queue
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -248,6 +275,11 @@ Name | Type | Description  | Required | Notes
 **status** | Option<[**AnnotationQueueStatus**](AnnotationQueueStatus.md)> | Filter by status |  |
 **page** | Option<**i64**> | page number, starts at 1 |  |
 **limit** | Option<**i64**> | limit of items per page |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_list_queue_items().configuration(&configuration).queue_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -267,18 +299,22 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_list_queues
 
-> models::PaginatedAnnotationQueues annotation_queues_list_queues(page, limit)
+> models::PaginatedAnnotationQueues annotation_queues_list_queues(page, limit, options)
 
 
 Get all annotation queues
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**i64**> | page number, starts at 1 |  |
 **limit** | Option<**i64**> | limit of items per page |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_list_queues().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -298,19 +334,23 @@ Name | Type | Description  | Required | Notes
 
 ## annotation_queues_update_queue_item
 
-> models::AnnotationQueueItem annotation_queues_update_queue_item(queue_id, item_id, update_annotation_queue_item_request)
+> models::AnnotationQueueItem annotation_queues_update_queue_item(queue_id, item_id, update_annotation_queue_item_request, options)
 
 
 Update an annotation queue item
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **queue_id** | **String** | The unique identifier of the annotation queue | [required] |
 **item_id** | **String** | The unique identifier of the annotation queue item | [required] |
 **update_annotation_queue_item_request** | [**UpdateAnnotationQueueItemRequest**](UpdateAnnotationQueueItemRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+annotation_queues_update_queue_item().configuration(&configuration).queue_id(..).item_id(..).update_annotation_queue_item_request(..).options(&options).call().await
+```
 
 ### Return type
 

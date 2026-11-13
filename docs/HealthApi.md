@@ -10,14 +10,20 @@ Method | HTTP request | Description
 
 ## health_health
 
-> models::HealthResponse health_health()
+> models::HealthResponse health_health(options)
 
 
 Check health of API and database
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+health_health().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

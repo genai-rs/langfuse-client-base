@@ -128,9 +128,9 @@ pub async fn projects_create(
     };
     req_builder = req_builder.json(p_body_projects_create_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -221,9 +221,9 @@ pub async fn projects_create_api_key(
     };
     req_builder = req_builder.json(p_body_projects_create_api_key_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -311,9 +311,9 @@ pub async fn projects_delete(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -404,9 +404,9 @@ pub async fn projects_delete_api_key(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -486,9 +486,9 @@ pub async fn projects_get(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -576,9 +576,9 @@ pub async fn projects_get_api_keys(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -669,9 +669,9 @@ pub async fn projects_update(
     };
     req_builder = req_builder.json(p_body_projects_update_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

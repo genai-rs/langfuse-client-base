@@ -11,17 +11,21 @@ Method | HTTP request | Description
 
 ## legacy_observations_v1_get
 
-> models::ObservationsViewSingle legacy_observations_v1_get(observation_id)
+> models::ObservationsViewSingle legacy_observations_v1_get(observation_id, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a observation
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **observation_id** | **String** | The unique langfuse identifier of an observation, can be an event, span or generation | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+legacy_observations_v1_get().configuration(&configuration).observation_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -41,13 +45,12 @@ Name | Type | Description  | Required | Notes
 
 ## legacy_observations_v1_get_many
 
-> models::LegacyObservationsViews legacy_observations_v1_get_many(page, limit, name, user_id, r#type, trace_id, level, parent_observation_id, environment, from_start_time, to_start_time, version, filter)
+> models::LegacyObservationsViews legacy_observations_v1_get_many(page, limit, name, user_id, r#type, trace_id, level, parent_observation_id, environment, from_start_time, to_start_time, version, filter, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/observations?fromStartTime=<from>&toStartTime=<to>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get a list of observations.  Consider using the [v2 observations endpoint](/api-reference#tag/observationsv2/GET/api/public/v2/observations) for cursor-based pagination and field selection.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -64,6 +67,11 @@ Name | Type | Description  | Required | Notes
 **to_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only observations with a start_time before this datetime (ISO 8601). |  |
 **version** | Option<**String**> | Optional filter to only include observations with a certain version. |  |
 **filter** | Option<**String**> | JSON string containing an array of filter conditions. When provided, this takes precedence over query parameter filters (userId, name, type, level, environment, fromStartTime, ...).  ## Filter Structure Each filter condition has the following structure: ```json [   {     \"type\": string,           // Required. One of: \"datetime\", \"string\", \"number\", \"stringOptions\", \"categoryOptions\", \"arrayOptions\", \"stringObject\", \"numberObject\", \"boolean\", \"null\"     \"column\": string,         // Required. Column to filter on (see available columns below)     \"operator\": string,       // Required. Operator based on type:                               // - datetime: \">\", \"<\", \">=\", \"<=\"                               // - string: \"=\", \"contains\", \"does not contain\", \"starts with\", \"ends with\"                               // - stringOptions: \"any of\", \"none of\"                               // - categoryOptions: \"any of\", \"none of\"                               // - arrayOptions: \"any of\", \"none of\", \"all of\"                               // - number: \"=\", \">\", \"<\", \">=\", \"<=\"                               // - stringObject: \"=\", \"contains\", \"does not contain\", \"starts with\", \"ends with\", \"is set\", \"is not set\"                               // - numberObject: \"=\", \">\", \"<\", \">=\", \"<=\"                               // - boolean: \"=\", \"<>\"                               // - null: \"is null\", \"is not null\"     \"value\": any,             // Required (except for null type). Value to compare against. Type depends on filter type     \"key\": string             // Required only for stringObject, numberObject, and categoryOptions types when filtering on nested fields like metadata   } ] ```  ## Available Columns  ### Core Observation Fields - `id` (string) - Observation ID - `type` (string) - Observation type (SPAN, GENERATION, EVENT) - `name` (string) - Observation name - `traceId` (string) - Associated trace ID - `startTime` (datetime) - Observation start time - `endTime` (datetime) - Observation end time - `environment` (string) - Environment tag - `level` (string) - Log level (DEBUG, DEFAULT, WARNING, ERROR) - `statusMessage` (string) - Status message - `version` (string) - Version tag  ### Performance Metrics - `latency` (number) - Latency in seconds (calculated: end_time - start_time) - `timeToFirstToken` (number) - Time to first token in seconds - `tokensPerSecond` (number) - Output tokens per second  ### Token Usage - `inputTokens` (number) - Number of input tokens - `outputTokens` (number) - Number of output tokens - `totalTokens` (number) - Total tokens (alias: `tokens`)  ### Cost Metrics - `inputCost` (number) - Input cost in USD - `outputCost` (number) - Output cost in USD - `totalCost` (number) - Total cost in USD  ### Model Information - `model` (string) - Provided model name - `promptName` (string) - Associated prompt name - `promptVersion` (number) - Associated prompt version  ### Structured Data - `metadata` (stringObject/numberObject/categoryOptions) - Metadata key-value pairs. Use `key` parameter to filter on specific metadata keys.  ### Associated Trace Fields (requires join with traces table) - `userId` (string) - User ID from associated trace - `traceName` (string) - Name from associated trace - `traceEnvironment` (string) - Environment from associated trace - `traceTags` (arrayOptions) - Tags from associated trace  ## Filter Examples ```json [   {     \"type\": \"string\",     \"column\": \"type\",     \"operator\": \"=\",     \"value\": \"GENERATION\"   },   {     \"type\": \"number\",     \"column\": \"latency\",     \"operator\": \">=\",     \"value\": 2.5   },   {     \"type\": \"stringObject\",     \"column\": \"metadata\",     \"key\": \"environment\",     \"operator\": \"=\",     \"value\": \"production\"   } ] ``` |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+legacy_observations_v1_get_many().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

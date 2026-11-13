@@ -80,9 +80,9 @@ pub async fn comments_create(
     };
     req_builder = req_builder.json(p_body_create_comment_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -189,9 +189,9 @@ pub async fn comments_get(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -279,9 +279,9 @@ pub async fn comments_get_by_id(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

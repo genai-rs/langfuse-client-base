@@ -14,17 +14,21 @@ Method | HTTP request | Description
 
 ## unstable_dashboard_widgets_create
 
-> models::UnstableDashboardWidget unstable_dashboard_widgets_create(unstable_create_dashboard_widget_request)
+> models::UnstableDashboardWidget unstable_dashboard_widgets_create(unstable_create_dashboard_widget_request, options)
 
 
 Create a dashboard widget (a standalone chart definition you place on any dashboard).  This endpoint creates the widget only; place it on a dashboard via `POST /dashboards/{dashboardId}/placements`.  Supported views are `observations`, `scores-numeric`, `scores-boolean`, and `scores-categorical`. The legacy `traces` view is not supported by this unstable API. Widgets are created as v2 internally.  `chartConfig` is optional and defaults to the plain config for `chartType`; when `chartConfig.type` is given it must match `chartType`.  Unstable API note: - This surface may evolve while dashboard/widget APIs are being finalized.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **unstable_create_dashboard_widget_request** | [**UnstableCreateDashboardWidgetRequest**](UnstableCreateDashboardWidgetRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+unstable_dashboard_widgets_create().configuration(&configuration).unstable_create_dashboard_widget_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -44,17 +48,21 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_dashboard_widgets_delete
 
-> models::UnstableDeleteDashboardWidgetResponse unstable_dashboard_widgets_delete(widget_id)
+> models::UnstableDeleteDashboardWidgetResponse unstable_dashboard_widgets_delete(widget_id, options)
 
 
 Delete a dashboard widget.  The API returns `409` while the widget is still placed on a dashboard. Remove those placements first.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **widget_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+unstable_dashboard_widgets_delete().configuration(&configuration).widget_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -74,17 +82,21 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_dashboard_widgets_get
 
-> models::UnstableDashboardWidget unstable_dashboard_widgets_get(widget_id)
+> models::UnstableDashboardWidget unstable_dashboard_widgets_get(widget_id, options)
 
 
 Get a dashboard widget by id.  The response may use `view: traces` for legacy widgets.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **widget_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+unstable_dashboard_widgets_get().configuration(&configuration).widget_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -104,18 +116,22 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_dashboard_widgets_list
 
-> models::UnstableDashboardWidgetList unstable_dashboard_widgets_list(page, limit)
+> models::UnstableDashboardWidgetList unstable_dashboard_widgets_list(page, limit, options)
 
 
 List dashboard widgets in the project, ordered by most recently updated first.  Responses may include legacy `traces` widgets created before this API existed. New widgets cannot be created with `view: traces`.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
 **limit** | Option<**i64**> | Maximum number of items per page. Defaults to `50`. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+unstable_dashboard_widgets_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -135,18 +151,22 @@ Name | Type | Description  | Required | Notes
 
 ## unstable_dashboard_widgets_update
 
-> models::UnstableDashboardWidget unstable_dashboard_widgets_update(widget_id, unstable_update_dashboard_widget_request)
+> models::UnstableDashboardWidget unstable_dashboard_widgets_update(widget_id, unstable_update_dashboard_widget_request, options)
 
 
 Update a dashboard widget.  All fields are optional; at least one field is required. Changing `chartType` without sending `chartConfig` resets the config to the new chart type's defaults. When `chartConfig.type` is given it must match the widget's (possibly updated) `chartType`.  `view` cannot be changed to the legacy `traces` value. Existing `traces` widgets may be updated on other fields.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **widget_id** | **String** |  | [required] |
 **unstable_update_dashboard_widget_request** | [**UnstableUpdateDashboardWidgetRequest**](UnstableUpdateDashboardWidgetRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+unstable_dashboard_widgets_update().configuration(&configuration).widget_id(..).unstable_update_dashboard_widget_request(..).options(&options).call().await
+```
 
 ### Return type
 

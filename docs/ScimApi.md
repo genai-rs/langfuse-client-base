@@ -16,17 +16,21 @@ Method | HTTP request | Description
 
 ## scim_create_user
 
-> models::ScimUser scim_create_user(scim_create_user_request)
+> models::ScimUser scim_create_user(scim_create_user_request, options)
 
 
 Create a new user in the organization (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **scim_create_user_request** | [**ScimCreateUserRequest**](ScimCreateUserRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_create_user().configuration(&configuration).scim_create_user_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -46,17 +50,21 @@ Name | Type | Description  | Required | Notes
 
 ## scim_delete_user
 
-> serde_json::Value scim_delete_user(user_id)
+> serde_json::Value scim_delete_user(user_id, options)
 
 
 Remove a user from the organization (requires organization-scoped API key). Note that this only removes the user from the organization but does not delete the user entity itself.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **user_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_delete_user().configuration(&configuration).user_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -76,14 +84,20 @@ Name | Type | Description  | Required | Notes
 
 ## scim_get_resource_types
 
-> models::ResourceTypesResponse scim_get_resource_types()
+> models::ResourceTypesResponse scim_get_resource_types(options)
 
 
 Get SCIM Resource Types (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_get_resource_types().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -103,14 +117,20 @@ This endpoint does not need any parameter.
 
 ## scim_get_schemas
 
-> models::SchemasResponse scim_get_schemas()
+> models::SchemasResponse scim_get_schemas(options)
 
 
 Get SCIM Schemas (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_get_schemas().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -130,14 +150,20 @@ This endpoint does not need any parameter.
 
 ## scim_get_service_provider_config
 
-> models::ServiceProviderConfig scim_get_service_provider_config()
+> models::ServiceProviderConfig scim_get_service_provider_config(options)
 
 
 Get SCIM Service Provider Configuration (requires organization-scoped API key)
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_get_service_provider_config().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -157,17 +183,21 @@ This endpoint does not need any parameter.
 
 ## scim_get_user
 
-> models::ScimUser scim_get_user(user_id)
+> models::ScimUser scim_get_user(user_id, options)
 
 
 Get a specific user by ID (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **user_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_get_user().configuration(&configuration).user_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -187,19 +217,23 @@ Name | Type | Description  | Required | Notes
 
 ## scim_list_users
 
-> models::ScimUsersListResponse scim_list_users(filter, start_index, count)
+> models::ScimUsersListResponse scim_list_users(filter, start_index, count, options)
 
 
 List users in the organization (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter** | Option<**String**> | Filter expression (e.g. userName eq \"value\") |  |
 **start_index** | Option<**i64**> | 1-based index of the first result to return (default 1) |  |
 **count** | Option<**i64**> | Maximum number of results to return (default 100) |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+scim_list_users().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

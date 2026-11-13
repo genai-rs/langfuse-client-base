@@ -83,9 +83,9 @@ pub async fn media_get(
         );
     };
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -170,9 +170,9 @@ pub async fn media_get_upload_url(
     };
     req_builder = req_builder.json(p_body_get_media_upload_url_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -263,9 +263,9 @@ pub async fn media_patch(
     };
     req_builder = req_builder.json(p_body_patch_media_body);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

@@ -16,17 +16,21 @@ Method | HTTP request | Description
 
 ## projects_create
 
-> models::Project projects_create(projects_create_request)
+> models::Project projects_create(projects_create_request, options)
 
 
 Create a new project (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **projects_create_request** | [**ProjectsCreateRequest**](ProjectsCreateRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_create().configuration(&configuration).projects_create_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -46,18 +50,22 @@ Name | Type | Description  | Required | Notes
 
 ## projects_create_api_key
 
-> models::ApiKeyResponse projects_create_api_key(project_id, projects_create_api_key_request)
+> models::ApiKeyResponse projects_create_api_key(project_id, projects_create_api_key_request, options)
 
 
 Create a new API key for a project (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
 **projects_create_api_key_request** | [**ProjectsCreateApiKeyRequest**](ProjectsCreateApiKeyRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_create_api_key().configuration(&configuration).project_id(..).projects_create_api_key_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -77,17 +85,21 @@ Name | Type | Description  | Required | Notes
 
 ## projects_delete
 
-> models::ProjectDeletionResponse projects_delete(project_id)
+> models::ProjectDeletionResponse projects_delete(project_id, options)
 
 
 Delete a project by ID (requires organization-scoped API key). Project deletion is processed asynchronously. Deleting the AI Gateway ingestion project turns off the AI Gateway for the organization until another ingestion project is selected.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_delete().configuration(&configuration).project_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -107,18 +119,22 @@ Name | Type | Description  | Required | Notes
 
 ## projects_delete_api_key
 
-> models::ApiKeyDeletionResponse projects_delete_api_key(project_id, api_key_id)
+> models::ApiKeyDeletionResponse projects_delete_api_key(project_id, api_key_id, options)
 
 
 Delete an API key for a project (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
 **api_key_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_delete_api_key().configuration(&configuration).project_id(..).api_key_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -138,14 +154,20 @@ Name | Type | Description  | Required | Notes
 
 ## projects_get
 
-> models::Projects projects_get()
+> models::Projects projects_get(options)
 
 
 Get Project associated with API key (requires project-scoped API key). You can use GET /api/public/organizations/projects to get all projects with an organization-scoped key.
 
 ### Parameters
 
-This endpoint does not need any parameter.
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_get().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 
@@ -165,17 +187,21 @@ This endpoint does not need any parameter.
 
 ## projects_get_api_keys
 
-> models::ApiKeyList projects_get_api_keys(project_id)
+> models::ApiKeyList projects_get_api_keys(project_id, options)
 
 
 Get all API keys for a project (requires organization-scoped API key)
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_get_api_keys().configuration(&configuration).project_id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -195,18 +221,22 @@ Name | Type | Description  | Required | Notes
 
 ## projects_update
 
-> models::Project projects_update(project_id, projects_update_request)
+> models::Project projects_update(project_id, projects_update_request, options)
 
 
 Update a project by ID (requires organization-scoped API key).
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **project_id** | **String** |  | [required] |
 **projects_update_request** | [**ProjectsUpdateRequest**](ProjectsUpdateRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+projects_update().configuration(&configuration).project_id(..).projects_update_request(..).options(&options).call().await
+```
 
 ### Return type
 

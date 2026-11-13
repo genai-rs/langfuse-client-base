@@ -13,17 +13,21 @@ Method | HTTP request | Description
 
 ## dataset_items_create
 
-> models::DatasetItem dataset_items_create(create_dataset_item_request)
+> models::DatasetItem dataset_items_create(create_dataset_item_request, options)
 
 
 Create a dataset item
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_dataset_item_request** | [**CreateDatasetItemRequest**](CreateDatasetItemRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_items_create().configuration(&configuration).create_dataset_item_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -43,17 +47,21 @@ Name | Type | Description  | Required | Notes
 
 ## dataset_items_delete
 
-> models::DeleteDatasetItemResponse dataset_items_delete(id)
+> models::DeleteDatasetItemResponse dataset_items_delete(id, options)
 
 
 Delete a dataset item and all its run items. This action is irreversible.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_items_delete().configuration(&configuration).id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -73,17 +81,21 @@ Name | Type | Description  | Required | Notes
 
 ## dataset_items_get
 
-> models::DatasetItem dataset_items_get(id)
+> models::DatasetItem dataset_items_get(id, options)
 
 
 Get a dataset item
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_items_get().configuration(&configuration).id(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -103,13 +115,12 @@ Name | Type | Description  | Required | Notes
 
 ## dataset_items_list
 
-> models::PaginatedDatasetItems dataset_items_list(dataset_name, source_trace_id, source_observation_id, version, page, limit)
+> models::PaginatedDatasetItems dataset_items_list(dataset_name, source_trace_id, source_observation_id, version, page, limit, options)
 
 
 Get dataset items. Optionally specify a version to get the items as they existed at that point in time. Note: If version parameter is provided, datasetName must also be provided.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -119,6 +130,11 @@ Name | Type | Description  | Required | Notes
 **version** | Option<**chrono::DateTime<chrono::FixedOffset>**> | ISO 8601 timestamp (RFC 3339, Section 5.6) in UTC (e.g., \"2026-01-21T14:35:42Z\"). If provided, returns state of dataset at this timestamp. If not provided, returns the latest version. Requires datasetName to be specified. |  |
 **page** | Option<**i64**> | page number, starts at 1 |  |
 **limit** | Option<**i64**> | limit of items per page |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+dataset_items_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

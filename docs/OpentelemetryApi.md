@@ -10,17 +10,21 @@ Method | HTTP request | Description
 
 ## opentelemetry_export_traces
 
-> serde_json::Value opentelemetry_export_traces(opentelemetry_export_traces_request)
+> serde_json::Value opentelemetry_export_traces(opentelemetry_export_traces_request, options)
 
 
 **OpenTelemetry Traces Ingestion Endpoint**  This endpoint implements the OTLP/HTTP specification for trace ingestion, providing native OpenTelemetry integration for Langfuse Observability.  Together with Observations API v2 and Metrics API v2, this is the only real-time write path. Other public API endpoints can delay data by about 10 minutes. Direct exporters must send `x-langfuse-ingestion-version: 4`; current Python and JS SDKs already do.  **Supported Formats:** - Binary Protobuf: `Content-Type: application/x-protobuf` - JSON Protobuf: `Content-Type: application/json` - Supports gzip compression via `Content-Encoding: gzip` header  **Specification Compliance:** - Conforms to [OTLP/HTTP Trace Export](https://opentelemetry.io/docs/specs/otlp/#otlphttp) - Implements `ExportTraceServiceRequest` message format  **Documentation:** - Integration guide: https://langfuse.com/integrations/native/opentelemetry - Data model: https://langfuse.com/docs/observability/data-model
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **opentelemetry_export_traces_request** | [**OpentelemetryExportTracesRequest**](OpentelemetryExportTracesRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+opentelemetry_export_traces().configuration(&configuration).opentelemetry_export_traces_request(..).options(&options).call().await
+```
 
 ### Return type
 

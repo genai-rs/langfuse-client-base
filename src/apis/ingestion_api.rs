@@ -57,9 +57,9 @@ pub async fn ingestion_batch(
     };
     req_builder = req_builder.json(p_body_ingestion_batch_request);
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

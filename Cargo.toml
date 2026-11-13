@@ -9,7 +9,7 @@ repository = "https://github.com/genai-rs/langfuse-client-base"
 homepage = "https://github.com/genai-rs/langfuse-client-base"
 documentation = "https://docs.rs/langfuse-client-base"
 readme = "README.md"
-exclude = ["docs/", "openapi.yml", "scripts/", "tests/*.py", ".github/", "AUTOMATION_GUIDE.md"]
+exclude = ["docs/", "guides/", "openapi.yml", "scripts/", "tests/*.py", ".github/", "AUTOMATION_GUIDE.md"]
 keywords = ["langfuse", "openapi", "client", "api", "llm"]
 categories = ["api-bindings", "web-programming::http-client"]
 rust-version = "1.88"
@@ -27,7 +27,7 @@ serde_with = { version = "^3.24.0", default-features = false, features = ["base6
 serde_json = "^1.0.154"
 serde_repr = "^0.1.21"
 url = "^2.5.8"
-timvw-rust-runtime = { version = "^0.3.0", default-features = false }
+timvw-rust-runtime = { version = "^0.4.0", default-features = false }
 
 chrono = { version = "^0.4.45",  features = ["serde"] }
 

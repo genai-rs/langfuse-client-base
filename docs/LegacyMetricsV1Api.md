@@ -10,17 +10,21 @@ Method | HTTP request | Description
 
 ## legacy_metrics_v1_metrics
 
-> models::LegacyMetricsResponse legacy_metrics_v1_metrics(query)
+> models::LegacyMetricsResponse legacy_metrics_v1_metrics(query, options)
 
 
 **Deprecated:** On Langfuse Cloud, Langfuse v3 is deprecated and this endpoint will be removed on November 16, 2026. Use `GET /api/public/v2/metrics?query=<urlencoded json query>` instead. Self-hosted deployments are unaffected by this date; the endpoint becomes unavailable when they upgrade to Langfuse v4. See the [Langfuse v3 to v4 upgrade guide](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v3-to-v4).  Get metrics from the Langfuse project using a query object.  Consider using the [v2 metrics endpoint](/api-reference#tag/metricsv2/GET/api/public/v2/metrics) for better performance.  For more details, see the [Metrics API documentation](https://langfuse.com/docs/metrics/features/metrics-api).
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **query** | **String** | JSON string containing the query parameters with the following structure: ```json {   \"view\": string,           // Required. One of \"traces\", \"observations\", \"scores-numeric\", \"scores-boolean\", \"scores-categorical\"   \"dimensions\": [           // Optional. Default: []     {       \"field\": string       // Field to group by, e.g. \"name\", \"userId\", \"sessionId\"     }   ],   \"metrics\": [              // Required. At least one metric must be provided     {       \"measure\": string,    // What to measure, e.g. \"count\", \"latency\", \"value\"       \"aggregation\": string // How to aggregate, e.g. \"count\", \"sum\", \"avg\", \"p95\", \"histogram\"     }   ],   \"filters\": [              // Optional. Default: []     {       \"column\": string,     // Column to filter on       \"operator\": string,   // Operator, e.g. \"=\", \">\", \"<\", \"contains\"       \"value\": any,         // Value to compare against       \"type\": string,       // Data type, e.g. \"string\", \"number\", \"stringObject\"       \"key\": string         // Required only when filtering on metadata     }   ],   \"timeDimension\": {        // Optional. Default: null. If provided, results will be grouped by time     \"granularity\": string   // One of \"minute\", \"hour\", \"day\", \"week\", \"month\", \"auto\"   },   \"fromTimestamp\": string,  // Required. ISO datetime string for start of time range   \"toTimestamp\": string,    // Required. ISO datetime string for end of time range   \"orderBy\": [              // Optional. Default: null     {       \"field\": string,      // Field to order by       \"direction\": string   // \"asc\" or \"desc\"     }   ],   \"config\": {               // Optional. Query-specific configuration     \"bins\": number,         // Optional. Number of bins for histogram (1-100), default: 10     \"row_limit\": number     // Optional. Row limit for results (1-1000)   } } ``` | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+legacy_metrics_v1_metrics().configuration(&configuration).query(..).options(&options).call().await
+```
 
 ### Return type
 

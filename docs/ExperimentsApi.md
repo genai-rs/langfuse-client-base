@@ -11,13 +11,12 @@ Method | HTTP request | Description
 
 ## experiments_list
 
-> models::ExperimentsResponse experiments_list(from_start_time, fields, limit, score_limit, cursor, to_start_time, id, name, dataset_id, filter)
+> models::ExperimentsResponse experiments_list(from_start_time, fields, limit, score_limit, cursor, to_start_time, id, name, dataset_id, filter, options)
 
 
 List experiments with cursor-based pagination. Results are ordered by latest experiment activity descending.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -31,6 +30,11 @@ Name | Type | Description  | Required | Notes
 **name** | Option<**String**> | Comma-separated list of experiment names. |  |
 **dataset_id** | Option<**String**> | Comma-separated list of dataset IDs. |  |
 **filter** | Option<**String**> | JSON string containing an array of structured filter conditions. Supported columns are `id`, `name`, and `datasetId`. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+experiments_list().configuration(&configuration).from_start_time(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -50,13 +54,12 @@ Name | Type | Description  | Required | Notes
 
 ## experiments_list_items
 
-> models::ExperimentItemsResponse experiments_list_items(from_start_time, fields, limit, score_limit, cursor, to_start_time, experiment_id, experiment_name, experiment_item_id, dataset_id, filter)
+> models::ExperimentItemsResponse experiments_list_items(from_start_time, fields, limit, score_limit, cursor, to_start_time, experiment_id, experiment_name, experiment_item_id, dataset_id, filter, options)
 
 
 List experiment items with cursor-based pagination. Use this endpoint to export experiment item inputs, outputs, expected outputs, metadata, and optionally item/trace scores. Results are ordered by time descending.
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -71,6 +74,11 @@ Name | Type | Description  | Required | Notes
 **experiment_item_id** | Option<**String**> | Comma-separated list of experiment item IDs. |  |
 **dataset_id** | Option<**String**> | Comma-separated list of dataset IDs. |  |
 **filter** | Option<**String**> | JSON string containing an array of structured filter conditions. Supported columns are `experimentId`, `experimentName`, `experimentItemId`, and `datasetId`. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+experiments_list_items().configuration(&configuration).from_start_time(..).options(&options).call().await
+```
 
 ### Return type
 

@@ -13,17 +13,21 @@ Method | HTTP request | Description
 
 ## prompts_create
 
-> models::Prompt prompts_create(create_prompt_request)
+> models::Prompt prompts_create(create_prompt_request, options)
 
 
 Create a new version for the prompt with the given `name`
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_prompt_request** | [**CreatePromptRequest**](CreatePromptRequest.md) |  | [required] |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+prompts_create().configuration(&configuration).create_prompt_request(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -43,19 +47,23 @@ Name | Type | Description  | Required | Notes
 
 ## prompts_delete
 
-> prompts_delete(prompt_name, label, version)
+> prompts_delete(prompt_name, label, version, options)
 
 
 Delete prompt versions. If neither version nor label is specified, all versions of the prompt are deleted.
 
 ### Parameters
 
-
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **prompt_name** | **String** | The name of the prompt | [required] |
 **label** | Option<**String**> | Optional label to filter deletion. If specified, deletes all prompt versions that have this label. |  |
 **version** | Option<**i64**> | Optional version to filter deletion. If specified, deletes only this specific version of the prompt. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+prompts_delete().configuration(&configuration).prompt_name(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -75,13 +83,12 @@ Name | Type | Description  | Required | Notes
 
 ## prompts_get
 
-> models::Prompt prompts_get(prompt_name, version, label, resolve)
+> models::Prompt prompts_get(prompt_name, version, label, resolve, options)
 
 
 Get a prompt
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -89,6 +96,11 @@ Name | Type | Description  | Required | Notes
 **version** | Option<**i64**> | Version of the prompt to be retrieved. |  |
 **label** | Option<**String**> | Label of the prompt to be retrieved. Defaults to \"production\" if no label or version is set. |  |
 **resolve** | Option<**bool**> | Resolve prompt dependencies before returning the prompt. Defaults to `true`. Set to `false` to return the raw stored prompt with dependency tags intact. This bypasses prompt caching and is intended for debugging or one-off jobs, not production runtime fetches. |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+prompts_get().configuration(&configuration).prompt_name(..).options(&options).call().await
+```
 
 ### Return type
 
@@ -108,13 +120,12 @@ Name | Type | Description  | Required | Notes
 
 ## prompts_list
 
-> models::PromptMetaListResponse prompts_list(name, label, tag, page, limit, from_updated_at, to_updated_at, filter)
+> models::PromptMetaListResponse prompts_list(name, label, tag, page, limit, from_updated_at, to_updated_at, filter, options)
 
 
 Get a list of prompt names with versions and labels
 
 ### Parameters
-
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
@@ -126,6 +137,11 @@ Name | Type | Description  | Required | Notes
 **from_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include prompt versions created/updated on or after a certain datetime (ISO 8601) |  |
 **to_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include prompt versions created/updated before a certain datetime (ISO 8601) |  |
 **filter** | Option<**String**> | JSON string containing an array of filter conditions, combined with AND. When provided, this takes precedence over name, version, label, tag, fromUpdatedAt, and toUpdatedAt. An empty array applies no filters. Project scoping and pagination always apply.  Each condition requires `type`, `column`, `operator`, and `value`. Supported types and columns: - `string`: `id`, `name`, `type`. Operators: `=`, `contains`, `does not contain`, `starts with`, `ends with`, `is not empty`. - `stringOptions`: `id`, `name`, `type`. Operators: `any of`, `none of`. Value: non-empty string array. - `number`: `version`. Operators: `=`, `>`, `<`, `>=`, `<=`. Value: number. - `datetime`: `createdAt`, `updatedAt`. Operators: `>`, `<`, `>=`, `<=`. Value: ISO 8601 timestamp. - `arrayOptions`: `labels`, `tags`. Operators: `any of`, `all of`, `none of`. Value: non-empty string array. - `stringObject`: `config`. Requires an additional `key` field. Operators: `=`, `contains`, `does not contain`, `starts with`, `ends with`, `is set`, `is not set`. Value: string (use an empty string for key-presence operators).  String equality is case-sensitive. String search operators use case-insensitive SQL pattern matching: `%` matches any sequence and `_` matches a single character. A backslash escapes these characters; JSON-escape the backslash in the filter value. Asterisks are literal. For config, an empty search value is treated as `is set`.  Filters apply to prompt versions before aggregation: returned versions, labels, and lastConfig reflect only matching versions.  Example: [{\"type\":\"string\",\"column\":\"name\",\"operator\":\"starts with\",\"value\":\"tools/\"},{\"type\":\"string\",\"column\":\"name\",\"operator\":\"ends with\",\"value\":\"/description\"}] |  |
+**options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
+
+```rust,ignore
+prompts_list().configuration(&configuration).options(&options).call().await
+```
 
 ### Return type
 

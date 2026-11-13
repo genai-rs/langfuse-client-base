@@ -19,7 +19,6 @@ pub enum Error<T> {
     /// Building the request, sending it through the client's service, or reading the response body failed.
     Http(timvw_rust_runtime::Error),
     Serde(serde_json::Error),
-    Io(std::io::Error),
     ResponseError(Box<ResponseContent<T>>),
 }
 
@@ -28,7 +27,6 @@ impl<T> fmt::Display for Error<T> {
         let (module, e) = match self {
             Error::Http(e) => ("http", e.to_string()),
             Error::Serde(e) => ("serde", e.to_string()),
-            Error::Io(e) => ("IO", e.to_string()),
             Error::ResponseError(e) => ("response", format!("status code {}", e.status)),
         };
         write!(f, "error in {}: {}", module, e)
@@ -40,7 +38,6 @@ impl<T: fmt::Debug> error::Error for Error<T> {
         Some(match self {
             Error::Http(e) => e,
             Error::Serde(e) => e,
-            Error::Io(e) => e,
             Error::ResponseError(_) => return None,
         })
     }
@@ -55,12 +52,6 @@ impl<T> From<timvw_rust_runtime::Error> for Error<T> {
 impl<T> From<serde_json::Error> for Error<T> {
     fn from(e: serde_json::Error) -> Self {
         Error::Serde(e)
-    }
-}
-
-impl<T> From<std::io::Error> for Error<T> {
-    fn from(e: std::io::Error) -> Self {
-        Error::Io(e)
     }
 }
 

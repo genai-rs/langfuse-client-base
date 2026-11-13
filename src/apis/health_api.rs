@@ -43,9 +43,9 @@ pub async fn health_health(
             req_builder.header(timvw_rust_runtime::header::USER_AGENT, user_agent.clone());
     }
 
-    // last, so its headers replace the generated ones
+    // last, so its headers replace the generated ones; its base URL replaces configuration.base_path
     if let Some(options) = options {
-        req_builder = req_builder.options(options);
+        req_builder = req_builder.base(&configuration.base_path).options(options);
     }
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
