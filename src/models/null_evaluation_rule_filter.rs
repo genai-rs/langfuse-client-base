@@ -19,7 +19,7 @@ pub struct NullEvaluationRuleFilter {
     pub column: String,
     #[serde(rename = "operator")]
     pub operator: models::EvaluationRuleNullFilterOperator,
-    /// Required empty-string placeholder used by the runtime filter contract.
+    /// Empty-string placeholder. Can be omitted on servers newer than v4.78.0.
     #[serde(rename = "value")]
     pub value: String,
 }

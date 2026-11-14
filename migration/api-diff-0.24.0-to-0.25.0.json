@@ -1,0 +1,102 @@
+{
+  "source_heads": {
+    "reference": "git:v0.24.0",
+    "candidate": "working-tree"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 502,
+  "current_source_rs_files": 502,
+  "source_files_added": [],
+  "source_files_removed": [],
+  "source_files_modified": [
+    "apis/observations_api.rs",
+    "models/evaluation_rule_filter_null_evaluation_rule_filter.rs",
+    "models/null_evaluation_rule_filter.rs",
+    "models/prompt_version_update_request.rs",
+    "models/unstable_dashboard_widget_filter.rs"
+  ],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "name": "new",
+      "signature": "pub fn new() -> PromptVersionUpdateRequest"
+    }
+  ],
+  "public_functions_removed_or_signature_changed": [
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "name": "new",
+      "signature": "pub fn new(new_labels: Vec<String>) -> PromptVersionUpdateRequest"
+    }
+  ],
+  "public_model_field_changes": [
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "model": "PromptVersionUpdateRequest",
+      "field": "new_labels",
+      "registry": "Vec<String>",
+      "current": "Option<Option<Vec<String>>>"
+    },
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "model": "PromptVersionUpdateRequest",
+      "field": "remove_labels",
+      "registry": null,
+      "current": "Option<Option<Vec<String>>>"
+    }
+  ],
+  "public_enum_variant_changes": [],
+  "public_derive_changes": [
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "type": "PromptVersionUpdateRequest",
+      "registry": [
+        "Clone",
+        "Debug",
+        "Deserialize",
+        "PartialEq",
+        "Serialize",
+        "bon::Builder"
+      ],
+      "current": [
+        "Clone",
+        "Debug",
+        "Default",
+        "Deserialize",
+        "PartialEq",
+        "Serialize",
+        "bon::Builder"
+      ]
+    }
+  ],
+  "serde_field_attribute_changes": [
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "model": "PromptVersionUpdateRequest",
+      "field": "new_labels",
+      "registry": "#[serde(rename = \"newLabels\")]",
+      "current": "#[serde( rename = \"newLabels\", default, with = \"::serde_with::rust::double_option\", skip_serializing_if = \"Option::is_none\" )]"
+    },
+    {
+      "file": "models/prompt_version_update_request.rs",
+      "model": "PromptVersionUpdateRequest",
+      "field": "remove_labels",
+      "registry": null,
+      "current": "#[serde( rename = \"removeLabels\", default, with = \"::serde_with::rust::double_option\", skip_serializing_if = \"Option::is_none\" )]"
+    }
+  ],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 1,
+    "public_functions_removed_or_signature_changed": 1,
+    "public_model_field_changes": 2,
+    "public_enum_types_with_variant_changes": 0,
+    "public_enum_variants_added": 0,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 1,
+    "serde_field_attribute_changes": 2
+  }
+}
