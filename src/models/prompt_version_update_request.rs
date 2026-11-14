@@ -11,16 +11,32 @@
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct PromptVersionUpdateRequest {
     /// New labels for the prompt version. Labels are unique across versions. The \"latest\" label is reserved and managed by Langfuse.
-    #[serde(rename = "newLabels")]
-    pub new_labels: Vec<String>,
+    #[serde(
+        rename = "newLabels",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub new_labels: Option<Option<Vec<String>>>,
+    /// Labels to remove from the prompt version. The \"latest\" label is reserved and managed by Langfuse.
+    #[serde(
+        rename = "removeLabels",
+        default,
+        with = "::serde_with::rust::double_option",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub remove_labels: Option<Option<Vec<String>>>,
 }
 
 impl PromptVersionUpdateRequest {
-    pub fn new(new_labels: Vec<String>) -> PromptVersionUpdateRequest {
-        PromptVersionUpdateRequest { new_labels }
+    pub fn new() -> PromptVersionUpdateRequest {
+        PromptVersionUpdateRequest {
+            new_labels: None,
+            remove_labels: None,
+        }
     }
 }
 
