@@ -2,9 +2,10 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
+| Version  | Supported          |
+| -------- | ------------------ |
+| Latest   | :white_check_mark: |
+| < Latest | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -38,8 +39,8 @@ When using this library:
 
 This project uses:
 - Automated dependency updates via Renovate
-- Security vulnerability scanning in CI
-- `cargo audit` for Rust dependency vulnerabilities
+- Security scanning in CI (the shared genai-rs security workflow): cargo-audit and cargo-deny for dependencies,
+  Gitleaks for committed secrets, and CodeQL
 
 Run security audit locally:
 ```bash

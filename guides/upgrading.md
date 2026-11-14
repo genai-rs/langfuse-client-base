@@ -1,10 +1,13 @@
 # Upgrading
 
 Releases that change the generated public API, or the `timvw-rust-runtime` types it exposes, are breaking (a
-minor-version bump before 1.0). Each one has a migration note in [`migration/`](../migration), next to the census of
+minor-version bump). Each one has a migration note in [`migration/`](../migration), next to the census of
 what changed in the public API (`api-diff-<from>-to-<to>.json`, written by `scripts/check_public_api.sh`). The
 [CHANGELOG](../CHANGELOG.md) lists every release.
 
+- **0.25** (Langfuse spec update): `PromptVersionUpdateRequest.new_labels` is `Option<Option<Vec<String>>>`, the new
+  `remove_labels` removes labels, and `PromptVersionUpdateRequest::new()` takes no arguments. See
+  [`api-diff-0.24.0-to-0.25.0.md`](../migration/api-diff-0.24.0-to-0.25.0.md).
 - **0.24** (timvw-rust 0.29.0, runtime 0.4): `apis::Error::Io` is removed; `RequestOptions::base_url` moves one call to
   another base URL; per-call options win over `ProviderLayer`. See
   [`api-diff-0.23.0-to-0.24.0.md`](../migration/api-diff-0.23.0-to-0.24.0.md).

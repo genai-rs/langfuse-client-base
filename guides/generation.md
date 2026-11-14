@@ -56,7 +56,7 @@ compatibility rules are reapplied on every generation, including when the downlo
 
 ## Checks
 
-- `python3 -m pytest -q tests`: the script tests (spec composition, generation manifest, the generate workflow).
+- `python3 -m unittest discover -s tests -p 'test_*.py'`: the script tests (spec composition, generation manifest, the generate workflow).
 - `cargo test --all-features`, including the README's doctests and mocked-HTTP smoke tests.
 - `scripts/check_public_api.sh`: compares the public API with the latest release tag (see
   [CONTRIBUTING](../CONTRIBUTING.md#public-api-check)); a breaking release ships the census and a migration note in
