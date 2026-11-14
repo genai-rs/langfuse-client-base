@@ -3,6 +3,7 @@ import re
 from pathlib import Path
 import argparse
 from serde_attributes import serde_field_attributes
+from rust_declarations import public_enums, public_type_names, trait_impls
 
 parser = argparse.ArgumentParser(description="Compare public Rust source declarations between two crate source trees.")
 parser.add_argument("registry_src", type=Path, help="Reference src/ directory (a published crate or a git ref's src/)")
@@ -96,28 +97,30 @@ def model_exports(root):
     return set(re.findall(r"pub use self::[^:]+::([A-Za-z0-9_]+);", text))
 
 
-def enum_variants(root):
+def enum_declarations(root):
+    """{(file, enum): {variant: normalized declaration}} for every public enum, generic ones included."""
     out = {}
     for rel, path in files(root).items():
-        lines = path.read_text().splitlines()
-        enum = None
-        depth = 0
-        for line in lines:
-            if enum is None:
-                match = re.search(r"pub enum (\w+)\s*\{", line)
-                if match:
-                    enum = match.group(1)
-                    depth = line.count("{") - line.count("}")
-                    out[(rel, enum)] = set()
-                continue
-            if depth == 1:
-                match = re.match(r"\s*(?:r#)?(\w+)\s*(?:\(|\{|,|$)", line)
-                if match and not line.strip().startswith(("//", "#")):
-                    out[(rel, enum)].add(match.group(1))
-            depth += line.count("{") - line.count("}")
-            if depth == 0:
-                enum = None
+        for enum, variants in public_enums(path.read_text()).items():
+            out[(rel, enum)] = variants
     return out
+
+
+def public_trait_impls(root, public_types):
+    """{(file, self type): {impl header}} for trait impls whose self type is a public type of the crate."""
+    out = {}
+    for rel, path in files(root).items():
+        for header, self_type in trait_impls(path.read_text()):
+            if self_type in public_types:
+                out.setdefault((rel, self_type), set()).add(header)
+    return out
+
+
+def public_types(root):
+    names = set()
+    for path in files(root).values():
+        names |= public_type_names(path.read_text())
+    return names
 
 
 def derive_attributes(root):
@@ -143,7 +146,22 @@ def serde_field_attribute_changes(old_root, new_root, field_diffs):
 
 old_exports, new_exports = model_exports(old), model_exports(new)
 old_fns, new_fns = api_functions(old), api_functions(new)
-old_variants, new_variants = enum_variants(old), enum_variants(new)
+old_enums, new_enums = enum_declarations(old), enum_declarations(new)
+old_variants = {key: set(value) for key, value in old_enums.items()}
+new_variants = {key: set(value) for key, value in new_enums.items()}
+payload_changes = []
+for key in sorted(old_enums.keys() & new_enums.keys()):
+    before, after = old_enums[key], new_enums[key]
+    for variant in sorted(before.keys() & after.keys()):
+        if before[variant] != after[variant]:
+            payload_changes.append({"file": key[0], "enum": key[1], "variant": variant, "registry": before[variant], "current": after[variant]})
+all_public_types = public_types(old) | public_types(new)
+old_impls, new_impls = public_trait_impls(old, all_public_types), public_trait_impls(new, all_public_types)
+impl_changes = []
+for key in sorted(old_impls.keys() | new_impls.keys()):
+    before, after = old_impls.get(key, set()), new_impls.get(key, set())
+    if before != after:
+        impl_changes.append({"file": key[0], "type": key[1], "added": sorted(after - before), "removed": sorted(before - after)})
 old_derives, new_derives = derive_attributes(old), derive_attributes(new)
 variant_changes = []
 for key in sorted(old_variants.keys() | new_variants.keys()):
@@ -152,7 +170,7 @@ for key in sorted(old_variants.keys() | new_variants.keys()):
         variant_changes.append({"file": key[0], "enum": key[1], "added": sorted(after - before), "removed": sorted(before - after)})
 result = {
     "source_heads": {"reference": args.reference_label or str(old), "candidate": args.candidate_label or str(new)},
-    "method": "Source declaration census of public model exports, struct fields, enum variant names, and function signatures, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derive or macro-generated builders, enumerate trait implementations, or resolve every visibility/re-export interaction.",
+    "method": "Source declaration census of public model exports, struct fields, enum variants (names and tuple/struct payloads, generic enums such as apis::Error<T> included), function signatures, and hand-written trait impls (e.g. From) on public types, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derives or macros, resolve blanket impls, or resolve every visibility/re-export interaction.",
     "registry_source_rs_files": len(old_files),
     "current_source_rs_files": len(new_files),
     "source_files_added": sorted(new_files.keys() - old_files.keys()),
@@ -166,6 +184,8 @@ result = {
     "public_enum_variant_changes": variant_changes,
     "public_derive_changes": [{"file": f, "type": t, "registry": old_derives.get((f, t)), "current": new_derives.get((f, t))} for (f, t) in sorted(old_derives.keys() | new_derives.keys()) if old_derives.get((f, t)) != new_derives.get((f, t))],
     "serde_field_attribute_changes": serde_field_attribute_changes(old, new, field_changes),
+    "public_enum_variant_payload_changes": payload_changes,
+    "public_trait_impl_changes": impl_changes,
 }
 result["counts"] = {
     "model_exports_added": len(result["model_exports_added"]),
@@ -178,6 +198,10 @@ result["counts"] = {
     "public_enum_variants_removed": sum(len(x["removed"]) for x in variant_changes),
     "public_derive_changes": len(result["public_derive_changes"]),
     "serde_field_attribute_changes": len(result["serde_field_attribute_changes"]),
+    "public_enum_variant_payload_changes": len(payload_changes),
+    "public_types_with_trait_impl_changes": len(impl_changes),
+    "public_trait_impls_added": sum(len(x["added"]) for x in impl_changes),
+    "public_trait_impls_removed": sum(len(x["removed"]) for x in impl_changes),
 }
 print(json.dumps(result, indent=2))
 if args.fail_on_change and any(result["counts"].values()):
