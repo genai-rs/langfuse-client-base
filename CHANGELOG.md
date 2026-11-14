@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.25.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.24.0...v0.25.0) - 2026-11-14
+
+### Added
+
+- [**breaking**] regenerate from the current Langfuse spec
+
 ## [0.24.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.23.0...v0.24.0) - 2026-11-13
 
 ### Added
