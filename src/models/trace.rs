@@ -18,7 +18,7 @@ pub struct Trace {
     pub id: String,
     /// The timestamp when the trace was created
     #[serde(rename = "timestamp")]
-    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
+    pub timestamp: jiff::Timestamp,
     /// The name of the trace
     #[serde(rename = "name", deserialize_with = "Option::deserialize")]
     pub name: Option<String>,
@@ -72,7 +72,7 @@ pub struct Trace {
 impl Trace {
     pub fn new(
         id: String,
-        timestamp: chrono::DateTime<chrono::FixedOffset>,
+        timestamp: jiff::Timestamp,
         name: Option<String>,
         session_id: Option<String>,
         release: Option<String>,

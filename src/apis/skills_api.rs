@@ -482,8 +482,8 @@ pub async fn skills_list(
     tag: Option<&str>,
     page: Option<i64>,
     limit: Option<i64>,
-    from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_updated_at: Option<jiff::Timestamp>,
+    to_updated_at: Option<jiff::Timestamp>,
     options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -516,10 +516,10 @@ pub async fn skills_list(
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_updated_at {
-        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromUpdatedAt", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_updated_at {
-        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toUpdatedAt", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder =

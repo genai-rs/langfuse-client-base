@@ -25,7 +25,7 @@ pub struct Model {
     pub match_pattern: String,
     /// Apply only to generations which are newer than this ISO date.
     #[serde(rename = "startDate", deserialize_with = "Option::deserialize")]
-    pub start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub start_date: Option<jiff::Timestamp>,
     #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
     pub unit: Option<models::ModelUsageUnit>,
     /// Deprecated. See 'prices' instead. Price (USD) per input unit
@@ -47,7 +47,7 @@ pub struct Model {
     pub is_langfuse_managed: bool,
     /// Timestamp when the model was created
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// Deprecated. Use 'pricingTiers' instead for models with usage-based pricing variations.  This field shows prices by usage type from the default pricing tier. Maintained for backward compatibility. If the model uses tiered pricing, this field will be populated from the default tier's prices.
     #[serde(rename = "prices")]
     pub prices: std::collections::HashMap<String, models::ModelPrice>,
@@ -62,14 +62,14 @@ impl Model {
         id: String,
         model_name: String,
         match_pattern: String,
-        start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
+        start_date: Option<jiff::Timestamp>,
         input_price: Option<f64>,
         output_price: Option<f64>,
         total_price: Option<f64>,
         tokenizer_id: Option<String>,
         tokenizer_config: Option<serde_json::Value>,
         is_langfuse_managed: bool,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
         prices: std::collections::HashMap<String, models::ModelPrice>,
         pricing_tiers: Vec<models::PricingTier>,
     ) -> Model {

@@ -17,7 +17,7 @@ pub struct ApiKeyResponse {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// Expiration timestamp. Null if the key does not expire.
     #[serde(
         rename = "expiresAt",
@@ -25,7 +25,7 @@ pub struct ApiKeyResponse {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub expires_at: Option<Option<jiff::Timestamp>>,
     #[serde(rename = "publicKey")]
     pub public_key: String,
     #[serde(rename = "secretKey")]
@@ -55,7 +55,7 @@ impl ApiKeyResponse {
     /// Response for API key creation
     pub fn new(
         id: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
         public_key: String,
         secret_key: String,
         display_secret_key: String,

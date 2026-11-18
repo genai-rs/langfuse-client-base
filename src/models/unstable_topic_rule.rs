@@ -28,7 +28,7 @@ pub struct UnstableTopicRule {
     #[serde(rename = "facetIds")]
     pub facet_ids: Vec<String>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl UnstableTopicRule {
@@ -38,7 +38,7 @@ impl UnstableTopicRule {
         filter: Vec<models::EvaluationRuleReadFilter>,
         sampling: f64,
         facet_ids: Vec<String>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        updated_at: jiff::Timestamp,
     ) -> UnstableTopicRule {
         UnstableTopicRule {
             id,

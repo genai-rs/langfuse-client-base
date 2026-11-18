@@ -19,9 +19,9 @@ pub struct ExperimentItem {
     #[serde(rename = "traceId")]
     pub trace_id: String,
     #[serde(rename = "startTime")]
-    pub start_time: chrono::DateTime<chrono::FixedOffset>,
+    pub start_time: jiff::Timestamp,
     #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
-    pub end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub end_time: Option<jiff::Timestamp>,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     #[serde(rename = "environment")]
@@ -47,7 +47,7 @@ pub struct ExperimentItem {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub experiment_item_version: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub experiment_item_version: Option<Option<jiff::Timestamp>>,
     /// Included when `fields=io` is requested.
     #[serde(
         rename = "input",
@@ -119,8 +119,8 @@ impl ExperimentItem {
     pub fn new(
         id: String,
         trace_id: String,
-        start_time: chrono::DateTime<chrono::FixedOffset>,
-        end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+        start_time: jiff::Timestamp,
+        end_time: Option<jiff::Timestamp>,
         level: models::ObservationLevel,
         environment: String,
         experiment_id: String,

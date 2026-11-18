@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** | Score config name. Maximum 80 characters. | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**created_at** | **jiff::Timestamp** |  | 
+**updated_at** | **jiff::Timestamp** |  | 
 **project_id** | **String** |  | 
 **data_type** | [**models::ScoreConfigDataType**](ScoreConfigDataType.md) |  | 
 **is_archived** | **bool** | Whether the score config is archived. Defaults to false | 

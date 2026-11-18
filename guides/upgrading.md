@@ -5,6 +5,9 @@ minor-version bump). Each one has a migration note in [`migration/`](../migratio
 what changed in the public API (`api-diff-<from>-to-<to>.json`, written by `scripts/check_public_api.sh`). The
 [CHANGELOG](../CHANGELOG.md) lists every release.
 
+- **0.26** (timvw-rust 0.33.0, `dateTimeLibrary=jiff`): dates are `jiff::Timestamp` and `jiff::civil::Date` instead of
+  chrono's types, and chrono is no longer a dependency. See
+  [`api-diff-0.25.1-to-0.26.0.md`](../migration/api-diff-0.25.1-to-0.26.0.md).
 - **0.25** (Langfuse spec update): `PromptVersionUpdateRequest.new_labels` is `Option<Option<Vec<String>>>`, the new
   `remove_labels` removes labels, and `PromptVersionUpdateRequest::new()` takes no arguments. See
   [`api-diff-0.24.0-to-0.25.0.md`](../migration/api-diff-0.24.0-to-0.25.0.md).

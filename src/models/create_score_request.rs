@@ -102,7 +102,7 @@ pub struct CreateScoreRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub timestamp: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub timestamp: Option<Option<jiff::Timestamp>>,
 }
 
 impl CreateScoreRequest {

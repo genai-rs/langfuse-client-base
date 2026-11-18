@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **retry_after_seconds** | Option<**i64**> | Number of seconds to wait before retrying a rate-limited request. | [optional]
 **limit** | Option<**i64**> | Rate-limit request allowance. | [optional]
 **remaining** | Option<**i64**> | Remaining requests in the current rate-limit window. | [optional]
-**reset_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Time when the current rate-limit window resets. | [optional]
+**reset_at** | Option<**jiff::Timestamp**> | Time when the current rate-limit window resets. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

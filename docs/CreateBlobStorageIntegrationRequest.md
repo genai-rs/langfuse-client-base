@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **force_path_style** | **bool** | Use path-style URLs for S3 requests | 
 **file_type** | [**models::BlobStorageIntegrationFileType**](BlobStorageIntegrationFileType.md) |  | 
 **export_mode** | [**models::BlobStorageExportMode**](BlobStorageExportMode.md) |  | 
-**export_start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Custom start date for exports (required when exportMode is FROM_CUSTOM_DATE). Must not be in the future (27 h tolerance for timezone differences). | [optional]
+**export_start_date** | Option<**jiff::Timestamp**> | Custom start date for exports (required when exportMode is FROM_CUSTOM_DATE). Must not be in the future (27 h tolerance for timezone differences). | [optional]
 **compressed** | Option<**bool**> | Enable gzip compression for exported files (.csv.gz, .json.gz, .jsonl.gz). Defaults to true. | [optional]
 **export_source** | Option<[**models::BlobStorageExportSource**](BlobStorageExportSource.md)> |  | [optional]
 **export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups to include in each exported observation and score row. Applies to all export sources; must include the observation `core` group if provided. Core score columns are always exported; score groups add columns on top. When omitted on create, all observation groups are selected and no score groups. When omitted on update, the existing value is preserved.  `exportFieldGroups` requires `exportSource` to be provided in the same request. | [optional]

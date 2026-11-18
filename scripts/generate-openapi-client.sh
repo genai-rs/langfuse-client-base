@@ -22,7 +22,7 @@ OPENAPI_GENERATOR_VERSION="${OPENAPI_GENERATOR_VERSION:-7.27.0}"
 # the output. The image tag names the generator version and the
 # openapi-generator version it bundles. Override the image for local builds of
 # the generator, e.g. GENERATOR_IMAGE=timvw-rust:0.29.0-og7.27.0.
-TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.29.0}"
+TIMVW_RUST_VERSION="${TIMVW_RUST_VERSION:-0.33.0}"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-ghcr.io/timvw/openapi-generator-timvw-rust:${TIMVW_RUST_VERSION}-og${OPENAPI_GENERATOR_VERSION}}"
 GENERATOR_NAME="${GENERATOR_NAME:-timvw-rust}"
 UPSTREAM_REVISION="${UPSTREAM_REVISION:-}"
@@ -122,6 +122,9 @@ rm -rf "$BASE_CLIENT_DIR/docs"
 # parameters an enum type (the current spec has none); deprecatedAttributes
 # marks deprecated properties and schemas #[deprecated].
 # pruneAllHelpers stays off: there is nothing for it to prune here.
+# dateTimeLibrary=jiff (timvw-rust 0.33.0): date-time and date are
+# jiff::Timestamp and jiff::civil::Date; chrono is unmaintained
+# (RUSTSEC-2026-0543).
 $GENERATOR_CMD generate \
     -i "/local/.openapi-generator/compatible.json" \
     -g "$GENERATOR_NAME" \
@@ -129,7 +132,8 @@ $GENERATOR_CMD generate \
     --additional-properties=packageName=langfuse-client-base \
     --additional-properties=packageVersion=0.1.0 \
     --additional-properties=typedEnumParameters=true \
-    --additional-properties=deprecatedAttributes=true
+    --additional-properties=deprecatedAttributes=true \
+    --additional-properties=dateTimeLibrary=jiff
 
 # Drop OpenAPI Generator's transient metadata while keeping the provenance
 # manifest available for CI artifact upload and local review.

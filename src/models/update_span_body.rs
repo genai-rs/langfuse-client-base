@@ -34,7 +34,7 @@ pub struct UpdateSpanBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub start_time: Option<Option<jiff::Timestamp>>,
     #[serde(
         rename = "metadata",
         default,
@@ -94,7 +94,7 @@ pub struct UpdateSpanBody {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub end_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub end_time: Option<Option<jiff::Timestamp>>,
 }
 
 impl UpdateSpanBody {

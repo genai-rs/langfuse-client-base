@@ -8,10 +8,10 @@ Name | Type | Description | Notes
 **project_id** | **String** |  | 
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
-**timestamp** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**timestamp** | **jiff::Timestamp** |  | 
 **environment** | **String** | The environment from which this score originated. | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**created_at** | **jiff::Timestamp** |  | 
+**updated_at** | **jiff::Timestamp** |  | 
 **comment** | Option<**String**> | Optional comment attached to the score. Present when \"details\" is included in the fields parameter. | [optional]
 **config_id** | Option<**String**> | The score config ID, if this score was created from a config. Present when \"details\" is included in the fields parameter. | [optional]
 **metadata** | Option<**std::collections::HashMap<String, serde_json::Value>**> | Arbitrary metadata attached to the score. Present when \"details\" is included in the fields parameter. | [optional]

@@ -21,14 +21,14 @@ pub struct DateTimeEvaluationRuleFilter {
     pub operator: models::EvaluationRuleNumberFilterOperator,
     /// Datetime value to compare against.
     #[serde(rename = "value")]
-    pub value: chrono::DateTime<chrono::FixedOffset>,
+    pub value: jiff::Timestamp,
 }
 
 impl DateTimeEvaluationRuleFilter {
     pub fn new(
         column: String,
         operator: models::EvaluationRuleNumberFilterOperator,
-        value: chrono::DateTime<chrono::FixedOffset>,
+        value: jiff::Timestamp,
     ) -> DateTimeEvaluationRuleFilter {
         DateTimeEvaluationRuleFilter {
             column,

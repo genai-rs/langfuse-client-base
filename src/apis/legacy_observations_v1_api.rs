@@ -143,8 +143,8 @@ pub async fn legacy_observations_v1_get_many(
     level: Option<models::ObservationLevel>,
     parent_observation_id: Option<&str>,
     environment: Option<Vec<String>>,
-    from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_start_time: Option<jiff::Timestamp>,
+    to_start_time: Option<jiff::Timestamp>,
     version: Option<&str>,
     filter: Option<&str>,
     options: Option<&timvw_rust_runtime::RequestOptions>,
@@ -200,10 +200,10 @@ pub async fn legacy_observations_v1_get_many(
         }
     }
     if let Some(ref param_value) = p_query_from_start_time {
-        req_builder = req_builder.query(&[("fromStartTime", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromStartTime", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_version {
         req_builder = req_builder.query(&[("version", &param_value.to_string())]);

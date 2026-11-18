@@ -18,7 +18,7 @@ pub struct UnstableTopicAssignment {
     pub trace_id: String,
     /// Trace start time.
     #[serde(rename = "timestamp")]
-    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
+    pub timestamp: jiff::Timestamp,
     #[serde(rename = "facetId")]
     pub facet_id: String,
     #[serde(rename = "facetName")]
@@ -46,18 +46,18 @@ pub struct UnstableTopicAssignment {
     )]
     pub run_id: Option<Option<String>>,
     #[serde(rename = "assignedAt")]
-    pub assigned_at: chrono::DateTime<chrono::FixedOffset>,
+    pub assigned_at: jiff::Timestamp,
 }
 
 impl UnstableTopicAssignment {
     pub fn new(
         trace_id: String,
-        timestamp: chrono::DateTime<chrono::FixedOffset>,
+        timestamp: jiff::Timestamp,
         facet_id: String,
         facet_name: String,
         facet_version: i64,
         status: models::UnstableTopicAssignmentStatus,
-        assigned_at: chrono::DateTime<chrono::FixedOffset>,
+        assigned_at: jiff::Timestamp,
     ) -> UnstableTopicAssignment {
         UnstableTopicAssignment {
             trace_id,

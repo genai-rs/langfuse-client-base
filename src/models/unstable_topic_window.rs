@@ -14,16 +14,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, bon::Builder)]
 pub struct UnstableTopicWindow {
     #[serde(rename = "from")]
-    pub from: chrono::DateTime<chrono::FixedOffset>,
+    pub from: jiff::Timestamp,
     #[serde(rename = "to")]
-    pub to: chrono::DateTime<chrono::FixedOffset>,
+    pub to: jiff::Timestamp,
 }
 
 impl UnstableTopicWindow {
-    pub fn new(
-        from: chrono::DateTime<chrono::FixedOffset>,
-        to: chrono::DateTime<chrono::FixedOffset>,
-    ) -> UnstableTopicWindow {
+    pub fn new(from: jiff::Timestamp, to: jiff::Timestamp) -> UnstableTopicWindow {
         UnstableTopicWindow { from, to }
     }
 }

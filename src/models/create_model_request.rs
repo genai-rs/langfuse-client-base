@@ -27,7 +27,7 @@ pub struct CreateModelRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub start_date: Option<Option<jiff::Timestamp>>,
     #[serde(rename = "unit")]
     pub unit: models::ModelUsageUnit,
     /// Deprecated. Use 'pricingTiers' instead. Price (USD) per input unit. Creates a default tier if pricingTiers not provided.

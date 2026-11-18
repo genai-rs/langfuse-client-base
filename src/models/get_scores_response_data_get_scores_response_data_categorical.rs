@@ -53,11 +53,11 @@ pub struct GetScoresResponseDataGetScoresResponseDataCategorical {
     #[serde(rename = "source")]
     pub source: models::ScoreSource,
     #[serde(rename = "timestamp")]
-    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
+    pub timestamp: jiff::Timestamp,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     /// The user ID of the author
     #[serde(rename = "authorUserId", deserialize_with = "Option::deserialize")]
     pub author_user_id: Option<String>,
@@ -98,9 +98,9 @@ impl GetScoresResponseDataGetScoresResponseDataCategorical {
         id: String,
         name: String,
         source: models::ScoreSource,
-        timestamp: chrono::DateTime<chrono::FixedOffset>,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        timestamp: jiff::Timestamp,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         author_user_id: Option<String>,
         comment: Option<String>,
         config_id: Option<String>,

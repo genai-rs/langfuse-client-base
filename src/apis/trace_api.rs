@@ -345,8 +345,8 @@ pub async fn trace_list(
     user_id: Option<&str>,
     name: Option<&str>,
     session_id: Option<&str>,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     order_by: Option<&str>,
     tags: Option<Vec<String>>,
     version: Option<&str>,
@@ -393,10 +393,10 @@ pub async fn trace_list(
         req_builder = req_builder.query(&[("sessionId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_order_by {
         req_builder = req_builder.query(&[("orderBy", &param_value.to_string())]);

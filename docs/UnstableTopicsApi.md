@@ -27,8 +27,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  Get on
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **topic_id** | **String** |  | [required] |
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Start of the window used for `traceCount`. Defaults to 7 days before `toTimestamp`. |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window used for `traceCount`. Defaults to now. |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Start of the window used for `traceCount`. Defaults to 7 days before `toTimestamp`. |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | End of the window used for `traceCount`. Defaults to now. |  |
 **options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
 
 ```rust,ignore
@@ -130,8 +130,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  List t
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window (trace start time, exclusive). Defaults to now. |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | End of the window (trace start time, exclusive). Defaults to now. |  |
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"facetName\",\"operator\":\"any of\",\"value\":[\"Issues\"]}]`. |  |
 **order_by** | Option<[**UnstableTopicsOrderBy**](UnstableTopicsOrderBy.md)> | Defaults to `traceCount.desc`. |  |
 **page** | Option<**i64**> | 1-based page number. Defaults to `1`. |  |
@@ -169,8 +169,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  List t
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window (trace start time, exclusive). Defaults to now. |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | End of the window (trace start time, exclusive). Defaults to now. |  |
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"topicName\",\"operator\":\"any of\",\"value\":[\"Refunds\"]}]`. |  |
 **order_by** | Option<[**UnstableTopicResultsOrderBy**](UnstableTopicResultsOrderBy.md)> | Defaults to `timestamp.desc`. |  |
 **limit** | Option<**i64**> | Maximum number of rows per page. Defaults to `50`, at most `100`. |  |
@@ -280,8 +280,8 @@ Unstable: Topics is in closed beta. The shape may change without notice.  List t
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | End of the window (trace start time, exclusive). Defaults to now. |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Start of the window (trace start time, inclusive). Defaults to 7 days before `toTimestamp`. |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | End of the window (trace start time, exclusive). Defaults to now. |  |
 **filter** | Option<**String**> | JSON array of filter conditions, for example `[{\"type\":\"stringOptions\",\"column\":\"traceId\",\"operator\":\"any of\",\"value\":[\"<trace id>\"]}]`. |  |
 **truncate_summaries** | Option<**bool**> | Whether to truncate summaries to 500 characters. Defaults to `false`. |  |
 **order_by** | Option<[**UnstableTopicResultsOrderBy**](UnstableTopicResultsOrderBy.md)> | Defaults to `timestamp.desc`. |  |

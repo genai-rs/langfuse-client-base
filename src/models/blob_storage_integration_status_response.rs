@@ -24,16 +24,16 @@ pub struct BlobStorageIntegrationStatusResponse {
     pub enabled: bool,
     /// End of the last successfully exported time window. Compare against your ETL bookmark to determine if new data is available. Null if the integration has never synced.
     #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
-    pub last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub last_sync_at: Option<jiff::Timestamp>,
     /// When the next export is scheduled. Null if no sync has occurred yet.
     #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
-    pub next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub next_sync_at: Option<jiff::Timestamp>,
     /// Raw error message from the storage provider (S3/Azure/GCS) if the last export failed. Cleared on successful export.
     #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
     pub last_error: Option<String>,
     /// When the last error occurred. Cleared on successful export.
     #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
-    pub last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub last_error_at: Option<jiff::Timestamp>,
 }
 
 impl BlobStorageIntegrationStatusResponse {
@@ -42,10 +42,10 @@ impl BlobStorageIntegrationStatusResponse {
         project_id: String,
         sync_status: models::BlobStorageSyncStatus,
         enabled: bool,
-        last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
-        next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        last_sync_at: Option<jiff::Timestamp>,
+        next_sync_at: Option<jiff::Timestamp>,
         last_error: Option<String>,
-        last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        last_error_at: Option<jiff::Timestamp>,
     ) -> BlobStorageIntegrationStatusResponse {
         BlobStorageIntegrationStatusResponse {
             id,

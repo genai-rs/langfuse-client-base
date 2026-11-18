@@ -35,9 +35,9 @@ pub struct Dataset {
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl Dataset {
@@ -49,8 +49,8 @@ impl Dataset {
         input_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
         expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
         project_id: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> Dataset {
         Dataset {
             id,

@@ -23,14 +23,14 @@ pub struct BooleanScoreV3 {
     #[serde(rename = "source")]
     pub source: models::ScoreSource,
     #[serde(rename = "timestamp")]
-    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
+    pub timestamp: jiff::Timestamp,
     /// The environment from which this score originated.
     #[serde(rename = "environment")]
     pub environment: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     /// Optional comment attached to the score. Present when \"details\" is included in the fields parameter.
     #[serde(
         rename = "comment",
@@ -84,10 +84,10 @@ impl BooleanScoreV3 {
         project_id: String,
         name: String,
         source: models::ScoreSource,
-        timestamp: chrono::DateTime<chrono::FixedOffset>,
+        timestamp: jiff::Timestamp,
         environment: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         value: bool,
     ) -> BooleanScoreV3 {
         BooleanScoreV3 {

@@ -21,16 +21,16 @@ Name | Type | Description | Notes
 **force_path_style** | **bool** |  | 
 **file_type** | [**models::BlobStorageIntegrationFileTypeResponse**](BlobStorageIntegrationFileTypeResponse.md) |  | 
 **export_mode** | [**models::BlobStorageExportMode**](BlobStorageExportMode.md) |  | 
-**export_start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
+**export_start_date** | Option<**jiff::Timestamp**> |  | 
 **compressed** | **bool** |  | 
 **export_source** | [**models::BlobStorageExportSource**](BlobStorageExportSource.md) |  | 
 **export_field_groups** | Option<[**Vec<models::BlobStorageExportFieldGroup>**](BlobStorageExportFieldGroup.md)> | Field groups included in each exported observation and score row. An empty list is treated as all observation groups and no score groups during export. Core score columns are always exported. | 
-**next_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
-**last_sync_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
+**next_sync_at** | Option<**jiff::Timestamp**> |  | 
+**last_sync_at** | Option<**jiff::Timestamp**> |  | 
 **last_error** | Option<**String**> |  | 
-**last_error_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**last_error_at** | Option<**jiff::Timestamp**> |  | 
+**created_at** | **jiff::Timestamp** |  | 
+**updated_at** | **jiff::Timestamp** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

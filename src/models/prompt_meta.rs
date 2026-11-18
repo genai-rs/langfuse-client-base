@@ -25,7 +25,7 @@ pub struct PromptMeta {
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
     #[serde(rename = "lastUpdatedAt")]
-    pub last_updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub last_updated_at: jiff::Timestamp,
     /// Config object of the most recent prompt version that matches the filters (if any are provided)
     #[serde(rename = "lastConfig", deserialize_with = "Option::deserialize")]
     pub last_config: Option<serde_json::Value>,
@@ -38,7 +38,7 @@ impl PromptMeta {
         versions: Vec<i64>,
         labels: Vec<String>,
         tags: Vec<String>,
-        last_updated_at: chrono::DateTime<chrono::FixedOffset>,
+        last_updated_at: jiff::Timestamp,
         last_config: Option<serde_json::Value>,
     ) -> PromptMeta {
         PromptMeta {
