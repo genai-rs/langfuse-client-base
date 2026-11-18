@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.0](https://github.com/genai-rs/langfuse-client-base/compare/v0.25.1...v0.26.0) - 2026-11-18
+
+### Added
+
+- [**breaking**] dates are jiff types instead of chrono
+
 ## [0.25.1](https://github.com/genai-rs/langfuse-client-base/compare/v0.25.0...v0.25.1) - 2026-11-17
 
 ### Fixed
