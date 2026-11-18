@@ -22,7 +22,7 @@ pub struct LlmAsJudgeEvaluatorVersion {
     pub version: i64,
     /// Timestamp when this evaluator version was created.
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "createdBy")]
     pub created_by: models::Creator,
     /// Evaluator type.
@@ -47,7 +47,7 @@ impl LlmAsJudgeEvaluatorVersion {
     pub fn new(
         id: String,
         version: i64,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
         created_by: models::Creator,
         r#type: String,
         prompt: Vec<models::EvaluatorChatMessage>,

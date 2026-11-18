@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **id** | **String** |  | 
 **model_name** | **String** | Name of the model definition. If multiple with the same name exist, they are applied in the following order: (1) custom over built-in, (2) newest according to startTime where model.startTime<observation.startTime | 
 **match_pattern** | **String** | Regex pattern which matches this model definition to generation.model. Useful in case of fine-tuned models. If you want to exact match, use `(?i)^modelname$` | 
-**start_date** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Apply only to generations which are newer than this ISO date. | 
+**start_date** | Option<**jiff::Timestamp**> | Apply only to generations which are newer than this ISO date. | 
 **unit** | Option<[**models::ModelUsageUnit**](ModelUsageUnit.md)> |  | [optional]
 **input_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per input unit | 
 **output_price** | Option<**f64**> | Deprecated. See 'prices' instead. Price (USD) per output unit | 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **tokenizer_id** | Option<**String**> | Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage. | 
 **tokenizer_config** | Option<**serde_json::Value**> | Legacy tokenizer configuration retained for API compatibility. Ingestion no longer uses it to infer observation usage. | 
 **is_langfuse_managed** | **bool** |  | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** | Timestamp when the model was created | 
+**created_at** | **jiff::Timestamp** | Timestamp when the model was created | 
 **prices** | [**std::collections::HashMap<String, models::ModelPrice>**](ModelPrice.md) | Deprecated. Use 'pricingTiers' instead for models with usage-based pricing variations.  This field shows prices by usage type from the default pricing tier. Maintained for backward compatibility. If the model uses tiered pricing, this field will be populated from the default tier's prices. | 
 **pricing_tiers** | [**Vec<models::PricingTier>**](PricingTier.md) | Array of pricing tiers with conditional pricing based on usage thresholds or observation attributes.  Pricing tiers enable accurate cost tracking for models that charge different rates based on usage patterns or request attributes (e.g., high-volume usage, large context windows, cached tokens, or service tiers).  Each model must have exactly one default tier (isDefault=true, priority=0) that serves as a fallback. Additional conditional tiers can be defined with specific matching criteria.  If this array is empty, the model uses legacy flat pricing from the inputPrice/outputPrice/totalPrice fields. | 
 

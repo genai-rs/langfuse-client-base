@@ -37,10 +37,10 @@ pub struct EvaluationRule {
     pub evaluator_assignments: Vec<models::EvaluatorAssignment>,
     /// Timestamp when the evaluation rule was created.
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// Timestamp when the evaluation rule was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl EvaluationRule {
@@ -53,8 +53,8 @@ impl EvaluationRule {
         sampling: f64,
         filter: Vec<models::EvaluationRuleReadFilter>,
         evaluator_assignments: Vec<models::EvaluatorAssignment>,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> EvaluationRule {
         EvaluationRule {
             id,

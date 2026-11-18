@@ -30,11 +30,11 @@ pub struct AnnotationQueueItem {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completed_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub completed_at: Option<Option<jiff::Timestamp>>,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl AnnotationQueueItem {
@@ -44,8 +44,8 @@ impl AnnotationQueueItem {
         object_id: String,
         object_type: models::AnnotationQueueObjectType,
         status: models::AnnotationQueueStatus,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> AnnotationQueueItem {
         AnnotationQueueItem {
             id,

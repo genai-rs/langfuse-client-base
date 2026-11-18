@@ -21,7 +21,7 @@ pub struct UnstableTopicFacetPublishedRun {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completed_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub completed_at: Option<Option<jiff::Timestamp>>,
     #[serde(rename = "topicCount")]
     pub topic_count: i64,
 }

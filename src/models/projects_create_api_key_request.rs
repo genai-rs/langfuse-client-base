@@ -37,7 +37,7 @@ pub struct ProjectsCreateApiKeyRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub expires_at: Option<Option<jiff::Timestamp>>,
     /// Optional predefined public key. Must start with 'pk-lf-'. If provided, secretKey must also be provided.
     #[serde(
         rename = "publicKey",

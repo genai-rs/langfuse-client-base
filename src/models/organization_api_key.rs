@@ -16,7 +16,7 @@ pub struct OrganizationApiKey {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// Expiration timestamp. Null if the key does not expire.
     #[serde(
         rename = "expiresAt",
@@ -24,14 +24,14 @@ pub struct OrganizationApiKey {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub expires_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub expires_at: Option<Option<jiff::Timestamp>>,
     #[serde(
         rename = "lastUsedAt",
         default,
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub last_used_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub last_used_at: Option<Option<jiff::Timestamp>>,
     /// Name of the API key. Contains the same value as note; null if no name was provided.
     #[serde(
         rename = "name",
@@ -58,7 +58,7 @@ pub struct OrganizationApiKey {
 impl OrganizationApiKey {
     pub fn new(
         id: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
         public_key: String,
         display_secret_key: String,
     ) -> OrganizationApiKey {

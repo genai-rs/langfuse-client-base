@@ -29,7 +29,7 @@ pub struct EvaluatorLlmAsJudgeEvaluator {
     pub status: models::EvaluatorStatus,
     /// Timestamp when the evaluator was paused, otherwise `null`.
     #[serde(rename = "pausedAt", deserialize_with = "Option::deserialize")]
-    pub paused_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub paused_at: Option<jiff::Timestamp>,
     /// Machine-readable reason when `status=paused`, otherwise `null`.
     #[serde(rename = "pausedReason", deserialize_with = "Option::deserialize")]
     pub paused_reason: Option<String>,
@@ -41,10 +41,10 @@ pub struct EvaluatorLlmAsJudgeEvaluator {
     pub evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>,
     /// Timestamp when the evaluator was created.
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// Timestamp when the evaluator was last updated.
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     /// Stable identifier of the latest evaluator version.
     #[serde(rename = "versionId")]
     pub version_id: String,
@@ -53,7 +53,7 @@ pub struct EvaluatorLlmAsJudgeEvaluator {
     pub version: i64,
     /// Timestamp when the latest evaluator version was created.
     #[serde(rename = "versionCreatedAt")]
-    pub version_created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub version_created_at: jiff::Timestamp,
     #[serde(rename = "versionCreatedBy")]
     pub version_created_by: models::Creator,
     #[serde(rename = "type")]
@@ -80,15 +80,15 @@ impl EvaluatorLlmAsJudgeEvaluator {
         description: Option<String>,
         created_by: models::Creator,
         status: models::EvaluatorStatus,
-        paused_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        paused_at: Option<jiff::Timestamp>,
         paused_reason: Option<String>,
         paused_message: Option<String>,
         evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         version_id: String,
         version: i64,
-        version_created_at: chrono::DateTime<chrono::FixedOffset>,
+        version_created_at: jiff::Timestamp,
         version_created_by: models::Creator,
         r#type: Type,
         prompt: Vec<models::EvaluatorChatMessage>,

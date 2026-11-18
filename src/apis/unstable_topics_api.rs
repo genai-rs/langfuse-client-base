@@ -131,8 +131,8 @@ pub enum UnstableTopicsListSummariesError {
 pub async fn unstable_topics_get(
     configuration: &configuration::Configuration,
     topic_id: &str,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -150,10 +150,10 @@ pub async fn unstable_topics_get(
         .request(timvw_rust_runtime::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder =
@@ -428,8 +428,8 @@ pub async fn unstable_topics_get_rule(
 #[bon::builder]
 pub async fn unstable_topics_list(
     configuration: &configuration::Configuration,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     filter: Option<&str>,
     order_by: Option<models::UnstableTopicsOrderBy>,
     page: Option<i64>,
@@ -450,10 +450,10 @@ pub async fn unstable_topics_list(
         .request(timvw_rust_runtime::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -548,8 +548,8 @@ pub async fn unstable_topics_list(
 #[bon::builder]
 pub async fn unstable_topics_list_assignments(
     configuration: &configuration::Configuration,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     filter: Option<&str>,
     order_by: Option<models::UnstableTopicResultsOrderBy>,
     limit: Option<i64>,
@@ -573,10 +573,10 @@ pub async fn unstable_topics_list_assignments(
         .request(timvw_rust_runtime::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);
@@ -887,8 +887,8 @@ pub async fn unstable_topics_list_rules(
 #[bon::builder]
 pub async fn unstable_topics_list_summaries(
     configuration: &configuration::Configuration,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     filter: Option<&str>,
     truncate_summaries: Option<bool>,
     order_by: Option<models::UnstableTopicResultsOrderBy>,
@@ -914,10 +914,10 @@ pub async fn unstable_topics_list_summaries(
         .request(timvw_rust_runtime::Method::GET, &uri_str);
 
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_filter {
         req_builder = req_builder.query(&[("filter", &param_value.to_string())]);

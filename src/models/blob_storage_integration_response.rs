@@ -55,7 +55,7 @@ pub struct BlobStorageIntegrationResponse {
     #[serde(rename = "exportMode")]
     pub export_mode: models::BlobStorageExportMode,
     #[serde(rename = "exportStartDate", deserialize_with = "Option::deserialize")]
-    pub export_start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub export_start_date: Option<jiff::Timestamp>,
     #[serde(rename = "compressed")]
     pub compressed: bool,
     #[serde(rename = "exportSource")]
@@ -64,17 +64,17 @@ pub struct BlobStorageIntegrationResponse {
     #[serde(rename = "exportFieldGroups", deserialize_with = "Option::deserialize")]
     pub export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
     #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
-    pub next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub next_sync_at: Option<jiff::Timestamp>,
     #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
-    pub last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub last_sync_at: Option<jiff::Timestamp>,
     #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
     pub last_error: Option<String>,
     #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
-    pub last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub last_error_at: Option<jiff::Timestamp>,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl BlobStorageIntegrationResponse {
@@ -96,16 +96,16 @@ impl BlobStorageIntegrationResponse {
         force_path_style: bool,
         file_type: models::BlobStorageIntegrationFileTypeResponse,
         export_mode: models::BlobStorageExportMode,
-        export_start_date: Option<chrono::DateTime<chrono::FixedOffset>>,
+        export_start_date: Option<jiff::Timestamp>,
         compressed: bool,
         export_source: models::BlobStorageExportSource,
         export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
-        next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
-        last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        next_sync_at: Option<jiff::Timestamp>,
+        last_sync_at: Option<jiff::Timestamp>,
         last_error: Option<String>,
-        last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        last_error_at: Option<jiff::Timestamp>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> BlobStorageIntegrationResponse {
         BlobStorageIntegrationResponse {
             id,

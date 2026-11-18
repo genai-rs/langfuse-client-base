@@ -56,8 +56,8 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**i64**> | Page number, starts at 1 |  |
 **limit** | Option<**i64**> | Limit of items per page. If you encounter api issues due to too large page sizes, try to reduce the limit. |  |
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created on or after a certain datetime (ISO 8601) |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Optional filter to only include sessions created before a certain datetime (ISO 8601) |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Optional filter to only include sessions created on or after a certain datetime (ISO 8601) |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | Optional filter to only include sessions created before a certain datetime (ISO 8601) |  |
 **environment** | Option<**Vec<String>**> | Optional filter for sessions where the environment is one of the provided values. |  |
 **options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
 

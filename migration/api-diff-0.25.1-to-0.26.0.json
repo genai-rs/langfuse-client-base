@@ -1,0 +1,3076 @@
+{
+  "source_heads": {
+    "reference": "git:v0.25.1",
+    "candidate": "working-tree"
+  },
+  "method": "Source declaration census of public model exports, struct fields, enum variants (names and tuple/struct payloads, generic enums such as apis::Error<T> included), function signatures, and hand-written trait impls (e.g. From) on public types, plus derive and serde-field-attribute differences. This is not an exhaustive Rust public API or semver check: it does not expand derives or macros, resolve blanket impls, or resolve every visibility/re-export interaction.",
+  "registry_source_rs_files": 502,
+  "current_source_rs_files": 502,
+  "source_files_added": [],
+  "source_files_removed": [],
+  "source_files_modified": [
+    "apis/dataset_items_api.rs",
+    "apis/experiments_api.rs",
+    "apis/legacy_observations_v1_api.rs",
+    "apis/observations_api.rs",
+    "apis/prompts_api.rs",
+    "apis/scores_api.rs",
+    "apis/scores_v3_api.rs",
+    "apis/sessions_api.rs",
+    "apis/skills_api.rs",
+    "apis/trace_api.rs",
+    "apis/unstable_topics_api.rs",
+    "models/annotation_queue.rs",
+    "models/annotation_queue_item.rs",
+    "models/api_key_response.rs",
+    "models/api_key_summary.rs",
+    "models/base_score.rs",
+    "models/base_score_v1.rs",
+    "models/base_score_v3.rs",
+    "models/blob_storage_integration_response.rs",
+    "models/blob_storage_integration_status_response.rs",
+    "models/boolean_score.rs",
+    "models/boolean_score_v1.rs",
+    "models/boolean_score_v3.rs",
+    "models/categorical_score.rs",
+    "models/categorical_score_v1.rs",
+    "models/categorical_score_v3.rs",
+    "models/code_evaluator.rs",
+    "models/code_evaluator_version.rs",
+    "models/comment.rs",
+    "models/correction_score.rs",
+    "models/correction_score_v3.rs",
+    "models/create_blob_storage_integration_request.rs",
+    "models/create_dataset_run_item_request.rs",
+    "models/create_event_body.rs",
+    "models/create_generation_body.rs",
+    "models/create_model_request.rs",
+    "models/create_score_request.rs",
+    "models/create_span_body.rs",
+    "models/dataset.rs",
+    "models/dataset_item.rs",
+    "models/dataset_run.rs",
+    "models/dataset_run_item.rs",
+    "models/dataset_run_with_items.rs",
+    "models/date_time_evaluation_rule_filter.rs",
+    "models/evaluation_rule.rs",
+    "models/evaluation_rule_filter_date_time_evaluation_rule_filter.rs",
+    "models/evaluator_base.rs",
+    "models/evaluator_code_evaluator.rs",
+    "models/evaluator_llm_as_judge_evaluator.rs",
+    "models/evaluator_version_base.rs",
+    "models/evaluator_version_code_evaluator_version.rs",
+    "models/evaluator_version_llm_as_judge_evaluator_version.rs",
+    "models/experiment.rs",
+    "models/experiment_item.rs",
+    "models/get_media_response.rs",
+    "models/get_scores_response_data_boolean.rs",
+    "models/get_scores_response_data_categorical.rs",
+    "models/get_scores_response_data_correction.rs",
+    "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+    "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+    "models/get_scores_response_data_get_scores_response_data_correction.rs",
+    "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+    "models/get_scores_response_data_get_scores_response_data_text.rs",
+    "models/get_scores_response_data_numeric.rs",
+    "models/get_scores_response_data_text.rs",
+    "models/llm_as_judge_evaluator.rs",
+    "models/llm_as_judge_evaluator_version.rs",
+    "models/llm_connection.rs",
+    "models/model.rs",
+    "models/numeric_score.rs",
+    "models/numeric_score_v1.rs",
+    "models/numeric_score_v3.rs",
+    "models/observation.rs",
+    "models/observation_body.rs",
+    "models/observation_v2.rs",
+    "models/observations_view.rs",
+    "models/observations_view_single.rs",
+    "models/optional_observation_body.rs",
+    "models/organization_api_key.rs",
+    "models/organization_project.rs",
+    "models/patch_media_body.rs",
+    "models/projects_create_api_key_request.rs",
+    "models/prompt_meta.rs",
+    "models/public_api_error_details.rs",
+    "models/score_boolean_score.rs",
+    "models/score_categorical_score.rs",
+    "models/score_config.rs",
+    "models/score_correction_score.rs",
+    "models/score_numeric_score.rs",
+    "models/score_text_score.rs",
+    "models/score_v1_boolean_score_v1.rs",
+    "models/score_v1_categorical_score_v1.rs",
+    "models/score_v1_numeric_score_v1.rs",
+    "models/score_v1_text_score_v1.rs",
+    "models/score_v3_boolean_score_v3.rs",
+    "models/score_v3_categorical_score_v3.rs",
+    "models/score_v3_correction_score_v3.rs",
+    "models/score_v3_numeric_score_v3.rs",
+    "models/score_v3_text_score_v3.rs",
+    "models/session.rs",
+    "models/session_with_traces.rs",
+    "models/skill_meta.rs",
+    "models/skill_version.rs",
+    "models/text_score.rs",
+    "models/text_score_v1.rs",
+    "models/text_score_v3.rs",
+    "models/trace.rs",
+    "models/trace_body.rs",
+    "models/trace_with_details.rs",
+    "models/trace_with_full_details.rs",
+    "models/unstable_dashboard.rs",
+    "models/unstable_dashboard_widget.rs",
+    "models/unstable_topic_assignment.rs",
+    "models/unstable_topic_facet_published_run.rs",
+    "models/unstable_topic_rule.rs",
+    "models/unstable_topic_summary.rs",
+    "models/unstable_topic_window.rs",
+    "models/update_event_body.rs",
+    "models/update_generation_body.rs",
+    "models/update_span_body.rs"
+  ],
+  "model_exports_added": [],
+  "model_exports_removed": [],
+  "public_functions_added_or_signature_changed": [
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_list",
+      "signature": "pub async fn dataset_items_list( configuration: &configuration::Configuration, dataset_name: Option<&str>, source_trace_id: Option<&str>, source_observation_id: Option<&str>, version: Option<jiff::Timestamp>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list",
+      "signature": "pub async fn experiments_list( configuration: &configuration::Configuration, from_start_time: jiff::Timestamp, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<jiff::Timestamp>, id: Option<&str>, name: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentsResponse, Error<ExperimentsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list_items",
+      "signature": "pub async fn experiments_list_items( configuration: &configuration::Configuration, from_start_time: jiff::Timestamp, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<jiff::Timestamp>, experiment_id: Option<&str>, experiment_name: Option<&str>, experiment_item_id: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentItemsResponse, Error<ExperimentsListItemsError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get_many",
+      "signature": "pub async fn legacy_observations_v1_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, name: Option<&str>, user_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, environment: Option<Vec<String>>, from_start_time: Option<jiff::Timestamp>, to_start_time: Option<jiff::Timestamp>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>>"
+    },
+    {
+      "file": "apis/observations_api.rs",
+      "name": "observations_get_many",
+      "signature": "pub async fn observations_get_many( configuration: &configuration::Configuration, fields: Option<&str>, expand_metadata: Option<&str>, limit: Option<i64>, cursor: Option<&str>, parse_io_as_json: Option<bool>, name: Option<&str>, user_id: Option<&str>, session_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, is_root_observation: Option<bool>, environment: Option<Vec<String>>, from_start_time: Option<jiff::Timestamp>, to_start_time: Option<jiff::Timestamp>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ObservationsV2Response, Error<ObservationsGetManyError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_list",
+      "signature": "pub async fn prompts_list( configuration: &configuration::Configuration, name: Option<&str>, label: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<jiff::Timestamp>, to_updated_at: Option<jiff::Timestamp>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_many",
+      "signature": "pub async fn scores_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, environment: Option<Vec<String>>, source: Option<models::ScoreSource>, operator: Option<&str>, value: Option<f64>, score_ids: Option<&str>, config_id: Option<&str>, session_id: Option<&str>, dataset_run_id: Option<&str>, trace_id: Option<&str>, observation_id: Option<&str>, queue_id: Option<&str>, data_type: Option<models::ScoreDataType>, trace_tags: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresResponse, Error<ScoresGetManyError>>"
+    },
+    {
+      "file": "apis/scores_v3_api.rs",
+      "name": "scores_v3_get_many_v3",
+      "signature": "pub async fn scores_v3_get_many_v3( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, fields: Option<&str>, id: Option<&str>, name: Option<&str>, source: Option<&str>, data_type: Option<&str>, environment: Option<&str>, config_id: Option<&str>, queue_id: Option<&str>, author_user_id: Option<&str>, value: Option<&str>, value_min: Option<f64>, value_max: Option<f64>, trace_id: Option<&str>, session_id: Option<&str>, observation_id: Option<&str>, experiment_id: Option<&str>, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresV3Response, Error<ScoresV3GetManyV3Error>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_list",
+      "signature": "pub async fn sessions_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, environment: Option<Vec<String>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedSessions, Error<SessionsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_list",
+      "signature": "pub async fn skills_list( configuration: &configuration::Configuration, name: Option<&str>, search: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<jiff::Timestamp>, to_updated_at: Option<jiff::Timestamp>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_list",
+      "signature": "pub async fn trace_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, session_id: Option<&str>, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, order_by: Option<&str>, tags: Option<Vec<String>>, version: Option<&str>, release: Option<&str>, environment: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Traces, Error<TraceListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get",
+      "signature": "pub async fn unstable_topics_get( configuration: &configuration::Configuration, topic_id: &str, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list",
+      "signature": "pub async fn unstable_topics_list( configuration: &configuration::Configuration, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, filter: Option<&str>, order_by: Option<models::UnstableTopicsOrderBy>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_assignments",
+      "signature": "pub async fn unstable_topics_list_assignments( configuration: &configuration::Configuration, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, filter: Option<&str>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_summaries",
+      "signature": "pub async fn unstable_topics_list_summaries( configuration: &configuration::Configuration, from_timestamp: Option<jiff::Timestamp>, to_timestamp: Option<jiff::Timestamp>, filter: Option<&str>, truncate_summaries: Option<bool>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>>"
+    },
+    {
+      "file": "models/annotation_queue.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, score_config_ids: Vec<String>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> AnnotationQueue"
+    },
+    {
+      "file": "models/annotation_queue_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, queue_id: String, object_id: String, object_type: models::AnnotationQueueObjectType, status: models::AnnotationQueueStatus, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> AnnotationQueueItem"
+    },
+    {
+      "file": "models/api_key_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, public_key: String, secret_key: String, display_secret_key: String, ) -> ApiKeyResponse"
+    },
+    {
+      "file": "models/api_key_summary.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, public_key: String, display_secret_key: String, ) -> ApiKeySummary"
+    },
+    {
+      "file": "models/base_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, ) -> BaseScore"
+    },
+    {
+      "file": "models/base_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, ) -> BaseScoreV1"
+    },
+    {
+      "file": "models/base_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> BaseScoreV3"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, r#type: models::BlobStorageIntegrationType, bucket_name: String, endpoint: Option<String>, region: String, auth_type: models::BlobStorageIntegrationAuthType, access_key_id: Option<String>, role_arn: Option<String>, external_id: Option<String>, cross_account_role_arn: Option<String>, prefix: String, export_frequency: models::BlobStorageExportFrequency, enabled: bool, force_path_style: bool, file_type: models::BlobStorageIntegrationFileTypeResponse, export_mode: models::BlobStorageExportMode, export_start_date: Option<jiff::Timestamp>, compressed: bool, export_source: models::BlobStorageExportSource, export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>, next_sync_at: Option<jiff::Timestamp>, last_sync_at: Option<jiff::Timestamp>, last_error: Option<String>, last_error_at: Option<jiff::Timestamp>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> BlobStorageIntegrationResponse"
+    },
+    {
+      "file": "models/blob_storage_integration_status_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, sync_status: models::BlobStorageSyncStatus, enabled: bool, last_sync_at: Option<jiff::Timestamp>, next_sync_at: Option<jiff::Timestamp>, last_error: Option<String>, last_error_at: Option<jiff::Timestamp>, ) -> BlobStorageIntegrationStatusResponse"
+    },
+    {
+      "file": "models/boolean_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> BooleanScore"
+    },
+    {
+      "file": "models/boolean_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> BooleanScoreV1"
+    },
+    {
+      "file": "models/boolean_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: bool, ) -> BooleanScoreV3"
+    },
+    {
+      "file": "models/categorical_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CategoricalScore"
+    },
+    {
+      "file": "models/categorical_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CategoricalScoreV1"
+    },
+    {
+      "file": "models/categorical_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, ) -> CategoricalScoreV3"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<jiff::Timestamp>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, version_id: String, version: i64, version_created_at: jiff::Timestamp, version_created_by: models::Creator, r#type: String, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> CodeEvaluator"
+    },
+    {
+      "file": "models/code_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: jiff::Timestamp, created_by: models::Creator, r#type: String, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> CodeEvaluatorVersion"
+    },
+    {
+      "file": "models/comment.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, object_type: models::CommentObjectType, object_id: String, content: String, ) -> Comment"
+    },
+    {
+      "file": "models/correction_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CorrectionScore"
+    },
+    {
+      "file": "models/correction_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, ) -> CorrectionScoreV3"
+    },
+    {
+      "file": "models/dataset.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, input_schema: Option<std::collections::HashMap<String, serde_json::Value>>, expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>, project_id: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> Dataset"
+    },
+    {
+      "file": "models/dataset_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, status: models::DatasetStatus, input: Option<serde_json::Value>, expected_output: Option<serde_json::Value>, metadata: Option<serde_json::Value>, source_trace_id: Option<String>, source_observation_id: Option<String>, dataset_id: String, dataset_name: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, media_references: Vec<models::DatasetItemMediaReference>, ) -> DatasetItem"
+    },
+    {
+      "file": "models/dataset_run.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, dataset_id: String, dataset_name: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> DatasetRun"
+    },
+    {
+      "file": "models/dataset_run_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, dataset_run_id: String, dataset_run_name: String, dataset_item_id: String, trace_id: String, observation_id: Option<String>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> DatasetRunItem"
+    },
+    {
+      "file": "models/dataset_run_with_items.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, dataset_id: String, dataset_name: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, dataset_run_items: Vec<models::DatasetRunItem>, ) -> DatasetRunWithItems"
+    },
+    {
+      "file": "models/date_time_evaluation_rule_filter.rs",
+      "name": "new",
+      "signature": "pub fn new( column: String, operator: models::EvaluationRuleNumberFilterOperator, value: jiff::Timestamp, ) -> DateTimeEvaluationRuleFilter"
+    },
+    {
+      "file": "models/evaluation_rule.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_by: models::Creator, enabled: bool, sampling: f64, filter: Vec<models::EvaluationRuleReadFilter>, evaluator_assignments: Vec<models::EvaluatorAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> EvaluationRule"
+    },
+    {
+      "file": "models/evaluation_rule_filter_date_time_evaluation_rule_filter.rs",
+      "name": "new",
+      "signature": "pub fn new( column: String, operator: models::EvaluationRuleNumberFilterOperator, value: jiff::Timestamp, r#type: Type, ) -> EvaluationRuleFilterDateTimeEvaluationRuleFilter"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<jiff::Timestamp>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, version_id: String, version: i64, version_created_at: jiff::Timestamp, version_created_by: models::Creator, ) -> EvaluatorBase"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<jiff::Timestamp>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, version_id: String, version: i64, version_created_at: jiff::Timestamp, version_created_by: models::Creator, r#type: Type, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> EvaluatorCodeEvaluator"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<jiff::Timestamp>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, version_id: String, version: i64, version_created_at: jiff::Timestamp, version_created_by: models::Creator, r#type: Type, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> EvaluatorLlmAsJudgeEvaluator"
+    },
+    {
+      "file": "models/evaluator_version_base.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: jiff::Timestamp, created_by: models::Creator, ) -> EvaluatorVersionBase"
+    },
+    {
+      "file": "models/evaluator_version_code_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: jiff::Timestamp, created_by: models::Creator, r#type: Type, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> EvaluatorVersionCodeEvaluatorVersion"
+    },
+    {
+      "file": "models/evaluator_version_llm_as_judge_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: jiff::Timestamp, created_by: models::Creator, r#type: Type, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> EvaluatorVersionLlmAsJudgeEvaluatorVersion"
+    },
+    {
+      "file": "models/experiment.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, start_time: jiff::Timestamp, end_time: jiff::Timestamp, item_count: i64, dataset_id: Option<String>, ) -> Experiment"
+    },
+    {
+      "file": "models/experiment_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, start_time: jiff::Timestamp, end_time: Option<jiff::Timestamp>, level: models::ObservationLevel, environment: String, experiment_id: String, experiment_name: String, experiment_item_id: String, ) -> ExperimentItem"
+    },
+    {
+      "file": "models/get_media_response.rs",
+      "name": "new",
+      "signature": "pub fn new( media_id: String, content_type: String, content_length: i64, uploaded_at: jiff::Timestamp, url: String, url_expiry: String, ) -> GetMediaResponse"
+    },
+    {
+      "file": "models/get_scores_response_data_boolean.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataBoolean"
+    },
+    {
+      "file": "models/get_scores_response_data_categorical.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataCategorical"
+    },
+    {
+      "file": "models/get_scores_response_data_correction.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataCorrection"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataBoolean"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataCategorical"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_correction.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataCorrection"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataNumeric"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_text.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataText"
+    },
+    {
+      "file": "models/get_scores_response_data_numeric.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> GetScoresResponseDataNumeric"
+    },
+    {
+      "file": "models/get_scores_response_data_text.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> GetScoresResponseDataText"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<jiff::Timestamp>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, version_id: String, version: i64, version_created_at: jiff::Timestamp, version_created_by: models::Creator, r#type: String, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> LlmAsJudgeEvaluator"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: jiff::Timestamp, created_by: models::Creator, r#type: String, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> LlmAsJudgeEvaluatorVersion"
+    },
+    {
+      "file": "models/llm_connection.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, provider: String, adapter: String, display_secret_key: String, custom_models: Vec<String>, with_default_models: bool, extra_header_keys: Vec<String>, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> LlmConnection"
+    },
+    {
+      "file": "models/model.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, model_name: String, match_pattern: String, start_date: Option<jiff::Timestamp>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, tokenizer_id: Option<String>, tokenizer_config: Option<serde_json::Value>, is_langfuse_managed: bool, created_at: jiff::Timestamp, prices: std::collections::HashMap<String, models::ModelPrice>, pricing_tiers: Vec<models::PricingTier>, ) -> Model"
+    },
+    {
+      "file": "models/numeric_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> NumericScore"
+    },
+    {
+      "file": "models/numeric_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> NumericScoreV1"
+    },
+    {
+      "file": "models/numeric_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: f64, ) -> NumericScoreV3"
+    },
+    {
+      "file": "models/observation.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: jiff::Timestamp, end_time: Option<jiff::Timestamp>, completion_start_time: Option<jiff::Timestamp>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, ) -> Observation"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, start_time: jiff::Timestamp, end_time: Option<jiff::Timestamp>, project_id: String, parent_observation_id: Option<String>, r#type: String, model_id: Option<String>, input_price: Option<String>, output_price: Option<String>, total_price: Option<String>, ) -> ObservationV2"
+    },
+    {
+      "file": "models/observations_view.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: jiff::Timestamp, end_time: Option<jiff::Timestamp>, completion_start_time: Option<jiff::Timestamp>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, prompt_name: Option<String>, prompt_version: Option<i64>, model_id: Option<String>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, calculated_input_cost: Option<f64>, calculated_output_cost: Option<f64>, calculated_total_cost: Option<f64>, latency: Option<f64>, time_to_first_token: Option<f64>, ) -> ObservationsView"
+    },
+    {
+      "file": "models/observations_view_single.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: jiff::Timestamp, end_time: Option<jiff::Timestamp>, completion_start_time: Option<jiff::Timestamp>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, prompt_name: Option<String>, prompt_version: Option<i64>, model_id: Option<String>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, calculated_input_cost: Option<f64>, calculated_output_cost: Option<f64>, calculated_total_cost: Option<f64>, latency: Option<f64>, time_to_first_token: Option<f64>, ) -> ObservationsViewSingle"
+    },
+    {
+      "file": "models/organization_api_key.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, public_key: String, display_secret_key: String, ) -> OrganizationApiKey"
+    },
+    {
+      "file": "models/organization_project.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, ) -> OrganizationProject"
+    },
+    {
+      "file": "models/patch_media_body.rs",
+      "name": "new",
+      "signature": "pub fn new(uploaded_at: jiff::Timestamp, upload_http_status: i64) -> PatchMediaBody"
+    },
+    {
+      "file": "models/prompt_meta.rs",
+      "name": "new",
+      "signature": "pub fn new( name: String, r#type: models::PromptType, versions: Vec<i64>, labels: Vec<String>, tags: Vec<String>, last_updated_at: jiff::Timestamp, last_config: Option<serde_json::Value>, ) -> PromptMeta"
+    },
+    {
+      "file": "models/score_boolean_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreBooleanScore"
+    },
+    {
+      "file": "models/score_categorical_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreCategoricalScore"
+    },
+    {
+      "file": "models/score_config.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, project_id: String, data_type: models::ScoreConfigDataType, is_archived: bool, ) -> ScoreConfig"
+    },
+    {
+      "file": "models/score_correction_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreCorrectionScore"
+    },
+    {
+      "file": "models/score_numeric_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> ScoreNumericScore"
+    },
+    {
+      "file": "models/score_text_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> ScoreTextScore"
+    },
+    {
+      "file": "models/score_v1_boolean_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreV1BooleanScoreV1"
+    },
+    {
+      "file": "models/score_v1_categorical_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreV1CategoricalScoreV1"
+    },
+    {
+      "file": "models/score_v1_numeric_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> ScoreV1NumericScoreV1"
+    },
+    {
+      "file": "models/score_v1_text_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> ScoreV1TextScoreV1"
+    },
+    {
+      "file": "models/score_v3_boolean_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: bool, data_type: DataType, ) -> ScoreV3BooleanScoreV3"
+    },
+    {
+      "file": "models/score_v3_categorical_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, data_type: DataType, ) -> ScoreV3CategoricalScoreV3"
+    },
+    {
+      "file": "models/score_v3_correction_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, data_type: DataType, ) -> ScoreV3CorrectionScoreV3"
+    },
+    {
+      "file": "models/score_v3_numeric_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: f64, data_type: DataType, ) -> ScoreV3NumericScoreV3"
+    },
+    {
+      "file": "models/score_v3_text_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, data_type: DataType, ) -> ScoreV3TextScoreV3"
+    },
+    {
+      "file": "models/session.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, project_id: String, environment: String, ) -> Session"
+    },
+    {
+      "file": "models/session_with_traces.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, project_id: String, environment: String, traces: Vec<models::Trace>, ) -> SessionWithTraces"
+    },
+    {
+      "file": "models/skill_meta.rs",
+      "name": "new",
+      "signature": "pub fn new( name: String, description: String, tags: Vec<String>, latest_version: i64, latest_version_created_at: jiff::Timestamp, latest_version_last_updated_at: jiff::Timestamp, production_version: Option<i64>, ) -> SkillMeta"
+    },
+    {
+      "file": "models/skill_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, project_id: String, created_by: String, name: String, description: String, frontmatter: Option<serde_json::Value>, version: i64, tags: Vec<String>, labels: Vec<String>, commit_message: Option<String>, files: Vec<models::SkillFile>, ) -> SkillVersion"
+    },
+    {
+      "file": "models/text_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> TextScore"
+    },
+    {
+      "file": "models/text_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> TextScoreV1"
+    },
+    {
+      "file": "models/text_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: jiff::Timestamp, environment: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, value: String, ) -> TextScoreV3"
+    },
+    {
+      "file": "models/trace.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: jiff::Timestamp, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, ) -> Trace"
+    },
+    {
+      "file": "models/trace_with_details.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: jiff::Timestamp, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, html_path: String, ) -> TraceWithDetails"
+    },
+    {
+      "file": "models/trace_with_full_details.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: jiff::Timestamp, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, html_path: String, observations: Vec<models::ObservationsView>, scores: Vec<models::ScoreV1>, ) -> TraceWithFullDetails"
+    },
+    {
+      "file": "models/unstable_dashboard.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, name: String, description: String, definition: models::UnstableDashboardDefinition, filters: Vec<models::UnstableDashboardWidgetFilter>, ) -> UnstableDashboard"
+    },
+    {
+      "file": "models/unstable_dashboard_widget.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: jiff::Timestamp, updated_at: jiff::Timestamp, name: String, description: String, view: models::UnstableDashboardWidgetViewWithLegacy, dimensions: Vec<models::UnstableDashboardWidgetDimension>, metrics: Vec<models::UnstableDashboardWidgetMetric>, filters: Vec<models::UnstableDashboardWidgetFilter>, chart_type: models::UnstableDashboardWidgetChartType, chart_config: models::UnstableDashboardWidgetChartConfig, ) -> UnstableDashboardWidget"
+    },
+    {
+      "file": "models/unstable_topic_assignment.rs",
+      "name": "new",
+      "signature": "pub fn new( trace_id: String, timestamp: jiff::Timestamp, facet_id: String, facet_name: String, facet_version: i64, status: models::UnstableTopicAssignmentStatus, assigned_at: jiff::Timestamp, ) -> UnstableTopicAssignment"
+    },
+    {
+      "file": "models/unstable_topic_rule.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, filter: Vec<models::EvaluationRuleReadFilter>, sampling: f64, facet_ids: Vec<String>, updated_at: jiff::Timestamp, ) -> UnstableTopicRule"
+    },
+    {
+      "file": "models/unstable_topic_summary.rs",
+      "name": "new",
+      "signature": "pub fn new( trace_id: String, trace_name: String, environment: String, timestamp: jiff::Timestamp, facet_id: String, facet_name: String, facet_version: i64, state: models::UnstableTopicSummaryState, summary_truncated: bool, processed_at: jiff::Timestamp, ) -> UnstableTopicSummary"
+    },
+    {
+      "file": "models/unstable_topic_window.rs",
+      "name": "new",
+      "signature": "pub fn new(from: jiff::Timestamp, to: jiff::Timestamp) -> UnstableTopicWindow"
+    }
+  ],
+  "public_functions_removed_or_signature_changed": [
+    {
+      "file": "apis/dataset_items_api.rs",
+      "name": "dataset_items_list",
+      "signature": "pub async fn dataset_items_list( configuration: &configuration::Configuration, dataset_name: Option<&str>, source_trace_id: Option<&str>, source_observation_id: Option<&str>, version: Option<chrono::DateTime<chrono::FixedOffset>>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedDatasetItems, Error<DatasetItemsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list",
+      "signature": "pub async fn experiments_list( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, id: Option<&str>, name: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentsResponse, Error<ExperimentsListError>>"
+    },
+    {
+      "file": "apis/experiments_api.rs",
+      "name": "experiments_list_items",
+      "signature": "pub async fn experiments_list_items( configuration: &configuration::Configuration, from_start_time: chrono::DateTime<chrono::FixedOffset>, fields: Option<&str>, limit: Option<i64>, score_limit: Option<i64>, cursor: Option<&str>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, experiment_id: Option<&str>, experiment_name: Option<&str>, experiment_item_id: Option<&str>, dataset_id: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ExperimentItemsResponse, Error<ExperimentsListItemsError>>"
+    },
+    {
+      "file": "apis/legacy_observations_v1_api.rs",
+      "name": "legacy_observations_v1_get_many",
+      "signature": "pub async fn legacy_observations_v1_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, name: Option<&str>, user_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::LegacyObservationsViews, Error<LegacyObservationsV1GetManyError>>"
+    },
+    {
+      "file": "apis/observations_api.rs",
+      "name": "observations_get_many",
+      "signature": "pub async fn observations_get_many( configuration: &configuration::Configuration, fields: Option<&str>, expand_metadata: Option<&str>, limit: Option<i64>, cursor: Option<&str>, parse_io_as_json: Option<bool>, name: Option<&str>, user_id: Option<&str>, session_id: Option<&str>, r#type: Option<&str>, trace_id: Option<&str>, level: Option<models::ObservationLevel>, parent_observation_id: Option<&str>, is_root_observation: Option<bool>, environment: Option<Vec<String>>, from_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, version: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::ObservationsV2Response, Error<ObservationsGetManyError>>"
+    },
+    {
+      "file": "apis/prompts_api.rs",
+      "name": "prompts_list",
+      "signature": "pub async fn prompts_list( configuration: &configuration::Configuration, name: Option<&str>, label: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PromptMetaListResponse, Error<PromptsListError>>"
+    },
+    {
+      "file": "apis/scores_api.rs",
+      "name": "scores_get_many",
+      "signature": "pub async fn scores_get_many( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, source: Option<models::ScoreSource>, operator: Option<&str>, value: Option<f64>, score_ids: Option<&str>, config_id: Option<&str>, session_id: Option<&str>, dataset_run_id: Option<&str>, trace_id: Option<&str>, observation_id: Option<&str>, queue_id: Option<&str>, data_type: Option<models::ScoreDataType>, trace_tags: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresResponse, Error<ScoresGetManyError>>"
+    },
+    {
+      "file": "apis/scores_v3_api.rs",
+      "name": "scores_v3_get_many_v3",
+      "signature": "pub async fn scores_v3_get_many_v3( configuration: &configuration::Configuration, limit: Option<i64>, cursor: Option<&str>, fields: Option<&str>, id: Option<&str>, name: Option<&str>, source: Option<&str>, data_type: Option<&str>, environment: Option<&str>, config_id: Option<&str>, queue_id: Option<&str>, author_user_id: Option<&str>, value: Option<&str>, value_min: Option<f64>, value_max: Option<f64>, trace_id: Option<&str>, session_id: Option<&str>, observation_id: Option<&str>, experiment_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::GetScoresV3Response, Error<ScoresV3GetManyV3Error>>"
+    },
+    {
+      "file": "apis/sessions_api.rs",
+      "name": "sessions_list",
+      "signature": "pub async fn sessions_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, environment: Option<Vec<String>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::PaginatedSessions, Error<SessionsListError>>"
+    },
+    {
+      "file": "apis/skills_api.rs",
+      "name": "skills_list",
+      "signature": "pub async fn skills_list( configuration: &configuration::Configuration, name: Option<&str>, search: Option<&str>, tag: Option<&str>, page: Option<i64>, limit: Option<i64>, from_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, to_updated_at: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::SkillMetaListResponse, Error<SkillsListError>>"
+    },
+    {
+      "file": "apis/trace_api.rs",
+      "name": "trace_list",
+      "signature": "pub async fn trace_list( configuration: &configuration::Configuration, page: Option<i64>, limit: Option<i64>, user_id: Option<&str>, name: Option<&str>, session_id: Option<&str>, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, order_by: Option<&str>, tags: Option<Vec<String>>, version: Option<&str>, release: Option<&str>, environment: Option<Vec<String>>, fields: Option<&str>, filter: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::Traces, Error<TraceListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_get",
+      "signature": "pub async fn unstable_topics_get( configuration: &configuration::Configuration, topic_id: &str, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicWithStatus, Error<UnstableTopicsGetError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list",
+      "signature": "pub async fn unstable_topics_list( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicsOrderBy>, page: Option<i64>, limit: Option<i64>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicList, Error<UnstableTopicsListError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_assignments",
+      "signature": "pub async fn unstable_topics_list_assignments( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicAssignmentList, Error<UnstableTopicsListAssignmentsError>>"
+    },
+    {
+      "file": "apis/unstable_topics_api.rs",
+      "name": "unstable_topics_list_summaries",
+      "signature": "pub async fn unstable_topics_list_summaries( configuration: &configuration::Configuration, from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>, filter: Option<&str>, truncate_summaries: Option<bool>, order_by: Option<models::UnstableTopicResultsOrderBy>, limit: Option<i64>, cursor: Option<&str>, options: Option<&timvw_rust_runtime::RequestOptions>, ) -> Result<models::UnstableTopicSummaryList, Error<UnstableTopicsListSummariesError>>"
+    },
+    {
+      "file": "models/annotation_queue.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, score_config_ids: Vec<String>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> AnnotationQueue"
+    },
+    {
+      "file": "models/annotation_queue_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, queue_id: String, object_id: String, object_type: models::AnnotationQueueObjectType, status: models::AnnotationQueueStatus, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> AnnotationQueueItem"
+    },
+    {
+      "file": "models/api_key_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, public_key: String, secret_key: String, display_secret_key: String, ) -> ApiKeyResponse"
+    },
+    {
+      "file": "models/api_key_summary.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, public_key: String, display_secret_key: String, ) -> ApiKeySummary"
+    },
+    {
+      "file": "models/base_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, ) -> BaseScore"
+    },
+    {
+      "file": "models/base_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, ) -> BaseScoreV1"
+    },
+    {
+      "file": "models/base_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> BaseScoreV3"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, r#type: models::BlobStorageIntegrationType, bucket_name: String, endpoint: Option<String>, region: String, auth_type: models::BlobStorageIntegrationAuthType, access_key_id: Option<String>, role_arn: Option<String>, external_id: Option<String>, cross_account_role_arn: Option<String>, prefix: String, export_frequency: models::BlobStorageExportFrequency, enabled: bool, force_path_style: bool, file_type: models::BlobStorageIntegrationFileTypeResponse, export_mode: models::BlobStorageExportMode, export_start_date: Option<chrono::DateTime<chrono::FixedOffset>>, compressed: bool, export_source: models::BlobStorageExportSource, export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>, next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>, last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>, last_error: Option<String>, last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> BlobStorageIntegrationResponse"
+    },
+    {
+      "file": "models/blob_storage_integration_status_response.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, sync_status: models::BlobStorageSyncStatus, enabled: bool, last_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>, next_sync_at: Option<chrono::DateTime<chrono::FixedOffset>>, last_error: Option<String>, last_error_at: Option<chrono::DateTime<chrono::FixedOffset>>, ) -> BlobStorageIntegrationStatusResponse"
+    },
+    {
+      "file": "models/boolean_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> BooleanScore"
+    },
+    {
+      "file": "models/boolean_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> BooleanScoreV1"
+    },
+    {
+      "file": "models/boolean_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: bool, ) -> BooleanScoreV3"
+    },
+    {
+      "file": "models/categorical_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CategoricalScore"
+    },
+    {
+      "file": "models/categorical_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CategoricalScoreV1"
+    },
+    {
+      "file": "models/categorical_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, ) -> CategoricalScoreV3"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<chrono::DateTime<chrono::FixedOffset>>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, version_id: String, version: i64, version_created_at: chrono::DateTime<chrono::FixedOffset>, version_created_by: models::Creator, r#type: String, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> CodeEvaluator"
+    },
+    {
+      "file": "models/code_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: chrono::DateTime<chrono::FixedOffset>, created_by: models::Creator, r#type: String, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> CodeEvaluatorVersion"
+    },
+    {
+      "file": "models/comment.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, object_type: models::CommentObjectType, object_id: String, content: String, ) -> Comment"
+    },
+    {
+      "file": "models/correction_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> CorrectionScore"
+    },
+    {
+      "file": "models/correction_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, ) -> CorrectionScoreV3"
+    },
+    {
+      "file": "models/dataset.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, input_schema: Option<std::collections::HashMap<String, serde_json::Value>>, expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>, project_id: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> Dataset"
+    },
+    {
+      "file": "models/dataset_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, status: models::DatasetStatus, input: Option<serde_json::Value>, expected_output: Option<serde_json::Value>, metadata: Option<serde_json::Value>, source_trace_id: Option<String>, source_observation_id: Option<String>, dataset_id: String, dataset_name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, media_references: Vec<models::DatasetItemMediaReference>, ) -> DatasetItem"
+    },
+    {
+      "file": "models/dataset_run.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, dataset_id: String, dataset_name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> DatasetRun"
+    },
+    {
+      "file": "models/dataset_run_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, dataset_run_id: String, dataset_run_name: String, dataset_item_id: String, trace_id: String, observation_id: Option<String>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> DatasetRunItem"
+    },
+    {
+      "file": "models/dataset_run_with_items.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, metadata: Option<serde_json::Value>, dataset_id: String, dataset_name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, dataset_run_items: Vec<models::DatasetRunItem>, ) -> DatasetRunWithItems"
+    },
+    {
+      "file": "models/date_time_evaluation_rule_filter.rs",
+      "name": "new",
+      "signature": "pub fn new( column: String, operator: models::EvaluationRuleNumberFilterOperator, value: chrono::DateTime<chrono::FixedOffset>, ) -> DateTimeEvaluationRuleFilter"
+    },
+    {
+      "file": "models/evaluation_rule.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_by: models::Creator, enabled: bool, sampling: f64, filter: Vec<models::EvaluationRuleReadFilter>, evaluator_assignments: Vec<models::EvaluatorAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> EvaluationRule"
+    },
+    {
+      "file": "models/evaluation_rule_filter_date_time_evaluation_rule_filter.rs",
+      "name": "new",
+      "signature": "pub fn new( column: String, operator: models::EvaluationRuleNumberFilterOperator, value: chrono::DateTime<chrono::FixedOffset>, r#type: Type, ) -> EvaluationRuleFilterDateTimeEvaluationRuleFilter"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<chrono::DateTime<chrono::FixedOffset>>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, version_id: String, version: i64, version_created_at: chrono::DateTime<chrono::FixedOffset>, version_created_by: models::Creator, ) -> EvaluatorBase"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<chrono::DateTime<chrono::FixedOffset>>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, version_id: String, version: i64, version_created_at: chrono::DateTime<chrono::FixedOffset>, version_created_by: models::Creator, r#type: Type, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> EvaluatorCodeEvaluator"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<chrono::DateTime<chrono::FixedOffset>>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, version_id: String, version: i64, version_created_at: chrono::DateTime<chrono::FixedOffset>, version_created_by: models::Creator, r#type: Type, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> EvaluatorLlmAsJudgeEvaluator"
+    },
+    {
+      "file": "models/evaluator_version_base.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: chrono::DateTime<chrono::FixedOffset>, created_by: models::Creator, ) -> EvaluatorVersionBase"
+    },
+    {
+      "file": "models/evaluator_version_code_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: chrono::DateTime<chrono::FixedOffset>, created_by: models::Creator, r#type: Type, source_code: String, source_code_language: models::CodeEvaluatorSourceCodeLanguage, ) -> EvaluatorVersionCodeEvaluatorVersion"
+    },
+    {
+      "file": "models/evaluator_version_llm_as_judge_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: chrono::DateTime<chrono::FixedOffset>, created_by: models::Creator, r#type: Type, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> EvaluatorVersionLlmAsJudgeEvaluatorVersion"
+    },
+    {
+      "file": "models/experiment.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: chrono::DateTime<chrono::FixedOffset>, item_count: i64, dataset_id: Option<String>, ) -> Experiment"
+    },
+    {
+      "file": "models/experiment_item.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: Option<chrono::DateTime<chrono::FixedOffset>>, level: models::ObservationLevel, environment: String, experiment_id: String, experiment_name: String, experiment_item_id: String, ) -> ExperimentItem"
+    },
+    {
+      "file": "models/get_media_response.rs",
+      "name": "new",
+      "signature": "pub fn new( media_id: String, content_type: String, content_length: i64, uploaded_at: chrono::DateTime<chrono::FixedOffset>, url: String, url_expiry: String, ) -> GetMediaResponse"
+    },
+    {
+      "file": "models/get_scores_response_data_boolean.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataBoolean"
+    },
+    {
+      "file": "models/get_scores_response_data_categorical.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataCategorical"
+    },
+    {
+      "file": "models/get_scores_response_data_correction.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, ) -> GetScoresResponseDataCorrection"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataBoolean"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataCategorical"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_correction.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataCorrection"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataNumeric"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_text.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> GetScoresResponseDataGetScoresResponseDataText"
+    },
+    {
+      "file": "models/get_scores_response_data_numeric.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> GetScoresResponseDataNumeric"
+    },
+    {
+      "file": "models/get_scores_response_data_text.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> GetScoresResponseDataText"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, description: Option<String>, created_by: models::Creator, status: models::EvaluatorStatus, paused_at: Option<chrono::DateTime<chrono::FixedOffset>>, paused_reason: Option<String>, paused_message: Option<String>, evaluation_rule_assignments: Vec<models::EvaluationRuleAssignment>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, version_id: String, version: i64, version_created_at: chrono::DateTime<chrono::FixedOffset>, version_created_by: models::Creator, r#type: String, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> LlmAsJudgeEvaluator"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, version: i64, created_at: chrono::DateTime<chrono::FixedOffset>, created_by: models::Creator, r#type: String, prompt: Vec<models::EvaluatorChatMessage>, variables: Vec<String>, variable_mapping: Option<Vec<models::PromptVariableMappingRead>>, model_config: models::EvaluatorModelConfig, output_definition: models::PublicEvaluatorOutputDefinition, ) -> LlmAsJudgeEvaluatorVersion"
+    },
+    {
+      "file": "models/llm_connection.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, provider: String, adapter: String, display_secret_key: String, custom_models: Vec<String>, with_default_models: bool, extra_header_keys: Vec<String>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> LlmConnection"
+    },
+    {
+      "file": "models/model.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, model_name: String, match_pattern: String, start_date: Option<chrono::DateTime<chrono::FixedOffset>>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, tokenizer_id: Option<String>, tokenizer_config: Option<serde_json::Value>, is_langfuse_managed: bool, created_at: chrono::DateTime<chrono::FixedOffset>, prices: std::collections::HashMap<String, models::ModelPrice>, pricing_tiers: Vec<models::PricingTier>, ) -> Model"
+    },
+    {
+      "file": "models/numeric_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> NumericScore"
+    },
+    {
+      "file": "models/numeric_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, ) -> NumericScoreV1"
+    },
+    {
+      "file": "models/numeric_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: f64, ) -> NumericScoreV3"
+    },
+    {
+      "file": "models/observation.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: Option<chrono::DateTime<chrono::FixedOffset>>, completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, ) -> Observation"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: Option<chrono::DateTime<chrono::FixedOffset>>, project_id: String, parent_observation_id: Option<String>, r#type: String, model_id: Option<String>, input_price: Option<String>, output_price: Option<String>, total_price: Option<String>, ) -> ObservationV2"
+    },
+    {
+      "file": "models/observations_view.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: Option<chrono::DateTime<chrono::FixedOffset>>, completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, prompt_name: Option<String>, prompt_version: Option<i64>, model_id: Option<String>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, calculated_input_cost: Option<f64>, calculated_output_cost: Option<f64>, calculated_total_cost: Option<f64>, latency: Option<f64>, time_to_first_token: Option<f64>, ) -> ObservationsView"
+    },
+    {
+      "file": "models/observations_view_single.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: Option<String>, r#type: String, name: Option<String>, start_time: chrono::DateTime<chrono::FixedOffset>, end_time: Option<chrono::DateTime<chrono::FixedOffset>>, completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>, model: Option<String>, model_parameters: Option<serde_json::Value>, input: Option<serde_json::Value>, version: Option<String>, output: Option<serde_json::Value>, usage: models::Usage, level: models::ObservationLevel, status_message: Option<String>, parent_observation_id: Option<String>, prompt_id: Option<String>, usage_details: std::collections::HashMap<String, i64>, cost_details: std::collections::HashMap<String, f64>, environment: String, prompt_name: Option<String>, prompt_version: Option<i64>, model_id: Option<String>, input_price: Option<f64>, output_price: Option<f64>, total_price: Option<f64>, calculated_input_cost: Option<f64>, calculated_output_cost: Option<f64>, calculated_total_cost: Option<f64>, latency: Option<f64>, time_to_first_token: Option<f64>, ) -> ObservationsViewSingle"
+    },
+    {
+      "file": "models/organization_api_key.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, public_key: String, display_secret_key: String, ) -> OrganizationApiKey"
+    },
+    {
+      "file": "models/organization_project.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> OrganizationProject"
+    },
+    {
+      "file": "models/patch_media_body.rs",
+      "name": "new",
+      "signature": "pub fn new( uploaded_at: chrono::DateTime<chrono::FixedOffset>, upload_http_status: i64, ) -> PatchMediaBody"
+    },
+    {
+      "file": "models/prompt_meta.rs",
+      "name": "new",
+      "signature": "pub fn new( name: String, r#type: models::PromptType, versions: Vec<i64>, labels: Vec<String>, tags: Vec<String>, last_updated_at: chrono::DateTime<chrono::FixedOffset>, last_config: Option<serde_json::Value>, ) -> PromptMeta"
+    },
+    {
+      "file": "models/score_boolean_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreBooleanScore"
+    },
+    {
+      "file": "models/score_categorical_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreCategoricalScore"
+    },
+    {
+      "file": "models/score_config.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, project_id: String, data_type: models::ScoreConfigDataType, is_archived: bool, ) -> ScoreConfig"
+    },
+    {
+      "file": "models/score_correction_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreCorrectionScore"
+    },
+    {
+      "file": "models/score_numeric_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> ScoreNumericScore"
+    },
+    {
+      "file": "models/score_text_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> ScoreTextScore"
+    },
+    {
+      "file": "models/score_v1_boolean_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreV1BooleanScoreV1"
+    },
+    {
+      "file": "models/score_v1_categorical_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, string_value: String, data_type: DataType, ) -> ScoreV1CategoricalScoreV1"
+    },
+    {
+      "file": "models/score_v1_numeric_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, value: f64, data_type: DataType, ) -> ScoreV1NumericScoreV1"
+    },
+    {
+      "file": "models/score_v1_text_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, data_type: DataType, ) -> ScoreV1TextScoreV1"
+    },
+    {
+      "file": "models/score_v3_boolean_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: bool, data_type: DataType, ) -> ScoreV3BooleanScoreV3"
+    },
+    {
+      "file": "models/score_v3_categorical_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, data_type: DataType, ) -> ScoreV3CategoricalScoreV3"
+    },
+    {
+      "file": "models/score_v3_correction_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, data_type: DataType, ) -> ScoreV3CorrectionScoreV3"
+    },
+    {
+      "file": "models/score_v3_numeric_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: f64, data_type: DataType, ) -> ScoreV3NumericScoreV3"
+    },
+    {
+      "file": "models/score_v3_text_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, data_type: DataType, ) -> ScoreV3TextScoreV3"
+    },
+    {
+      "file": "models/session.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, project_id: String, environment: String, ) -> Session"
+    },
+    {
+      "file": "models/session_with_traces.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, project_id: String, environment: String, traces: Vec<models::Trace>, ) -> SessionWithTraces"
+    },
+    {
+      "file": "models/skill_meta.rs",
+      "name": "new",
+      "signature": "pub fn new( name: String, description: String, tags: Vec<String>, latest_version: i64, latest_version_created_at: chrono::DateTime<chrono::FixedOffset>, latest_version_last_updated_at: chrono::DateTime<chrono::FixedOffset>, production_version: Option<i64>, ) -> SkillMeta"
+    },
+    {
+      "file": "models/skill_version.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, project_id: String, created_by: String, name: String, description: String, frontmatter: Option<serde_json::Value>, version: i64, tags: Vec<String>, labels: Vec<String>, commit_message: Option<String>, files: Vec<models::SkillFile>, ) -> SkillVersion"
+    },
+    {
+      "file": "models/text_score.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> TextScore"
+    },
+    {
+      "file": "models/text_score_v1.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, trace_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, author_user_id: Option<String>, comment: Option<String>, config_id: Option<String>, queue_id: Option<String>, environment: String, string_value: String, ) -> TextScoreV1"
+    },
+    {
+      "file": "models/text_score_v3.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, project_id: String, name: String, source: models::ScoreSource, timestamp: chrono::DateTime<chrono::FixedOffset>, environment: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, value: String, ) -> TextScoreV3"
+    },
+    {
+      "file": "models/trace.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: chrono::DateTime<chrono::FixedOffset>, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, ) -> Trace"
+    },
+    {
+      "file": "models/trace_with_details.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: chrono::DateTime<chrono::FixedOffset>, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, html_path: String, ) -> TraceWithDetails"
+    },
+    {
+      "file": "models/trace_with_full_details.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, timestamp: chrono::DateTime<chrono::FixedOffset>, name: Option<String>, session_id: Option<String>, release: Option<String>, version: Option<String>, user_id: Option<String>, tags: Vec<String>, public: bool, environment: String, html_path: String, observations: Vec<models::ObservationsView>, scores: Vec<models::ScoreV1>, ) -> TraceWithFullDetails"
+    },
+    {
+      "file": "models/unstable_dashboard.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, name: String, description: String, definition: models::UnstableDashboardDefinition, filters: Vec<models::UnstableDashboardWidgetFilter>, ) -> UnstableDashboard"
+    },
+    {
+      "file": "models/unstable_dashboard_widget.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, created_at: chrono::DateTime<chrono::FixedOffset>, updated_at: chrono::DateTime<chrono::FixedOffset>, name: String, description: String, view: models::UnstableDashboardWidgetViewWithLegacy, dimensions: Vec<models::UnstableDashboardWidgetDimension>, metrics: Vec<models::UnstableDashboardWidgetMetric>, filters: Vec<models::UnstableDashboardWidgetFilter>, chart_type: models::UnstableDashboardWidgetChartType, chart_config: models::UnstableDashboardWidgetChartConfig, ) -> UnstableDashboardWidget"
+    },
+    {
+      "file": "models/unstable_topic_assignment.rs",
+      "name": "new",
+      "signature": "pub fn new( trace_id: String, timestamp: chrono::DateTime<chrono::FixedOffset>, facet_id: String, facet_name: String, facet_version: i64, status: models::UnstableTopicAssignmentStatus, assigned_at: chrono::DateTime<chrono::FixedOffset>, ) -> UnstableTopicAssignment"
+    },
+    {
+      "file": "models/unstable_topic_rule.rs",
+      "name": "new",
+      "signature": "pub fn new( id: String, name: String, filter: Vec<models::EvaluationRuleReadFilter>, sampling: f64, facet_ids: Vec<String>, updated_at: chrono::DateTime<chrono::FixedOffset>, ) -> UnstableTopicRule"
+    },
+    {
+      "file": "models/unstable_topic_summary.rs",
+      "name": "new",
+      "signature": "pub fn new( trace_id: String, trace_name: String, environment: String, timestamp: chrono::DateTime<chrono::FixedOffset>, facet_id: String, facet_name: String, facet_version: i64, state: models::UnstableTopicSummaryState, summary_truncated: bool, processed_at: chrono::DateTime<chrono::FixedOffset>, ) -> UnstableTopicSummary"
+    },
+    {
+      "file": "models/unstable_topic_window.rs",
+      "name": "new",
+      "signature": "pub fn new( from: chrono::DateTime<chrono::FixedOffset>, to: chrono::DateTime<chrono::FixedOffset>, ) -> UnstableTopicWindow"
+    }
+  ],
+  "public_model_field_changes": [
+    {
+      "file": "models/annotation_queue.rs",
+      "model": "AnnotationQueue",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/annotation_queue.rs",
+      "model": "AnnotationQueue",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/annotation_queue_item.rs",
+      "model": "AnnotationQueueItem",
+      "field": "completed_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/annotation_queue_item.rs",
+      "model": "AnnotationQueueItem",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/annotation_queue_item.rs",
+      "model": "AnnotationQueueItem",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/api_key_response.rs",
+      "model": "ApiKeyResponse",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/api_key_response.rs",
+      "model": "ApiKeyResponse",
+      "field": "expires_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/api_key_summary.rs",
+      "model": "ApiKeySummary",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/api_key_summary.rs",
+      "model": "ApiKeySummary",
+      "field": "expires_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/api_key_summary.rs",
+      "model": "ApiKeySummary",
+      "field": "last_used_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/base_score.rs",
+      "model": "BaseScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score.rs",
+      "model": "BaseScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score.rs",
+      "model": "BaseScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v1.rs",
+      "model": "BaseScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v1.rs",
+      "model": "BaseScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v1.rs",
+      "model": "BaseScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v3.rs",
+      "model": "BaseScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v3.rs",
+      "model": "BaseScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/base_score_v3.rs",
+      "model": "BaseScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "export_start_date",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "last_error_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "last_sync_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "next_sync_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_response.rs",
+      "model": "BlobStorageIntegrationResponse",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/blob_storage_integration_status_response.rs",
+      "model": "BlobStorageIntegrationStatusResponse",
+      "field": "last_error_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_status_response.rs",
+      "model": "BlobStorageIntegrationStatusResponse",
+      "field": "last_sync_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/blob_storage_integration_status_response.rs",
+      "model": "BlobStorageIntegrationStatusResponse",
+      "field": "next_sync_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/boolean_score.rs",
+      "model": "BooleanScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score.rs",
+      "model": "BooleanScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score.rs",
+      "model": "BooleanScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v1.rs",
+      "model": "BooleanScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v1.rs",
+      "model": "BooleanScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v1.rs",
+      "model": "BooleanScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v3.rs",
+      "model": "BooleanScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v3.rs",
+      "model": "BooleanScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/boolean_score_v3.rs",
+      "model": "BooleanScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score.rs",
+      "model": "CategoricalScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score.rs",
+      "model": "CategoricalScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score.rs",
+      "model": "CategoricalScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v1.rs",
+      "model": "CategoricalScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v1.rs",
+      "model": "CategoricalScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v1.rs",
+      "model": "CategoricalScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v3.rs",
+      "model": "CategoricalScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v3.rs",
+      "model": "CategoricalScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/categorical_score_v3.rs",
+      "model": "CategoricalScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "model": "CodeEvaluator",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "model": "CodeEvaluator",
+      "field": "paused_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "model": "CodeEvaluator",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/code_evaluator.rs",
+      "model": "CodeEvaluator",
+      "field": "version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/code_evaluator_version.rs",
+      "model": "CodeEvaluatorVersion",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/comment.rs",
+      "model": "Comment",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/comment.rs",
+      "model": "Comment",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score.rs",
+      "model": "CorrectionScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score.rs",
+      "model": "CorrectionScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score.rs",
+      "model": "CorrectionScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score_v3.rs",
+      "model": "CorrectionScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score_v3.rs",
+      "model": "CorrectionScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/correction_score_v3.rs",
+      "model": "CorrectionScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/create_blob_storage_integration_request.rs",
+      "model": "CreateBlobStorageIntegrationRequest",
+      "field": "export_start_date",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_dataset_run_item_request.rs",
+      "model": "CreateDatasetRunItemRequest",
+      "field": "created_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_dataset_run_item_request.rs",
+      "model": "CreateDatasetRunItemRequest",
+      "field": "dataset_version",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_event_body.rs",
+      "model": "CreateEventBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_generation_body.rs",
+      "model": "CreateGenerationBody",
+      "field": "completion_start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_generation_body.rs",
+      "model": "CreateGenerationBody",
+      "field": "end_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_generation_body.rs",
+      "model": "CreateGenerationBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_model_request.rs",
+      "model": "CreateModelRequest",
+      "field": "start_date",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_score_request.rs",
+      "model": "CreateScoreRequest",
+      "field": "timestamp",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_span_body.rs",
+      "model": "CreateSpanBody",
+      "field": "end_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/create_span_body.rs",
+      "model": "CreateSpanBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/dataset.rs",
+      "model": "Dataset",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset.rs",
+      "model": "Dataset",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_item.rs",
+      "model": "DatasetItem",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_item.rs",
+      "model": "DatasetItem",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_item.rs",
+      "model": "DatasetItem",
+      "field": "version",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/dataset_run.rs",
+      "model": "DatasetRun",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_run.rs",
+      "model": "DatasetRun",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_run_item.rs",
+      "model": "DatasetRunItem",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_run_item.rs",
+      "model": "DatasetRunItem",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_run_with_items.rs",
+      "model": "DatasetRunWithItems",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/dataset_run_with_items.rs",
+      "model": "DatasetRunWithItems",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/date_time_evaluation_rule_filter.rs",
+      "model": "DateTimeEvaluationRuleFilter",
+      "field": "value",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluation_rule.rs",
+      "model": "EvaluationRule",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluation_rule.rs",
+      "model": "EvaluationRule",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluation_rule_filter_date_time_evaluation_rule_filter.rs",
+      "model": "EvaluationRuleFilterDateTimeEvaluationRuleFilter",
+      "field": "value",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "model": "EvaluatorBase",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "model": "EvaluatorBase",
+      "field": "paused_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "model": "EvaluatorBase",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_base.rs",
+      "model": "EvaluatorBase",
+      "field": "version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "model": "EvaluatorCodeEvaluator",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "model": "EvaluatorCodeEvaluator",
+      "field": "paused_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "model": "EvaluatorCodeEvaluator",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_code_evaluator.rs",
+      "model": "EvaluatorCodeEvaluator",
+      "field": "version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "model": "EvaluatorLlmAsJudgeEvaluator",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "model": "EvaluatorLlmAsJudgeEvaluator",
+      "field": "paused_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "model": "EvaluatorLlmAsJudgeEvaluator",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_llm_as_judge_evaluator.rs",
+      "model": "EvaluatorLlmAsJudgeEvaluator",
+      "field": "version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_version_base.rs",
+      "model": "EvaluatorVersionBase",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_version_code_evaluator_version.rs",
+      "model": "EvaluatorVersionCodeEvaluatorVersion",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/evaluator_version_llm_as_judge_evaluator_version.rs",
+      "model": "EvaluatorVersionLlmAsJudgeEvaluatorVersion",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/experiment.rs",
+      "model": "Experiment",
+      "field": "end_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/experiment.rs",
+      "model": "Experiment",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/experiment_item.rs",
+      "model": "ExperimentItem",
+      "field": "end_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/experiment_item.rs",
+      "model": "ExperimentItem",
+      "field": "experiment_item_version",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/experiment_item.rs",
+      "model": "ExperimentItem",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_media_response.rs",
+      "model": "GetMediaResponse",
+      "field": "uploaded_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataBoolean",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataBoolean",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataBoolean",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataCategorical",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataCategorical",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataCategorical",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataCorrection",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataCorrection",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataCorrection",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataBoolean",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataBoolean",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_boolean.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataBoolean",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCategorical",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCategorical",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_categorical.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCategorical",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCorrection",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCorrection",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_correction.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataCorrection",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataNumeric",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataNumeric",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataNumeric",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataText",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataText",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataGetScoresResponseDataText",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataNumeric",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataNumeric",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_numeric.rs",
+      "model": "GetScoresResponseDataNumeric",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataText",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataText",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/get_scores_response_data_text.rs",
+      "model": "GetScoresResponseDataText",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "model": "LlmAsJudgeEvaluator",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "model": "LlmAsJudgeEvaluator",
+      "field": "paused_at",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "model": "LlmAsJudgeEvaluator",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator.rs",
+      "model": "LlmAsJudgeEvaluator",
+      "field": "version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_as_judge_evaluator_version.rs",
+      "model": "LlmAsJudgeEvaluatorVersion",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_connection.rs",
+      "model": "LlmConnection",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/llm_connection.rs",
+      "model": "LlmConnection",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/model.rs",
+      "model": "Model",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/model.rs",
+      "model": "Model",
+      "field": "start_date",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/numeric_score.rs",
+      "model": "NumericScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score.rs",
+      "model": "NumericScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score.rs",
+      "model": "NumericScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v1.rs",
+      "model": "NumericScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v1.rs",
+      "model": "NumericScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v1.rs",
+      "model": "NumericScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v3.rs",
+      "model": "NumericScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v3.rs",
+      "model": "NumericScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/numeric_score_v3.rs",
+      "model": "NumericScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/observation.rs",
+      "model": "Observation",
+      "field": "completion_start_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observation.rs",
+      "model": "Observation",
+      "field": "end_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observation.rs",
+      "model": "Observation",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/observation_body.rs",
+      "model": "ObservationBody",
+      "field": "completion_start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observation_body.rs",
+      "model": "ObservationBody",
+      "field": "end_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observation_body.rs",
+      "model": "ObservationBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "model": "ObservationV2",
+      "field": "completion_start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "model": "ObservationV2",
+      "field": "created_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "model": "ObservationV2",
+      "field": "end_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "model": "ObservationV2",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/observation_v2.rs",
+      "model": "ObservationV2",
+      "field": "updated_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/observations_view.rs",
+      "model": "ObservationsView",
+      "field": "completion_start_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observations_view.rs",
+      "model": "ObservationsView",
+      "field": "end_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observations_view.rs",
+      "model": "ObservationsView",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/observations_view_single.rs",
+      "model": "ObservationsViewSingle",
+      "field": "completion_start_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observations_view_single.rs",
+      "model": "ObservationsViewSingle",
+      "field": "end_time",
+      "registry": "Option<chrono::DateTime<chrono::FixedOffset>>",
+      "current": "Option<jiff::Timestamp>"
+    },
+    {
+      "file": "models/observations_view_single.rs",
+      "model": "ObservationsViewSingle",
+      "field": "start_time",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/optional_observation_body.rs",
+      "model": "OptionalObservationBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/organization_api_key.rs",
+      "model": "OrganizationApiKey",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/organization_api_key.rs",
+      "model": "OrganizationApiKey",
+      "field": "expires_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/organization_api_key.rs",
+      "model": "OrganizationApiKey",
+      "field": "last_used_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/organization_project.rs",
+      "model": "OrganizationProject",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/organization_project.rs",
+      "model": "OrganizationProject",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/patch_media_body.rs",
+      "model": "PatchMediaBody",
+      "field": "uploaded_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/projects_create_api_key_request.rs",
+      "model": "ProjectsCreateApiKeyRequest",
+      "field": "expires_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/prompt_meta.rs",
+      "model": "PromptMeta",
+      "field": "last_updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/public_api_error_details.rs",
+      "model": "PublicApiErrorDetails",
+      "field": "reset_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/score_boolean_score.rs",
+      "model": "ScoreBooleanScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_boolean_score.rs",
+      "model": "ScoreBooleanScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_boolean_score.rs",
+      "model": "ScoreBooleanScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_categorical_score.rs",
+      "model": "ScoreCategoricalScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_categorical_score.rs",
+      "model": "ScoreCategoricalScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_categorical_score.rs",
+      "model": "ScoreCategoricalScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_config.rs",
+      "model": "ScoreConfig",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_config.rs",
+      "model": "ScoreConfig",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_correction_score.rs",
+      "model": "ScoreCorrectionScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_correction_score.rs",
+      "model": "ScoreCorrectionScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_correction_score.rs",
+      "model": "ScoreCorrectionScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_numeric_score.rs",
+      "model": "ScoreNumericScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_numeric_score.rs",
+      "model": "ScoreNumericScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_numeric_score.rs",
+      "model": "ScoreNumericScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_text_score.rs",
+      "model": "ScoreTextScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_text_score.rs",
+      "model": "ScoreTextScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_text_score.rs",
+      "model": "ScoreTextScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_boolean_score_v1.rs",
+      "model": "ScoreV1BooleanScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_boolean_score_v1.rs",
+      "model": "ScoreV1BooleanScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_boolean_score_v1.rs",
+      "model": "ScoreV1BooleanScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_categorical_score_v1.rs",
+      "model": "ScoreV1CategoricalScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_categorical_score_v1.rs",
+      "model": "ScoreV1CategoricalScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_categorical_score_v1.rs",
+      "model": "ScoreV1CategoricalScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_numeric_score_v1.rs",
+      "model": "ScoreV1NumericScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_numeric_score_v1.rs",
+      "model": "ScoreV1NumericScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_numeric_score_v1.rs",
+      "model": "ScoreV1NumericScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_text_score_v1.rs",
+      "model": "ScoreV1TextScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_text_score_v1.rs",
+      "model": "ScoreV1TextScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v1_text_score_v1.rs",
+      "model": "ScoreV1TextScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_boolean_score_v3.rs",
+      "model": "ScoreV3BooleanScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_boolean_score_v3.rs",
+      "model": "ScoreV3BooleanScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_boolean_score_v3.rs",
+      "model": "ScoreV3BooleanScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_categorical_score_v3.rs",
+      "model": "ScoreV3CategoricalScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_categorical_score_v3.rs",
+      "model": "ScoreV3CategoricalScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_categorical_score_v3.rs",
+      "model": "ScoreV3CategoricalScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_correction_score_v3.rs",
+      "model": "ScoreV3CorrectionScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_correction_score_v3.rs",
+      "model": "ScoreV3CorrectionScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_correction_score_v3.rs",
+      "model": "ScoreV3CorrectionScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_numeric_score_v3.rs",
+      "model": "ScoreV3NumericScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_numeric_score_v3.rs",
+      "model": "ScoreV3NumericScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_numeric_score_v3.rs",
+      "model": "ScoreV3NumericScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_text_score_v3.rs",
+      "model": "ScoreV3TextScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_text_score_v3.rs",
+      "model": "ScoreV3TextScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/score_v3_text_score_v3.rs",
+      "model": "ScoreV3TextScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/session.rs",
+      "model": "Session",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/session_with_traces.rs",
+      "model": "SessionWithTraces",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/skill_meta.rs",
+      "model": "SkillMeta",
+      "field": "latest_version_created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/skill_meta.rs",
+      "model": "SkillMeta",
+      "field": "latest_version_last_updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/skill_version.rs",
+      "model": "SkillVersion",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/skill_version.rs",
+      "model": "SkillVersion",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score.rs",
+      "model": "TextScore",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score.rs",
+      "model": "TextScore",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score.rs",
+      "model": "TextScore",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v1.rs",
+      "model": "TextScoreV1",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v1.rs",
+      "model": "TextScoreV1",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v1.rs",
+      "model": "TextScoreV1",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v3.rs",
+      "model": "TextScoreV3",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v3.rs",
+      "model": "TextScoreV3",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/text_score_v3.rs",
+      "model": "TextScoreV3",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/trace.rs",
+      "model": "Trace",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/trace_body.rs",
+      "model": "TraceBody",
+      "field": "timestamp",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/trace_with_details.rs",
+      "model": "TraceWithDetails",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/trace_with_full_details.rs",
+      "model": "TraceWithFullDetails",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_dashboard.rs",
+      "model": "UnstableDashboard",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_dashboard.rs",
+      "model": "UnstableDashboard",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_dashboard_widget.rs",
+      "model": "UnstableDashboardWidget",
+      "field": "created_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_dashboard_widget.rs",
+      "model": "UnstableDashboardWidget",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_assignment.rs",
+      "model": "UnstableTopicAssignment",
+      "field": "assigned_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_assignment.rs",
+      "model": "UnstableTopicAssignment",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_facet_published_run.rs",
+      "model": "UnstableTopicFacetPublishedRun",
+      "field": "completed_at",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/unstable_topic_rule.rs",
+      "model": "UnstableTopicRule",
+      "field": "updated_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_summary.rs",
+      "model": "UnstableTopicSummary",
+      "field": "processed_at",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_summary.rs",
+      "model": "UnstableTopicSummary",
+      "field": "timestamp",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_window.rs",
+      "model": "UnstableTopicWindow",
+      "field": "from",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/unstable_topic_window.rs",
+      "model": "UnstableTopicWindow",
+      "field": "to",
+      "registry": "chrono::DateTime<chrono::FixedOffset>",
+      "current": "jiff::Timestamp"
+    },
+    {
+      "file": "models/update_event_body.rs",
+      "model": "UpdateEventBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/update_generation_body.rs",
+      "model": "UpdateGenerationBody",
+      "field": "completion_start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/update_generation_body.rs",
+      "model": "UpdateGenerationBody",
+      "field": "end_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/update_generation_body.rs",
+      "model": "UpdateGenerationBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/update_span_body.rs",
+      "model": "UpdateSpanBody",
+      "field": "end_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    },
+    {
+      "file": "models/update_span_body.rs",
+      "model": "UpdateSpanBody",
+      "field": "start_time",
+      "registry": "Option<Option<chrono::DateTime<chrono::FixedOffset>>>",
+      "current": "Option<Option<jiff::Timestamp>>"
+    }
+  ],
+  "public_enum_variant_changes": [],
+  "public_derive_changes": [],
+  "serde_field_attribute_changes": [],
+  "public_enum_variant_payload_changes": [],
+  "public_trait_impl_changes": [],
+  "counts": {
+    "model_exports_added": 0,
+    "model_exports_removed": 0,
+    "public_functions_added_or_signature_changed": 108,
+    "public_functions_removed_or_signature_changed": 108,
+    "public_model_field_changes": 262,
+    "public_enum_types_with_variant_changes": 0,
+    "public_enum_variants_added": 0,
+    "public_enum_variants_removed": 0,
+    "public_derive_changes": 0,
+    "serde_field_attribute_changes": 0,
+    "public_enum_variant_payload_changes": 0,
+    "public_types_with_trait_impl_changes": 0,
+    "public_trait_impls_added": 0,
+    "public_trait_impls_removed": 0
+  }
+}

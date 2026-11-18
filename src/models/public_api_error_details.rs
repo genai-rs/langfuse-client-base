@@ -54,7 +54,7 @@ pub struct PublicApiErrorDetails {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub reset_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub reset_at: Option<Option<jiff::Timestamp>>,
 }
 
 impl PublicApiErrorDetails {

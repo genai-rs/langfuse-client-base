@@ -28,16 +28,16 @@ pub struct Observation {
     pub name: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
-    pub start_time: chrono::DateTime<chrono::FixedOffset>,
+    pub start_time: jiff::Timestamp,
     /// The end time of the observation.
     #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
-    pub end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub end_time: Option<jiff::Timestamp>,
     /// The completion start time of the observation
     #[serde(
         rename = "completionStartTime",
         deserialize_with = "Option::deserialize"
     )]
-    pub completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub completion_start_time: Option<jiff::Timestamp>,
     /// The model used for the observation
     #[serde(rename = "model", deserialize_with = "Option::deserialize")]
     pub model: Option<String>,
@@ -94,9 +94,9 @@ impl Observation {
         trace_id: Option<String>,
         r#type: String,
         name: Option<String>,
-        start_time: chrono::DateTime<chrono::FixedOffset>,
-        end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
-        completion_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+        start_time: jiff::Timestamp,
+        end_time: Option<jiff::Timestamp>,
+        completion_start_time: Option<jiff::Timestamp>,
         model: Option<String>,
         model_parameters: Option<serde_json::Value>,
         input: Option<serde_json::Value>,

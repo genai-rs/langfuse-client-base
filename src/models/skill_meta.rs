@@ -22,9 +22,9 @@ pub struct SkillMeta {
     #[serde(rename = "latestVersion")]
     pub latest_version: i64,
     #[serde(rename = "latestVersionCreatedAt")]
-    pub latest_version_created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub latest_version_created_at: jiff::Timestamp,
     #[serde(rename = "latestVersionLastUpdatedAt")]
-    pub latest_version_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub latest_version_last_updated_at: jiff::Timestamp,
     /// Version assigned the production label, or null when no version is assigned.
     #[serde(rename = "productionVersion", deserialize_with = "Option::deserialize")]
     pub production_version: Option<i64>,
@@ -36,8 +36,8 @@ impl SkillMeta {
         description: String,
         tags: Vec<String>,
         latest_version: i64,
-        latest_version_created_at: chrono::DateTime<chrono::FixedOffset>,
-        latest_version_last_updated_at: chrono::DateTime<chrono::FixedOffset>,
+        latest_version_created_at: jiff::Timestamp,
+        latest_version_last_updated_at: jiff::Timestamp,
         production_version: Option<i64>,
     ) -> SkillMeta {
         SkillMeta {

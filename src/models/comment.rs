@@ -19,9 +19,9 @@ pub struct Comment {
     #[serde(rename = "projectId")]
     pub project_id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     #[serde(rename = "objectType")]
     pub object_type: models::CommentObjectType,
     #[serde(rename = "objectId")]
@@ -42,8 +42,8 @@ impl Comment {
     pub fn new(
         id: String,
         project_id: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         object_type: models::CommentObjectType,
         object_id: String,
         content: String,

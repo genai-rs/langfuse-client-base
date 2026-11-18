@@ -170,8 +170,8 @@ Name | Type | Description  | Required | Notes
 **tag** | Option<**String**> | Filter by a shared skill tag. |  |
 **page** | Option<**i64**> |  |  |
 **limit** | Option<**i64**> |  |  |
-**from_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Include skills whose latest version was updated at or after this timestamp. |  |
-**to_updated_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Include skills whose latest version was updated before this timestamp. |  |
+**from_updated_at** | Option<**jiff::Timestamp**> | Include skills whose latest version was updated at or after this timestamp. |  |
+**to_updated_at** | Option<**jiff::Timestamp**> | Include skills whose latest version was updated before this timestamp. |  |
 **options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
 
 ```rust,ignore

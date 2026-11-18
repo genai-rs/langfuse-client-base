@@ -86,7 +86,7 @@ pub struct CreateBlobStorageIntegrationRequest {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub export_start_date: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub export_start_date: Option<Option<jiff::Timestamp>>,
     /// Enable gzip compression for exported files (.csv.gz, .json.gz, .jsonl.gz). Defaults to true.
     #[serde(
         rename = "compressed",

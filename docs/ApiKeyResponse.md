@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**expires_at** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Expiration timestamp. Null if the key does not expire. | [optional]
+**created_at** | **jiff::Timestamp** |  | 
+**expires_at** | Option<**jiff::Timestamp**> | Expiration timestamp. Null if the key does not expire. | [optional]
 **public_key** | **String** |  | 
 **secret_key** | **String** |  | 
 **display_secret_key** | **String** |  | 

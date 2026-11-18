@@ -37,8 +37,8 @@ Name | Type | Description  | Required | Notes
 **session_id** | Option<**String**> | Comma-separated list of session IDs to filter by. Mutually exclusive with traceId, observationId, experimentId. |  |
 **observation_id** | Option<**String**> | Comma-separated list of observation IDs to filter by. Requires traceId to be specified, because observation IDs are scoped to a trace. Mutually exclusive with sessionId, experimentId. Returns HTTP 400 when used without traceId. |  |
 **experiment_id** | Option<**String**> | Comma-separated list of dataset run IDs (experiment IDs) to filter by. Mutually exclusive with traceId, sessionId, observationId. |  |
-**from_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Inclusive lower bound on the score timestamp. |  |
-**to_timestamp** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Exclusive upper bound on the score timestamp. |  |
+**from_timestamp** | Option<**jiff::Timestamp**> | Inclusive lower bound on the score timestamp. |  |
+**to_timestamp** | Option<**jiff::Timestamp**> | Exclusive upper bound on the score timestamp. |  |
 **options** | Option<&timvw_rust_runtime::RequestOptions> | Per-call extra headers, query parameters and base URL, applied after everything else ([`RequestOptions`](https://docs.rs/timvw-rust-runtime/latest/timvw_rust_runtime/struct.RequestOptions.html)) |  |
 
 ```rust,ignore

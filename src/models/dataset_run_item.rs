@@ -27,9 +27,9 @@ pub struct DatasetRunItem {
     #[serde(rename = "observationId", deserialize_with = "Option::deserialize")]
     pub observation_id: Option<String>,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl DatasetRunItem {
@@ -40,8 +40,8 @@ impl DatasetRunItem {
         dataset_item_id: String,
         trace_id: String,
         observation_id: Option<String>,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> DatasetRunItem {
         DatasetRunItem {
             id,

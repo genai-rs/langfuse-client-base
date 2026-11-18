@@ -6,15 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **trace_id** | **String** |  | 
-**start_time** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**end_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> |  | 
+**start_time** | **jiff::Timestamp** |  | 
+**end_time** | Option<**jiff::Timestamp**> |  | 
 **level** | [**models::ObservationLevel**](ObservationLevel.md) |  | 
 **environment** | **String** |  | 
 **experiment_id** | **String** |  | 
 **experiment_name** | **String** |  | 
 **experiment_item_id** | **String** |  | 
 **experiment_dataset_id** | Option<**String**> | Included when `fields=dataset` is requested. | [optional]
-**experiment_item_version** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Included when `fields=dataset` is requested. | [optional]
+**experiment_item_version** | Option<**jiff::Timestamp**> | Included when `fields=dataset` is requested. | [optional]
 **input** | Option<**serde_json::Value**> | Included when `fields=io` is requested. | [optional]
 **output** | Option<**serde_json::Value**> | Included when `fields=io` is requested. | [optional]
 **expected_output** | Option<**serde_json::Value**> | Included when `fields=io` is requested. | [optional]

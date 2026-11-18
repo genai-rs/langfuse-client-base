@@ -22,7 +22,7 @@ pub struct UnstableTopicSummary {
     pub environment: String,
     /// Trace start time.
     #[serde(rename = "timestamp")]
-    pub timestamp: chrono::DateTime<chrono::FixedOffset>,
+    pub timestamp: jiff::Timestamp,
     #[serde(rename = "facetId")]
     pub facet_id: String,
     #[serde(rename = "facetName")]
@@ -42,7 +42,7 @@ pub struct UnstableTopicSummary {
     #[serde(rename = "summaryTruncated")]
     pub summary_truncated: bool,
     #[serde(rename = "processedAt")]
-    pub processed_at: chrono::DateTime<chrono::FixedOffset>,
+    pub processed_at: jiff::Timestamp,
 }
 
 impl UnstableTopicSummary {
@@ -50,13 +50,13 @@ impl UnstableTopicSummary {
         trace_id: String,
         trace_name: String,
         environment: String,
-        timestamp: chrono::DateTime<chrono::FixedOffset>,
+        timestamp: jiff::Timestamp,
         facet_id: String,
         facet_name: String,
         facet_version: i64,
         state: models::UnstableTopicSummaryState,
         summary_truncated: bool,
-        processed_at: chrono::DateTime<chrono::FixedOffset>,
+        processed_at: jiff::Timestamp,
     ) -> UnstableTopicSummary {
         UnstableTopicSummary {
             trace_id,

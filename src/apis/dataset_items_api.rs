@@ -336,7 +336,7 @@ pub async fn dataset_items_list(
     dataset_name: Option<&str>,
     source_trace_id: Option<&str>,
     source_observation_id: Option<&str>,
-    version: Option<chrono::DateTime<chrono::FixedOffset>>,
+    version: Option<jiff::Timestamp>,
     page: Option<i64>,
     limit: Option<i64>,
     options: Option<&timvw_rust_runtime::RequestOptions>,
@@ -364,7 +364,7 @@ pub async fn dataset_items_list(
         req_builder = req_builder.query(&[("sourceObservationId", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_version {
-        req_builder = req_builder.query(&[("version", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("version", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_page {
         req_builder = req_builder.query(&[("page", &param_value.to_string())]);

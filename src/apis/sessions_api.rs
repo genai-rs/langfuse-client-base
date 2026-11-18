@@ -136,8 +136,8 @@ pub async fn sessions_list(
     configuration: &configuration::Configuration,
     page: Option<i64>,
     limit: Option<i64>,
-    from_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
-    to_timestamp: Option<chrono::DateTime<chrono::FixedOffset>>,
+    from_timestamp: Option<jiff::Timestamp>,
+    to_timestamp: Option<jiff::Timestamp>,
     environment: Option<Vec<String>>,
     options: Option<&timvw_rust_runtime::RequestOptions>,
 ) -> Result<models::PaginatedSessions, Error<SessionsListError>> {
@@ -160,10 +160,10 @@ pub async fn sessions_list(
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_from_timestamp {
-        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("fromTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_to_timestamp {
-        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toTimestamp", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_environment {
         let items: Vec<String> = param_value.iter().map(|p| p.to_string()).collect();

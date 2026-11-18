@@ -20,12 +20,12 @@ List experiments with cursor-based pagination. Results are ordered by latest exp
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Required. Retrieve only experiments with events on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with an upper bound to select a specific window. | [required] |
+**from_start_time** | **jiff::Timestamp** | Required. Retrieve only experiments with events on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with an upper bound to select a specific window. | [required] |
 **fields** | Option<**String**> | Comma-separated list of field groups to include. Available groups: `core`, `metadata`, `scores`. If omitted, `core` is returned. |  |
 **limit** | Option<**i64**> | Number of experiments to return per page. Maximum 100, default 50. |  |
 **score_limit** | Option<**i64**> | Number of scores to return per experiment when `fields=scores` is requested. Maximum 50, default 50. |  |
 **cursor** | Option<**String**> | Versioned base64url cursor from the previous response page. |  |
-**to_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only experiments before this datetime. |  |
+**to_start_time** | Option<**jiff::Timestamp**> | Retrieve only experiments before this datetime. |  |
 **id** | Option<**String**> | Comma-separated list of experiment IDs. |  |
 **name** | Option<**String**> | Comma-separated list of experiment names. |  |
 **dataset_id** | Option<**String**> | Comma-separated list of dataset IDs. |  |
@@ -63,12 +63,12 @@ List experiment items with cursor-based pagination. Use this endpoint to export 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**from_start_time** | **chrono::DateTime<chrono::FixedOffset>** | Required. Retrieve only experiment items started on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with an upper bound to select a specific window. | [required] |
+**from_start_time** | **jiff::Timestamp** | Required. Retrieve only experiment items started on or after this datetime. A lower bound is required so the query stays fast on large projects; pair it with an upper bound to select a specific window. | [required] |
 **fields** | Option<**String**> | Comma-separated list of field groups to include. Available groups: `core`, `dataset`, `io`, `metadata`, `itemMetadata`, `experimentMetadata`, `scores`. If omitted, `core,dataset` is returned. |  |
 **limit** | Option<**i64**> | Number of experiment items to return per page. Maximum 100, default 50. |  |
 **score_limit** | Option<**i64**> | Number of scores to return per experiment item when `fields=scores` is requested. Maximum 50, default 50. |  |
 **cursor** | Option<**String**> | Versioned base64url cursor from the previous response page. |  |
-**to_start_time** | Option<**chrono::DateTime<chrono::FixedOffset>**> | Retrieve only experiment items started before this datetime. |  |
+**to_start_time** | Option<**jiff::Timestamp**> | Retrieve only experiment items started before this datetime. |  |
 **experiment_id** | Option<**String**> | Comma-separated list of experiment IDs. |  |
 **experiment_name** | Option<**String**> | Comma-separated list of experiment names. |  |
 **experiment_item_id** | Option<**String**> | Comma-separated list of experiment item IDs. |  |

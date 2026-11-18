@@ -17,9 +17,9 @@ pub struct UnstableDashboard {
     #[serde(rename = "id")]
     pub id: String,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "description")]
@@ -34,8 +34,8 @@ pub struct UnstableDashboard {
 impl UnstableDashboard {
     pub fn new(
         id: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         name: String,
         description: String,
         definition: models::UnstableDashboardDefinition,

@@ -22,10 +22,10 @@ pub struct Experiment {
     pub description: Option<String>,
     /// Start of the experiment, i.e. the earliest event within the requested time range. Clipped to `fromStartTime` when the experiment started before the requested range.
     #[serde(rename = "startTime")]
-    pub start_time: chrono::DateTime<chrono::FixedOffset>,
+    pub start_time: jiff::Timestamp,
     /// End of the experiment, i.e. the latest event end within the requested time range.
     #[serde(rename = "endTime")]
-    pub end_time: chrono::DateTime<chrono::FixedOffset>,
+    pub end_time: jiff::Timestamp,
     /// Number of experiment items within the requested time range.
     #[serde(rename = "itemCount")]
     pub item_count: i64,
@@ -55,8 +55,8 @@ impl Experiment {
         id: String,
         name: String,
         description: Option<String>,
-        start_time: chrono::DateTime<chrono::FixedOffset>,
-        end_time: chrono::DateTime<chrono::FixedOffset>,
+        start_time: jiff::Timestamp,
+        end_time: jiff::Timestamp,
         item_count: i64,
         dataset_id: Option<String>,
     ) -> Experiment {

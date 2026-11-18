@@ -25,17 +25,17 @@ pub struct OrganizationProject {
     )]
     pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
 }
 
 impl OrganizationProject {
     pub fn new(
         id: String,
         name: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
     ) -> OrganizationProject {
         OrganizationProject {
             id,

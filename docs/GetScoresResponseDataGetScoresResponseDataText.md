@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 **dataset_run_id** | Option<**String**> | The dataset run ID associated with the score | [optional]
 **name** | **String** |  | 
 **source** | [**models::ScoreSource**](ScoreSource.md) |  | 
-**timestamp** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**created_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
-**updated_at** | **chrono::DateTime<chrono::FixedOffset>** |  | 
+**timestamp** | **jiff::Timestamp** |  | 
+**created_at** | **jiff::Timestamp** |  | 
+**updated_at** | **jiff::Timestamp** |  | 
 **author_user_id** | Option<**String**> | The user ID of the author | 
 **comment** | Option<**String**> | Comment on the score | 
 **metadata** | Option<**std::collections::HashMap<String, serde_json::Value>**> | Metadata associated with the score | [optional]

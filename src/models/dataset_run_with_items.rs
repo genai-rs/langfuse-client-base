@@ -34,10 +34,10 @@ pub struct DatasetRunWithItems {
     pub dataset_name: String,
     /// The date and time when the dataset run was created
     #[serde(rename = "createdAt")]
-    pub created_at: chrono::DateTime<chrono::FixedOffset>,
+    pub created_at: jiff::Timestamp,
     /// The date and time when the dataset run was last updated
     #[serde(rename = "updatedAt")]
-    pub updated_at: chrono::DateTime<chrono::FixedOffset>,
+    pub updated_at: jiff::Timestamp,
     #[serde(rename = "datasetRunItems")]
     pub dataset_run_items: Vec<models::DatasetRunItem>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
@@ -52,8 +52,8 @@ impl DatasetRunWithItems {
         metadata: Option<serde_json::Value>,
         dataset_id: String,
         dataset_name: String,
-        created_at: chrono::DateTime<chrono::FixedOffset>,
-        updated_at: chrono::DateTime<chrono::FixedOffset>,
+        created_at: jiff::Timestamp,
+        updated_at: jiff::Timestamp,
         dataset_run_items: Vec<models::DatasetRunItem>,
     ) -> DatasetRunWithItems {
         DatasetRunWithItems {

@@ -42,12 +42,12 @@ pub enum ExperimentsListItemsError {
 #[bon::builder]
 pub async fn experiments_list(
     configuration: &configuration::Configuration,
-    from_start_time: chrono::DateTime<chrono::FixedOffset>,
+    from_start_time: jiff::Timestamp,
     fields: Option<&str>,
     limit: Option<i64>,
     score_limit: Option<i64>,
     cursor: Option<&str>,
-    to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    to_start_time: Option<jiff::Timestamp>,
     id: Option<&str>,
     name: Option<&str>,
     dataset_id: Option<&str>,
@@ -83,9 +83,9 @@ pub async fn experiments_list(
     if let Some(ref param_value) = p_query_cursor {
         req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
     }
-    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_rfc3339())]);
+    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_string())]);
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_id {
         req_builder = req_builder.query(&[("id", &param_value.to_string())]);
@@ -174,12 +174,12 @@ pub async fn experiments_list(
 #[bon::builder]
 pub async fn experiments_list_items(
     configuration: &configuration::Configuration,
-    from_start_time: chrono::DateTime<chrono::FixedOffset>,
+    from_start_time: jiff::Timestamp,
     fields: Option<&str>,
     limit: Option<i64>,
     score_limit: Option<i64>,
     cursor: Option<&str>,
-    to_start_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    to_start_time: Option<jiff::Timestamp>,
     experiment_id: Option<&str>,
     experiment_name: Option<&str>,
     experiment_item_id: Option<&str>,
@@ -217,9 +217,9 @@ pub async fn experiments_list_items(
     if let Some(ref param_value) = p_query_cursor {
         req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
     }
-    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_rfc3339())]);
+    req_builder = req_builder.query(&[("fromStartTime", &p_query_from_start_time.to_string())]);
     if let Some(ref param_value) = p_query_to_start_time {
-        req_builder = req_builder.query(&[("toStartTime", &param_value.to_rfc3339())]);
+        req_builder = req_builder.query(&[("toStartTime", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_query_experiment_id {
         req_builder = req_builder.query(&[("experimentId", &param_value.to_string())]);

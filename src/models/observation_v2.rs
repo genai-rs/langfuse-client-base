@@ -23,10 +23,10 @@ pub struct ObservationV2 {
     pub trace_id: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
-    pub start_time: chrono::DateTime<chrono::FixedOffset>,
+    pub start_time: jiff::Timestamp,
     /// The end time of the observation
     #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
-    pub end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+    pub end_time: Option<jiff::Timestamp>,
     /// The project ID this observation belongs to
     #[serde(rename = "projectId")]
     pub project_id: String,
@@ -120,7 +120,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub completion_start_time: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub completion_start_time: Option<Option<jiff::Timestamp>>,
     /// The creation timestamp of the observation
     #[serde(
         rename = "createdAt",
@@ -128,7 +128,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub created_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub created_at: Option<Option<jiff::Timestamp>>,
     /// The last update timestamp of the observation
     #[serde(
         rename = "updatedAt",
@@ -136,7 +136,7 @@ pub struct ObservationV2 {
         with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub updated_at: Option<Option<chrono::DateTime<chrono::FixedOffset>>>,
+    pub updated_at: Option<Option<jiff::Timestamp>>,
     /// The input data of the observation
     #[serde(
         rename = "input",
@@ -300,8 +300,8 @@ impl ObservationV2 {
     pub fn new(
         id: String,
         trace_id: Option<String>,
-        start_time: chrono::DateTime<chrono::FixedOffset>,
-        end_time: Option<chrono::DateTime<chrono::FixedOffset>>,
+        start_time: jiff::Timestamp,
+        end_time: Option<jiff::Timestamp>,
         project_id: String,
         parent_observation_id: Option<String>,
         r#type: String,
