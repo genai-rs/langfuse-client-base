@@ -24,24 +24,24 @@ pub struct Model {
     #[serde(rename = "matchPattern")]
     pub match_pattern: String,
     /// Apply only to generations which are newer than this ISO date.
-    #[serde(rename = "startDate", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "startDate", default)]
     pub start_date: Option<jiff::Timestamp>,
     #[serde(rename = "unit", skip_serializing_if = "Option::is_none")]
     pub unit: Option<models::ModelUsageUnit>,
     /// Deprecated. See 'prices' instead. Price (USD) per input unit
-    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "inputPrice", default)]
     pub input_price: Option<f64>,
     /// Deprecated. See 'prices' instead. Price (USD) per output unit
-    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "outputPrice", default)]
     pub output_price: Option<f64>,
     /// Deprecated. See 'prices' instead. Price (USD) per total unit. Cannot be set if input or output price is set.
-    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "totalPrice", default)]
     pub total_price: Option<f64>,
     /// Legacy tokenizer identifier retained for API compatibility. Ingestion no longer uses it to infer observation usage.
-    #[serde(rename = "tokenizerId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "tokenizerId", default)]
     pub tokenizer_id: Option<String>,
     /// Legacy tokenizer configuration retained for API compatibility. Ingestion no longer uses it to infer observation usage.
-    #[serde(rename = "tokenizerConfig", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "tokenizerConfig", default)]
     pub tokenizer_config: Option<serde_json::Value>,
     #[serde(rename = "isLangfuseManaged")]
     pub is_langfuse_managed: bool,

@@ -37,10 +37,10 @@ pub struct ScoreV1TextScoreV1 {
     #[serde(rename = "updatedAt")]
     pub updated_at: jiff::Timestamp,
     /// The user ID of the author
-    #[serde(rename = "authorUserId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "authorUserId", default)]
     pub author_user_id: Option<String>,
     /// Comment on the score
-    #[serde(rename = "comment", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "comment", default)]
     pub comment: Option<String>,
     /// Metadata associated with the score
     #[serde(
@@ -51,10 +51,10 @@ pub struct ScoreV1TextScoreV1 {
     )]
     pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// Reference a score config on a score. When set, config and score name must be equal and value must comply to optionally defined numerical range
-    #[serde(rename = "configId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "configId", default)]
     pub config_id: Option<String>,
     /// The annotation queue referenced by the score. Indicates if score was initially created while processing annotation queue.
-    #[serde(rename = "queueId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "queueId", default)]
     pub queue_id: Option<String>,
     /// The environment from which this score originated. Can be any lowercase alphanumeric string with hyphens and underscores that does not start with 'langfuse'.
     #[serde(rename = "environment")]

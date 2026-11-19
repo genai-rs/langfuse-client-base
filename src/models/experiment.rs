@@ -18,7 +18,7 @@ pub struct Experiment {
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "description", default)]
     pub description: Option<String>,
     /// Start of the experiment, i.e. the earliest event within the requested time range. Clipped to `fromStartTime` when the experiment started before the requested range.
     #[serde(rename = "startTime")]
@@ -30,7 +30,7 @@ pub struct Experiment {
     #[serde(rename = "itemCount")]
     pub item_count: i64,
     /// Null when the experiment is not associated with a dataset.
-    #[serde(rename = "datasetId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "datasetId", default)]
     pub dataset_id: Option<String>,
     /// Included only when `fields=metadata` is requested.
     #[serde(

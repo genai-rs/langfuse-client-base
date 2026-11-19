@@ -19,22 +19,19 @@ pub struct DatasetItem {
     #[serde(rename = "status")]
     pub status: models::DatasetStatus,
     /// Input data for the dataset item
-    #[serde(rename = "input", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "input", default)]
     pub input: Option<serde_json::Value>,
     /// Expected output for the dataset item
-    #[serde(rename = "expectedOutput", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "expectedOutput", default)]
     pub expected_output: Option<serde_json::Value>,
     /// Metadata associated with the dataset item
-    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "metadata", default)]
     pub metadata: Option<serde_json::Value>,
     /// The trace ID that sourced this dataset item
-    #[serde(rename = "sourceTraceId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "sourceTraceId", default)]
     pub source_trace_id: Option<String>,
     /// The observation ID that sourced this dataset item
-    #[serde(
-        rename = "sourceObservationId",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "sourceObservationId", default)]
     pub source_observation_id: Option<String>,
     #[serde(rename = "datasetId")]
     pub dataset_id: String,

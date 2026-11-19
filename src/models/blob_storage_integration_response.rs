@@ -22,25 +22,22 @@ pub struct BlobStorageIntegrationResponse {
     pub r#type: models::BlobStorageIntegrationType,
     #[serde(rename = "bucketName")]
     pub bucket_name: String,
-    #[serde(rename = "endpoint", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "endpoint", default)]
     pub endpoint: Option<String>,
     #[serde(rename = "region")]
     pub region: String,
     #[serde(rename = "authType")]
     pub auth_type: models::BlobStorageIntegrationAuthType,
-    #[serde(rename = "accessKeyId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "accessKeyId", default)]
     pub access_key_id: Option<String>,
     /// IAM role Langfuse assumes. May be set while `authType` is `ACCESS_KEYS` if the integration used `ROLE_ARN` before.
-    #[serde(rename = "roleArn", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "roleArn", default)]
     pub role_arn: Option<String>,
     /// External ID Langfuse passes when assuming `roleArn`. Require it in the role's trust policy with an `sts:ExternalId` condition. Null until the integration first uses `ROLE_ARN`.
-    #[serde(rename = "externalId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "externalId", default)]
     pub external_id: Option<String>,
     /// Langfuse role that must be trusted by `roleArn`. Null when the deployment does not support IAM role auth or the organization is not on an Enterprise plan.
-    #[serde(
-        rename = "crossAccountRoleArn",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "crossAccountRoleArn", default)]
     pub cross_account_role_arn: Option<String>,
     #[serde(rename = "prefix")]
     pub prefix: String,
@@ -54,22 +51,22 @@ pub struct BlobStorageIntegrationResponse {
     pub file_type: models::BlobStorageIntegrationFileTypeResponse,
     #[serde(rename = "exportMode")]
     pub export_mode: models::BlobStorageExportMode,
-    #[serde(rename = "exportStartDate", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "exportStartDate", default)]
     pub export_start_date: Option<jiff::Timestamp>,
     #[serde(rename = "compressed")]
     pub compressed: bool,
     #[serde(rename = "exportSource")]
     pub export_source: models::BlobStorageExportSource,
     /// Field groups included in each exported observation and score row. An empty list is treated as all observation groups and no score groups during export. Core score columns are always exported.
-    #[serde(rename = "exportFieldGroups", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "exportFieldGroups", default)]
     pub export_field_groups: Option<Vec<models::BlobStorageExportFieldGroup>>,
-    #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "nextSyncAt", default)]
     pub next_sync_at: Option<jiff::Timestamp>,
-    #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastSyncAt", default)]
     pub last_sync_at: Option<jiff::Timestamp>,
-    #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastError", default)]
     pub last_error: Option<String>,
-    #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastErrorAt", default)]
     pub last_error_at: Option<jiff::Timestamp>,
     #[serde(rename = "createdAt")]
     pub created_at: jiff::Timestamp,

@@ -28,7 +28,7 @@ pub struct SkillVersion {
     pub name: String,
     #[serde(rename = "description")]
     pub description: String,
-    #[serde(rename = "frontmatter", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "frontmatter", default)]
     pub frontmatter: Option<serde_json::Value>,
     #[serde(rename = "version")]
     pub version: i64,
@@ -36,7 +36,7 @@ pub struct SkillVersion {
     pub tags: Vec<String>,
     #[serde(rename = "labels")]
     pub labels: Vec<String>,
-    #[serde(rename = "commitMessage", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "commitMessage", default)]
     pub commit_message: Option<String>,
     #[serde(rename = "files")]
     pub files: Vec<models::SkillFile>,

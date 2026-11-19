@@ -19,22 +19,19 @@ pub struct ObservationV2 {
     #[serde(rename = "id")]
     pub id: String,
     /// The trace ID associated with the observation
-    #[serde(rename = "traceId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "traceId", default)]
     pub trace_id: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
     pub start_time: jiff::Timestamp,
     /// The end time of the observation
-    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "endTime", default)]
     pub end_time: Option<jiff::Timestamp>,
     /// The project ID this observation belongs to
     #[serde(rename = "projectId")]
     pub project_id: String,
     /// The physical parent observation ID, if present. Observations marked as app roots by the SDK may retain a non-null parent ID.
-    #[serde(
-        rename = "parentObservationId",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "parentObservationId", default)]
     pub parent_observation_id: Option<String>,
     /// The type of the observation (e.g. GENERATION, SPAN, EVENT)
     #[serde(rename = "type")]
@@ -258,16 +255,16 @@ pub struct ObservationV2 {
     )]
     pub time_to_first_token: Option<Option<f64>>,
     /// The matched model ID. Null when the `model` field group is not requested.
-    #[serde(rename = "modelId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "modelId", default)]
     pub model_id: Option<String>,
     /// The input token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "inputPrice", default)]
     pub input_price: Option<String>,
     /// The output token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "outputPrice", default)]
     pub output_price: Option<String>,
     /// The total token price (USD per unit) from the matched model, serialized as a decimal string (e.g. \"0.0001\"). Null when the `model` field group is not requested.
-    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "totalPrice", default)]
     pub total_price: Option<String>,
     /// The name of the parent trace
     #[serde(

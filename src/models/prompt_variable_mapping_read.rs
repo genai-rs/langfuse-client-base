@@ -18,7 +18,7 @@ pub struct PromptVariableMappingRead {
     #[serde(rename = "variable")]
     pub variable: String,
     /// Stored source field populating the variable, or `null` when the mapping is incomplete.
-    #[serde(rename = "source", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "source", default)]
     pub source: Option<String>,
     /// Optional JSONPath selector applied to the selected source.
     #[serde(
