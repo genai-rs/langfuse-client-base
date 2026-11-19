@@ -3,8 +3,10 @@ name: CI
 on:
   push:
     branches: [main]
+  # Default activity types only: labeled/unlabeled events would start more
+  # runs on the same commit, which cancel each other and can leave a
+  # required check cancelled (genai-rs/.github docs/rust-ci.md).
   pull_request:
-    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -50,6 +52,9 @@ jobs:
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
           API_CHANGE_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'api-change') }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           # Strict only for PRs that change the generation pipeline: those must
           # reproduce the API of their base commit, or justify the diff. The
@@ -65,6 +70,12 @@ jobs:
             echo "::notice::Generation pipeline unchanged; public-API diff against the last release is report-only"
             scripts/check_public_api.sh
           else
+            # The label is read now as well: CI does not run on labeled
+            # events, so it takes effect with a re-run, which replays the
+            # original event payload, or with the next push.
+            if [ "$API_CHANGE_LABEL" != "true" ] && gh api "repos/$REPO/issues/$PR_NUMBER/labels" --jq '.[].name' | grep -qx 'api-change'; then
+              API_CHANGE_LABEL=true
+            fi
             if [ "$API_CHANGE_LABEL" = "true" ]; then
               export ALLOW_API_CHANGES=1
               echo "::warning::PR is labelled api-change; public-API diff is report-only"
