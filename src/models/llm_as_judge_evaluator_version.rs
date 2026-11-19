@@ -35,7 +35,7 @@ pub struct LlmAsJudgeEvaluatorVersion {
     #[serde(rename = "variables")]
     pub variables: Vec<String>,
     /// Default variable mapping for this evaluator version, or `null` when no default is configured.
-    #[serde(rename = "variableMapping", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "variableMapping", default)]
     pub variable_mapping: Option<Vec<models::PromptVariableMappingRead>>,
     #[serde(rename = "modelConfig")]
     pub model_config: models::EvaluatorModelConfig,

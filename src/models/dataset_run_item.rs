@@ -24,7 +24,7 @@ pub struct DatasetRunItem {
     #[serde(rename = "traceId")]
     pub trace_id: String,
     /// The observation ID associated with this run item
-    #[serde(rename = "observationId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "observationId", default)]
     pub observation_id: Option<String>,
     #[serde(rename = "createdAt")]
     pub created_at: jiff::Timestamp,

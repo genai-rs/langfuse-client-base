@@ -20,7 +20,7 @@ pub struct ExperimentItem {
     pub trace_id: String,
     #[serde(rename = "startTime")]
     pub start_time: jiff::Timestamp,
-    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "endTime", default)]
     pub end_time: Option<jiff::Timestamp>,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,

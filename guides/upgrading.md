@@ -5,6 +5,11 @@ minor-version bump). Each one has a migration note in [`migration/`](../migratio
 what changed in the public API (`api-diff-<from>-to-<to>.json`, written by `scripts/check_public_api.sh`). The
 [CHANGELOG](../CHANGELOG.md) lists every release.
 
+- **0.26.1** (timvw-rust 0.39.0): no API change. A required, nullable field (277 of them, e.g.
+  `Observation.parent_observation_id`, `AnnotationQueue.description`) reads a missing key as `None` instead of
+  failing the whole response; `None` is still written as `null`, and a missing required field that cannot be null
+  still fails. The generator changes between 0.36.0 and 0.39.0 for Unix timestamps (`format: unixtime`) and
+  collapsed string union parameters have nothing to apply to in the Langfuse spec.
 - **0.26** (timvw-rust 0.33.0, `dateTimeLibrary=jiff`): dates are `jiff::Timestamp` and `jiff::civil::Date` instead of
   chrono's types, and chrono is no longer a dependency. See
   [`api-diff-0.25.1-to-0.26.0.md`](../migration/api-diff-0.25.1-to-0.26.0.md).

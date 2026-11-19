@@ -17,7 +17,7 @@ pub struct PromptTextPrompt {
     pub name: String,
     #[serde(rename = "version")]
     pub version: i64,
-    #[serde(rename = "config", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "config", default)]
     pub config: Option<serde_json::Value>,
     /// List of deployment labels of this prompt version.
     #[serde(rename = "labels")]

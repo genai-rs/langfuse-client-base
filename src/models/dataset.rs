@@ -18,19 +18,16 @@ pub struct Dataset {
     #[serde(rename = "name")]
     pub name: String,
     /// Description of the dataset
-    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "description", default)]
     pub description: Option<String>,
     /// Metadata associated with the dataset
-    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "metadata", default)]
     pub metadata: Option<serde_json::Value>,
     /// JSON Schema for validating dataset item inputs
-    #[serde(rename = "inputSchema", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "inputSchema", default)]
     pub input_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
     /// JSON Schema for validating dataset item expected outputs
-    #[serde(
-        rename = "expectedOutputSchema",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "expectedOutputSchema", default)]
     pub expected_output_schema: Option<std::collections::HashMap<String, serde_json::Value>>,
     #[serde(rename = "projectId")]
     pub project_id: String,

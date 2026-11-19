@@ -21,20 +21,20 @@ pub struct LlmAsJudgeEvaluator {
     #[serde(rename = "name")]
     pub name: String,
     /// Optional human-readable evaluator description.
-    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "description", default)]
     pub description: Option<String>,
     #[serde(rename = "createdBy")]
     pub created_by: models::Creator,
     #[serde(rename = "status")]
     pub status: models::EvaluatorStatus,
     /// Timestamp when the evaluator was paused, otherwise `null`.
-    #[serde(rename = "pausedAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "pausedAt", default)]
     pub paused_at: Option<jiff::Timestamp>,
     /// Machine-readable reason when `status=paused`, otherwise `null`.
-    #[serde(rename = "pausedReason", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "pausedReason", default)]
     pub paused_reason: Option<String>,
     /// Human-readable explanation when `status=paused`, otherwise `null`.
-    #[serde(rename = "pausedMessage", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "pausedMessage", default)]
     pub paused_message: Option<String>,
     /// All modern and legacy evaluation-rule assignments in newest-assignment-first order. Rule-specific mappings are exposed as `variableMappingOverride`; inherited defaults are omitted.
     #[serde(rename = "evaluationRuleAssignments")]
@@ -66,7 +66,7 @@ pub struct LlmAsJudgeEvaluator {
     #[serde(rename = "variables")]
     pub variables: Vec<String>,
     /// Default variable mapping for the latest version, or `null` when no default is configured.
-    #[serde(rename = "variableMapping", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "variableMapping", default)]
     pub variable_mapping: Option<Vec<models::PromptVariableMappingRead>>,
     #[serde(rename = "modelConfig")]
     pub model_config: models::EvaluatorModelConfig,

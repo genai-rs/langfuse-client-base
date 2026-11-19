@@ -23,16 +23,16 @@ pub struct BlobStorageIntegrationStatusResponse {
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// End of the last successfully exported time window. Compare against your ETL bookmark to determine if new data is available. Null if the integration has never synced.
-    #[serde(rename = "lastSyncAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastSyncAt", default)]
     pub last_sync_at: Option<jiff::Timestamp>,
     /// When the next export is scheduled. Null if no sync has occurred yet.
-    #[serde(rename = "nextSyncAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "nextSyncAt", default)]
     pub next_sync_at: Option<jiff::Timestamp>,
     /// Raw error message from the storage provider (S3/Azure/GCS) if the last export failed. Cleared on successful export.
-    #[serde(rename = "lastError", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastError", default)]
     pub last_error: Option<String>,
     /// When the last error occurred. Cleared on successful export.
-    #[serde(rename = "lastErrorAt", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastErrorAt", default)]
     pub last_error_at: Option<jiff::Timestamp>,
 }
 

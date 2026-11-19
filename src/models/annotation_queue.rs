@@ -17,7 +17,7 @@ pub struct AnnotationQueue {
     pub id: String,
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "description", default)]
     pub description: Option<String>,
     #[serde(rename = "scoreConfigIds")]
     pub score_config_ids: Vec<String>,

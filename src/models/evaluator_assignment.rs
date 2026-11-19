@@ -18,7 +18,7 @@ pub struct EvaluatorAssignment {
     #[serde(rename = "evaluatorId")]
     pub evaluator_id: String,
     /// Stored rule-specific override, or `null` when the evaluator's latest default mapping is inherited. Legacy mappings are returned as an explicit `legacy` variant.
-    #[serde(rename = "variableMapping", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "variableMapping", default)]
     pub variable_mapping: Option<Vec<models::PromptVariableMapping>>,
 }
 

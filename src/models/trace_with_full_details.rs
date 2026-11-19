@@ -21,7 +21,7 @@ pub struct TraceWithFullDetails {
     #[serde(rename = "timestamp")]
     pub timestamp: jiff::Timestamp,
     /// The name of the trace
-    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "name", default)]
     pub name: Option<String>,
     /// The input data of the trace. Can be any JSON.
     #[serde(
@@ -40,16 +40,16 @@ pub struct TraceWithFullDetails {
     )]
     pub output: Option<Option<serde_json::Value>>,
     /// The session identifier associated with the trace
-    #[serde(rename = "sessionId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "sessionId", default)]
     pub session_id: Option<String>,
     /// The release version of the application when the trace was created
-    #[serde(rename = "release", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "release", default)]
     pub release: Option<String>,
     /// The version of the trace
-    #[serde(rename = "version", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "version", default)]
     pub version: Option<String>,
     /// The user identifier associated with the trace
-    #[serde(rename = "userId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "userId", default)]
     pub user_id: Option<String>,
     /// The metadata associated with the trace. Values can be any JSON; non-object metadata sent at ingestion is returned under the `metadata` key.
     #[serde(

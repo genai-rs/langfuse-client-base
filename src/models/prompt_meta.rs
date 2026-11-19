@@ -27,7 +27,7 @@ pub struct PromptMeta {
     #[serde(rename = "lastUpdatedAt")]
     pub last_updated_at: jiff::Timestamp,
     /// Config object of the most recent prompt version that matches the filters (if any are provided)
-    #[serde(rename = "lastConfig", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "lastConfig", default)]
     pub last_config: Option<serde_json::Value>,
 }
 

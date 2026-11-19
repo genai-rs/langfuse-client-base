@@ -18,37 +18,34 @@ pub struct ObservationsViewSingle {
     #[serde(rename = "id")]
     pub id: String,
     /// The trace ID associated with the observation
-    #[serde(rename = "traceId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "traceId", default)]
     pub trace_id: Option<String>,
     /// The type of the observation
     #[serde(rename = "type")]
     pub r#type: String,
     /// The name of the observation
-    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "name", default)]
     pub name: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
     pub start_time: jiff::Timestamp,
     /// The end time of the observation.
-    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "endTime", default)]
     pub end_time: Option<jiff::Timestamp>,
     /// The completion start time of the observation
-    #[serde(
-        rename = "completionStartTime",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "completionStartTime", default)]
     pub completion_start_time: Option<jiff::Timestamp>,
     /// The model used for the observation
-    #[serde(rename = "model", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "model", default)]
     pub model: Option<String>,
     /// The parameters of the model used for the observation
-    #[serde(rename = "modelParameters", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "modelParameters", default)]
     pub model_parameters: Option<serde_json::Value>,
     /// The input data of the observation
-    #[serde(rename = "input", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "input", default)]
     pub input: Option<serde_json::Value>,
     /// The version of the observation
-    #[serde(rename = "version", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "version", default)]
     pub version: Option<String>,
     /// Additional metadata of the observation
     #[serde(
@@ -59,23 +56,20 @@ pub struct ObservationsViewSingle {
     )]
     pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// The output data of the observation
-    #[serde(rename = "output", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "output", default)]
     pub output: Option<serde_json::Value>,
     #[serde(rename = "usage")]
     pub usage: models::Usage,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
-    #[serde(rename = "statusMessage", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "statusMessage", default)]
     pub status_message: Option<String>,
     /// The parent observation ID
-    #[serde(
-        rename = "parentObservationId",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "parentObservationId", default)]
     pub parent_observation_id: Option<String>,
     /// The prompt ID associated with the observation
-    #[serde(rename = "promptId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "promptId", default)]
     pub prompt_id: Option<String>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
     #[serde(rename = "usageDetails")]
@@ -87,46 +81,37 @@ pub struct ObservationsViewSingle {
     #[serde(rename = "environment")]
     pub environment: String,
     /// The name of the prompt associated with the observation
-    #[serde(rename = "promptName", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "promptName", default)]
     pub prompt_name: Option<String>,
     /// The version of the prompt associated with the observation
-    #[serde(rename = "promptVersion", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "promptVersion", default)]
     pub prompt_version: Option<i64>,
     /// The unique identifier of the model
-    #[serde(rename = "modelId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "modelId", default)]
     pub model_id: Option<String>,
     /// The price of the input in USD
-    #[serde(rename = "inputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "inputPrice", default)]
     pub input_price: Option<f64>,
     /// The price of the output in USD.
-    #[serde(rename = "outputPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "outputPrice", default)]
     pub output_price: Option<f64>,
     /// The total price in USD.
-    #[serde(rename = "totalPrice", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "totalPrice", default)]
     pub total_price: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the input in USD
-    #[serde(
-        rename = "calculatedInputCost",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "calculatedInputCost", default)]
     pub calculated_input_cost: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated cost of the output in USD
-    #[serde(
-        rename = "calculatedOutputCost",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "calculatedOutputCost", default)]
     pub calculated_output_cost: Option<f64>,
     /// (Deprecated. Use usageDetails and costDetails instead.) The calculated total cost in USD
-    #[serde(
-        rename = "calculatedTotalCost",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "calculatedTotalCost", default)]
     pub calculated_total_cost: Option<f64>,
     /// The latency in seconds.
-    #[serde(rename = "latency", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "latency", default)]
     pub latency: Option<f64>,
     /// The time to the first token in seconds
-    #[serde(rename = "timeToFirstToken", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "timeToFirstToken", default)]
     pub time_to_first_token: Option<f64>,
     #[serde(rename = "_deprecation", skip_serializing_if = "Option::is_none")]
     pub _deprecation: Option<models::Deprecation>,

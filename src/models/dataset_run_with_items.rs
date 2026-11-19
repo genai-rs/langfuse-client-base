@@ -21,10 +21,10 @@ pub struct DatasetRunWithItems {
     #[serde(rename = "name")]
     pub name: String,
     /// Description of the run
-    #[serde(rename = "description", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "description", default)]
     pub description: Option<String>,
     /// Metadata of the dataset run
-    #[serde(rename = "metadata", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "metadata", default)]
     pub metadata: Option<serde_json::Value>,
     /// Id of the associated dataset
     #[serde(rename = "datasetId")]

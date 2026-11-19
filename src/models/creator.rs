@@ -18,7 +18,7 @@ pub struct Creator {
     #[serde(rename = "id")]
     pub id: String,
     /// User name, or `null` when unavailable.
-    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "name", default)]
     pub name: Option<String>,
 }
 

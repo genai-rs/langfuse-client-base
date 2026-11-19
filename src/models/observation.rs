@@ -18,37 +18,34 @@ pub struct Observation {
     #[serde(rename = "id")]
     pub id: String,
     /// The trace ID associated with the observation
-    #[serde(rename = "traceId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "traceId", default)]
     pub trace_id: Option<String>,
     /// The type of the observation
     #[serde(rename = "type")]
     pub r#type: String,
     /// The name of the observation
-    #[serde(rename = "name", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "name", default)]
     pub name: Option<String>,
     /// The start time of the observation
     #[serde(rename = "startTime")]
     pub start_time: jiff::Timestamp,
     /// The end time of the observation.
-    #[serde(rename = "endTime", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "endTime", default)]
     pub end_time: Option<jiff::Timestamp>,
     /// The completion start time of the observation
-    #[serde(
-        rename = "completionStartTime",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "completionStartTime", default)]
     pub completion_start_time: Option<jiff::Timestamp>,
     /// The model used for the observation
-    #[serde(rename = "model", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "model", default)]
     pub model: Option<String>,
     /// The parameters of the model used for the observation
-    #[serde(rename = "modelParameters", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "modelParameters", default)]
     pub model_parameters: Option<serde_json::Value>,
     /// The input data of the observation
-    #[serde(rename = "input", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "input", default)]
     pub input: Option<serde_json::Value>,
     /// The version of the observation
-    #[serde(rename = "version", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "version", default)]
     pub version: Option<String>,
     /// Additional metadata of the observation
     #[serde(
@@ -59,23 +56,20 @@ pub struct Observation {
     )]
     pub metadata: Option<Option<std::collections::HashMap<String, serde_json::Value>>>,
     /// The output data of the observation
-    #[serde(rename = "output", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "output", default)]
     pub output: Option<serde_json::Value>,
     #[serde(rename = "usage")]
     pub usage: models::Usage,
     #[serde(rename = "level")]
     pub level: models::ObservationLevel,
     /// The status message of the observation
-    #[serde(rename = "statusMessage", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "statusMessage", default)]
     pub status_message: Option<String>,
     /// The parent observation ID
-    #[serde(
-        rename = "parentObservationId",
-        deserialize_with = "Option::deserialize"
-    )]
+    #[serde(rename = "parentObservationId", default)]
     pub parent_observation_id: Option<String>,
     /// The prompt ID associated with the observation
-    #[serde(rename = "promptId", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "promptId", default)]
     pub prompt_id: Option<String>,
     /// The usage details of the observation. Key is the name of the usage metric, value is the number of units consumed. The total key is the sum of all (non-total) usage metrics or the total value ingested.
     #[serde(rename = "usageDetails")]

@@ -24,7 +24,7 @@ pub struct Usage {
     #[serde(rename = "total")]
     pub total: i64,
     /// Unit of measurement
-    #[serde(rename = "unit", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "unit", default)]
     pub unit: Option<String>,
     /// USD input cost
     #[serde(

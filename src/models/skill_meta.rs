@@ -26,7 +26,7 @@ pub struct SkillMeta {
     #[serde(rename = "latestVersionLastUpdatedAt")]
     pub latest_version_last_updated_at: jiff::Timestamp,
     /// Version assigned the production label, or null when no version is assigned.
-    #[serde(rename = "productionVersion", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "productionVersion", default)]
     pub production_version: Option<i64>,
 }
 

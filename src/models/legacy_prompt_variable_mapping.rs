@@ -24,7 +24,7 @@ pub struct LegacyPromptVariableMapping {
     #[serde(rename = "langfuseObject")]
     pub langfuse_object: models::LegacyEvaluationObject,
     /// Observation name to match, or `null` when `langfuseObject` is `trace` or `dataset_item`.
-    #[serde(rename = "objectName", deserialize_with = "Option::deserialize")]
+    #[serde(rename = "objectName", default)]
     pub object_name: Option<String>,
     /// Field selected from the legacy object.
     #[serde(rename = "source")]
